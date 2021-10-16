@@ -1,0 +1,19 @@
+# SimpleStaffChat2 by Refrac
+# Placeholders: (PlaceholderAPI is supported)
+# %player% - Get the player name
+# %message% - Get the message
+#---------------------------
+# Send a update notification on join
+# permission: simplestaffchat.update
+Update:
+  enabled: true
+
+Format:
+  # Minecraft format
+  minecraft-format: "&8[&4&lStaffChat&8] &f%player%&7: &f%message%"
+
+Messages:
+  no-permission: "&cYou don't have permission to execute this command."
+  reload: "&7Config files reloaded. Changes should be live in-game."
+  toggle-on: "&7StaffChat toggled &aon&7."
+  toggle-off: "&7StaffChat toggled &coff&7."

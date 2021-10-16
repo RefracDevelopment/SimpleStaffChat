@@ -1,0 +1,16 @@
+name: 'SimpleStaffChat'
+version: '${project.version}'
+main: me.refrac.simplestaffchat.spigot.SimpleStaffChat
+author: 'Refrac'
+description: 'A Lightweight StaffChat Plugin'
+website: 'https://discord.gg/jVnmm7QnQU'
+
+commands:
+  staffchat:
+    description: Send messages to your staff privately
+    aliases:
+      - sc
+  staffchattoggle:
+    description: Toggle staffchat
+    aliases:
+      - sctoggle
