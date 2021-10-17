@@ -2,10 +2,12 @@
  * Copyright (c) Refrac
  * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
  */
-package me.refrac.simplestaffchat.spigot.utilities;
+package me.refrac.simplestaffchat.bungee.utilities;
 
-import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
-import org.bukkit.Bukkit;
+import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
+import net.md_5.bungee.api.ProxyServer;
+
+import java.util.logging.Level;
 
 public enum Logger {
 
@@ -17,6 +19,6 @@ public enum Logger {
 
     public void out(String message) {
         message = Color.translate(String.format("&%c%s", this.color, message));
-        Bukkit.getServer().getConsoleSender().sendMessage(message);
+        ProxyServer.getInstance().getLogger().log(Level.ALL, message);
     }
 }

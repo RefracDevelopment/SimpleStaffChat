@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Refrac
+ * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ */
 package me.refrac.simplestaffchat.spigot.utilities;
 
 import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
@@ -10,12 +14,6 @@ public class Files {
     private static File configFile;
     private static FileConfiguration config;
 
-    private static File messagesFile;
-    private static FileConfiguration messages;
-
-    private static File menusFile;
-    private static FileConfiguration menus;
-
     public static void loadFiles(SimpleStaffChat staffChat) {
         if (!staffChat.getDataFolder().exists()) {
             staffChat.getDataFolder().mkdirs();
@@ -26,30 +24,10 @@ public class Files {
             staffChat.saveResource("config.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
-
-        messagesFile = new File(staffChat.getDataFolder(), "messages.yml");
-        if (!messagesFile.exists()) {
-            staffChat.saveResource("messages.yml", false);
-        }
-        messages = YamlConfiguration.loadConfiguration(messagesFile);
-
-        menusFile = new File(staffChat.getDataFolder(), "menus.yml");
-        if (!menusFile.exists()) {
-            staffChat.saveResource("menus.yml", false);
-        }
-        menus = YamlConfiguration.loadConfiguration(menusFile);
     }
 
     public static FileConfiguration getConfig() {
         return config;
-    }
-
-    public static FileConfiguration getMessages() {
-        return messages;
-    }
-
-    public static FileConfiguration getMenus() {
-        return menus;
     }
 
     public static void reloadConfig(SimpleStaffChat staffChat) {
@@ -58,16 +36,6 @@ public class Files {
             config = YamlConfiguration.loadConfiguration(configFile);
         } catch (Exception e) {
             Logger.ERROR.out("Failed to reload the config file!");
-            e.printStackTrace();
-        }
-    }
-
-    public static void reloadMessages(SimpleStaffChat staffChat) {
-        messagesFile = new File(staffChat.getDataFolder(), "messages.yml");
-        try {
-            messages = YamlConfiguration.loadConfiguration(messagesFile);
-        } catch (Exception e) {
-            Logger.ERROR.out("Failed to reload the messages file!");
             e.printStackTrace();
         }
     }

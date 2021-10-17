@@ -1,0 +1,6 @@
+name: 'BungeeStaffChat'
+version: '${project.version}'
+main: me.refrac.simplestaffchat.bungee.BungeeStaffChat
+author: 'Refrac'
+description: 'A Lightweight StaffChat Plugin'
+website: 'https://discord.gg/jVnmm7QnQU'

@@ -1,6 +1,8 @@
 name: 'SimpleStaffChat'
 version: '${project.version}'
 main: me.refrac.simplestaffchat.spigot.SimpleStaffChat
+softdepend:
+  - PlaceholderAPI
 author: 'Refrac'
 description: 'A Lightweight StaffChat Plugin'
 website: 'https://discord.gg/jVnmm7QnQU'
@@ -11,6 +13,10 @@ commands:
     aliases:
       - sc
   staffchattoggle:
-    description: Toggle staffchat
+    description: Toggle sending messages to your staff privately
     aliases:
       - sctoggle
+  staffchatreload:
+    description: Reload the configuration file
+    aliases:
+      - screload

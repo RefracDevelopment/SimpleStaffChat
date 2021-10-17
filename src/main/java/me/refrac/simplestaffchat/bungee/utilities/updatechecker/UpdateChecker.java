@@ -2,10 +2,10 @@
  * Copyright (c) Refrac
  * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
  */
-package me.refrac.simplestaffchat.spigot.utilities.updatechecker;
+package me.refrac.simplestaffchat.bungee.utilities.updatechecker;
 
-import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
-import org.bukkit.Bukkit;
+import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
+import net.md_5.bungee.api.ProxyServer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,16 +14,16 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class UpdateChecker {
-    private final SimpleStaffChat plugin;
+    private final BungeeStaffChat plugin;
     private final int resourceId;
 
-    public UpdateChecker(SimpleStaffChat plugin, int resourceId) {
+    public UpdateChecker(BungeeStaffChat plugin, int resourceId) {
         this.plugin  = plugin;
         this.resourceId = resourceId;
     }
 
     public void getLatestVersion(Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        ProxyServer.getInstance().getScheduler().runAsync(this.plugin, () -> {
             try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
                  Scanner scanner = new Scanner(inputStream)) {
                 if (scanner.hasNext()) {
