@@ -4,7 +4,7 @@
  */
 package me.refrac.simplestaffchat.bungee.commands;
 
-import me.refrac.simplestaffchat.bungee.utilities.Files;
+import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -18,7 +18,7 @@ public class ToggleCommand extends Command {
     public static List<UUID> insc = new ArrayList<>();
 
     public ToggleCommand() {
-        super("staffchattoggle", "simplestaffchat.toggle", "sctoggle");
+        super("staffchattoggle", "", "sctoggle");
     }
 
     @Override
@@ -27,16 +27,17 @@ public class ToggleCommand extends Command {
 
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("toggle")) {
-                if (insc.contains(player.getUniqueId())) {
-                    insc.remove(player.getUniqueId());
-                    player.sendMessage(Color.translate(player, Files.getConfig().getString("messages.toggle-off")));
-                } else {
-                    insc.add(player.getUniqueId());
-                    player.sendMessage(Color.translate(player, Files.getConfig().getString("messages.toggle-on")));
-                }
-            }
+        if (!sender.hasPermission("simplestaffchat.toggle")) {
+            Color.sendMessage(player, Config.NO_PERMISSION, true);
+            return;
+        }
+
+        if (insc.contains(player.getUniqueId())) {
+            insc.remove(player.getUniqueId());
+            Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+        } else {
+            insc.add(player.getUniqueId());
+            Color.sendMessage(player, Config.TOGGLE_ON, true, true);
         }
     }
 }

@@ -4,12 +4,11 @@
  */
 package me.refrac.simplestaffchat.bungee.listeners;
 
-import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
-import me.refrac.simplestaffchat.bungee.utilities.Files;
+import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.Settings;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
-import me.refrac.simplestaffchat.bungee.utilities.updatechecker.UpdateChecker;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -23,46 +22,32 @@ public class JoinListener implements Listener {
     public void onJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (Files.getConfig().getBoolean("update.enabled")) {
-            if (!player.hasPermission("simplestaffchat.update")) return;
-
-            new UpdateChecker(BungeeStaffChat.getInstance(), 91883).getLatestVersion(version -> {
-                if (!BungeeStaffChat.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    player.sendMessage(Color.format("&7&m-----------------------------------------"));
-                    player.sendMessage(Color.format("&bA new version of " + Settings.getName + " &bhas been released!"));
-                    player.sendMessage(Color.format("&bPlease update here: &e" + Settings.getPluginURL));
-                    player.sendMessage(Color.format("&7&m-----------------------------------------"));
-                }
-            });
-        }
-
-        if (Files.getConfig().getBoolean("join.enabled")) {
+        if (Config.JOIN_ENABLED) {
             if (!player.hasPermission("simplestaffchat.join")) return;
             if (player.getServer() != null) return;
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
                 if (!p.hasPermission("simplestaffchat.join")) return;
 
-                p.sendMessage(Color.translate(player, Files.getConfig().getString("join.join-format")
-                        .replace("%server%", event.getTarget().getName())));
+                Color.sendMessage(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName()), true, true);
             }
         }
 
-        if (player.getName().equalsIgnoreCase("Refracxx")) {
-            player.sendMessage(" ");
+        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) {
+            player.sendMessage(new TextComponent(" "));
             player.sendMessage(Color.format("&aWelcome " + Settings.getName + " Developer!"));
             player.sendMessage(Color.format("&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a."));
             player.sendMessage(Color.format("&aPlugin name&7: &f" + Settings.getName));
-            player.sendMessage(" ");
+            player.sendMessage(new TextComponent(" "));
             player.sendMessage(Color.format("&aServer version&7: &f" + ProxyServer.getInstance().getVersion()));
-            player.sendMessage(" ");
+            player.sendMessage(new TextComponent(" "));
         }
     }
 
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null) return;
-        if (!Files.getConfig().getBoolean("join.enabled")) return;
+        if (Config.JOIN_ENABLED) return;
         if (!event.getPlayer().hasPermission("simplestaffchat.join")) return;
 
         ProxiedPlayer player = event.getPlayer();
@@ -72,14 +57,13 @@ public class JoinListener implements Listener {
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (!p.hasPermission("simplestaffchat.switch")) return;
 
-            p.sendMessage(Color.translate(player, Files.getConfig().getString("join.switch-format")
-                    .replace("%from%", event.getFrom().getName())));
+            Color.sendMessage(player, Config.SWITCH_FORMAT.replace("%from%", event.getFrom().getName()), true, true);
         }
     }
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (!Files.getConfig().getBoolean("join.enabled")) return;
+        if (Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
@@ -88,7 +72,7 @@ public class JoinListener implements Listener {
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (!p.hasPermission("simplestaffchat.quit")) return;
 
-            p.sendMessage(Color.translate(player, Files.getConfig().getString("join.quit-format")));
+            Color.sendMessage(player, Config.QUIT_FORMAT, true, true);
         }
     }
 }

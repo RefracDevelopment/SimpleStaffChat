@@ -4,7 +4,7 @@
  */
 package me.refrac.simplestaffchat.spigot.commands;
 
-import me.refrac.simplestaffchat.spigot.utilities.Files;
+import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,21 +24,18 @@ public class ToggleCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (args.length == 0) {
-            if (!player.hasPermission("simplestaffchat.toggle")) {
-                player.sendMessage(Color.translate(player, Files.getConfig().getString("messages.no-permission")));
-                return true;
-            }
-
-            if (insc.contains(player.getUniqueId())) {
-                insc.remove(player.getUniqueId());
-                player.sendMessage(Color.translate(player, Files.getConfig().getString("messages.toggle-off")));
-            } else {
-                insc.add(player.getUniqueId());
-                player.sendMessage(Color.translate(player, Files.getConfig().getString("messages.toggle-on")));
-            }
+        if (!player.hasPermission("simplestaffchat.toggle")) {
+            player.sendMessage(Color.translate(player, Config.NO_PERMISSION));
             return true;
         }
-        return false;
+
+        if (insc.contains(player.getUniqueId())) {
+            insc.remove(player.getUniqueId());
+            player.sendMessage(Color.translate(player, Config.TOGGLE_OFF));
+        } else {
+            insc.add(player.getUniqueId());
+            player.sendMessage(Color.translate(player, Config.TOGGLE_ON));
+        }
+        return true;
     }
 }

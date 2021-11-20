@@ -5,8 +5,10 @@
 package me.refrac.simplestaffchat.spigot.commands;
 
 import com.google.common.base.Joiner;
+import me.refrac.simplestaffchat.spigot.utilities.Settings;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
-import me.refrac.simplestaffchat.spigot.utilities.Files;
+import me.refrac.simplestaffchat.spigot.utilities.files.Config;
+import me.refrac.simplestaffchat.spigot.utilities.files.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,19 +29,16 @@ public class StaffChatCommand implements CommandExecutor {
             }
 
             String message = Joiner.on(" ").join(args);
-            String format = Files.getConfig().getString("format.minecraft-format")
-                    .replace("%message%", message);
+            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission("simplestaffchat.use")) return true;
-
-                p.sendMessage(Color.translate(player, format));
-            }
+            Bukkit.broadcast(Color.translate(player, format), "simplestaffchat.see");
         } else {
+            player.sendMessage(" ");
+            player.sendMessage(Color.translate(player, "&e&lRunning " + Settings.getName + " v" + Settings.getVersion));
+            player.sendMessage(" ");
             player.sendMessage(Color.translate(player, "&e&lUsage: /staffchat <message>"));
             player.sendMessage(Color.translate(player, "&e&lUsage: /staffchattoggle"));
-            player.sendMessage(Color.translate(player, ""));
-            player.sendMessage(Color.translate(player, "&e&lToggle: "));
+            player.sendMessage(" ");
         }
         return false;
     }

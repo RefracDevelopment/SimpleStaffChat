@@ -2,9 +2,10 @@
  * Copyright (c) Refrac
  * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
  */
-package me.refrac.simplestaffchat.spigot.utilities;
+package me.refrac.simplestaffchat.spigot.utilities.files;
 
 import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -24,13 +25,17 @@ public class Files {
             staffChat.saveResource("config.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(configFile);
+
+        Logger.NONE.out("&c==========================================");
+        Logger.NONE.out("&aAll files have been loaded correctly!");
+        Logger.NONE.out("&c==========================================");
     }
 
     public static FileConfiguration getConfig() {
         return config;
     }
 
-    public static void reloadConfig(SimpleStaffChat staffChat) {
+    public static void reloadFiles(SimpleStaffChat staffChat) {
         configFile = new File(staffChat.getDataFolder(), "config.yml");
         try {
             config = YamlConfiguration.loadConfiguration(configFile);
@@ -38,5 +43,9 @@ public class Files {
             Logger.ERROR.out("Failed to reload the config file!");
             e.printStackTrace();
         }
+
+        Logger.NONE.out("&c==========================================");
+        Logger.NONE.out("&aAll files have been reloaded correctly!");
+        Logger.NONE.out("&c==========================================");
     }
 }

@@ -2,11 +2,12 @@
  * Copyright (c) Refrac
  * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
  */
-package me.refrac.simplestaffchat.bungee.utilities;
+package me.refrac.simplestaffchat.bungee.utilities.files;
 
 import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -38,12 +39,18 @@ public class Files {
         return resourceFile;
     }
 
-    public static void loadConfig() {
+    // Load & Reload files
+    public static void loadFiles() {
         try {
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(
                     loadResource(BungeeStaffChat.getInstance(), "bungee-config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
+
+        Logger.NONE.out("&c==========================================");
+        Logger.NONE.out("&aAll files have been loaded correctly!");
+        Logger.NONE.out("&c==========================================");
     }
 }

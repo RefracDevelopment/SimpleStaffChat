@@ -5,7 +5,7 @@
 package me.refrac.simplestaffchat.bungee.listeners;
 
 import me.refrac.simplestaffchat.bungee.commands.ToggleCommand;
-import me.refrac.simplestaffchat.bungee.utilities.Files;
+import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -27,9 +27,9 @@ public class ChatListener implements Listener {
                     .replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.use")) return;
+                if (!p.hasPermission("simplestaffchat.see")) return;
 
-                p.sendMessage(Color.translate(player, format));
+                Color.sendMessage(player, format, true, true);
             }
         } else if (event.getMessage().contains(Files.getConfig().getString("staffchat-symbol")) &&
                 player.hasPermission("simplestaffchat.symbol")) {
@@ -42,9 +42,9 @@ public class ChatListener implements Listener {
                     .replace("%message%", message.replaceFirst(Files.getConfig().getString("staffchat-symbol"), ""));
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.use")) return;
+                if (!p.hasPermission("simplestaffchat.see")) return;
 
-                p.sendMessage(Color.translate(player, format));
+                Color.sendMessage(player, format, true, true);
             }
         }
     }

@@ -5,7 +5,7 @@
 package me.refrac.simplestaffchat.bungee.commands;
 
 import com.google.common.base.Joiner;
-import me.refrac.simplestaffchat.bungee.utilities.Files;
+import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -15,7 +15,7 @@ import net.md_5.bungee.api.plugin.Command;
 public class StaffChatCommand extends Command {
 
     public StaffChatCommand() {
-        super("staffchat", "simplestaffchat.use", "sc");
+        super("staffchat", "", "sc");
     }
 
     @Override
@@ -24,20 +24,24 @@ public class StaffChatCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (args.length >= 1) {
+            if (!player.hasPermission("simplestaffchat.use")) {
+                Color.sendMessage(player, Config.NO_PERMISSION, true);
+                return;
+            }
+
             String message = Joiner.on(" ").join(args);
-            String format = Files.getConfig().getString("format.minecraft-format")
-                    .replace("%message%", message);
+            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.use")) return;
+                if (!p.hasPermission("simplestaffchat.see")) return;
 
-                p.sendMessage(Color.translate(player, format));
+                Color.sendMessage(player, format, true, true);
             }
         } else {
-            sender.sendMessage(Color.format("&e&lUsage: /staffchat <message>"));
-            sender.sendMessage(Color.format("&e&lUsage: /staffchattoggle"));
-            sender.sendMessage(Color.format(""));
-            sender.sendMessage(Color.format("&e&lToggle: "));
+            Color.sendMessage(player, "", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
+            Color.sendMessage(player, "", true);
         }
     }
 }

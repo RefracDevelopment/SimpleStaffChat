@@ -4,10 +4,8 @@
  */
 package me.refrac.simplestaffchat.spigot.listeners;
 
-import me.refrac.simplestaffchat.spigot.utilities.updatechecker.UpdateChecker;
-import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.Settings;
-import me.refrac.simplestaffchat.spigot.utilities.Files;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,30 +20,11 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (Files.getConfig().getBoolean("update.enabled")) {
-            if (!player.hasPermission("simplestaffchat.update")) return;
-
-            new UpdateChecker(SimpleStaffChat.getInstance(), 91883).getLatestVersion(version -> {
-                if (!SimpleStaffChat.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
-                    player.sendMessage(Color.translate("&7&m-----------------------------------------"));
-                    player.sendMessage(Color.translate("&bA new version of " + Settings.getName + " &bhas been released!"));
-                    player.sendMessage(Color.translate("&bPlease update here: &e" + Settings.getPluginURL));
-                    player.sendMessage(Color.translate("&7&m-----------------------------------------"));
-                }
-            });
+        if (Config.JOIN_ENABLED) {
+            Bukkit.broadcast(Color.translate(player, Config.JOIN_FORMAT), "simplestaffchat.join");
         }
 
-        if (Files.getConfig().getBoolean("join.enabled")) {
-            if (!player.hasPermission("simplestaffchat.join")) return;
-
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission("simplestaffchat.join")) return;
-
-                p.sendMessage(Color.translate(player, Files.getConfig().getString("join.join-format")));
-            }
-        }
-
-        if (player.getName().equalsIgnoreCase("Refracxx")) {
+        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) {
             player.sendMessage(" ");
             player.sendMessage(Color.translate("&aWelcome " + Settings.getName + " Developer!"));
             player.sendMessage(Color.translate("&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a."));
@@ -60,13 +39,8 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (!Files.getConfig().getBoolean("join.enabled")) return;
-        if (!player.hasPermission("simplestaffchat.quit")) return;
+        if (Config.JOIN_ENABLED) return;
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission("simplestaffchat.quit")) return;
-
-            p.sendMessage(Color.translate(player, Files.getConfig().getString("join.quit-format")));
-        }
+        Bukkit.broadcast(Color.translate(player, Config.QUIT_FORMAT), "simplestaffchat.quit");
     }
 }

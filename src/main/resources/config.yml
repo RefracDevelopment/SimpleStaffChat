@@ -4,6 +4,11 @@
 # %player% - Get the player name
 # %displayname% - Get the player display name
 # %message% - Get the message
+# %arrow% - Get an arrow for a message
+# %arrow_2% - Get alt arrow for a message
+# %star% - Get a star for a message
+# %circle% - Get a circle for a message
+# %empty% - Disable any message with this placeholder
 #--------------------------------------
 # Send a update notification on join
 # permission: simplestaffchat.update
@@ -17,7 +22,7 @@ staffchat-symbol: "#"
 
 format:
   # Minecraft format
-  minecraft-format: "%prefix% &f%player%&7: &f%message%"
+  minecraft-format: "%prefix% &6&l%player%&7: &f%message%"
 
 # This is for staff joins only
 # permission: simplestaffchat.join or simplestaffchat.quit
