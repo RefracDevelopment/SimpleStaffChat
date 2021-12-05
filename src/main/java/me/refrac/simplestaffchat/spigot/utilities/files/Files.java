@@ -45,7 +45,7 @@ public class Files {
         }
 
         Logger.NONE.out("&c==========================================");
-        Logger.NONE.out("&aAll files have been reloaded correctly!");
+        Logger.NONE.out("&aAll files have been loaded correctly!");
         Logger.NONE.out("&c==========================================");
     }
 }

@@ -12,7 +12,7 @@ import me.refrac.simplestaffchat.spigot.listeners.JoinListener;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
 import me.refrac.simplestaffchat.spigot.utilities.Metrics;
-import me.refrac.simplestaffchat.spigot.utilities.Settings;
+import me.refrac.simplestaffchat.shared.Settings;
 import me.refrac.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refrac.simplestaffchat.spigot.utilities.Logger;
 import org.bukkit.plugin.java.JavaPlugin;

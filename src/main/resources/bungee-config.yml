@@ -11,11 +11,6 @@
 # %circle% - Get a circle for a message
 # %empty% - Disable any message with this placeholder
 #--------------------------------------
-# Send a update notification on join
-# permission: simplestaffchat.update
-update:
-  enabled: true
-
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
@@ -29,9 +24,8 @@ format:
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
 join:
   enabled: true
-  join-format: "&8[&a+&8] &9%player% &fjoined &e%server%&f."
-  switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%server% &f%arrow% &e%server%&7)&f."
-  quit-format: "&8[&c-&8] &9%player% &fleft&f."
+  switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."
+  quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."
 
 messages:
   prefix: "&8[&4&lStaffChat&8]"

@@ -7,7 +7,7 @@ package me.refrac.simplestaffchat.bungee.utilities.files;
 import com.google.common.io.ByteStreams;
 import lombok.Getter;
 import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
-import me.refrac.simplestaffchat.spigot.utilities.Logger;
+import me.refrac.simplestaffchat.bungee.utilities.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;

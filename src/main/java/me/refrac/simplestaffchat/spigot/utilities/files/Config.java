@@ -6,7 +6,6 @@ package me.refrac.simplestaffchat.spigot.utilities.files;
 
 public class Config {
     // General
-    public static boolean UPDATE_ENABLED;
     public static String STAFFCHAT_SYMBOL;
     public static String STAFFCHAT_FORMAT;
 
@@ -24,7 +23,6 @@ public class Config {
 
     public static void loadConfig() {
         // General
-        UPDATE_ENABLED = Files.getConfig().getBoolean("update.enabled");
         STAFFCHAT_SYMBOL = Files.getConfig().getString("staffchat-symbol");
         STAFFCHAT_FORMAT = Files.getConfig().getString("format.minecraft-format");
 

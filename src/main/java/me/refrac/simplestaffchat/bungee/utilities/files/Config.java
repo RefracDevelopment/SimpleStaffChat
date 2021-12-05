@@ -6,13 +6,11 @@ package me.refrac.simplestaffchat.bungee.utilities.files;
 
 public class Config {
     // General
-    public static boolean UPDATE_ENABLED;
     public static String STAFFCHAT_SYMBOL;
     public static String STAFFCHAT_FORMAT;
 
     // Staff Joins
     public static boolean JOIN_ENABLED;
-    public static String JOIN_FORMAT;
     public static String SWITCH_FORMAT;
     public static String QUIT_FORMAT;
 
@@ -25,13 +23,11 @@ public class Config {
 
     public static void loadConfig() {
         // General
-        UPDATE_ENABLED = Files.getConfig().getBoolean("update.enabled");
         STAFFCHAT_SYMBOL = Files.getConfig().getString("staffchat-symbol");
         STAFFCHAT_FORMAT = Files.getConfig().getString("format.minecraft-format");
 
         // Staff Joins
         JOIN_ENABLED = Files.getConfig().getBoolean("join.enabled");
-        JOIN_FORMAT = Files.getConfig().getString("join.join-format");
         SWITCH_FORMAT = Files.getConfig().getString("join.switch-format");
         QUIT_FORMAT = Files.getConfig().getString("join.quit-format");
 

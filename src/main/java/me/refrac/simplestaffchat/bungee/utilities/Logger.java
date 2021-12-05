@@ -6,8 +6,7 @@ package me.refrac.simplestaffchat.bungee.utilities;
 
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.ProxyServer;
-
-import java.util.logging.Level;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public enum Logger {
 
@@ -19,6 +18,6 @@ public enum Logger {
 
     public void out(String message) {
         message = Color.translate(String.format("&%c%s", this.color, message));
-        ProxyServer.getInstance().getLogger().log(Level.ALL, message);
+        ProxyServer.getInstance().getConsole().sendMessage(new TextComponent(message));
     }
 }

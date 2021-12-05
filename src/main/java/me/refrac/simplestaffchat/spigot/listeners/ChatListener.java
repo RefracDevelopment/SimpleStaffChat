@@ -4,6 +4,7 @@
  */
 package me.refrac.simplestaffchat.spigot.listeners;
 
+import me.refrac.simplestaffchat.shared.Permissions;
 import me.refrac.simplestaffchat.spigot.commands.ToggleCommand;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
@@ -25,8 +26,12 @@ public class ChatListener implements Listener {
             String message = event.getMessage();
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
-            Bukkit.broadcast(Color.translate(player, format), "simplestaffchat.see");
-        } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) && player.hasPermission("simplestaffchat.symbol")) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
+            }
+        } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
@@ -34,7 +39,11 @@ public class ChatListener implements Listener {
             String message = event.getMessage();
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
-            Bukkit.broadcast(Color.translate(player, format), "simplestaffchat.see");
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
+            }
         }
     }
 }

@@ -9,15 +9,12 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Color {
 
     public static TextComponent translate(ProxiedPlayer player, String source) {
         source = Placeholders.setPlaceholders(player, source);
 
-        return format(source);
+        return new TextComponent(translate(source));
     }
 
     public static String translate(String source) {
@@ -26,10 +23,6 @@ public class Color {
 
     public static TextComponent format(String source) {
         return new TextComponent(translate(source));
-    }
-
-    public static List<String> translate(List<String> source) {
-        return source.stream().map(Color::translate).collect(Collectors.toList());
     }
 
     public static void sendMessage(ProxiedPlayer player, String source, boolean color, boolean placeholders) {

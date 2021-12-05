@@ -5,8 +5,10 @@
 package me.refrac.simplestaffchat.bungee.listeners;
 
 import me.refrac.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
+import me.refrac.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -23,28 +25,27 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Files.getConfig().getString("format.minecraft-format")
-                    .replace("%message%", message);
+            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.see")) return;
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-                Color.sendMessage(player, format, true, true);
+                p.sendMessage(Color.translate(player, format));
             }
-        } else if (event.getMessage().contains(Files.getConfig().getString("staffchat-symbol")) &&
-                player.hasPermission("simplestaffchat.symbol")) {
-            if (event.getMessage().equalsIgnoreCase(Files.getConfig().getString("staffchat-symbol"))) return;
+        } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) &&
+                player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
+            if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Files.getConfig().getString("format.minecraft-format")
-                    .replace("%message%", message.replaceFirst(Files.getConfig().getString("staffchat-symbol"), ""));
+                    .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.see")) return;
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-                Color.sendMessage(player, format, true, true);
+                p.sendMessage(Color.translate(player, format));
             }
         }
     }

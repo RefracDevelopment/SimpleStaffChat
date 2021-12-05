@@ -10,11 +10,6 @@
 # %circle% - Get a circle for a message
 # %empty% - Disable any message with this placeholder
 #--------------------------------------
-# Send a update notification on join
-# permission: simplestaffchat.update
-update:
-  enabled: true
-
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>

@@ -5,10 +5,10 @@
 package me.refrac.simplestaffchat.bungee.listeners;
 
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
-import me.refrac.simplestaffchat.bungee.utilities.Settings;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
+import me.refrac.simplestaffchat.shared.Permissions;
+import me.refrac.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -22,57 +22,45 @@ public class JoinListener implements Listener {
     public void onJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (Config.JOIN_ENABLED) {
-            if (!player.hasPermission("simplestaffchat.join")) return;
-            if (player.getServer() != null) return;
+        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.join")) return;
-
-                Color.sendMessage(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName()), true, true);
-            }
-        }
-
-        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) {
-            player.sendMessage(new TextComponent(" "));
-            player.sendMessage(Color.format("&aWelcome " + Settings.getName + " Developer!"));
-            player.sendMessage(Color.format("&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a."));
-            player.sendMessage(Color.format("&aPlugin name&7: &f" + Settings.getName));
-            player.sendMessage(new TextComponent(" "));
-            player.sendMessage(Color.format("&aServer version&7: &f" + ProxyServer.getInstance().getVersion()));
-            player.sendMessage(new TextComponent(" "));
-        }
+        Color.sendMessage(player, " ", true);
+        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true);
+        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true);
+        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true);
+        Color.sendMessage(player, " ", true);
+        Color.sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion(), true);
+        Color.sendMessage(player, " ", true);
     }
 
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null) return;
-        if (Config.JOIN_ENABLED) return;
-        if (!event.getPlayer().hasPermission("simplestaffchat.join")) return;
+        if (!Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission("simplestaffchat.switch")) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
 
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (!p.hasPermission("simplestaffchat.switch")) return;
+            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-            Color.sendMessage(player, Config.SWITCH_FORMAT.replace("%from%", event.getFrom().getName()), true, true);
+            p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%from%", event.getFrom().getName())));
         }
     }
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission("simplestaffchat.quit")) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (!p.hasPermission("simplestaffchat.quit")) return;
+            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-            Color.sendMessage(player, Config.QUIT_FORMAT, true, true);
+            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
         }
     }
 }

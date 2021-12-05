@@ -14,7 +14,7 @@ import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.Logger;
 import me.refrac.simplestaffchat.bungee.utilities.Metrics;
-import me.refrac.simplestaffchat.bungee.utilities.Settings;
+import me.refrac.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.plugin.Plugin;
 
 @Getter

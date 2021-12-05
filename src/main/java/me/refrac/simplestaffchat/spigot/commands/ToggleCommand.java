@@ -4,6 +4,7 @@
  */
 package me.refrac.simplestaffchat.spigot.commands;
 
+import me.refrac.simplestaffchat.shared.Permissions;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.Command;
@@ -24,17 +25,17 @@ public class ToggleCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("simplestaffchat.toggle")) {
-            player.sendMessage(Color.translate(player, Config.NO_PERMISSION));
+        if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+            Color.sendMessage(player, Config.NO_PERMISSION, true, false);
             return true;
         }
 
         if (insc.contains(player.getUniqueId())) {
             insc.remove(player.getUniqueId());
-            player.sendMessage(Color.translate(player, Config.TOGGLE_OFF));
+            Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
         } else {
             insc.add(player.getUniqueId());
-            player.sendMessage(Color.translate(player, Config.TOGGLE_ON));
+            Color.sendMessage(player, Config.TOGGLE_ON, true, true);
         }
         return true;
     }
