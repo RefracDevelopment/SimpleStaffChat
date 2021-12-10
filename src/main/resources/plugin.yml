@@ -1,4 +1,4 @@
-name: 'SimpleStaffChat'
+name: 'SimpleStaffChat2'
 version: '${project.version}'
 main: me.refrac.simplestaffchat.spigot.SimpleStaffChat
 softdepend:

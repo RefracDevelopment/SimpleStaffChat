@@ -1,4 +1,4 @@
-name: 'BungeeStaffChat'
+name: 'SimpleStaffChat2'
 version: '${project.version}'
 main: me.refrac.simplestaffchat.bungee.BungeeStaffChat
 author: 'Refrac'

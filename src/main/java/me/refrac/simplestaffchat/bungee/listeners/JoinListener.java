@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.bungee.listeners;
 
@@ -22,7 +22,18 @@ public class JoinListener implements Listener {
     public void onJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
+        if (Config.JOIN_ENABLED) {
+            if (!player.hasPermission("simplestaffchat.join")) return;
+            if (player.getServer() != null) return;
+
+            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+                if (!p.hasPermission("simplestaffchat.join")) return;
+
+                Color.sendMessage(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName()), true, true);
+            }
+        }
+
+        if (!player.getName().equalsIgnoreCase("Refracxx")) return;
 
         Color.sendMessage(player, " ", true);
         Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true);
@@ -45,7 +56,8 @@ public class JoinListener implements Listener {
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-            p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%from%", event.getFrom().getName())));
+            p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%from%", event.getFrom().getName())));
         }
     }
 
@@ -60,7 +72,7 @@ public class JoinListener implements Listener {
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
         }
     }
 }

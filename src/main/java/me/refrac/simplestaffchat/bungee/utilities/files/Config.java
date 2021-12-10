@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.bungee.utilities.files;
 
@@ -11,6 +11,7 @@ public class Config {
 
     // Staff Joins
     public static boolean JOIN_ENABLED;
+    public static String JOIN_FORMAT;
     public static String SWITCH_FORMAT;
     public static String QUIT_FORMAT;
 
@@ -28,6 +29,7 @@ public class Config {
 
         // Staff Joins
         JOIN_ENABLED = Files.getConfig().getBoolean("join.enabled");
+        JOIN_FORMAT = Files.getConfig().getString("join.join-format");
         SWITCH_FORMAT = Files.getConfig().getString("join.switch-format");
         QUIT_FORMAT = Files.getConfig().getString("join.quit-format");
 

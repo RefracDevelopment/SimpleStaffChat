@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.spigot.commands;
 
@@ -17,17 +17,14 @@ public class ReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0) {
-            if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
-                Color.sendMessage(sender, Config.NO_PERMISSION, true);
-                return true;
-            }
-
-            Files.reloadFiles(SimpleStaffChat.getInstance());
-            Config.loadConfig();
-            Color.sendMessage(sender, Config.RELOAD, true);
+        if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
+            Color.sendMessage(sender, Config.NO_PERMISSION, true);
             return true;
         }
-        return false;
+
+        Files.reloadFiles(SimpleStaffChat.getInstance());
+        Config.loadConfig();
+        Color.sendMessage(sender, Config.RELOAD, true);
+        return true;
     }
 }

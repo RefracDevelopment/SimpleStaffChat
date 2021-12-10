@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.bungee.utilities.chat;
 
@@ -12,7 +12,6 @@ public class Placeholders {
     public static String setPlaceholders(ProxiedPlayer player, String placeholder) {
         placeholder = placeholder.replace("%prefix%", Config.PREFIX);
         placeholder = placeholder.replace("%player%", player.getName());
-        placeholder = placeholder.replace("%server%", player.getServer().getInfo().getName());
         placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         placeholder = placeholder.replace("%arrow%", "\u00BB");
         placeholder = placeholder.replace("%arrow_2%", "\u27A5");

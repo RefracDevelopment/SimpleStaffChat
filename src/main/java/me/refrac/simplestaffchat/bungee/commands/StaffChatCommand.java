@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.bungee.commands;
 
@@ -32,7 +32,8 @@ public class StaffChatCommand extends Command {
             }
 
             String message = Joiner.on(" ").join(args);
-            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
+            String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
                 if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;

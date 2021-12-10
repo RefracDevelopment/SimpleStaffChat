@@ -1,6 +1,6 @@
 /*
  * Copyright (c) Refrac
- * If you have any questions please email refracplaysmc@gmail.com or reach me on Discord
+ * If you have any questions please join my discord https://discord.gg/jVnmm7QnQU
  */
 package me.refrac.simplestaffchat.spigot.listeners;
 
@@ -37,7 +37,8 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
+            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message
+                    .replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
