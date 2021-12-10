@@ -31,7 +31,7 @@ public class JoinListener implements Listener {
             }
         }
 
-        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
+        if (!player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
 
         Color.sendMessage(player, " ", true);
         Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true);
@@ -46,7 +46,7 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (!Config.JOIN_ENABLED) return;
+        if (Config.JOIN_ENABLED) return;
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (Player p : Bukkit.getOnlinePlayers()) {

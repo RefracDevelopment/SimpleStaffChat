@@ -47,7 +47,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null) return;
-        if (!Config.JOIN_ENABLED) return;
+        if (Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
@@ -63,7 +63,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (!Config.JOIN_ENABLED) return;
+        if (Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 

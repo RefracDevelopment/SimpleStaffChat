@@ -12,19 +12,33 @@ import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class ReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true);
-            return true;
-        }
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
 
-        Files.reloadFiles(SimpleStaffChat.getInstance());
-        Config.loadConfig();
-        Color.sendMessage(sender, Config.RELOAD, true);
+            if (!player.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
+                Color.sendMessage(player, Config.NO_PERMISSION, true, false);
+                return true;
+            }
+
+            Files.reloadFiles(SimpleStaffChat.getInstance());
+            Config.loadConfig();
+            Color.sendMessage(player, Config.RELOAD, true, true);
+        } else {
+            if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
+                Color.sendMessage(sender, Config.NO_PERMISSION, true);
+                return true;
+            }
+
+            Files.reloadFiles(SimpleStaffChat.getInstance());
+            Config.loadConfig();
+            Color.sendMessage(sender, Config.RELOAD, true);
+        }
         return true;
     }
 }
