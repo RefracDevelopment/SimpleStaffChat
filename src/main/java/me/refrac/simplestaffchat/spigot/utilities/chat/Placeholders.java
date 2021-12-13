@@ -20,6 +20,6 @@ public class Placeholders {
         placeholder = placeholder.replace("%circle%", StringEscapeUtils.unescapeJava("\u2219"));
         placeholder = placeholder.replace("|", StringEscapeUtils.unescapeJava("\u2503"));
 
-        return Color.translate(placeholder);
+        return placeholder;
     }
 }

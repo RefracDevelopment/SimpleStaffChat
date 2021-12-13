@@ -46,7 +46,7 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED) return;
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (Player p : Bukkit.getOnlinePlayers()) {

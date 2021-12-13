@@ -21,10 +21,6 @@ public class Color {
         return ChatColor.translateAlternateColorCodes('&', source);
     }
 
-    public static TextComponent format(String source) {
-        return new TextComponent(translate(source));
-    }
-
     public static void sendMessage(ProxiedPlayer player, String source, boolean color, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (placeholders) source = Placeholders.setPlaceholders(player, source);
@@ -34,10 +30,10 @@ public class Color {
         player.sendMessage(new TextComponent(source));
     }
 
-    public static void sendMessage(CommandSender player, String source, boolean color) {
+    public static void sendMessage(CommandSender sender, String source, boolean color) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (color) source = translate(source);
 
-        player.sendMessage(new TextComponent(source));
+        sender.sendMessage(new TextComponent(source));
     }
 }

@@ -19,6 +19,6 @@ public class Placeholders {
         placeholder = placeholder.replace("%circle%", "\u2219");
         placeholder = placeholder.replace("|", "\u2503");
 
-        return Color.translate(placeholder);
+        return placeholder;
     }
 }

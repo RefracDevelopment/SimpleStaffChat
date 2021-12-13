@@ -37,10 +37,10 @@ public class Color {
         player.sendMessage(source);
     }
 
-    public static void sendMessage(CommandSender player, String source, boolean color) {
+    public static void sendMessage(CommandSender sender, String source, boolean color) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (color) source = translate(source);
 
-        player.sendMessage(source);
+        sender.sendMessage(source);
     }
 }

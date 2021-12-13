@@ -23,13 +23,13 @@ public class JoinListener implements Listener {
         ProxiedPlayer player = event.getPlayer();
 
         if (Config.JOIN_ENABLED) {
-            if (!player.hasPermission("simplestaffchat.join")) return;
+            if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
             if (player.getServer() != null) return;
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission("simplestaffchat.join")) return;
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
 
-                Color.sendMessage(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName()), true, true);
+                p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
             }
         }
 
@@ -47,7 +47,7 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null) return;
-        if (Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
@@ -63,7 +63,7 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED) return;
 
         ProxiedPlayer player = event.getPlayer();
 
