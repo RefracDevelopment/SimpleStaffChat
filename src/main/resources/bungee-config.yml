@@ -34,3 +34,21 @@ messages:
   reload: "&7Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% &eStaffChat toggled &aon&7."
   toggle-off: "%prefix% &eStaffChat toggled &coff&7."
+
+# These changes will require a restart of your BungeeCord/Proxy server
+commands:
+  staffchat:
+    enabled: true
+    # Command without /
+    command: "staffchat"
+    alias: "sc"
+  toggle:
+    enabled: true
+    # Command without /
+    command: "staffchattoggle"
+    alias: "sctoggle"
+  reload:
+    enabled: true
+    # Command without /
+    command: "staffchatreload"
+    alias: "screload"
