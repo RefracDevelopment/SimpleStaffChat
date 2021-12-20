@@ -42,9 +42,9 @@ public class JoinListener implements Listener {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
 
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                }
             }
         }
 
@@ -67,9 +67,9 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            }
         }
     }
 }

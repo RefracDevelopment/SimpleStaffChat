@@ -44,9 +44,9 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
         } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
@@ -58,9 +58,9 @@ public class ChatListener implements Listener {
                     .replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
         }
     }

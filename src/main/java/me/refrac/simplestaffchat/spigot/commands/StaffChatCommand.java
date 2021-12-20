@@ -49,11 +49,16 @@ public class StaffChatCommand implements CommandExecutor {
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return true;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
         } else {
+            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
+                Color.sendMessage(player, Config.NO_PERMISSION, true, false);
+                return true;
+            }
+
             Color.sendMessage(player, "", true);
             Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
             Color.sendMessage(player, "", true);

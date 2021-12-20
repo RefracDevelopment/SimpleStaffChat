@@ -45,12 +45,14 @@ public class ChatListener implements Listener {
                     .replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
+
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
         } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) &&
-                player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && !event.isCommand()) {
+                player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
@@ -60,10 +62,12 @@ public class ChatListener implements Listener {
                     .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
+
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
         }
     }
 }

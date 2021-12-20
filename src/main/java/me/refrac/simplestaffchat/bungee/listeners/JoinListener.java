@@ -44,9 +44,9 @@ public class JoinListener implements Listener {
             if (player.getServer() != null) return;
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
+                }
             }
         }
 
@@ -71,10 +71,10 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
 
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%from%", event.getFrom().getName())));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                        .replace("%from%", event.getFrom().getName())));
+            }
         }
     }
 
@@ -87,9 +87,9 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+            }
         }
     }
 }

@@ -54,11 +54,18 @@ public class StaffChatCommand extends Command {
                     .replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
+
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
         } else {
+            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
+                Color.sendMessage(player, Config.NO_PERMISSION, true);
+                return;
+            }
+
             Color.sendMessage(player, "", true);
             Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
             Color.sendMessage(player, "", true);
