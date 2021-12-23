@@ -48,7 +48,7 @@ public class ChatListener implements Listener {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
-        } else if (event.getMessage().contains(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
