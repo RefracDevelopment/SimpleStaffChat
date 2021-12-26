@@ -69,9 +69,9 @@ public class StaffChatCommand extends Command {
             Color.sendMessage(player, "", true);
             Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
             Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lUsage: /sc <message>", true);
-            Color.sendMessage(player, "&e&lUsage: /sctoggle", true);
-            Color.sendMessage(player, "&e&lUsage: /screload", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchatreload", true);
             Color.sendMessage(player, "", true);
         }
     }

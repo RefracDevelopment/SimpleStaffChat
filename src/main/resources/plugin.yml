@@ -10,14 +10,7 @@ website: 'https://discord.gg/jVnmm7QnQU'
 commands:
   staffchat:
     description: 'Send messages to your staff privately'
-    aliases:
-      - sc
   staffchattoggle:
     description: 'Toggle sending messages to your staff privately'
-    aliases:
-      - sctoggle
-      - sct
   staffchatreload:
     description: 'Reload the plugin'
-    aliases:
-      - screload

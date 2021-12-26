@@ -37,7 +37,7 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (ToggleCommand.insc.contains(player.getUniqueId())) {
+        if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
             event.setCancelled(true);
 
             String message = event.getMessage();

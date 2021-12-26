@@ -21,6 +21,8 @@
  */
 package me.refrac.simplestaffchat.spigot.utilities.files;
 
+import java.util.List;
+
 public class Config {
     // General
     public static String STAFFCHAT_SYMBOL;
@@ -38,6 +40,17 @@ public class Config {
     public static String TOGGLE_ON;
     public static String TOGGLE_OFF;
 
+    // Commands
+    public static boolean STAFFCHAT_ENABLED;
+    public static List<String> STAFFCHAT_ALIAS;
+    public static boolean TOGGLE_ENABLED;
+    public static List<String> TOGGLE_ALIAS;
+    public static boolean RELOAD_ENABLED;
+    public static List<String> RELOAD_ALIAS;
+    public static String STAFFCHAT_ALIAS_INVALID;
+    public static String TOGGLE_ALIAS_INVALID;
+    public static String RELOAD_ALIAS_INVALID;
+
     public static void loadConfig() {
         // General
         STAFFCHAT_SYMBOL = Files.getConfig().getString("staffchat-symbol");
@@ -54,5 +67,16 @@ public class Config {
         RELOAD = Files.getConfig().getString("messages.reload");
         TOGGLE_ON = Files.getConfig().getString("messages.toggle-on");
         TOGGLE_OFF = Files.getConfig().getString("messages.toggle-off");
+
+        // Commands
+        STAFFCHAT_ENABLED = Files.getConfig().getBoolean("commands.staffchat.enabled");
+        STAFFCHAT_ALIAS = Files.getConfig().getStringList("commands.staffchat.alias");
+        STAFFCHAT_ALIAS_INVALID = Files.getConfig().getString("commands.staffchat.alias-invalid-message");
+        TOGGLE_ENABLED = Files.getConfig().getBoolean("commands.toggle.enabled");
+        TOGGLE_ALIAS = Files.getConfig().getStringList("commands.toggle.alias");
+        TOGGLE_ALIAS_INVALID = Files.getConfig().getString("commands.toggle.alias-invalid-message");
+        RELOAD_ENABLED = Files.getConfig().getBoolean("commands.reload.enabled");
+        RELOAD_ALIAS = Files.getConfig().getStringList("commands.reload.alias");
+        RELOAD_ALIAS_INVALID = Files.getConfig().getString("commands.reload.alias-invalid-message");
     }
 }

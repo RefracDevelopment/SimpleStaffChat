@@ -36,6 +36,7 @@ public class StaffChatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!Config.STAFFCHAT_ENABLED) return false;
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
 
@@ -62,8 +63,9 @@ public class StaffChatCommand implements CommandExecutor {
             Color.sendMessage(player, "", true);
             Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
             Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lUsage: /sc <message>", true);
-            Color.sendMessage(player, "&e&lUsage: /sctoggle", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
+            Color.sendMessage(player, "&e&lUsage: /staffchatreload", true);
             Color.sendMessage(player, "", true);
         }
         return true;

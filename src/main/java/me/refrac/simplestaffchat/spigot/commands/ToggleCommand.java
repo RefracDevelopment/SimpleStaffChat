@@ -38,6 +38,7 @@ public class ToggleCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!Config.TOGGLE_ENABLED) return false;
         if (!(sender instanceof Player)) return true;
 
         Player player = (Player) sender;

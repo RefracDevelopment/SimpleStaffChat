@@ -25,6 +25,7 @@ import lombok.Getter;
 import me.refrac.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refrac.simplestaffchat.spigot.commands.ToggleCommand;
 import me.refrac.simplestaffchat.spigot.listeners.ChatListener;
+import me.refrac.simplestaffchat.spigot.listeners.CommandPreprocessListener;
 import me.refrac.simplestaffchat.spigot.listeners.JoinListener;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
@@ -73,6 +74,7 @@ public final class SimpleStaffChat extends JavaPlugin {
 
     private void loadListeners() {
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 }

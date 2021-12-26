@@ -35,6 +35,7 @@ public class ReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!Config.RELOAD_ENABLED) return false;
         if (sender instanceof Player) {
             Player player = (Player) sender;
 

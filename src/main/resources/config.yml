@@ -32,3 +32,22 @@ messages:
   reload: "&7Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% &7StaffChat toggled &aon&7."
   toggle-off: "%prefix% &7StaffChat toggled &coff&7."
+
+# You will need to reload the config for these changes /staffchatreload
+commands:
+  staffchat:
+    enabled: true
+    # Command without /
+    alias:
+      - "sc"
+  toggle:
+    enabled: true
+    # Command without /
+    alias:
+      - "sctoggle"
+      - "sct"
+  reload:
+    enabled: true
+    # Command without /
+    alias:
+      - "screload"
