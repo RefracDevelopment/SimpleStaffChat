@@ -39,4 +39,17 @@ public class Placeholders {
 
         return placeholder;
     }
+
+    public static String setConsolePlaceholders(String placeholder) {
+        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
+        placeholder = placeholder.replace("%player%", "Console");
+        placeholder = placeholder.replace("%displayname%", "Console");
+        placeholder = placeholder.replace("%arrow%", StringEscapeUtils.unescapeJava("\u00BB"));
+        placeholder = placeholder.replace("%arrow_2%", StringEscapeUtils.unescapeJava("\u27A5"));
+        placeholder = placeholder.replace("%star%", StringEscapeUtils.unescapeJava("\u2726"));
+        placeholder = placeholder.replace("%circle%", StringEscapeUtils.unescapeJava("\u2219"));
+        placeholder = placeholder.replace("|", StringEscapeUtils.unescapeJava("\u2503"));
+
+        return placeholder;
+    }
 }

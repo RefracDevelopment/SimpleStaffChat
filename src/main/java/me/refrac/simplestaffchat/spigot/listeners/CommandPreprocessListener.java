@@ -57,6 +57,8 @@ public class CommandPreprocessListener implements Listener {
                                 p.sendMessage(Color.translate(player, format));
                             }
                         }
+
+                        Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
                     } else {
                         Color.sendMessage(player, "", true);
                         Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);

@@ -55,8 +55,7 @@ public final class SimpleStaffChat extends JavaPlugin {
             Logger.INFO.out("Hooked into PlaceholderAPI.");
         }
 
-        int pluginId = 12095;
-        Metrics metrics = new Metrics(this, pluginId);
+        new Metrics(this, 12095);
 
         Logger.NONE.out("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Logger.NONE.out("&e" + Settings.getName + " has been enabled.");

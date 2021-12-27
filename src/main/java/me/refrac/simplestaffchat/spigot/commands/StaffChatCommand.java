@@ -54,6 +54,8 @@ public class StaffChatCommand implements CommandExecutor {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
+
+            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
         } else {
             if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
                 Color.sendMessage(player, Config.NO_PERMISSION, true, false);
