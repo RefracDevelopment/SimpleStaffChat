@@ -16,9 +16,6 @@
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
 
-# Automatically turn bStats on to support developers.
-auto-bstats: true
-
 format:
   # Minecraft format
   minecraft-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
