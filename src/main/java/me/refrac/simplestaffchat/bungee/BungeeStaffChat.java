@@ -49,8 +49,7 @@ public class BungeeStaffChat extends Plugin {
         loadCommands();
         loadListeners();
 
-        int pluginId = 12096;
-        Metrics metrics = new Metrics(this, pluginId);
+        new Metrics(this, 12096);
 
         Logger.NONE.out("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Logger.NONE.out("&e" + Settings.getName + " has been enabled.");

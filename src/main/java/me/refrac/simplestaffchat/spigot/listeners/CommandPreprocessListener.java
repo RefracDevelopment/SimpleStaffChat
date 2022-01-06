@@ -47,7 +47,7 @@ public class CommandPreprocessListener implements Listener {
             if (args[0].equalsIgnoreCase("/" + alias)) {
                 if (!Config.STAFFCHAT_ENABLED) return;
                 event.setCancelled(true);
-                String message = event.getMessage().replaceAll("/" + alias + " ", "");
+                String message = event.getMessage().replaceFirst("/" + alias + " ", "");
                 String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
                 if (player.hasPermission(Permissions.STAFFCHAT_USE)) {
