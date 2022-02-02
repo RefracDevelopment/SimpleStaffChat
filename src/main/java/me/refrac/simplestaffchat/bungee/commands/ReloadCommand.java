@@ -51,13 +51,13 @@ public class ReloadCommand extends Command {
             Color.sendMessage(player, Config.RELOAD, true, true);
         } else {
             if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
-                Color.sendMessage(sender, Config.NO_PERMISSION, true);
+                Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
                 return;
             }
 
             Files.loadFiles();
             Config.loadConfig();
-            Color.sendMessage(sender, Config.RELOAD, true);
+            Color.sendMessage(sender, Config.RELOAD, true, true);
         }
     }
 }

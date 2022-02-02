@@ -47,7 +47,7 @@ public class ToggleCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.NO_PERMISSION, true);
+            Color.sendMessage(player, Config.NO_PERMISSION, true, true);
             return;
         }
 

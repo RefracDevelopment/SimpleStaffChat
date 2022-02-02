@@ -22,27 +22,22 @@
 package me.refrac.simplestaffchat.bungee.utilities.chat;
 
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Placeholders {
 
-    public static String setPlaceholders(ProxiedPlayer player, String placeholder) {
+    public static String setPlaceholders(CommandSender sender, String placeholder) {
         placeholder = placeholder.replace("%prefix%", Config.PREFIX);
-        placeholder = placeholder.replace("%player%", player.getName());
-        placeholder = placeholder.replace("%displayname%", player.getDisplayName());
-        placeholder = placeholder.replace("%arrow%", "\u00BB");
-        placeholder = placeholder.replace("%arrow_2%", "\u27A5");
-        placeholder = placeholder.replace("%star%", "\u2726");
-        placeholder = placeholder.replace("%circle%", "\u2219");
-        placeholder = placeholder.replace("|", "\u2503");
-
-        return placeholder;
-    }
-
-    public static String setConsolePlaceholders(String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
-        placeholder = placeholder.replace("%player%", "Console");
-        placeholder = placeholder.replace("%displayname%", "Console");
+        if (sender instanceof ProxiedPlayer) {
+            ProxiedPlayer player = (ProxiedPlayer) sender;
+            placeholder = placeholder.replace("%player%", player.getName());
+            placeholder = placeholder.replace("%displayname%", player.getDisplayName());
+        }
+        else {
+            placeholder = placeholder.replace("%player%", "Console");
+            placeholder = placeholder.replace("%displayname%", "Console");
+        }
         placeholder = placeholder.replace("%arrow%", "\u00BB");
         placeholder = placeholder.replace("%arrow_2%", "\u27A5");
         placeholder = placeholder.replace("%star%", "\u2726");

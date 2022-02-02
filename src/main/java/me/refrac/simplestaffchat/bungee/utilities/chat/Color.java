@@ -34,6 +34,11 @@ public class Color {
         return new TextComponent(translate(source));
     }
 
+    public static TextComponent translate(CommandSender sender, String source) {
+        source = Placeholders.setPlaceholders(sender, source);
+
+        return new TextComponent(translate(source));
+    }
     public static String translate(String source) {
         return ChatColor.translateAlternateColorCodes('&', source);
     }
@@ -47,7 +52,7 @@ public class Color {
         player.sendMessage(new TextComponent(source));
     }
 
-    public static void sendMessage(CommandSender sender, String source, boolean color) {
+    public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (color) source = translate(source);
 

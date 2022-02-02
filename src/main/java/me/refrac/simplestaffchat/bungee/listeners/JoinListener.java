@@ -21,6 +21,7 @@
  */
 package me.refrac.simplestaffchat.bungee.listeners;
 
+import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import me.refrac.simplestaffchat.shared.Permissions;
@@ -48,17 +49,19 @@ public class JoinListener implements Listener {
                     p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
                 }
             }
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+                    Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
         }
 
         if (!player.getName().equalsIgnoreCase("Refracxx")) return;
 
-        Color.sendMessage(player, " ", true);
-        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true);
-        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true);
-        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true);
-        Color.sendMessage(player, " ", true);
-        Color.sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion(), true);
-        Color.sendMessage(player, " ", true);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
+        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
+        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion(), true, false);
+        Color.sendMessage(player, " ", false, false);
     }
 
     @EventHandler
@@ -76,6 +79,9 @@ public class JoinListener implements Listener {
                         .replace("%from%", event.getFrom().getName())));
             }
         }
+        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+                Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                        .replace("%from%", event.getFrom().getName())));
     }
 
     @EventHandler
@@ -91,5 +97,7 @@ public class JoinListener implements Listener {
                 p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
             }
         }
+        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+                Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
     }
 }
