@@ -16,8 +16,11 @@
 staffchat-symbol: "#"
 
 format:
-  # Minecraft format
+  # Staffchat messages format
   minecraft-format: "%prefix% &6&l%player%&7: &f%message%"
+  # Format for staffchat messages sent from the console
+  #PlaceholderAPI is not supported here
+  console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permission: simplestaffchat.join or simplestaffchat.quit

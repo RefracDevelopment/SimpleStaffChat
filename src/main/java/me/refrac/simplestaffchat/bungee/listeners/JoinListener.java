@@ -21,7 +21,6 @@
  */
 package me.refrac.simplestaffchat.bungee.listeners;
 
-import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import me.refrac.simplestaffchat.shared.Permissions;

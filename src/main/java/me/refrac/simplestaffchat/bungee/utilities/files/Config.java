@@ -25,6 +25,7 @@ public class Config {
     // General
     public static String STAFFCHAT_SYMBOL;
     public static String STAFFCHAT_FORMAT;
+    public static String CONSOLE_FORMAT;
 
     // Staff Joins
     public static boolean JOIN_ENABLED;
@@ -54,6 +55,7 @@ public class Config {
         // General
         STAFFCHAT_SYMBOL = Files.getConfig().getString("staffchat-symbol");
         STAFFCHAT_FORMAT = Files.getConfig().getString("format.minecraft-format");
+        CONSOLE_FORMAT = Files.getConfig().getString("format.console-staffchat-format");
 
         // Staff Joins
         JOIN_ENABLED = Files.getConfig().getBoolean("join.enabled");

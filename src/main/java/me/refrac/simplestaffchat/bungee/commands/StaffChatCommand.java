@@ -48,32 +48,30 @@ public class StaffChatCommand extends Command {
 
         if (args.length >= 1) {
 
+            String format;
             String message = Joiner.on(" ").join(args);
+
             if (sender instanceof ProxiedPlayer) {
                 ProxiedPlayer player = (ProxiedPlayer) sender;
-                String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                         .replace("%message%", message);
 
-                for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                    if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                        p.sendMessage(Color.translate(player, format));
-                    }
-                }
-
-                ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
             }
             else {
-                String format = Config.STAFFCHAT_FORMAT.replace("%server%", "[Server]").replace(
-                        "%message%", message);
-
-                for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                    if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                        p.sendMessage(Color.translate(sender, format));
-                    }
-                }
-
-                ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
+                System.out.println(Config.CONSOLE_FORMAT);
+                System.out.println(message);
+                format = Config.CONSOLE_FORMAT.replace("%message%", message);
             }
+            System.out.println(format);
+
+            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(sender, format));
+                }
+            }
+            System.out.println(Color.translate(sender, format));
+
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
 
         } else {
             Color.sendMessage(sender, "", false, false);

@@ -19,6 +19,8 @@ staffchat-symbol: "@"
 format:
   # Minecraft format
   minecraft-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
+  # Format for messages sent by the console.
+  console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
