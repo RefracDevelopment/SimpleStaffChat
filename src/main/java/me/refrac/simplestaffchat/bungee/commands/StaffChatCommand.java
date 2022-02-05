@@ -40,39 +40,47 @@ public class StaffChatCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!Config.STAFFCHAT_ENABLED) return;
-        if (!(sender instanceof ProxiedPlayer)) return;
-        ProxiedPlayer player = (ProxiedPlayer) sender;
+
+        if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
+            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+            return;
+        }
 
         if (args.length >= 1) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION, true);
-                return;
-            }
 
+            String format;
             String message = Joiner.on(" ").join(args);
-            String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message);
+
+            if (sender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) sender;
+                format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                        .replace("%message%", message);
+
+            }
+            else {
+                System.out.println(Config.CONSOLE_FORMAT);
+                System.out.println(message);
+                format = Config.CONSOLE_FORMAT.replace("%message%", message);
+            }
+            System.out.println(format);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
+                    p.sendMessage(Color.translate(sender, format));
                 }
             }
+            System.out.println(Color.translate(sender, format));
 
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
+            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
+
         } else {
-            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION, true);
-                return;
-            }
-
-            Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
-            Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchatreload", true);
-            Color.sendMessage(player, "", true);
+            Color.sendMessage(sender, "", false, false);
+            Color.sendMessage(sender, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);
+            Color.sendMessage(sender, "", false, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchat <message>", true, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchattoggle", true, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchatreload", true, false);
+            Color.sendMessage(sender, "", false, false);
         }
     }
 }

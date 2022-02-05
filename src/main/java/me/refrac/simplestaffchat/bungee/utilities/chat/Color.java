@@ -24,31 +24,22 @@ package me.refrac.simplestaffchat.bungee.utilities.chat;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Color {
 
-    public static TextComponent translate(ProxiedPlayer player, String source) {
-        source = Placeholders.setPlaceholders(player, source);
+    public static TextComponent translate(CommandSender sender, String source) {
+        source = Placeholders.setPlaceholders(sender, source);
 
         return new TextComponent(translate(source));
     }
-
     public static String translate(String source) {
         return ChatColor.translateAlternateColorCodes('&', source);
     }
 
-    public static void sendMessage(ProxiedPlayer player, String source, boolean color, boolean placeholders) {
+    public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
-        if (placeholders) source = Placeholders.setPlaceholders(player, source);
+        if (placeholders) source = Placeholders.setPlaceholders(sender, source);
 
-        if (color) source = translate(source);
-
-        player.sendMessage(new TextComponent(source));
-    }
-
-    public static void sendMessage(CommandSender sender, String source, boolean color) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (color) source = translate(source);
 
         sender.sendMessage(new TextComponent(source));

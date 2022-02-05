@@ -37,38 +37,34 @@ public class StaffChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!Config.STAFFCHAT_ENABLED) return false;
-        if (!(sender instanceof Player)) return true;
-        Player player = (Player) sender;
+
+        if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
+            Color.sendMessage(sender, Config.NO_PERMISSION, true, false);
+            return true;
+        }
 
         if (args.length >= 1) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION, true, false);
-                return true;
-            }
 
+            String format;
             String message = Joiner.on(" ").join(args);
-            String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
+            format = (sender instanceof Player) ? Config.STAFFCHAT_FORMAT.replace("%message%", message) :
+             Config.CONSOLE_FORMAT.replace("%message%", message);
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
+                    p.sendMessage(Color.translate(sender, format));
                 }
             }
 
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+            Bukkit.getConsoleSender().sendMessage(Color.translate(sender, format));
         } else {
-            if (!player.hasPermission(Permissions.STAFFCHAT_USE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION, true, false);
-                return true;
-            }
-
-            Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
-            Color.sendMessage(player, "", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
-            Color.sendMessage(player, "&e&lUsage: /staffchatreload", true);
-            Color.sendMessage(player, "", true);
+            Color.sendMessage(sender, "", false, false);
+            Color.sendMessage(sender, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);
+            Color.sendMessage(sender, "", false, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchat <message>", true, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchattoggle", true, false);
+            Color.sendMessage(sender, "&e&lUsage: /staffchatreload", true, false);
+            Color.sendMessage(sender, "", false, false);
         }
         return true;
     }

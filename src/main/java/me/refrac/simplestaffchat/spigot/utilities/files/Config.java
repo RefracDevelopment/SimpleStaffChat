@@ -48,6 +48,9 @@ public class Config {
     public static boolean RELOAD_ENABLED;
     public static List<String> RELOAD_ALIAS;
 
+    //Console Format
+    public static String CONSOLE_FORMAT;
+
     public static void loadConfig() {
         // General
         STAFFCHAT_SYMBOL = Files.getConfig().getString("staffchat-symbol");
@@ -72,5 +75,8 @@ public class Config {
         TOGGLE_ALIAS = Files.getConfig().getStringList("commands.toggle.alias");
         RELOAD_ENABLED = Files.getConfig().getBoolean("commands.reload.enabled");
         RELOAD_ALIAS = Files.getConfig().getStringList("commands.reload.alias");
+
+        //Console Messages
+        CONSOLE_FORMAT = Files.getConfig().getString("format.console-staffchat-format");
     }
 }

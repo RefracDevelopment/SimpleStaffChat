@@ -29,33 +29,33 @@ import org.bukkit.entity.Player;
 
 public class Color {
 
-    public static String translate(Player player, String source) {
-        source = Placeholders.setPlaceholders(player, source);
+    public static String translate(CommandSender sender, String source) {
+        source = Placeholders.setPlaceholders(sender, source);
 
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            return PlaceholderAPI.setPlaceholders(player, Color.translate(source));
-        } else return Color.translate(source);
+        if (sender instanceof Player) {
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                source = PlaceholderAPI.setPlaceholders((Player)sender,source);
+            }
+        }
+
+        return Color.translate(source);
     }
 
     public static String translate(String source) {
         return ChatColor.translateAlternateColorCodes('&', source);
     }
 
-    public static void sendMessage(Player player, String source, boolean color, boolean placeholders) {
+    public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
-        if (placeholders) source = Placeholders.setPlaceholders(player, source);
+        if (placeholders) source = Placeholders.setPlaceholders(sender, source);
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            source = PlaceholderAPI.setPlaceholders(player, source);
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                source = PlaceholderAPI.setPlaceholders(player, source);
+            }
         }
 
-        if (color) source = translate(source);
-
-        player.sendMessage(source);
-    }
-
-    public static void sendMessage(CommandSender sender, String source, boolean color) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (color) source = translate(source);
 
         sender.sendMessage(source);

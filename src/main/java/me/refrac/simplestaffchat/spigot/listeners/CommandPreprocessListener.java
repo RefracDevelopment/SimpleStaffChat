@@ -60,13 +60,13 @@ public class CommandPreprocessListener implements Listener {
 
                         Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
                     } else {
-                        Color.sendMessage(player, "", true);
-                        Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true);
-                        Color.sendMessage(player, "", true);
-                        Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true);
-                        Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true);
-                        Color.sendMessage(player, "&e&lUsage: /staffchatreload", true);
-                        Color.sendMessage(player, "", true);
+                        Color.sendMessage(player, "", false, false);
+                        Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);
+                        Color.sendMessage(player, "", false, false);
+                        Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true, false);
+                        Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true, false);
+                        Color.sendMessage(player, "&e&lUsage: /staffchatreload", true, false);
+                        Color.sendMessage(player, "", false, false);
                     }
                 }
             }

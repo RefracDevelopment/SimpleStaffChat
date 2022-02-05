@@ -48,15 +48,17 @@ public class JoinListener implements Listener {
             }
         }
 
+        Bukkit.getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+
         if (!player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
 
-        Color.sendMessage(player, " ", true);
-        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true);
-        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true);
-        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true);
-        Color.sendMessage(player, " ", true);
-        Color.sendMessage(player, "&aServer version&7: &f" + Bukkit.getVersion(), true);
-        Color.sendMessage(player, " ", true);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
+        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
+        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aServer version&7: &f" + Bukkit.getVersion(), true, false);
+        Color.sendMessage(player, " ", false, false);
     }
 
     @EventHandler
@@ -71,5 +73,6 @@ public class JoinListener implements Listener {
                 p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
             }
         }
+        Bukkit.getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT));
     }
 }
