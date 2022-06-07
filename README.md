@@ -9,7 +9,7 @@ Please report all issues/support questions to the [Issues](https://github.com/Re
 
 ### Suggestions
 
-We do have a suggestions channel that is on [Issues](https://github.com/RefracDevelopment/SimpleStaffChat2/issues) which is reviewed by project maintainers, but feel free to make a pull request to add cool features without posting there!
+Suggestion can be posted in [Issues](https://github.com/RefracDevelopment/SimpleStaffChat2/issues) which is reviewed by project maintainers, but feel free to make a pull request to add cool features without posting there!
 
 ### License
 Please view the [LICENSE](LICENSE) file for more information on the license of this source code.
