@@ -5,11 +5,11 @@ A simple lightweight staffchat plugin.
 
 ### Issue Reporting/Support
 
-While you may report issues via the "Issues" tab I recommend putting them on our [Discord](https://discord.gg/jVnmm7QnQU) as it will be a faster response.
+Please report all issues/support questions to the [Issues](https://github.com/RefracDevelopment/SimpleStaffChat2/issues) tab.
 
 ### Suggestions
 
-We do have a suggestions channel that is on [Discord](https://discord.gg/jVnmm7QnQU) which is reviewed by project maintainers, but feel free to make a pull request to add cool features without posting there!
+Suggestion can be posted in [Issues](https://github.com/RefracDevelopment/SimpleStaffChat2/issues) which is reviewed by project maintainers, but feel free to make a pull request to add cool features without posting there!
 
 ### License
 Please view the [LICENSE](LICENSE) file for more information on the license of this source code.
