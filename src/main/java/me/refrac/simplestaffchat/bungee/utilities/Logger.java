@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public enum Logger {
 
-    NONE('r'), SUCCESS('a'), ERROR('c'), WARNING('e'), INFO('b');
+    NONE('r'), ERROR('c'), INFO('b');
 
     char color;
 

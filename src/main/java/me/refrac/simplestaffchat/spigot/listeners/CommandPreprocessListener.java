@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -57,8 +57,7 @@ public class CommandPreprocessListener implements Listener {
                                 p.sendMessage(Color.translate(player, format));
                             }
                         }
-
-                        Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+                        System.out.println(Color.translate(player, format));
                     } else {
                         Color.sendMessage(player, "", false, false);
                         Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);

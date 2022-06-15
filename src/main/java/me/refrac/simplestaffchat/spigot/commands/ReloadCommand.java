@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,6 @@ public class ReloadCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!Config.RELOAD_ENABLED) return false;
-
         if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
             Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
             return true;

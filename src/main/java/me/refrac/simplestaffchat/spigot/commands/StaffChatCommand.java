@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,14 +39,14 @@ public class StaffChatCommand implements CommandExecutor {
         if (!Config.STAFFCHAT_ENABLED) return false;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, false);
+            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
             return true;
         }
 
         if (args.length >= 1) {
-
             String format;
             String message = Joiner.on(" ").join(args);
+
             format = (sender instanceof Player) ? Config.STAFFCHAT_FORMAT.replace("%message%", message) :
              Config.CONSOLE_FORMAT.replace("%message%", message);
 
@@ -55,8 +55,7 @@ public class StaffChatCommand implements CommandExecutor {
                     p.sendMessage(Color.translate(sender, format));
                 }
             }
-
-            Bukkit.getConsoleSender().sendMessage(Color.translate(sender, format));
+            System.out.println(Color.translate(sender, format));
         } else {
             Color.sendMessage(sender, "", false, false);
             Color.sendMessage(sender, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);

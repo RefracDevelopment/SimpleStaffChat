@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ public class Color {
 
         if (sender instanceof Player) {
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                source = PlaceholderAPI.setPlaceholders((Player)sender,source);
+                source = PlaceholderAPI.setPlaceholders((Player) sender, source);
             }
         }
 
@@ -48,9 +48,9 @@ public class Color {
     public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (placeholders) source = Placeholders.setPlaceholders(sender, source);
-
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            if (sender instanceof Player) {
+        
+        if (sender instanceof Player) {
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 Player player = (Player) sender;
                 source = PlaceholderAPI.setPlaceholders(player, source);
             }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@ import me.refrac.simplestaffchat.bungee.listeners.JoinListener;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.Logger;
-import me.refrac.simplestaffchat.bungee.utilities.Metrics;
 import me.refrac.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.bstats.bungeecord.Metrics;
 
 @Getter
 public class BungeeStaffChat extends Plugin {

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,10 @@ import me.refrac.simplestaffchat.spigot.listeners.CommandPreprocessListener;
 import me.refrac.simplestaffchat.spigot.listeners.JoinListener;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
-import me.refrac.simplestaffchat.spigot.utilities.Metrics;
 import me.refrac.simplestaffchat.shared.Settings;
 import me.refrac.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refrac.simplestaffchat.spigot.utilities.Logger;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
@@ -52,7 +52,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         loadListeners();
 
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            Logger.INFO.out("Hooked into PlaceholderAPI.");
+            Logger.NONE.out("&bHooked into PlaceholderAPI.");
         }
 
         new Metrics(this, 12095);

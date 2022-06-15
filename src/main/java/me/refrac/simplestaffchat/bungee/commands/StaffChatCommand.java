@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,22 +47,11 @@ public class StaffChatCommand extends Command {
         }
 
         if (args.length >= 1) {
-
             String format;
             String message = Joiner.on(" ").join(args);
 
-            if (sender instanceof ProxiedPlayer) {
-                ProxiedPlayer player = (ProxiedPlayer) sender;
-                format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                        .replace("%message%", message);
-
-            }
-            else {
-                System.out.println(Config.CONSOLE_FORMAT);
-                System.out.println(message);
-                format = Config.CONSOLE_FORMAT.replace("%message%", message);
-            }
-            System.out.println(format);
+            format = (sender instanceof ProxiedPlayer) ? Config.STAFFCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
+                    .replace("%message%", message) : Config.CONSOLE_FORMAT.replace("%message%", message);
 
             for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -70,9 +59,6 @@ public class StaffChatCommand extends Command {
                 }
             }
             System.out.println(Color.translate(sender, format));
-
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
-
         } else {
             Color.sendMessage(sender, "", false, false);
             Color.sendMessage(sender, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);

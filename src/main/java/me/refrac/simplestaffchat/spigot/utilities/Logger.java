@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@ import org.bukkit.Bukkit;
 
 public enum Logger {
 
-    NONE('r'), SUCCESS('a'), ERROR('c'), WARNING('e'), INFO('b');
+    NONE('r'), ERROR('c');
 
-    char color;
+    final char color;
 
     Logger(char color) { this.color = color; }
 

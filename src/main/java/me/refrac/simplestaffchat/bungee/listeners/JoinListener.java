@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ public class JoinListener implements Listener {
                     p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
                 }
             }
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+            System.out.println(Color.translate(player,
                     Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
         }
 
@@ -78,7 +78,7 @@ public class JoinListener implements Listener {
                         .replace("%from%", event.getFrom().getName())));
             }
         }
-        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+        System.out.println(Color.translate(player,
                 Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
     }
@@ -90,13 +90,14 @@ public class JoinListener implements Listener {
         ProxiedPlayer player = event.getPlayer();
 
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
+        if (player.getServer() == null) return;
 
         for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
             }
         }
-        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
+        System.out.println(Color.translate(player,
                 Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
     }
 }

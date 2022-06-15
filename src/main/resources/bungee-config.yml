@@ -25,7 +25,7 @@ format:
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
 join:
-  enabled: true
+  enabled: false
   join-format: "&8[&a+&8] &9%player% &fjoined &e%server%&f."
   switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."
   quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."

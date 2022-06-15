@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ public class Config {
     public static boolean RELOAD_ENABLED;
     public static List<String> RELOAD_ALIAS;
 
-    //Console Format
+    // Console Format
     public static String CONSOLE_FORMAT;
 
     public static void loadConfig() {
@@ -76,7 +76,7 @@ public class Config {
         RELOAD_ENABLED = Files.getConfig().getBoolean("commands.reload.enabled");
         RELOAD_ALIAS = Files.getConfig().getStringList("commands.reload.alias");
 
-        //Console Messages
+        // Console Messages
         CONSOLE_FORMAT = Files.getConfig().getString("format.console-staffchat-format");
     }
 }

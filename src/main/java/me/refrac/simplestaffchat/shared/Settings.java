@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,6 @@ public class Settings {
     public static final String getName = "SimpleStaffChat2";
     public static final String getDeveloper = "Refrac";
     public static final String getDevUUID = "d9c670ed-d7d5-45fb-a144-8b8be86c4a2d";
-    public static final String getVersion = "2.0.8";
+    public static final String getVersion = "2.1";
 
 }

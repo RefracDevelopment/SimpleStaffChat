@@ -19,13 +19,13 @@ format:
   # Staffchat messages format
   minecraft-format: "%prefix% &6&l%player%&7: &f%message%"
   # Format for staffchat messages sent from the console
-  #PlaceholderAPI is not supported here
+  # PlaceholderAPI is not supported here
   console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permission: simplestaffchat.join or simplestaffchat.quit
 join:
-  enabled: true
+  enabled: false
   join-format: "&8[&a+&8] &9%player% &fjoined&f."
   quit-format: "&8[&c-&8] &9%player% &fleft&f."
 

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2021 RefracDevelopment
+ * Copyright (c) 2022 RefracDevelopment
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,7 @@ public class ChatListener implements Listener {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
-
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+            System.out.println(Color.translate(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
@@ -64,8 +63,7 @@ public class ChatListener implements Listener {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
-
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+            System.out.println(Color.translate(player, format));
         }
     }
 }
