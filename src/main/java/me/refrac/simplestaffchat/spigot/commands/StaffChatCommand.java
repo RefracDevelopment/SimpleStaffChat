@@ -31,11 +31,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class StaffChatCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!Config.STAFFCHAT_ENABLED) return false;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
@@ -55,15 +56,20 @@ public class StaffChatCommand implements CommandExecutor {
                     p.sendMessage(Color.translate(sender, format));
                 }
             }
-            System.out.println(Color.translate(sender, format));
+            Bukkit.getConsoleSender().sendMessage(Color.translate(sender, format));
         } else {
-            Color.sendMessage(sender, "", false, false);
-            Color.sendMessage(sender, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);
-            Color.sendMessage(sender, "", false, false);
-            Color.sendMessage(sender, "&e&lUsage: /staffchat <message>", true, false);
-            Color.sendMessage(sender, "&e&lUsage: /staffchattoggle", true, false);
-            Color.sendMessage(sender, "&e&lUsage: /staffchatreload", true, false);
-            Color.sendMessage(sender, "", false, false);
+            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
+                for (String s : Config.STAFFCHAT_MESSAGE)
+                    Color.sendMessage(sender, s, true, true);
+            } else {
+                Color.sendMessage(sender, "", false, false);
+                Color.sendMessage(sender, "&c&lSimpleStaffChat2 %arrow2% Help", true, true);
+                Color.sendMessage(sender, "", false, false);
+                Color.sendMessage(sender, "&c/staffchat <message> - Send staffchat messages.", true, true);
+                Color.sendMessage(sender, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
+                Color.sendMessage(sender, "&c/staffchatreload - Reload the config file.", true, true);
+                Color.sendMessage(sender, "", false, false);
+            }
         }
         return true;
     }

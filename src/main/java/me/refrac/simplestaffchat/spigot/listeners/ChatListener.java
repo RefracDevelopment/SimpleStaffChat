@@ -40,6 +40,12 @@ public class ChatListener implements Listener {
         if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
             event.setCancelled(true);
 
+            if (!player.hasPermission(Permissions.STAFFCHAT_USE) && !player.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                ToggleCommand.insc.remove(player.getUniqueId());
+                Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+                return;
+            }
+
             String message = event.getMessage();
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
@@ -48,7 +54,7 @@ public class ChatListener implements Listener {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
-            System.out.println(Color.translate(player, format));
+            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
@@ -63,7 +69,7 @@ public class ChatListener implements Listener {
                     p.sendMessage(Color.translate(player, format));
                 }
             }
-            System.out.println(Color.translate(player, format));
+            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
         }
     }
 }

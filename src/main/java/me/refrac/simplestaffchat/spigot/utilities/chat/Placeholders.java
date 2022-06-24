@@ -22,6 +22,7 @@
 package me.refrac.simplestaffchat.spigot.utilities.chat;
 
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -34,11 +35,11 @@ public class Placeholders {
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         }
-        placeholder = placeholder.replace("%arrow%", "\u00BB");
-        placeholder = placeholder.replace("%arrow_2%", "\u27A5");
-        placeholder = placeholder.replace("%star%", "\u2726");
-        placeholder = placeholder.replace("%circle%", "\u2219");
-        placeholder = placeholder.replace("|", "\u2503");
+        placeholder = placeholder.replace("%arrow%", StringEscapeUtils.unescapeJava("\u00BB"));
+        placeholder = placeholder.replace("%arrow_2%", StringEscapeUtils.unescapeJava("\u27A5"));
+        placeholder = placeholder.replace("%star%", StringEscapeUtils.unescapeJava("\u2726"));
+        placeholder = placeholder.replace("%circle%", StringEscapeUtils.unescapeJava("\u2219"));
+        placeholder = placeholder.replace("|", StringEscapeUtils.unescapeJava("\u2503"));
 
         return placeholder;
     }

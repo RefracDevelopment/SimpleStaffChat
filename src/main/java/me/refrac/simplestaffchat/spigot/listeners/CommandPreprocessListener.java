@@ -57,16 +57,25 @@ public class CommandPreprocessListener implements Listener {
                                 p.sendMessage(Color.translate(player, format));
                             }
                         }
-                        System.out.println(Color.translate(player, format));
+                        Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
                     } else {
+                        if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
+                            for (String s : Config.STAFFCHAT_MESSAGE)
+                                Color.sendMessage(player, s, true, true);
+                            return;
+                        }
+
                         Color.sendMessage(player, "", false, false);
-                        Color.sendMessage(player, "&e&lRunning " + Settings.getName + " &bv" + Settings.getVersion, true, false);
+                        Color.sendMessage(player, "&c&lSimpleStaffChat %arrow2% Help", true, true);
                         Color.sendMessage(player, "", false, false);
-                        Color.sendMessage(player, "&e&lUsage: /staffchat <message>", true, false);
-                        Color.sendMessage(player, "&e&lUsage: /staffchattoggle", true, false);
-                        Color.sendMessage(player, "&e&lUsage: /staffchatreload", true, false);
+                        Color.sendMessage(player, "&c/staffchat <message> - Send staffchat messages.", true, true);
+                        Color.sendMessage(player, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
+                        Color.sendMessage(player, "&c/staffchatreload - Reload the config file.", true, true);
                         Color.sendMessage(player, "", false, false);
                     }
+                } else {
+                    Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                    return;
                 }
             }
         }
@@ -84,6 +93,9 @@ public class CommandPreprocessListener implements Listener {
                         ToggleCommand.insc.add(player.getUniqueId());
                         Color.sendMessage(player, Config.TOGGLE_ON, true, true);
                     }
+                } else {
+                    Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                    return;
                 }
             }
         }
@@ -97,6 +109,9 @@ public class CommandPreprocessListener implements Listener {
                     Files.reloadFiles(SimpleStaffChat.getInstance());
                     Config.loadConfig();
                     Color.sendMessage(player, Config.RELOAD, true, true);
+                } else {
+                    Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                    return;
                 }
             }
         }

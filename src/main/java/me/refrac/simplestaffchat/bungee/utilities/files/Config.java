@@ -21,6 +21,8 @@
  */
 package me.refrac.simplestaffchat.bungee.utilities.files;
 
+import java.util.List;
+
 public class Config {
     // General
     public static String STAFFCHAT_SYMBOL;
@@ -39,6 +41,8 @@ public class Config {
     public static String RELOAD;
     public static String TOGGLE_ON;
     public static String TOGGLE_OFF;
+    public static String STAFFCHAT_OUTPUT;
+    public static List<String> STAFFCHAT_MESSAGE;
 
     // Commands
     public static boolean STAFFCHAT_ENABLED;
@@ -69,6 +73,8 @@ public class Config {
         RELOAD = Files.getConfig().getString("messages.reload");
         TOGGLE_ON = Files.getConfig().getString("messages.toggle-on");
         TOGGLE_OFF = Files.getConfig().getString("messages.toggle-off");
+        STAFFCHAT_OUTPUT = Files.getConfig().getString("messages.staffchat-output");
+        STAFFCHAT_MESSAGE = Files.getConfig().getStringList("messages.staffchat-message");
 
         // Commands
         STAFFCHAT_ENABLED = Files.getConfig().getBoolean("commands.staffchat.enabled");

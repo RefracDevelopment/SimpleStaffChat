@@ -28,6 +28,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,14 +38,14 @@ public class ToggleCommand implements CommandExecutor {
     public static List<UUID> insc = new ArrayList<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!Config.TOGGLE_ENABLED) return false;
         if (!(sender instanceof Player)) return true;
 
         Player player = (Player) sender;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, false);
+            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
             return true;
         }
 

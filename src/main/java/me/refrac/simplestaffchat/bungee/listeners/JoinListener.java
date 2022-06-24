@@ -97,7 +97,7 @@ public class JoinListener implements Listener {
                 p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
             }
         }
-        System.out.println(Color.translate(player,
+        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player,
                 Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
     }
 }

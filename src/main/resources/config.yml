@@ -16,9 +16,9 @@
 staffchat-symbol: "#"
 
 format:
-  # Staffchat messages format
+  # Minecraft format
   minecraft-format: "%prefix% &6&l%player%&7: &f%message%"
-  # Format for staffchat messages sent from the console
+  # Format for messages sent by the console
   # PlaceholderAPI is not supported here
   console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
 
@@ -35,6 +35,17 @@ messages:
   reload: "&7Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% &7StaffChat toggled &aon&7."
   toggle-off: "%prefix% &7StaffChat toggled &coff&7."
+  # If this is set to "custom" you can change the /sc output message to anything
+  staffchat-output: "default"
+  # staffchat-output must be set to "custom" in order for this to work
+  staffchat-message:
+    - ""
+    - "&c&lSimpleStaffChat2 %arrow2% Help"
+    - ""
+    - "&c/staffchat <message> - Send staffchat messages."
+    - "&c/staffchattoggle - Send staffchat messages without needing to type a command."
+    - "&c/staffchatreload - Reload the config file."
+    - ""
 
 # You will need to reload the config for these changes /staffchatreload
 commands:
