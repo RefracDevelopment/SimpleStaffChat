@@ -36,6 +36,7 @@ public class Placeholders {
             placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         }
         placeholder = placeholder.replace("%arrow%", StringEscapeUtils.unescapeJava("\u00BB"));
+        placeholder = placeholder.replace("%arrow2%", StringEscapeUtils.unescapeJava("\u27A5"));
         placeholder = placeholder.replace("%arrow_2%", StringEscapeUtils.unescapeJava("\u27A5"));
         placeholder = placeholder.replace("%star%", StringEscapeUtils.unescapeJava("\u2726"));
         placeholder = placeholder.replace("%circle%", StringEscapeUtils.unescapeJava("\u2219"));
