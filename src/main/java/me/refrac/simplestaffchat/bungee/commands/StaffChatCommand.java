@@ -63,6 +63,23 @@ public class StaffChatCommand extends Command {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
                 for (String s : Config.STAFFCHAT_MESSAGE)
                     Color.sendMessage(sender, s, true, true);
+            } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+                if (sender instanceof ProxiedPlayer) {
+                    ProxiedPlayer player = (ProxiedPlayer) sender;
+
+                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+                        Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                        return;
+                    }
+
+                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
+                        ToggleCommand.insc.remove(player.getUniqueId());
+                        Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+                    } else {
+                        ToggleCommand.insc.add(player.getUniqueId());
+                        Color.sendMessage(player, Config.TOGGLE_ON, true, true);
+                    }
+                }
             } else {
                 Color.sendMessage(sender, "", false, false);
                 Color.sendMessage(sender, "&c&lSimpleStaffChat2 %arrow2% Help", true, true);

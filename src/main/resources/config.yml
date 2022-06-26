@@ -36,6 +36,7 @@ messages:
   toggle-on: "%prefix% &7StaffChat toggled &aon&7."
   toggle-off: "%prefix% &7StaffChat toggled &coff&7."
   # If this is set to "custom" you can change the /sc output message to anything
+  # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"
   # staffchat-output must be set to "custom" in order for this to work
   staffchat-message:

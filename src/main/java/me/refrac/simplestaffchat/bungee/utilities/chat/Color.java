@@ -32,6 +32,7 @@ public class Color {
 
         return new TextComponent(translate(source));
     }
+
     public static String translate(String source) {
         return ChatColor.translateAlternateColorCodes('&', source);
     }

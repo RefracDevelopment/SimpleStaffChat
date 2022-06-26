@@ -38,7 +38,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandPreprocessListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
@@ -62,16 +62,25 @@ public class CommandPreprocessListener implements Listener {
                         if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                             for (String s : Config.STAFFCHAT_MESSAGE)
                                 Color.sendMessage(player, s, true, true);
-                            return;
+                        } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+                            if (player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+                                if (ToggleCommand.insc.contains(player.getUniqueId())) {
+                                    ToggleCommand.insc.remove(player.getUniqueId());
+                                    Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+                                } else {
+                                    ToggleCommand.insc.add(player.getUniqueId());
+                                    Color.sendMessage(player, Config.TOGGLE_ON, true, true);
+                                }
+                            }
+                        } else {
+                            Color.sendMessage(player, "", false, false);
+                            Color.sendMessage(player, "&c&lSimpleStaffChat %arrow2% Help", true, true);
+                            Color.sendMessage(player, "", false, false);
+                            Color.sendMessage(player, "&c/staffchat <message> - Send staffchat messages.", true, true);
+                            Color.sendMessage(player, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
+                            Color.sendMessage(player, "&c/staffchatreload - Reload the config file.", true, true);
+                            Color.sendMessage(player, "", false, false);
                         }
-
-                        Color.sendMessage(player, "", false, false);
-                        Color.sendMessage(player, "&c&lSimpleStaffChat %arrow2% Help", true, true);
-                        Color.sendMessage(player, "", false, false);
-                        Color.sendMessage(player, "&c/staffchat <message> - Send staffchat messages.", true, true);
-                        Color.sendMessage(player, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
-                        Color.sendMessage(player, "&c/staffchatreload - Reload the config file.", true, true);
-                        Color.sendMessage(player, "", false, false);
                     }
                 } else {
                     Color.sendMessage(player, Config.NO_PERMISSION, true, true);

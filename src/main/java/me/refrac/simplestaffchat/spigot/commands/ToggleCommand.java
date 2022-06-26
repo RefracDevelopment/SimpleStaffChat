@@ -44,8 +44,8 @@ public class ToggleCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!sender.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+        if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+            Color.sendMessage(player, Config.NO_PERMISSION, true, true);
             return true;
         }
 
