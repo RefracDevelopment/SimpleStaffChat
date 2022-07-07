@@ -1,5 +1,5 @@
-# SimpleLinks
-A simple links plugin.
+# SimpleStaffchat
+A simple lightweight staffchat plugin.
 
 [Spigot](https://www.spigotmc.org/resources/simplestaffchat2-1-7-1-18.91883/) [Polymart](https://polymart.org/resource/simplestaffchat2-1-7-1-18.1173) [Songoda](https://songoda.com/marketplace/product/simplestaffchat-17-116-staffchat.645) [MC-Market](https://www.mc-market.org/resources/22491/)
 
