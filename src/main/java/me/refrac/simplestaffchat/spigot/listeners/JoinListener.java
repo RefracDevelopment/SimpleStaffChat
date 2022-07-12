@@ -22,17 +22,22 @@
 package me.refrac.simplestaffchat.spigot.listeners;
 
 import me.refrac.simplestaffchat.shared.Permissions;
+import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.Manager;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.shared.Settings;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class JoinListener implements Listener {
+public class JoinListener extends Manager implements Listener {
+
+    public JoinListener(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -41,12 +46,12 @@ public class JoinListener implements Listener {
         if (Config.JOIN_ENABLED) {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
-                }
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
             }
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+            plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
         }
 
         if (!player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
@@ -56,7 +61,7 @@ public class JoinListener implements Listener {
         Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
         Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
         Color.sendMessage(player, " ", false, false);
-        Color.sendMessage(player, "&aServer version&7: &f" + Bukkit.getVersion(), true, false);
+        Color.sendMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion(), true, false);
         Color.sendMessage(player, " ", false, false);
     }
 
@@ -67,11 +72,11 @@ public class JoinListener implements Listener {
         if (!Config.JOIN_ENABLED) return;
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
-            }
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
         }
+        plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT));
     }
 }

@@ -22,18 +22,25 @@
 package me.refrac.simplestaffchat.spigot.listeners;
 
 import me.refrac.simplestaffchat.shared.Permissions;
+import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
 import me.refrac.simplestaffchat.spigot.commands.ToggleCommand;
+import me.refrac.simplestaffchat.spigot.utilities.Manager;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class ChatListener implements Listener {
+public class ChatListener extends Manager implements Listener {
 
-    @EventHandler
+    public ChatListener(SimpleStaffChat plugin) {
+        super(plugin);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
@@ -49,12 +56,12 @@ public class ChatListener implements Listener {
             String message = event.getMessage();
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message);
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
-                }
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
             }
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+            plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
@@ -64,12 +71,12 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%message%", message
                     .replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
-                }
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
             }
-            Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+            plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
         }
     }
 }

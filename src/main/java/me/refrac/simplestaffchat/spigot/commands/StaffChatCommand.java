@@ -22,22 +22,26 @@
 package me.refrac.simplestaffchat.spigot.commands;
 
 import com.google.common.base.Joiner;
-import me.refrac.simplestaffchat.shared.Settings;
+import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.Manager;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import me.refrac.simplestaffchat.shared.Permissions;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class StaffChatCommand implements CommandExecutor {
+public class StaffChatCommand extends Manager implements CommandExecutor {
+
+    public StaffChatCommand(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!Config.STAFFCHAT_ENABLED) return false;
+        if (!Config.STAFFCHAT_ENABLED) return true;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
             Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
@@ -51,12 +55,12 @@ public class StaffChatCommand implements CommandExecutor {
             format = (sender instanceof Player) ? Config.STAFFCHAT_FORMAT.replace("%message%", message) :
              Config.CONSOLE_FORMAT.replace("%message%", message);
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(sender, format));
-                }
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return true;
+
+                p.sendMessage(Color.translate(sender, format));
             }
-            Bukkit.getConsoleSender().sendMessage(Color.translate(sender, format));
+            plugin.getServer().getConsoleSender().sendMessage(Color.translate(sender, format));
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
                 for (String s : Config.STAFFCHAT_MESSAGE)
@@ -66,7 +70,8 @@ public class StaffChatCommand implements CommandExecutor {
                     Player player = (Player) sender;
 
                     if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                        for (String s : Config.STAFFCHAT_MESSAGE)
+                            Color.sendMessage(sender, s, true, true);
                         return true;
                     }
 

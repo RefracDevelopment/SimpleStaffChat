@@ -22,21 +22,23 @@
 package me.refrac.simplestaffchat.spigot.listeners;
 
 import me.refrac.simplestaffchat.shared.Permissions;
-import me.refrac.simplestaffchat.shared.Settings;
 import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
 import me.refrac.simplestaffchat.spigot.commands.ToggleCommand;
+import me.refrac.simplestaffchat.spigot.utilities.Manager;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-public class CommandPreprocessListener implements Listener {
+public class CommandPreprocessListener extends Manager implements Listener {
+
+    public CommandPreprocessListener(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
     @EventHandler
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
@@ -52,12 +54,12 @@ public class CommandPreprocessListener implements Listener {
 
                 if (player.hasPermission(Permissions.STAFFCHAT_USE)) {
                     if (args.length >= 2) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                                p.sendMessage(Color.translate(player, format));
-                            }
+                        for (Player p : plugin.getServer().getOnlinePlayers()) {
+                            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                            p.sendMessage(Color.translate(player, format));
                         }
-                        Bukkit.getConsoleSender().sendMessage(Color.translate(player, format));
+                        plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
                     } else {
                         if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                             for (String s : Config.STAFFCHAT_MESSAGE)
@@ -115,8 +117,7 @@ public class CommandPreprocessListener implements Listener {
                 if (!Config.RELOAD_ENABLED) return;
                 event.setCancelled(true);
                 if (player.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
-                    Files.reloadFiles(SimpleStaffChat.getInstance());
-                    Config.loadConfig();
+                    Files.reloadFiles(plugin);
                     Color.sendMessage(player, Config.RELOAD, true, true);
                 } else {
                     Color.sendMessage(player, Config.NO_PERMISSION, true, true);

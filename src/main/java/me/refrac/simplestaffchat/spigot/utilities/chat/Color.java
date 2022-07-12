@@ -39,13 +39,12 @@ public class Color {
             }
         }
 
-        source = IridiumColorAPI.process(source);
-
-        return Color.translate(source);
+        return translate(source);
     }
 
     public static String translate(String source) {
         source = IridiumColorAPI.process(source);
+
 
         return ChatColor.translateAlternateColorCodes('&', source);
     }
@@ -60,8 +59,6 @@ public class Color {
                 source = PlaceholderAPI.setPlaceholders(player, source);
             }
         }
-
-        source = IridiumColorAPI.process(source);
 
         if (color) source = translate(source);
 

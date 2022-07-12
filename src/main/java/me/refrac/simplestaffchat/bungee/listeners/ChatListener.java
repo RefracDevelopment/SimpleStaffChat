@@ -21,17 +21,22 @@
  */
 package me.refrac.simplestaffchat.bungee.listeners;
 
+import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
 import me.refrac.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refrac.simplestaffchat.bungee.utilities.Manager;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import me.refrac.simplestaffchat.shared.Permissions;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-public class ChatListener implements Listener {
+public class ChatListener extends Manager implements Listener {
+
+    public ChatListener(BungeeStaffChat plugin) {
+        super(plugin);
+    }
 
     @EventHandler
     public void onChat(ChatEvent event) {
@@ -50,14 +55,13 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message);
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
-                }
+            for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
             }
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) &&
-                player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
+            plugin.getProxy().getConsole().sendMessage(Color.translate(player, format));
+        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
@@ -66,12 +70,12 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, format));
-                }
+            for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(player, format));
             }
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
+            plugin.getProxy().getConsole().sendMessage(Color.translate(player, format));
         }
     }
 }

@@ -27,9 +27,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public enum Logger {
 
-    NONE('r'), ERROR('c'), INFO('b');
+    NONE('r');
 
-    char color;
+    final char color;
 
     Logger(char color) { this.color = color; }
 

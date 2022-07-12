@@ -21,13 +21,11 @@
  */
 package me.refrac.simplestaffchat.spigot;
 
-import lombok.Getter;
 import me.refrac.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refrac.simplestaffchat.spigot.commands.ToggleCommand;
 import me.refrac.simplestaffchat.spigot.listeners.ChatListener;
 import me.refrac.simplestaffchat.spigot.listeners.CommandPreprocessListener;
 import me.refrac.simplestaffchat.spigot.listeners.JoinListener;
-import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
 import me.refrac.simplestaffchat.shared.Settings;
 import me.refrac.simplestaffchat.spigot.commands.StaffChatCommand;
@@ -35,24 +33,18 @@ import me.refrac.simplestaffchat.spigot.utilities.Logger;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Getter
 public final class SimpleStaffChat extends JavaPlugin {
-    @Getter
-    private static SimpleStaffChat instance;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        instance = this;
-
         Files.loadFiles(this);
-        Config.loadConfig();
 
         loadCommands();
         loadListeners();
 
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            Logger.NONE.out("&bHooked into PlaceholderAPI.");
+            Logger.INFO.out("Hooked into PlaceholderAPI.");
         }
 
         new Metrics(this, 12095);
@@ -66,14 +58,14 @@ public final class SimpleStaffChat extends JavaPlugin {
     }
 
     private void loadCommands() {
-        getCommand("staffchat").setExecutor(new StaffChatCommand());
+        getCommand("staffchat").setExecutor(new StaffChatCommand(this));
         getCommand("staffchattoggle").setExecutor(new ToggleCommand());
-        getCommand("staffchatreload").setExecutor(new ReloadCommand());
+        getCommand("staffchatreload").setExecutor(new ReloadCommand(this));
     }
 
     private void loadListeners() {
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
-        getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new CommandPreprocessListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
     }
 }

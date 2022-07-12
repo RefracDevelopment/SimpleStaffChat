@@ -26,7 +26,7 @@ import org.bukkit.Bukkit;
 
 public enum Logger {
 
-    NONE('r'), ERROR('c');
+    NONE('r'), ERROR('c'), INFO('b');
 
     final char color;
 

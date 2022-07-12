@@ -22,19 +22,21 @@
 package me.refrac.simplestaffchat.bungee.commands;
 
 import com.google.common.base.Joiner;
+import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
 import me.refrac.simplestaffchat.shared.Permissions;
-import me.refrac.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 public class StaffChatCommand extends Command {
 
-    public StaffChatCommand() {
+    private final BungeeStaffChat plugin;
+
+    public StaffChatCommand(BungeeStaffChat plugin) {
         super(Config.STAFFCHAT_COMMAND, "", Config.STAFFCHAT_ALIAS);
+        this.plugin = plugin;
     }
 
     @Override
@@ -53,12 +55,12 @@ public class StaffChatCommand extends Command {
             format = (sender instanceof ProxiedPlayer) ? Config.STAFFCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
                     .replace("%message%", message) : Config.CONSOLE_FORMAT.replace("%message%", message);
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(sender, format));
-                }
+            for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
+                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
+
+                p.sendMessage(Color.translate(sender, format));
             }
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
+            plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
                 for (String s : Config.STAFFCHAT_MESSAGE)

@@ -57,14 +57,16 @@ public class Files {
     }
 
     // Load & Reload files
-    public static void loadFiles() {
+    public static void loadFiles(BungeeStaffChat staffChat) {
         try {
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(
-                    loadResource(BungeeStaffChat.getInstance(), "bungee-config.yml"));
+                    loadResource(staffChat, "bungee-config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
+
+        Config.loadConfig();
 
         Logger.NONE.out("&c==========================================");
         Logger.NONE.out("&aAll files have been loaded correctly!");

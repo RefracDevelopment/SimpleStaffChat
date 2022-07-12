@@ -23,6 +23,7 @@ package me.refrac.simplestaffchat.spigot.commands;
 
 import me.refrac.simplestaffchat.shared.Permissions;
 import me.refrac.simplestaffchat.spigot.SimpleStaffChat;
+import me.refrac.simplestaffchat.spigot.utilities.Manager;
 import me.refrac.simplestaffchat.spigot.utilities.chat.Color;
 import me.refrac.simplestaffchat.spigot.utilities.files.Config;
 import me.refrac.simplestaffchat.spigot.utilities.files.Files;
@@ -31,18 +32,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class ReloadCommand implements CommandExecutor {
+public class ReloadCommand extends Manager implements CommandExecutor {
+
+    public ReloadCommand(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!Config.RELOAD_ENABLED) return false;
+        if (!Config.RELOAD_ENABLED) return true;
         if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
             Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
             return true;
         }
 
-        Files.reloadFiles(SimpleStaffChat.getInstance());
-        Config.loadConfig();
+        Files.reloadFiles(plugin);
         Color.sendMessage(sender, Config.RELOAD, true, true);
         return true;
     }

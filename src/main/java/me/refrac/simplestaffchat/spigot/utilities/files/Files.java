@@ -43,6 +43,8 @@ public class Files {
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
+        Config.loadConfig();
+
         Logger.NONE.out("&c==========================================");
         Logger.NONE.out("&aAll files have been loaded correctly!");
         Logger.NONE.out("&c==========================================");
@@ -60,6 +62,8 @@ public class Files {
             Logger.ERROR.out("Failed to reload the config file!");
             e.printStackTrace();
         }
+
+        Config.loadConfig();
 
         Logger.NONE.out("&c==========================================");
         Logger.NONE.out("&aAll files have been loaded correctly!");

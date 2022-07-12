@@ -21,30 +21,22 @@
  */
 package me.refrac.simplestaffchat.bungee;
 
-import lombok.Getter;
 import me.refrac.simplestaffchat.bungee.commands.ReloadCommand;
 import me.refrac.simplestaffchat.bungee.commands.StaffChatCommand;
 import me.refrac.simplestaffchat.bungee.commands.ToggleCommand;
 import me.refrac.simplestaffchat.bungee.listeners.ChatListener;
 import me.refrac.simplestaffchat.bungee.listeners.JoinListener;
-import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.Logger;
 import me.refrac.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 
-@Getter
 public class BungeeStaffChat extends Plugin {
-    @Getter
-    private static BungeeStaffChat instance;
 
     @Override
     public void onEnable() {
-        instance = this;
-
-        Files.loadFiles();
-        Config.loadConfig();
+        Files.loadFiles(this);
 
         loadCommands();
         loadListeners();
@@ -60,13 +52,13 @@ public class BungeeStaffChat extends Plugin {
     }
 
     private void loadCommands() {
-        getProxy().getPluginManager().registerCommand(this, new StaffChatCommand());
+        getProxy().getPluginManager().registerCommand(this, new StaffChatCommand(this));
         getProxy().getPluginManager().registerCommand(this, new ToggleCommand());
-        getProxy().getPluginManager().registerCommand(this, new ReloadCommand());
+        getProxy().getPluginManager().registerCommand(this, new ReloadCommand(this));
     }
 
     private void loadListeners() {
-        getProxy().getPluginManager().registerListener(this, new JoinListener());
-        getProxy().getPluginManager().registerListener(this, new ChatListener());
+        getProxy().getPluginManager().registerListener(this, new JoinListener(this));
+        getProxy().getPluginManager().registerListener(this, new ChatListener(this));
     }
 }

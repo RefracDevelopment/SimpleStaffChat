@@ -21,6 +21,7 @@
  */
 package me.refrac.simplestaffchat.bungee.commands;
 
+import me.refrac.simplestaffchat.bungee.BungeeStaffChat;
 import me.refrac.simplestaffchat.bungee.utilities.files.Config;
 import me.refrac.simplestaffchat.bungee.utilities.files.Files;
 import me.refrac.simplestaffchat.bungee.utilities.chat.Color;
@@ -30,8 +31,11 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class ReloadCommand extends Command {
 
-    public ReloadCommand() {
+    private final BungeeStaffChat plugin;
+
+    public ReloadCommand(BungeeStaffChat plugin) {
         super(Config.RELOAD_COMMAND, "", Config.RELOAD_ALIAS);
+        this.plugin = plugin;
     }
 
     @Override
@@ -42,8 +46,7 @@ public class ReloadCommand extends Command {
             return;
         }
 
-        Files.loadFiles();
-        Config.loadConfig();
+        Files.loadFiles(plugin);
         Color.sendMessage(sender, Config.RELOAD, true, true);
     }
 }
