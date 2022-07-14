@@ -56,9 +56,9 @@ public class StaffChatCommand extends Manager implements CommandExecutor {
              Config.CONSOLE_FORMAT.replace("%message%", message);
 
             for (Player p : plugin.getServer().getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return true;
-
-                p.sendMessage(Color.translate(sender, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(sender, format));
+                }
             }
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(sender, format));
         } else {

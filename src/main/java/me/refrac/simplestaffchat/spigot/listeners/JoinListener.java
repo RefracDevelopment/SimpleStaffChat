@@ -47,22 +47,18 @@ public class JoinListener extends Manager implements Listener {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
 
             for (Player p : plugin.getServer().getOnlinePlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                }
             }
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
         }
 
-        if (!player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) return;
-
-        Color.sendMessage(player, " ", false, false);
-        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
-        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
-        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
-        Color.sendMessage(player, " ", false, false);
-        Color.sendMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion(), true, false);
-        Color.sendMessage(player, " ", false, false);
+        if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) {
+            sendDevMessage(player);
+        } else if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID2)) {
+            sendDevMessage(player);
+        }
     }
 
     @EventHandler
@@ -73,10 +69,20 @@ public class JoinListener extends Manager implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            }
         }
         plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+    }
+
+    private void sendDevMessage(Player player) {
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
+        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
+        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion(), true, false);
+        Color.sendMessage(player, " ", false, false);
     }
 }

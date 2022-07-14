@@ -55,9 +55,9 @@ public class CommandPreprocessListener extends Manager implements Listener {
                 if (player.hasPermission(Permissions.STAFFCHAT_USE)) {
                     if (args.length >= 2) {
                         for (Player p : plugin.getServer().getOnlinePlayers()) {
-                            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                            p.sendMessage(Color.translate(player, format));
+                            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                                p.sendMessage(Color.translate(player, format));
+                            }
                         }
                         plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
                     } else {

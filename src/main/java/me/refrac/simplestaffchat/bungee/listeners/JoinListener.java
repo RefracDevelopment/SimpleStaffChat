@@ -56,15 +56,11 @@ public class JoinListener extends Manager implements Listener {
             plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
         }
 
-        if (!player.getName().equalsIgnoreCase("Refracxx")) return;
-
-        Color.sendMessage(player, " ", false, false);
-        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
-        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
-        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
-        Color.sendMessage(player, " ", false, false);
-        Color.sendMessage(player, "&aServer version&7: &f" + plugin.getProxy().getVersion(), true, false);
-        Color.sendMessage(player, " ", false, false);
+        if (player.getName().equalsIgnoreCase("Refracxx")) {
+            sendDevMessage(player);
+        } else if (player.getName().equalsIgnoreCase("RyanMood")) {
+            sendDevMessage(player);
+        }
     }
 
     @EventHandler
@@ -77,10 +73,10 @@ public class JoinListener extends Manager implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
 
         for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%from%", event.getFrom().getName())));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                        .replace("%from%", event.getFrom().getName())));
+            }
         }
         plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
@@ -96,10 +92,20 @@ public class JoinListener extends Manager implements Listener {
         if (player.getServer() == null) return;
 
         for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-            p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+            }
         }
         plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+    }
+
+    private void sendDevMessage(ProxiedPlayer player) {
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aWelcome " + Settings.getName + " Developer!", true, false);
+        Color.sendMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.", true, false);
+        Color.sendMessage(player, "&aPlugin name&7: &f" + Settings.getName, true, false);
+        Color.sendMessage(player, " ", false, false);
+        Color.sendMessage(player, "&aServer version&7: &f" + plugin.getProxy().getVersion(), true, false);
+        Color.sendMessage(player, " ", false, false);
     }
 }

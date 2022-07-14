@@ -56,9 +56,9 @@ public class ChatListener extends Manager implements Listener {
                     .replace("%message%", message);
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
@@ -71,9 +71,9 @@ public class ChatListener extends Manager implements Listener {
                     .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(player, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(player, format));
+                }
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(player, format));
         }

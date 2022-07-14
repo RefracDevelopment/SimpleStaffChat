@@ -56,9 +56,9 @@ public class StaffChatCommand extends Command {
                     .replace("%message%", message) : Config.CONSOLE_FORMAT.replace("%message%", message);
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-                if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) return;
-
-                p.sendMessage(Color.translate(sender, format));
+                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                    p.sendMessage(Color.translate(sender, format));
+                }
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
         } else {
