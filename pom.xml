@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.refrac</groupId>
+    <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>2.4.1</version>
+    <version>2.5</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>
@@ -43,11 +43,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>me.refrac.simplestaffchat.spigot</shadedPattern>
+                                    <shadedPattern>me.refracdevelopment.simplestaffchat.spigot</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>me.refrac.simplestaffchat.bungee</shadedPattern>
+                                    <shadedPattern>me.refracdevelopment.simplestaffchat.bungee</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -79,6 +79,10 @@
         <repository>
             <id>iridiumdevelopment</id>
             <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+        </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
     </repositories>
 
@@ -123,6 +127,11 @@
             <groupId>com.iridium</groupId>
             <artifactId>IridiumColorAPI</artifactId>
             <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>co.aikar</groupId>
+            <artifactId>acf-paper</artifactId>
+            <version>0.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

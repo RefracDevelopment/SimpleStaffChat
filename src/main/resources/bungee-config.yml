@@ -1,4 +1,4 @@
-# SimpleStaffChat2 by Refrac
+# SimpleStaffChat2 by RefracDevelopment
 #--------------------------------------
 # Placeholders:
 # %player% - Get the player name
@@ -15,12 +15,28 @@
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
+# Used to send messages to adminchat without the
+# need to type in /adminchat <message> or /adminchattoggle
+# this uses the same format as /adminchat <message>
+adminchat-symbol: "#"
+# Used to send messages to devchat without the
+# need to type in /devchat <message> or /devchattoggle
+# this uses the same format as /devchat <message>
+devchat-symbol: "%"
 
 format:
+  # AdminChat Format
+  adminchat-format: "&8[&c&lAdminChat&8] &e(%server%) &c&l%player%&7: &f%message%"
+  # DevChat Format
+  devchat-format: "&8[&d&lDevChat&8] &e(%server%) &b&l%player%&7: &f%message%"
   # Minecraft format
   minecraft-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
   # Format for messages sent by the console.
   console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
+  # Format for messages sent by the console.
+  console-adminchat-format: "&8[&c&lAdminChat&8] &c&lConsole&7: &f%message%"
+  # Format for messages sent by the console.
+  console-devchat-format: "&8[&d&lDevChat&8] &b&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
@@ -36,6 +52,10 @@ messages:
   reload: "&7Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% &eStaffChat toggled &aon&7."
   toggle-off: "%prefix% &eStaffChat toggled &coff&7."
+  adminchat-toggle-on: "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."
+  adminchat-toggle-off: "&8[&c&lAdminChat&8] &7AdminChat toggled &coff&7."
+  devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
+  devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
   # If this is set to "custom" you can change the /sc output message to anything
   # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"
@@ -45,6 +65,8 @@ messages:
     - "&c&lSimpleStaffChat2 %arrow2% Help"
     - ""
     - "&c/staffchat <message> - Send staffchat messages."
+    - "&c/adminchat <message> - Send adminchat messages."
+    - "&c/devchat <message> - Send devchat messages."
     - "&c/staffchattoggle - Send staffchat messages without needing to type a command."
     - "&c/staffchatreload - Reload the config file."
     - ""
@@ -56,11 +78,31 @@ commands:
     # Command without /
     command: "staffchat"
     alias: "sc"
+  adminchat:
+    enabled: true
+    # Command without /
+    command: "adminchat"
+    alias: "ac"
+  devchat:
+    enabled: true
+    # Command without /
+    command: "devchat"
+    alias: "dc"
   toggle:
     enabled: true
     # Command without /
     command: "staffchattoggle"
     alias: "sctoggle"
+  adminchat-toggle:
+    enabled: true
+    # Command without /
+    command: "adminchattoggle"
+    alias: "actoggle"
+  devchat-toggle:
+    enabled: true
+    # Command without /
+    command: "devchattoggle"
+    alias: "dctoggle"
   reload:
     enabled: true
     # Command without /

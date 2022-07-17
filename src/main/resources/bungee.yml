@@ -1,6 +1,8 @@
 name: 'SimpleStaffChat2'
 version: '${project.version}'
-main: me.refrac.simplestaffchat.bungee.BungeeStaffChat
-author: 'Refrac'
+main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
+authors:
+  - 'RefracDevelopment'
+  - 'Refrac'
 description: 'A Lightweight StaffChat Plugin'
 website: 'https://discord.gg/EFeSKPg739'
