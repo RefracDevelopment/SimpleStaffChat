@@ -31,7 +31,8 @@ public class Permissions {
     public static final String STAFFCHAT_SWITCH = "simplestaffchat.switch";
     public static final String STAFFCHAT_QUIT = "simplestaffchat.quit";
     public static final String STAFFCHAT_SYMBOL = "simplestaffchat.symbol";
-    public static final String STAFFCHAT_ADMIN = "simplestaffchat.admin";
+    public static final String STAFFCHAT_RELOAD = "simplestaffchat.reload";
+    public static final String STAFFCHAT_HELP = "simplestaffchat.help";
 
     // AdminChat
     public static final String ADMINCHAT_USE = "simplestaffchat.admin.use";

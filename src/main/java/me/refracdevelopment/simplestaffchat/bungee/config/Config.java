@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.bungee.config;
 import lombok.Getter;
 import lombok.Setter;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +99,7 @@ public enum Config {
     }
 
     public List<String> toList() {
-        return config.getStringList(Color.translate(this.path));
+        return config.getStringList(this.path);
     }
 
     public String toString() {

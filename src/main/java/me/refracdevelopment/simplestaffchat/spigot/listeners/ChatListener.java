@@ -63,7 +63,6 @@ public class ChatListener extends Manager implements Listener {
                 }
             });
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
-            return;
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL.toString()) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL.toString())) return;
 
@@ -79,7 +78,6 @@ public class ChatListener extends Manager implements Listener {
                 }
             });
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
-            return;
         }
 
         // AdminChat
@@ -101,7 +99,6 @@ public class ChatListener extends Manager implements Listener {
                 }
             });
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
-            return;
         } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL.toString()) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL.toString())) return;
 
@@ -117,7 +114,6 @@ public class ChatListener extends Manager implements Listener {
                 }
             });
             plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, format));
-            return;
         }
 
         // DevChat

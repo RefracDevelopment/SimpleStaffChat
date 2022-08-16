@@ -65,6 +65,11 @@ public class StaffChatCommand extends Command {
             plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
         } else {
             if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
+                if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
+                    Color.sendMessage(sender, "&c/staffchat <message>", true, true);
+                    return;
+                }
+
                 for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
                     Color.sendMessage(sender, s, true, true);
             } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
@@ -89,6 +94,11 @@ public class StaffChatCommand extends Command {
                     }
                 }
             } else {
+                if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
+                    Color.sendMessage(sender, "&c/staffchat <message>", true, true);
+                    return;
+                }
+
                 Color.sendMessage(sender, "", false, false);
                 Color.sendMessage(sender, "&c&lSimpleStaffChat2 %arrow2% Help", true, true);
                 Color.sendMessage(sender, "", false, false);

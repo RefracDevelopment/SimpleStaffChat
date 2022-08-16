@@ -8,3 +8,65 @@ authors:
   - 'Refrac'
 description: 'A Simple StaffChat Plugin'
 website: 'https://discord.gg/EFeSKPg739'
+
+permissions:
+  simplestaffchat.*:
+    default: op
+    description: Gives all permissions
+    children:
+      simplestaffchat.help: true
+      simplestaffchat.use: true
+      simplestaffchat.see: true
+      simplestaffchat.toggle: true
+      simplestaffchat.symbol: true
+      simplestaffchat.reload: true
+      simplestaffchat.admin.use: true
+      simplestaffchat.admin.see: true
+      simplestaffchat.admin.toggle: true
+      simplestaffchat.admin.symbol: true
+      simplestaffchat.dev.use: true
+      simplestaffchat.dev.see: true
+      simplestaffchat.dev.toggle: true
+      simplestaffchat.dev.symbol: true
+  simplestaffchat.help:
+    default: op
+    description: Allows you to see the help page
+  simplestaffchat.use:
+    default: op
+    description: Allows you to use the staffchat command
+  simplestaffchat.see:
+    default: op
+    description: Allows you to see the staffchat messages
+  simplestaffchat.toggle:
+    default: op
+    description: Allows you to toggle staffchat
+  simplestaffchat.symbol:
+    default: op
+    description: Allows you to use the staffchat symbol
+  simplestaffchat.reload:
+    default: op
+    description: Allows you to reload the config file
+  simplestaffchat.admin.use:
+    default: op
+    description: Allows you to use the adminchat command
+  simplestaffchat.admin.see:
+    default: op
+    description: Allows you to see the adminchat messages
+  simplestaffchat.admin.toggle:
+    default: op
+    description: Allows you to toggle adminchat
+  simplestaffchat.admin.symbol:
+    default: op
+    description: Allows you to use the adminchat symbol
+  simplestaffchat.dev.use:
+    default: op
+    description: Allows you to use the devchat command
+  simplestaffchat.dev.see:
+    default: op
+    description: Allows you to see the devchat messages
+  simplestaffchat.dev.toggle:
+    default: op
+    description: Allows you to toggle devchat
+  simplestaffchat.dev.symbol:
+    default: op
+    description: Allows you to use the devchat symbol

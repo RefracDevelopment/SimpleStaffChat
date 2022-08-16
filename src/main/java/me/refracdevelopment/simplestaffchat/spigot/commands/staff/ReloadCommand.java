@@ -39,7 +39,7 @@ public class ReloadCommand extends Command {
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         if (!Config.COMMANDS_RELOAD_ENABLED.toBoolean()) return true;
 
-        if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
+        if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
             Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return true;
         }

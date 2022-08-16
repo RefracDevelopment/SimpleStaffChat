@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.spigot.config;
 import lombok.Getter;
 import lombok.Setter;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 
 import java.util.Arrays;
 import java.util.List;
