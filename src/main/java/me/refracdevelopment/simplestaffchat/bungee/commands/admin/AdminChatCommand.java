@@ -23,8 +23,10 @@ package me.refracdevelopment.simplestaffchat.bungee.commands.admin;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -35,16 +37,16 @@ public class AdminChatCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public AdminChatCommand(BungeeStaffChat plugin) {
-        super(Config.ADMINCHAT_COMMAND, "", Config.ADMINCHAT_ALIAS);
+        super(Config.COMMANDS_ADMINCHAT_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_ALIASES.toList().toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!Config.ADMINCHAT_ENABLED) return;
+        if (!Config.COMMANDS_ADMINCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.ADMINCHAT_USE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return;
         }
 
@@ -52,8 +54,8 @@ public class AdminChatCommand extends Command {
             String format;
             String message = Joiner.on(" ").join(args);
 
-            format = (sender instanceof ProxiedPlayer) ? Config.ADMINCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_ADMINCHAT_FORMAT.replace("%message%", message);
+            format = (sender instanceof ProxiedPlayer) ? Config.FORMAT_ADMINCHAT.toString().replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
+                    .replace("%message%", message) : Config.CONSOLE_ADMINCHAT.toString().replace("%message%", message);
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
@@ -62,21 +64,25 @@ public class AdminChatCommand extends Command {
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+            if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
                         return;
                     }
 
                     if (AdminToggleCommand.inac.contains(player.getUniqueId())) {
                         AdminToggleCommand.inac.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true, true);
                     } else {
+                        if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                            ToggleCommand.insc.remove(player.getUniqueId());
+                            DevToggleCommand.indc.remove(player.getUniqueId());
+                        }
                         AdminToggleCommand.inac.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_ON, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true, true);
                     }
                 }
             }

@@ -22,9 +22,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.commands;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Files;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
@@ -34,19 +33,19 @@ public class ReloadCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public ReloadCommand(BungeeStaffChat plugin) {
-        super(Config.RELOAD_COMMAND, "", Config.RELOAD_ALIAS);
+        super(Config.COMMANDS_RELOAD_COMMAND.toString(), "", Config.COMMANDS_RELOAD_ALIASES.toList().toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!Config.RELOAD_ENABLED) return;
+        if (!Config.COMMANDS_RELOAD_ENABLED.toBoolean()) return;
         if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return;
         }
 
-        Files.loadFiles(plugin);
-        Color.sendMessage(sender, Config.RELOAD, true, true);
+        plugin.getConfigFile().load();
+        Color.sendMessage(sender, Config.MESSAGES_RELOAD.toString(), true, true);
     }
 }

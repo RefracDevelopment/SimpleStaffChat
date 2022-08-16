@@ -23,8 +23,8 @@ package me.refracdevelopment.simplestaffchat.spigot.listeners;
 
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Config;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.entity.Player;
@@ -43,15 +43,15 @@ public class JoinListener extends Manager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (Config.JOIN_ENABLED) {
+        if (Config.JOIN_ENABLED.toBoolean()) {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
 
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString()));
                 }
             }
-            plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+            plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString()));
         }
 
         if (player.getUniqueId().toString().equalsIgnoreCase(Settings.getDevUUID)) {
@@ -65,15 +65,15 @@ public class JoinListener extends Manager implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (!Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED.toBoolean()) return;
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (!p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString()));
             }
         }
-        plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT));
+        plugin.getServer().getConsoleSender().sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString()));
     }
 
     private void sendDevMessage(Player player) {

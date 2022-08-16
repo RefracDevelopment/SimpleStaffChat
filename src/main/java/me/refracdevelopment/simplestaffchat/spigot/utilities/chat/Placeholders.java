@@ -21,26 +21,26 @@
  */
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Config;
-import org.apache.commons.lang.StringEscapeUtils;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Placeholders {
 
     public static String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
+        placeholder = placeholder.replace("%prefix%", Config.MESSAGES_PREFIX.toString());
         if (sender instanceof Player) {
             Player player = (Player) sender;
+
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         }
-        placeholder = placeholder.replace("%arrow%", StringEscapeUtils.unescapeJava("\u00BB"));
-        placeholder = placeholder.replace("%arrow2%", StringEscapeUtils.unescapeJava("\u27A5"));
-        placeholder = placeholder.replace("%arrow_2%", StringEscapeUtils.unescapeJava("\u27A5"));
-        placeholder = placeholder.replace("%star%", StringEscapeUtils.unescapeJava("\u2726"));
-        placeholder = placeholder.replace("%circle%", StringEscapeUtils.unescapeJava("\u2219"));
-        placeholder = placeholder.replace("|", StringEscapeUtils.unescapeJava("\u2503"));
+        placeholder = placeholder.replace("%arrow%", "\u00BB");
+        placeholder = placeholder.replace("%arrow2%", "\u27A5");
+        placeholder = placeholder.replace("%arrow_2%", "\u27A5");
+        placeholder = placeholder.replace("%star%", "\u2726");
+        placeholder = placeholder.replace("%circle%", "\u2219");
+        placeholder = placeholder.replace("|", "\u2503");
 
         return placeholder;
     }

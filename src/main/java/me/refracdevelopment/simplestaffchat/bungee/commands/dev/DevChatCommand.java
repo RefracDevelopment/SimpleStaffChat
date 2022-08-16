@@ -23,8 +23,10 @@ package me.refracdevelopment.simplestaffchat.bungee.commands.dev;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -35,16 +37,16 @@ public class DevChatCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public DevChatCommand(BungeeStaffChat plugin) {
-        super(Config.DEVCHAT_COMMAND, "", Config.DEVCHAT_ALIAS);
+        super(Config.COMMANDS_DEVCHAT_COMMAND.toString(), "", Config.COMMANDS_DEVCHAT_ALIASES.toList().toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!Config.DEVCHAT_ENABLED) return;
+        if (!Config.COMMANDS_DEVCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.DEVCHAT_USE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return;
         }
 
@@ -52,8 +54,8 @@ public class DevChatCommand extends Command {
             String format;
             String message = Joiner.on(" ").join(args);
 
-            format = (sender instanceof ProxiedPlayer) ? Config.DEVCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_DEVCHAT_FORMAT.replace("%message%", message);
+            format = (sender instanceof ProxiedPlayer) ? Config.FORMAT_DEVCHAT.toString().replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
+                    .replace("%message%", message) : Config.CONSOLE_DEVCHAT.toString().replace("%message%", message);
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
@@ -61,22 +63,27 @@ public class DevChatCommand extends Command {
                 }
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
+            return;
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+            if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
                         return;
                     }
 
                     if (DevToggleCommand.indc.contains(player.getUniqueId())) {
                         DevToggleCommand.indc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true, true);
                     } else {
+                        if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                            AdminToggleCommand.inac.remove(player.getUniqueId());
+                            ToggleCommand.insc.remove(player.getUniqueId());
+                        }
                         DevToggleCommand.indc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true, true);
                     }
                 }
             }

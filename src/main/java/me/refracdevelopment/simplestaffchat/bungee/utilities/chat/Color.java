@@ -21,27 +21,20 @@
  */
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import net.md_5.bungee.api.ChatColor;
+import me.refracdevelopment.simplestaffchat.shared.ColorTranslator;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Color {
 
     public static TextComponent translate(CommandSender sender, String source) {
         source = Placeholders.setPlaceholders(sender, source);
 
-        return new TextComponent(translate(source));
+        return ColorTranslator.translateColorCodesToTextComponent(source);
     }
 
     public static String translate(String source) {
-        return ChatColor.translateAlternateColorCodes('&', source);
-    }
-
-    public static List<String> translate(List<String> source) {
-        return source.stream().map(Color::translate).collect(Collectors.toList());
+        return ColorTranslator.translateColorCodes(source);
     }
 
     public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {

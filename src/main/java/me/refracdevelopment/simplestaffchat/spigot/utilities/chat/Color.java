@@ -21,15 +21,11 @@
  */
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
-import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.refracdevelopment.simplestaffchat.shared.ColorTranslator;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Color {
 
@@ -38,7 +34,8 @@ public class Color {
 
         if (sender instanceof Player) {
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                source = PlaceholderAPI.setPlaceholders((Player) sender, source);
+                Player player = (Player) sender;
+                source = PlaceholderAPI.setPlaceholders(player, source);
             }
         }
 
@@ -46,14 +43,7 @@ public class Color {
     }
 
     public static String translate(String source) {
-        source = IridiumColorAPI.process(source);
-
-
-        return ChatColor.translateAlternateColorCodes('&', source);
-    }
-
-    public static List<String> translate(List<String> source) {
-        return source.stream().map(Color::translate).collect(Collectors.toList());
+        return ColorTranslator.translateColorCodes(source);
     }
 
     public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {

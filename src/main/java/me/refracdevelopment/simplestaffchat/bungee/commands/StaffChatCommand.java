@@ -23,8 +23,10 @@ package me.refracdevelopment.simplestaffchat.bungee.commands;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
+import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -35,16 +37,16 @@ public class StaffChatCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public StaffChatCommand(BungeeStaffChat plugin) {
-        super(Config.STAFFCHAT_COMMAND, "", Config.STAFFCHAT_ALIAS);
+        super(Config.COMMANDS_STAFFCHAT_COMMAND.toString(), "", Config.COMMANDS_STAFFCHAT_ALIASES.toList().toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!Config.STAFFCHAT_ENABLED) return;
+        if (!Config.COMMANDS_STAFFCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
-            Color.sendMessage(sender, Config.NO_PERMISSION, true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return;
         }
 
@@ -52,8 +54,8 @@ public class StaffChatCommand extends Command {
             String format;
             String message = Joiner.on(" ").join(args);
 
-            format = (sender instanceof ProxiedPlayer) ? Config.STAFFCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_FORMAT.replace("%message%", message);
+            format = (sender instanceof ProxiedPlayer) ? Config.FORMAT_STAFFCHAT.toString().replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
+                    .replace("%message%", message) : Config.CONSOLE_STAFFCHAT.toString().replace("%message%", message);
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -62,24 +64,28 @@ public class StaffChatCommand extends Command {
             }
             plugin.getProxy().getConsole().sendMessage(Color.translate(sender, format));
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
-                for (String s : Config.STAFFCHAT_MESSAGE)
+            if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
+                for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
                     Color.sendMessage(sender, s, true, true);
-            } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+            } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
                         return;
                     }
 
                     if (ToggleCommand.insc.contains(player.getUniqueId())) {
                         ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true, true);
                     } else {
+                        if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
+                            AdminToggleCommand.inac.remove(player.getUniqueId());
+                            DevToggleCommand.indc.remove(player.getUniqueId());
+                        }
                         ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.TOGGLE_ON, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_ON.toString(), true, true);
                     }
                 }
             } else {
@@ -88,6 +94,10 @@ public class StaffChatCommand extends Command {
                 Color.sendMessage(sender, "", false, false);
                 Color.sendMessage(sender, "&c/staffchat <message> - Send staffchat messages.", true, true);
                 Color.sendMessage(sender, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
+                Color.sendMessage(sender, "&c/adminchat <message> - Send adminchat messages.", true, true);
+                Color.sendMessage(sender, "&c/adminchattoggle - Send adminchat messages without needing to type a command.", true, true);
+                Color.sendMessage(sender, "&c/devchat <message> - Send devchat messages.", true, true);
+                Color.sendMessage(sender, "&c/devchattoggle - Send devchat messages without needing to type a command.", true, true);
                 Color.sendMessage(sender, "&c/staffchatreload - Reload the config file.", true, true);
                 Color.sendMessage(sender, "", false, false);
             }

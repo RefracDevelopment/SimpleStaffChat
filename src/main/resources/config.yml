@@ -79,38 +79,45 @@ commands:
   staffchat:
     enabled: true
     # Command without /
+    command: "staffchat"
     alias:
       - "sc"
   adminchat:
     enabled: true
     # Command without /
+    command: "adminchat"
     alias:
       - "ac"
   devchat:
     enabled: true
     # Command without /
+    command: "devchat"
     alias:
       - "dc"
   toggle:
     enabled: true
     # Command without /
+    command: "staffchattoggle"
     alias:
       - "sctoggle"
       - "sct"
   adminchat-toggle:
     enabled: true
     # Command without /
+    command: "adminchattoggle"
     alias:
       - "actoggle"
       - "act"
   devchat-toggle:
     enabled: true
     # Command without /
+    command: "devchattoggle"
     alias:
       - "dctoggle"
       - "dct"
   reload:
     enabled: true
     # Command without /
+    command: "staffchatreload"
     alias:
       - "screload"

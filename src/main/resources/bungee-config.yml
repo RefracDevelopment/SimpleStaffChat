@@ -68,6 +68,8 @@ messages:
     - "&c/adminchat <message> - Send adminchat messages."
     - "&c/devchat <message> - Send devchat messages."
     - "&c/staffchattoggle - Send staffchat messages without needing to type a command."
+    - "&c/adminchattoggle - Send adminchat messages without needing to type a command."
+    - "&c/devchattoggle - Send devchat messages without needing to type a command."
     - "&c/staffchatreload - Reload the config file."
     - ""
 
@@ -77,34 +79,44 @@ commands:
     enabled: true
     # Command without /
     command: "staffchat"
-    alias: "sc"
+    alias:
+      - "sc"
   adminchat:
     enabled: true
     # Command without /
     command: "adminchat"
-    alias: "ac"
+    alias:
+      - "ac"
   devchat:
     enabled: true
     # Command without /
     command: "devchat"
-    alias: "dc"
+    alias:
+      - "dc"
   toggle:
     enabled: true
     # Command without /
     command: "staffchattoggle"
-    alias: "sctoggle"
+    alias:
+      - "sctoggle"
+      - "sct"
   adminchat-toggle:
     enabled: true
     # Command without /
     command: "adminchattoggle"
-    alias: "actoggle"
+    alias:
+      - "actoggle"
+      - "act"
   devchat-toggle:
     enabled: true
     # Command without /
     command: "devchattoggle"
-    alias: "dctoggle"
+    alias:
+      - "dctoggle"
+      - "dct"
   reload:
     enabled: true
     # Command without /
     command: "staffchatreload"
-    alias: "screload"
+    alias:
+      - "screload"

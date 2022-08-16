@@ -21,33 +21,36 @@
  */
 package me.refracdevelopment.simplestaffchat.spigot;
 
-import co.aikar.commands.BukkitCommandIssuer;
-import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.ConditionFailedException;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.admin.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.admin.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.dev.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.dev.DevToggleCommand;
+import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
-import me.refracdevelopment.simplestaffchat.spigot.listeners.CommandPreprocessListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Files;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
-import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Logger;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Getter
 public final class SimpleStaffChat extends JavaPlugin {
+
+    @Getter
+    private static SimpleStaffChat instance;
+    private ConfigFile configFile;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        Files.loadFiles(this);
+        instance = this;
+        this.configFile = new ConfigFile(this, "config.yml");
+        Config.setConfig(this.configFile);
+        Config.load();
+        Logger.NONE.out("&c==========================================");
+        Logger.NONE.out("&aAll files have been loaded correctly!");
+        Logger.NONE.out("&c==========================================");
 
-        loadCommands();
+        CommandManager.registerAll();
         loadListeners();
 
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -64,26 +67,8 @@ public final class SimpleStaffChat extends JavaPlugin {
         Logger.NONE.out("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
     }
 
-    private void loadCommands() {
-        BukkitCommandManager manager = new BukkitCommandManager(this);
-        manager.getCommandConditions().addCondition("noconsole", (context) -> {
-            BukkitCommandIssuer issuer = context.getIssuer();
-            if (!issuer.isPlayer()) {
-                throw new ConditionFailedException("Only players can execute this command.");
-            }
-        });
-        manager.registerCommand(new StaffChatCommand());
-        manager.registerCommand(new AdminChatCommand());
-        manager.registerCommand(new DevChatCommand());
-        manager.registerCommand(new ToggleCommand());
-        manager.registerCommand(new AdminToggleCommand());
-        manager.registerCommand(new DevToggleCommand());
-        manager.registerCommand(new ReloadCommand());
-    }
-
     private void loadListeners() {
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
-        getServer().getPluginManager().registerEvents(new CommandPreprocessListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
     }
 }

@@ -23,8 +23,8 @@ package me.refracdevelopment.simplestaffchat.bungee.listeners;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -44,16 +44,16 @@ public class JoinListener extends Manager implements Listener {
     public void onJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (Config.JOIN_ENABLED) {
+        if (Config.JOIN_ENABLED.toBoolean()) {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
             if (player.getServer() != null) return;
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
+                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
                 }
             }
-            plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
+            plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
         }
 
         if (player.getName().equalsIgnoreCase("Refracxx")) {
@@ -66,7 +66,7 @@ public class JoinListener extends Manager implements Listener {
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null) return;
-        if (!Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED.toBoolean()) return;
 
         ProxiedPlayer player = event.getPlayer();
 
@@ -74,17 +74,17 @@ public class JoinListener extends Manager implements Listener {
 
         for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
             }
         }
-        plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+        plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
     }
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (!Config.JOIN_ENABLED) return;
+        if (!Config.JOIN_ENABLED.toBoolean()) return;
 
         ProxiedPlayer player = event.getPlayer();
 
@@ -93,10 +93,10 @@ public class JoinListener extends Manager implements Listener {
 
         for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
             }
         }
-        plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+        plugin.getProxy().getConsole().sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
     }
 
     private void sendDevMessage(ProxiedPlayer player) {

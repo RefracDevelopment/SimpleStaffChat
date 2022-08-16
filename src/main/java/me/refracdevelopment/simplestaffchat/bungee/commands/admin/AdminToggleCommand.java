@@ -21,8 +21,10 @@
  */
 package me.refracdevelopment.simplestaffchat.bungee.commands.admin;
 
+import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -36,27 +38,31 @@ public class AdminToggleCommand extends Command {
     public static List<UUID> inac = new ArrayList<>();
 
     public AdminToggleCommand() {
-        super(Config.ADMINCHAT_TOGGLE_COMMAND, "", Config.ADMINCHAT_TOGGLE_ALIAS);
+        super(Config.COMMANDS_ADMINCHAT_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_TOGGLE_ALIASES.toList().toArray(new String[0]));
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!Config.ADMINCHAT_TOGGLE_ENABLED) return;
+        if (!Config.COMMANDS_ADMINCHAT_TOGGLE_ENABLED.toBoolean()) return;
         if (!(sender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.NO_PERMISSION, true, true);
+            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
             return;
         }
 
         if (inac.contains(player.getUniqueId())) {
             inac.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF, true, true);
+            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true, true);
         } else {
+            if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                ToggleCommand.insc.remove(player.getUniqueId());
+                DevToggleCommand.indc.remove(player.getUniqueId());
+            }
             inac.add(player.getUniqueId());
-            Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_ON, true, true);
+            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true, true);
         }
     }
 }

@@ -21,6 +21,7 @@
  */
 package me.refracdevelopment.simplestaffchat.bungee;
 
+import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
@@ -28,22 +29,40 @@ import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminChatComma
 import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Files;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.Logger;
+import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 
+@Getter
 public class BungeeStaffChat extends Plugin {
+
+    @Getter
+    private static BungeeStaffChat instance;
+    private YMLBase configFile;
 
     @Override
     public void onEnable() {
-        Files.loadFiles(this);
+        instance = this;
+        this.configFile = new YMLBase(this, "bungee-config.yml");
+        Config.setConfig(this.configFile);
+        Config.load();
+        Logger.NONE.out("&c==========================================");
+        Logger.NONE.out("&aAll files have been loaded correctly!");
+        Logger.NONE.out("&c==========================================");
 
         loadCommands();
         loadListeners();
+
+        if (this.getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
+            LuckPermsUtil.setLuckPerms(net.luckperms.api.LuckPermsProvider.get());
+            Logger.INFO.out("Hooked into LuckPerms.");
+        }
 
         new Metrics(this, 12096);
 

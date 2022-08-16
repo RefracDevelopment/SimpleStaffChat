@@ -21,37 +21,55 @@
  */
 package me.refracdevelopment.simplestaffchat.spigot.commands.dev;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import me.refracdevelopment.simplestaffchat.spigot.commands.admin.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
+import me.refracdevelopment.simplestaffchat.spigot.commands.Command;
+import me.refracdevelopment.simplestaffchat.spigot.commands.staff.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Config;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@CommandAlias("devchattoggle")
-@Description("Toggle sending messages to your developers privately")
-@CommandPermission(Permissions.DEVCHAT_TOGGLE)
-@Conditions("noconsole")
-public class DevToggleCommand extends BaseCommand {
+public class DevToggleCommand extends Command {
     public static List<UUID> indc = new ArrayList<>();
 
-    @Default
-    public void onDefault(CommandSender sender, String[] args) {
-        if (!Config.DEVCHAT_TOGGLE_ENABLED) return;
+    public DevToggleCommand() {
+        super(Config.COMMANDS_DEVCHAT_TOGGLE_COMMAND.toString(), Config.COMMANDS_DEVCHAT_TOGGLE_ALIASES.toList());
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        if (!Config.COMMANDS_DEVCHAT_TOGGLE_ENABLED.toBoolean()) return true;
+        if (!(sender instanceof Player)) return true;
 
         Player player = (Player) sender;
 
+        if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
+            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            return true;
+        }
+
         if (indc.contains(player.getUniqueId())) {
             indc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF, true, true);
+            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true, true);
         } else {
+            if (ToggleCommand.insc.contains(player.getUniqueId()) || AdminToggleCommand.inac.contains(player.getUniqueId())) {
+                ToggleCommand.insc.remove(player.getUniqueId());
+                AdminToggleCommand.inac.remove(player.getUniqueId());
+            }
             indc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON, true, true);
+            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true, true);
         }
+        return true;
+    }
+
+    @Override
+    public int compareTo(@NotNull Command o) {
+        return 0;
     }
 }

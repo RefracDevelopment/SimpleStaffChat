@@ -21,16 +21,28 @@
  */
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.bungee.utilities.files.Config;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class Placeholders {
 
     public static String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
+        placeholder = placeholder.replace("%prefix%", Config.MESSAGES_PREFIX.toString());
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
+
+            if (ProxyServer.getInstance().getPluginManager().getPlugin("LuckPerms") != null) {
+                placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
+                placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
+            } else {
+                placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
+                placeholder = placeholder.replace("%luckperms_suffix%", "N/A");
+            }
+
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         }

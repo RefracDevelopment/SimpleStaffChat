@@ -19,30 +19,38 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package me.refracdevelopment.simplestaffchat.spigot.commands;
+package me.refracdevelopment.simplestaffchat.spigot.commands.staff;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.commands.Command;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Config;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Files;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-@CommandAlias("staffchatreload")
-@Description("Reload the plugin")
-@CommandPermission(Permissions.STAFFCHAT_ADMIN)
-public class ReloadCommand extends BaseCommand {
+public class ReloadCommand extends Command {
 
-    @Dependency
-    private SimpleStaffChat plugin;
+    public ReloadCommand() {
+        super(Config.COMMANDS_RELOAD_COMMAND.toString(), Config.COMMANDS_RELOAD_ALIASES.toList());
+    }
 
-    @Default
-    public void onDefault(CommandSender sender, String[] args) {
-        if (!Config.RELOAD_ENABLED) return;
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        if (!Config.COMMANDS_RELOAD_ENABLED.toBoolean()) return true;
 
-        Files.reloadFiles(plugin);
-        Color.sendMessage(sender, Config.RELOAD, true, true);
+        if (!sender.hasPermission(Permissions.STAFFCHAT_ADMIN)) {
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            return true;
+        }
+
+        SimpleStaffChat.getInstance().getConfigFile().load();
+        Color.sendMessage(sender, Config.MESSAGES_RELOAD.toString(), true, true);
+        return true;
+    }
+
+    @Override
+    public int compareTo(@NotNull Command o) {
+        return 0;
     }
 }

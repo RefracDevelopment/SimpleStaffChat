@@ -19,63 +19,72 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package me.refracdevelopment.simplestaffchat.spigot.commands;
+package me.refracdevelopment.simplestaffchat.spigot.commands.staff;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
 import com.google.common.base.Joiner;
-import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.commands.dev.DevToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.commands.Command;
+import me.refracdevelopment.simplestaffchat.spigot.commands.admin.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.files.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-@CommandAlias("staffchat")
-@Description("Send messages to your staff privately")
-@CommandPermission(Permissions.STAFFCHAT_USE)
-public class StaffChatCommand extends BaseCommand {
+public class StaffChatCommand extends Command {
 
-    @Dependency
-    private SimpleStaffChat plugin;
+    public StaffChatCommand() {
+        super(Config.COMMANDS_STAFFCHAT_COMMAND.toString(), Config.COMMANDS_STAFFCHAT_ALIASES.toList());
+    }
 
-    @Default
-    public void onDefault(CommandSender sender, String[] args) {
-        if (!Config.STAFFCHAT_ENABLED) return;
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        if (!Config.COMMANDS_STAFFCHAT_ENABLED.toBoolean()) return true;
+
+        if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            return true;
+        }
 
         if (args.length >= 1) {
             String format;
             String message = Joiner.on(" ").join(args);
 
-            format = (sender instanceof Player) ? Config.STAFFCHAT_FORMAT.replace("%message%", message) :
-             Config.CONSOLE_FORMAT.replace("%message%", message);
+            format = (sender instanceof Player) ? Config.FORMAT_STAFFCHAT.toString().replace("%message%", message) :
+                    Config.CONSOLE_STAFFCHAT.toString().replace("%message%", message);
 
-            for (Player p : plugin.getServer().getOnlinePlayers()) {
+            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     p.sendMessage(Color.translate(sender, format));
                 }
             }
-            plugin.getServer().getConsoleSender().sendMessage(Color.translate(sender, format));
+            Bukkit.getServer().getConsoleSender().sendMessage(Color.translate(sender, format));
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
-                for (String s : Config.STAFFCHAT_MESSAGE)
+            if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
+                for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
                     Color.sendMessage(sender, s, true, true);
-            } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+            } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
                     if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        for (String s : Config.STAFFCHAT_MESSAGE)
+                        for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
                             Color.sendMessage(sender, s, true, true);
-                        return;
+                        return true;
                     }
 
                     if (ToggleCommand.insc.contains(player.getUniqueId())) {
                         ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.TOGGLE_OFF, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true, true);
                     } else {
+                        if (DevToggleCommand.indc.contains(player.getUniqueId()) || AdminToggleCommand.inac.contains(player.getUniqueId())) {
+                            DevToggleCommand.indc.remove(player.getUniqueId());
+                            AdminToggleCommand.inac.remove(player.getUniqueId());
+                        }
                         ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.TOGGLE_ON, true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_ON.toString(), true, true);
                     }
                 }
             } else {
@@ -92,5 +101,11 @@ public class StaffChatCommand extends BaseCommand {
                 Color.sendMessage(sender, "", false, false);
             }
         }
+        return true;
+    }
+
+    @Override
+    public int compareTo(@NotNull Command o) {
+        return 0;
     }
 }
