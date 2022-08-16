@@ -64,7 +64,7 @@ public class StaffChatCommand extends Command {
         } else {
             if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    getUsage();
+                    Color.sendMessage(sender, "&c/staffchat <message>", true, true);
                     return true;
                 }
 
