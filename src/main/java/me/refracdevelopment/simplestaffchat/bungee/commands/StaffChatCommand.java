@@ -46,7 +46,7 @@ public class StaffChatCommand extends Command {
         if (!Config.COMMANDS_STAFFCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_USE)) {
-            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
@@ -66,50 +66,50 @@ public class StaffChatCommand extends Command {
         } else {
             if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(sender, "&c/staffchat <message>", true, true);
+                    Color.sendMessage(sender, "&c/staffchat <message>", true);
                     return;
                 }
 
                 for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
-                    Color.sendMessage(sender, s, true, true);
+                    Color.sendMessage(sender, s, true);
             } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true);
                         return;
                     }
 
                     if (ToggleCommand.insc.contains(player.getUniqueId())) {
                         ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true);
                     } else {
                         if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
                             AdminToggleCommand.inac.remove(player.getUniqueId());
                             DevToggleCommand.indc.remove(player.getUniqueId());
                         }
                         ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_ON.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_TOGGLE_ON.toString(), true);
                     }
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(sender, "&c/staffchat <message>", true, true);
+                    Color.sendMessage(sender, "&c/staffchat <message>", true);
                     return;
                 }
 
-                Color.sendMessage(sender, "", false, false);
-                Color.sendMessage(sender, "&c&lSimpleStaffChat2 %arrow2% Help", true, true);
-                Color.sendMessage(sender, "", false, false);
-                Color.sendMessage(sender, "&c/staffchat <message> - Send staffchat messages.", true, true);
-                Color.sendMessage(sender, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true, true);
-                Color.sendMessage(sender, "&c/adminchat <message> - Send adminchat messages.", true, true);
-                Color.sendMessage(sender, "&c/adminchattoggle - Send adminchat messages without needing to type a command.", true, true);
-                Color.sendMessage(sender, "&c/devchat <message> - Send devchat messages.", true, true);
-                Color.sendMessage(sender, "&c/devchattoggle - Send devchat messages without needing to type a command.", true, true);
-                Color.sendMessage(sender, "&c/staffchatreload - Reload the config file.", true, true);
-                Color.sendMessage(sender, "", false, false);
+                Color.sendMessage(sender, "", false);
+                Color.sendMessage(sender, "&c&lSimpleStaffChat2 %arrow2% Help", true);
+                Color.sendMessage(sender, "", false);
+                Color.sendMessage(sender, "&c/staffchat <message> - Send staffchat messages.", true);
+                Color.sendMessage(sender, "&c/staffchattoggle - Send staffchat messages without needing to type a command.", true);
+                Color.sendMessage(sender, "&c/adminchat <message> - Send adminchat messages.", true);
+                Color.sendMessage(sender, "&c/adminchattoggle - Send adminchat messages without needing to type a command.", true);
+                Color.sendMessage(sender, "&c/devchat <message> - Send devchat messages.", true);
+                Color.sendMessage(sender, "&c/devchattoggle - Send devchat messages without needing to type a command.", true);
+                Color.sendMessage(sender, "&c/staffchatreload - Reload the config file.", true);
+                Color.sendMessage(sender, "", false);
             }
         }
     }

@@ -50,7 +50,7 @@ public class ChatListener extends Manager implements Listener {
 
             if (!player.hasPermission(Permissions.STAFFCHAT_USE) && !player.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 ToggleCommand.insc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true, true);
+                Color.sendMessage(player, Config.MESSAGES_TOGGLE_OFF.toString(), true);
                 return;
             }
 
@@ -87,7 +87,7 @@ public class ChatListener extends Manager implements Listener {
 
             if (!player.hasPermission(Permissions.ADMINCHAT_USE) && !player.hasPermission(Permissions.ADMINCHAT_SEE)) {
                 AdminToggleCommand.inac.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true, true);
+                Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true);
                 return;
             }
 
@@ -124,7 +124,7 @@ public class ChatListener extends Manager implements Listener {
 
             if (!player.hasPermission(Permissions.DEVCHAT_USE) && !player.hasPermission(Permissions.DEVCHAT_SEE)) {
                 DevToggleCommand.indc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true, true);
+                Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true);
                 return;
             }
 

@@ -42,11 +42,11 @@ public class ReloadCommand extends Command {
         if (!Config.COMMANDS_RELOAD_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
         plugin.getConfigFile().load();
-        Color.sendMessage(sender, Config.MESSAGES_RELOAD.toString(), true, true);
+        Color.sendMessage(sender, Config.MESSAGES_RELOAD.toString(), true);
     }
 }

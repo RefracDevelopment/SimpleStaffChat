@@ -36,6 +36,7 @@ import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.Logger;
 import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
+import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 
@@ -59,8 +60,8 @@ public class BungeeStaffChat extends Plugin {
         loadCommands();
         loadListeners();
 
-        if (this.getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
-            LuckPermsUtil.setLuckPerms(net.luckperms.api.LuckPermsProvider.get());
+        if (Config.LUCKPERMS.toBoolean()) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Logger.INFO.out("Hooked into LuckPerms.");
         }
 

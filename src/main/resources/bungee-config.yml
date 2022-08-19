@@ -23,6 +23,8 @@ adminchat-symbol: "#"
 # need to type in /devchat <message> or /devchattoggle
 # this uses the same format as /devchat <message>
 devchat-symbol: "%"
+# Change to true if you have LuckPerms installed
+luckperms: false
 
 format:
   # AdminChat Format

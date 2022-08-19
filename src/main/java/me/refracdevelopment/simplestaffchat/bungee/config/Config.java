@@ -17,6 +17,7 @@ public enum Config {
     STAFFCHAT_SYMBOL("staffchat-symbol", "@"),
     ADMINCHAT_SYMBOL("adminchat-symbol", "#"),
     DEVCHAT_SYMBOL("devchat-symbol", "%"),
+    LUCKPERMS("luckperms", false),
     FORMAT_ADMINCHAT("format.adminchat-format", "&8[&c&lAdminChat&8] &e(%server%) &c&l%player%&7: &f%message%"),
     FORMAT_DEVCHAT("format.devchat-format", "&8[&d&lDevChat&8] &e(%server%) &b&l%player%&7: &f%message%"),
     FORMAT_STAFFCHAT("format.minecraft-format", "%prefix% &e(%server%) &6&l%player%&7: &f%message%"),

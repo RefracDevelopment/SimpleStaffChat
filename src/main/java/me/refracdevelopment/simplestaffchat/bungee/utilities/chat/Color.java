@@ -37,12 +37,10 @@ public class Color {
         return ColorTranslator.translateColorCodes(source);
     }
 
-    public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
+    public static void sendMessage(CommandSender sender, String source, boolean placeholders) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
         if (placeholders) source = Placeholders.setPlaceholders(sender, source);
 
-        if (color) source = translate(source);
-
-        sender.sendMessage(new TextComponent(source));
+        sender.sendMessage(translate(sender, source));
     }
 }

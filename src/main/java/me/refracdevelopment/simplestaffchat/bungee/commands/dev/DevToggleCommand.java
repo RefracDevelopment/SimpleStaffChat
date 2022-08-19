@@ -49,20 +49,20 @@ public class DevToggleCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
         if (indc.contains(player.getUniqueId())) {
             indc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true);
         } else {
             if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
                 AdminToggleCommand.inac.remove(player.getUniqueId());
                 ToggleCommand.insc.remove(player.getUniqueId());
             }
             indc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true);
         }
     }
 }

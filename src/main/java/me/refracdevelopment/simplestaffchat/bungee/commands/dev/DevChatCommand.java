@@ -46,7 +46,7 @@ public class DevChatCommand extends Command {
         if (!Config.COMMANDS_DEVCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.DEVCHAT_USE)) {
-            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
@@ -70,20 +70,20 @@ public class DevChatCommand extends Command {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true);
                         return;
                     }
 
                     if (DevToggleCommand.indc.contains(player.getUniqueId())) {
                         DevToggleCommand.indc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_OFF.toString(), true);
                     } else {
                         if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
                             AdminToggleCommand.inac.remove(player.getUniqueId());
                             ToggleCommand.insc.remove(player.getUniqueId());
                         }
                         DevToggleCommand.indc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_DEVCHAT_TOGGLE_ON.toString(), true);
                     }
                 }
             }

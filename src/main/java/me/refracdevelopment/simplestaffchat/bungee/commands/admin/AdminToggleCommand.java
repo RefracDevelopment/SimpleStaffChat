@@ -49,20 +49,20 @@ public class AdminToggleCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
         if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
         if (inac.contains(player.getUniqueId())) {
             inac.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true);
         } else {
             if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
                 ToggleCommand.insc.remove(player.getUniqueId());
                 DevToggleCommand.indc.remove(player.getUniqueId());
             }
             inac.add(player.getUniqueId());
-            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true, true);
+            Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true);
         }
     }
 }

@@ -46,7 +46,7 @@ public class AdminChatCommand extends Command {
         if (!Config.COMMANDS_ADMINCHAT_ENABLED.toBoolean()) return;
 
         if (!sender.hasPermission(Permissions.ADMINCHAT_USE)) {
-            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+            Color.sendMessage(sender, Config.MESSAGES_NO_PERMISSION.toString(), true);
             return;
         }
 
@@ -69,20 +69,20 @@ public class AdminChatCommand extends Command {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
 
                     if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_NO_PERMISSION.toString(), true);
                         return;
                     }
 
                     if (AdminToggleCommand.inac.contains(player.getUniqueId())) {
                         AdminToggleCommand.inac.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_OFF.toString(), true);
                     } else {
                         if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
                             ToggleCommand.insc.remove(player.getUniqueId());
                             DevToggleCommand.indc.remove(player.getUniqueId());
                         }
                         AdminToggleCommand.inac.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true, true);
+                        Color.sendMessage(player, Config.MESSAGES_ADMINCHAT_TOGGLE_ON.toString(), true);
                     }
                 }
             }
