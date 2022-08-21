@@ -53,25 +53,25 @@ public enum Config {
     )),
     COMMANDS_STAFFCHAT_ENABLED("commands.staffchat.enabled", true),
     COMMANDS_STAFFCHAT_COMMAND("commands.staffchat.command", "staffchat"),
-    COMMANDS_STAFFCHAT_ALIASES("commands.staffchat.alias", Arrays.asList("sc")),
+    COMMANDS_STAFFCHAT_ALIASES("commands.staffchat.alias", "sc"),
     COMMANDS_ADMINCHAT_ENABLED("commands.adminchat.enabled", true),
     COMMANDS_ADMINCHAT_COMMAND("commands.adminchat.command", "adminchat"),
-    COMMANDS_ADMINCHAT_ALIASES("commands.adminchat.alias", Arrays.asList("ac")),
+    COMMANDS_ADMINCHAT_ALIASES("commands.adminchat.alias", "ac"),
     COMMANDS_DEVCHAT_ENABLED("commands.devchat.enabled", true),
     COMMANDS_DEVCHAT_COMMAND("commands.devchat.command", "devchat"),
-    COMMANDS_DEVCHAT_ALIASES("commands.devchat.alias", Arrays.asList("dc")),
+    COMMANDS_DEVCHAT_ALIASES("commands.devchat.alias", "dc"),
     COMMANDS_TOGGLE_ENABLED("commands.toggle.enabled", true),
     COMMANDS_TOGGLE_COMMAND("commands.toggle.command", "staffchattoggle"),
-    COMMANDS_TOGGLE_ALIASES("commands.toggle.alias", Arrays.asList("sctoggle", "sct")),
+    COMMANDS_TOGGLE_ALIASES("commands.toggle.alias", "sctoggle"),
     COMMANDS_ADMINCHAT_TOGGLE_ENABLED("commands.adminchat-toggle.enabled", true),
     COMMANDS_ADMINCHAT_TOGGLE_COMMAND("commands.adminchat-toggle.command", "adminchattoggle"),
-    COMMANDS_ADMINCHAT_TOGGLE_ALIASES("commands.adminchat-toggle.alias", Arrays.asList("actoggle", "act")),
+    COMMANDS_ADMINCHAT_TOGGLE_ALIASES("commands.adminchat-toggle.alias", "actoggle"),
     COMMANDS_DEVCHAT_TOGGLE_ENABLED("commands.devchat-toggle.enabled", true),
     COMMANDS_DEVCHAT_TOGGLE_COMMAND("commands.devchat-toggle.command", "devchattoggle"),
-    COMMANDS_DEVCHAT_TOGGLE_ALIASES("commands.devchat-toggle.alias", Arrays.asList("dctoggle", "dct")),
+    COMMANDS_DEVCHAT_TOGGLE_ALIASES("commands.devchat-toggle.alias", "dctoggle"),
     COMMANDS_RELOAD_ENABLED("commands.reload.enabled", true),
     COMMANDS_RELOAD_COMMAND("commands.reload.command", "staffchatreload"),
-    COMMANDS_RELOAD_ALIASES("commands.reload.alias", Arrays.asList("screload"));
+    COMMANDS_RELOAD_ALIASES("commands.reload.alias", "screload");
 
     @Getter
     private String path;

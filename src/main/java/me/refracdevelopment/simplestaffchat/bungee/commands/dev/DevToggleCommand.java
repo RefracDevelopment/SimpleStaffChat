@@ -38,7 +38,7 @@ public class DevToggleCommand extends Command {
     public static List<UUID> indc = new ArrayList<>();
 
     public DevToggleCommand() {
-        super(Config.COMMANDS_DEVCHAT_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_DEVCHAT_TOGGLE_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_DEVCHAT_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_DEVCHAT_TOGGLE_ALIASES.toString());
     }
 
     @Override

@@ -38,7 +38,7 @@ public class ToggleCommand extends Command {
     public static List<UUID> insc = new ArrayList<>();
 
     public ToggleCommand() {
-        super(Config.COMMANDS_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_TOGGLE_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_TOGGLE_ALIASES.toString());
     }
 
     @Override

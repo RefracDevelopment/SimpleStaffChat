@@ -37,7 +37,7 @@ public class AdminChatCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public AdminChatCommand(BungeeStaffChat plugin) {
-        super(Config.COMMANDS_ADMINCHAT_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_ADMINCHAT_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_ALIASES.toString());
         this.plugin = plugin;
     }
 

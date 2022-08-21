@@ -38,7 +38,7 @@ public class AdminToggleCommand extends Command {
     public static List<UUID> inac = new ArrayList<>();
 
     public AdminToggleCommand() {
-        super(Config.COMMANDS_ADMINCHAT_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_TOGGLE_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_ADMINCHAT_TOGGLE_COMMAND.toString(), "", Config.COMMANDS_ADMINCHAT_TOGGLE_ALIASES.toString());
     }
 
     @Override

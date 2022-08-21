@@ -37,7 +37,7 @@ public class DevChatCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public DevChatCommand(BungeeStaffChat plugin) {
-        super(Config.COMMANDS_DEVCHAT_COMMAND.toString(), "", Config.COMMANDS_DEVCHAT_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_DEVCHAT_COMMAND.toString(), "", Config.COMMANDS_DEVCHAT_ALIASES.toString());
         this.plugin = plugin;
     }
 

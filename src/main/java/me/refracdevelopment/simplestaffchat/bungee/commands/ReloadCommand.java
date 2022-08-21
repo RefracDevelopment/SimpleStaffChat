@@ -33,7 +33,7 @@ public class ReloadCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public ReloadCommand(BungeeStaffChat plugin) {
-        super(Config.COMMANDS_RELOAD_COMMAND.toString(), "", Config.COMMANDS_RELOAD_ALIASES.toList().toArray(new String[0]));
+        super(Config.COMMANDS_RELOAD_COMMAND.toString(), "", Config.COMMANDS_RELOAD_ALIASES.toString());
         this.plugin = plugin;
     }
 
