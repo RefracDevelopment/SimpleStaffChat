@@ -1,72 +1,47 @@
-name: 'SimpleStaffChat2'
-version: '${project.version}'
+name: SimpleStaffChat2
+version: '@version@'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
+author:  RefracDevelopment
+api-version: "1.13"
 softdepend:
   - PlaceholderAPI
-authors:
-  - 'RefracDevelopment'
-  - 'Refrac'
-description: 'A Simple StaffChat Plugin'
-website: 'https://discord.gg/EFeSKPg739'
+description: A Simple StaffChat Plugin
+website: https://discord.refracdev.ml/
 
 permissions:
   simplestaffchat.*:
     default: op
     description: Gives all permissions
     children:
-      simplestaffchat.help: true
-      simplestaffchat.use: true
-      simplestaffchat.see: true
-      simplestaffchat.toggle: true
-      simplestaffchat.symbol: true
-      simplestaffchat.reload: true
-      simplestaffchat.admin.use: true
-      simplestaffchat.admin.see: true
-      simplestaffchat.admin.toggle: true
-      simplestaffchat.admin.symbol: true
-      simplestaffchat.dev.use: true
-      simplestaffchat.dev.see: true
-      simplestaffchat.dev.toggle: true
-      simplestaffchat.dev.symbol: true
-  simplestaffchat.help:
+      simplestaffchat.command.help: true
+      simplestaffchat.command.staffchat: true
+      simplestaffchat.command.staffchat.toggle: true
+      simplestaffchat.command.reload: true
+      simplestaffchat.staffchat.see: true
+      simplestaffchat.staffchat.symbol: true
+      simplestaffchat.join: true
+      simplestaffchat.quit: true
+  simplestaffchat.command.help:
     default: op
     description: Allows you to see the help page
-  simplestaffchat.use:
+  simplestaffchat.command.staffchat:
     default: op
     description: Allows you to use the staffchat command
-  simplestaffchat.see:
-    default: op
-    description: Allows you to see the staffchat messages
-  simplestaffchat.toggle:
+  simplestaffchat.command.staffchat.toggle:
     default: op
     description: Allows you to toggle staffchat
-  simplestaffchat.symbol:
-    default: op
-    description: Allows you to use the staffchat symbol
-  simplestaffchat.reload:
+  simplestaffchat.command.reload:
     default: op
     description: Allows you to reload the config file
-  simplestaffchat.admin.use:
+  simplestaffchat.staffchat.see:
     default: op
-    description: Allows you to use the adminchat command
-  simplestaffchat.admin.see:
+    description: Allows you to see the staffchat messages
+  simplestaffchat.staffchat.symbol:
     default: op
-    description: Allows you to see the adminchat messages
-  simplestaffchat.admin.toggle:
+    description: Allows you to use the staffchat symbol
+  simplestaffchat.join:
     default: op
-    description: Allows you to toggle adminchat
-  simplestaffchat.admin.symbol:
+    description: Sends a join message when a staff member joins.
+  simplestaffchat.quit:
     default: op
-    description: Allows you to use the adminchat symbol
-  simplestaffchat.dev.use:
-    default: op
-    description: Allows you to use the devchat command
-  simplestaffchat.dev.see:
-    default: op
-    description: Allows you to see the devchat messages
-  simplestaffchat.dev.toggle:
-    default: op
-    description: Allows you to toggle devchat
-  simplestaffchat.dev.symbol:
-    default: op
-    description: Allows you to use the devchat symbol
+    description: Sends a join message when a staff member leaves the server.

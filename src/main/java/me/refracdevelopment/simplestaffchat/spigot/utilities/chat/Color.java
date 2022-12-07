@@ -1,64 +1,29 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2022 RefracDevelopment
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import me.refracdevelopment.simplestaffchat.shared.ColorTranslator;
+import dev.rosewood.rosegarden.utils.HexUtils;
+import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class Color {
 
-    public static String translate(CommandSender sender, String source) {
-        source = Placeholders.setPlaceholders(sender, source);
-
-        if (sender instanceof Player) {
-            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                Player player = (Player) sender;
-                source = PlaceholderAPI.setPlaceholders(player, source);
-            }
-        }
-
-        return translate(source);
-    }
-
     public static String translate(String source) {
-        return ColorTranslator.translateColorCodes(source);
+        return HexUtils.colorify(source);
     }
 
-    public static void sendMessage(CommandSender sender, String source, boolean color, boolean placeholders) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
-        if (placeholders) source = Placeholders.setPlaceholders(sender, source);
-        
-        if (sender instanceof Player) {
-            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                Player player = (Player) sender;
-                source = PlaceholderAPI.setPlaceholders(player, source);
-            }
-        }
+    public static void log(String message) {
+        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
 
-        if (color) source = translate(source);
+        String prefix = locale.getLocaleMessage("prefix");
 
-        sender.sendMessage(source);
+        locale.sendCustomMessage(Bukkit.getConsoleSender(), prefix + message);
+    }
+
+    // Used for console StaffChat messages
+    public static void log2(String message) {
+        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+
+
+        locale.sendCustomMessage(Bukkit.getConsoleSender(), message);
     }
 }

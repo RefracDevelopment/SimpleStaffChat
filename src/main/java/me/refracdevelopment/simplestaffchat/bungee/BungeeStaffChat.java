@@ -1,44 +1,30 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2022 RefracDevelopment
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package me.refracdevelopment.simplestaffchat.bungee;
 
+import co.aikar.commands.BungeeCommandIssuer;
+import co.aikar.commands.BungeeCommandManager;
+import co.aikar.commands.ConditionFailedException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.admin.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.dev.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.config.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Logger;
-import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import net.luckperms.api.LuckPermsProvider;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @Getter
 public class BungeeStaffChat extends Plugin {
@@ -50,43 +36,102 @@ public class BungeeStaffChat extends Plugin {
     @Override
     public void onEnable() {
         instance = this;
-        this.configFile = new YMLBase(this, "bungee-config.yml");
+        long startTiming = System.currentTimeMillis();
+
+        this.configFile = new YMLBase(this, "config.yml");
         Config.setConfig(this.configFile);
         Config.load();
-        Logger.NONE.out("&c==========================================");
-        Logger.NONE.out("&aAll files have been loaded correctly!");
-        Logger.NONE.out("&c==========================================");
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
 
         loadCommands();
+        Color.log("&aLoaded commands.");
         loadListeners();
+        Color.log("&aLoaded listeners.");
 
         if (Config.LUCKPERMS.toBoolean()) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Logger.INFO.out("Hooked into LuckPerms.");
+            Color.log("&aHooked into LuckPerms.");
         }
 
         new Metrics(this, 12096);
 
-        Logger.NONE.out("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Logger.NONE.out("&e" + Settings.getName + " has been enabled.");
-        Logger.NONE.out(" &f[*] &6Version&f: &b" + Settings.getVersion);
-        Logger.NONE.out(" &f[*] &6Name&f: &b" + Settings.getName);
-        Logger.NONE.out(" &f[*] &6Author&f: &b" + Settings.getDeveloper);
-        Logger.NONE.out("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log("&aChecking for updates!");
+        updateCheck(getProxy().getConsole(), true);
+
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log("&e" + Settings.getName + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log(" &f[*] &6Version&f: &b" + Settings.getVersion);
+        Color.log(" &f[*] &6Name&f: &b" + Settings.getName);
+        Color.log(" &f[*] &6Author&f: &b" + Settings.getDeveloper);
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
     }
 
     private void loadCommands() {
-        getProxy().getPluginManager().registerCommand(this, new StaffChatCommand(this));
-        getProxy().getPluginManager().registerCommand(this, new ToggleCommand());
-        getProxy().getPluginManager().registerCommand(this, new AdminChatCommand(this));
-        getProxy().getPluginManager().registerCommand(this, new AdminToggleCommand());
-        getProxy().getPluginManager().registerCommand(this, new DevChatCommand(this));
-        getProxy().getPluginManager().registerCommand(this, new DevToggleCommand());
-        getProxy().getPluginManager().registerCommand(this, new ReloadCommand(this));
+        BungeeCommandManager manager = new BungeeCommandManager(this);
+        manager.getCommandConditions().addCondition("noconsole", (context) -> {
+            BungeeCommandIssuer issuer = context.getIssuer();
+            if (!issuer.isPlayer()) {
+                throw new ConditionFailedException("Only players can use this command.");
+            }
+            return;
+        });
+        manager.registerCommand(new StaffChatCommand());
+        manager.registerCommand(new ReloadCommand());
+        manager.registerCommand(new ToggleCommand());
     }
 
     private void loadListeners() {
-        getProxy().getPluginManager().registerListener(this, new JoinListener(this));
-        getProxy().getPluginManager().registerListener(this, new ChatListener(this));
+        getProxy().getPluginManager().registerListener(this, new JoinListener());
+        getProxy().getPluginManager().registerListener(this, new ChatListener());
+    }
+
+    public void updateCheck(CommandSender sender, boolean console) {
+        try {
+            String urlString = "https://updatecheck.refracdev.ml";
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String input;
+            StringBuffer response = new StringBuffer();
+            while ((input = reader.readLine()) != null) {
+                response.append(input);
+            }
+            reader.close();
+            JsonObject object = new JsonParser().parse(response.toString()).getAsJsonObject();
+
+            if (object.has("plugins")) {
+                JsonObject plugins = object.get("plugins").getAsJsonObject();
+                JsonObject info = plugins.get(Settings.getName).getAsJsonObject();
+                String version = info.get("version").getAsString();
+                if (version.equals(getDescription().getVersion())) {
+                    if (console) {
+                        sender.sendMessage(Color.translate("&a" + Settings.getName + " is on the latest version."));
+                    }
+                } else {
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate("&cYour " + Settings.getName + " version is out of date!"));
+                    sender.sendMessage(Color.translate("&cWe recommend updating ASAP!"));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate("&cYour Version: &e" + Settings.getVersion));
+                    sender.sendMessage(Color.translate("&aNewest Version: &e" + version));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate(""));
+                    return;
+                }
+                return;
+            } else {
+                sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
+                return;
+            }
+        } catch (
+                Exception ex) {
+            sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
+            return;
+        }
     }
 }

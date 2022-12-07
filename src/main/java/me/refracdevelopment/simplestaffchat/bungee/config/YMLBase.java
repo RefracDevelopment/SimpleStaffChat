@@ -1,7 +1,6 @@
 package me.refracdevelopment.simplestaffchat.bungee.config;
 
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Logger;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -43,7 +42,7 @@ public class YMLBase {
                 } else
                     file.createNewFile();
             } catch (IOException e) {
-                Logger.ERROR.out(e.getMessage());
+                Color.log(e.getMessage());
             }
         }
 
@@ -54,7 +53,7 @@ public class YMLBase {
         try {
             this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
         } catch (IOException e) {
-            Logger.ERROR.out(e.getMessage());
+            Color.log(e.getMessage());
         }
     }
 
@@ -62,7 +61,7 @@ public class YMLBase {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, file);
         } catch (IOException e) {
-            Logger.ERROR.out(e.getMessage());
+            Color.log(e.getMessage());
         }
     }
 

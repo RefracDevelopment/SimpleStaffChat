@@ -1,10 +1,84 @@
-name: 'SimpleStaffChat2'
-version: '${project.version}'
+name: SimpleStaffChat2
+version: ${project.version}
 main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
 softDepends:
   - LuckPerms
 authors:
-  - 'RefracDevelopment'
-  - 'Refrac'
-description: 'A Simple StaffChat Plugin'
-website: 'https://discord.gg/EFeSKPg739'
+  - RefracDevelopment
+  - Refrac
+description: A Simple StaffChat Plugin
+website: https://discord.refracdev.ml/
+
+permissions:
+  simplestaffchat.*:
+    default: op
+    description: Gives all permissions
+    children:
+      simplestaffchat.command.help: true
+      simplestaffchat.command.staffchat: true
+      simplestaffchat.command.staffchat.toggle: true
+      simplestaffchat.command.reload: true
+      simplestaffchat.command.adminchat: true
+      simplestaffchat.command.adminchat.toggle: true
+      simplestaffchat.command.devchat: true
+      simplestaffchat.command.devchat.toggle: true
+      simplestaffchat.staffchat.see: true
+      simplestaffchat.adminchat.see: true
+      simplestaffchat.devchat.see: true
+      simplestaffchat.staffchat.symbol: true
+      simplestaffchat.adminchat.symbol: true
+      simplestaffchat.devchat.symbol: true
+      simplestaffchat.join: true
+      simplestaffchat.switch: true
+      simplestaffchat.quit: true
+  simplestaffchat.command.help:
+    default: op
+    description: Allows you to see the help page
+  simplestaffchat.command.staffchat:
+    default: op
+    description: Allows you to use the staffchat command
+  simplestaffchat.command.staffchat.toggle:
+    default: op
+    description: Allows you to toggle staffchat
+  simplestaffchat.command.reload:
+    default: op
+    description: Allows you to reload the config file
+  simplestaffchat.command.adminchat:
+    default: op
+    description: Allows you to use the adminchat command
+  simplestaffchat.command.adminchat.toggle:
+    default: op
+    description: Allows you to toggle adminchat
+  simplestaffchat.command.devchat:
+    default: op
+    description: Allows you to use the devchat command
+  simplestaffchat.command.devchat.toggle:
+    default: op
+    description: Allows you to toggle devchat
+  simplestaffchat.staffchat.see:
+    default: op
+    description: Allows you to see the staffchat messages
+  simplestaffchat.adminchat.see:
+    default: op
+    description: Allows you to see the adminchat messages
+  simplestaffchat.devchat.see:
+    default: op
+    description: Allows you to see the devchat messages
+  simplestaffchat.staffchat.symbol:
+    default: op
+    description: Allows you to use the staffchat symbol
+  simplestaffchat.adminchat.symbol:
+    default: op
+    description: Allows you to use the adminchat symbol
+  simplestaffchat.devchat.symbol:
+    default: op
+    description: Allows you to use the devchat symbol
+  simplestaffchat.join:
+    default: op
+    description: Sends a join message when a staff member joins.
+  simplestaffchat.switch:
+    default: op
+    description: Sends a join message when a staff member switch servers.
+  simplestaffchat.quit:
+    default: op
+    description: Sends a join message when a staff member leaves the server.

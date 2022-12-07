@@ -9,6 +9,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @UtilityClass
 public class LuckPermsUtil {
+
     @Getter
     @Setter
     private LuckPerms luckPerms;
