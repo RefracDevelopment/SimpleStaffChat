@@ -1,6 +1,7 @@
 package me.refracdevelopment.simplestaffchat.spigot.utilities.config;
 
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class Config {
     public static String STAFFCHAT_OUTPUT;
     public static List<String> STAFFCHAT_MESSAGE;
 
+    // Settings
+    public static boolean VELOCITY;
+
     public static void loadConfig() {
         // General
         STAFFCHAT_SYMBOL = ConfigurationManager.Setting.STAFFCHAT_SYMBOL.getString();
@@ -34,5 +38,12 @@ public class Config {
         // Messages
         STAFFCHAT_OUTPUT = ConfigurationManager.Setting.STAFFCHAT_OUTPUT.getString();
         STAFFCHAT_MESSAGE = ConfigurationManager.Setting.STAFFCHAT_MESSAGE.getStringList();
+
+        // Settings
+        VELOCITY = ConfigurationManager.Setting.VELOCITY.getBoolean();
+
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
     }
 }

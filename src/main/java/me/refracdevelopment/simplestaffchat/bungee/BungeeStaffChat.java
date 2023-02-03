@@ -41,14 +41,9 @@ public class BungeeStaffChat extends Plugin {
         this.configFile = new YMLBase(this, "config.yml");
         Config.setConfig(this.configFile);
         Config.load();
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
 
         loadCommands();
-        Color.log("&aLoaded commands.");
         loadListeners();
-        Color.log("&aLoaded listeners.");
 
         if (Config.LUCKPERMS.toBoolean()) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
@@ -57,15 +52,14 @@ public class BungeeStaffChat extends Plugin {
 
         new Metrics(this, 12096);
 
-        Color.log("&aChecking for updates!");
-        updateCheck(getProxy().getConsole(), true);
-
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + Settings.getName + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
         Color.log(" &f[*] &6Version&f: &b" + Settings.getVersion);
         Color.log(" &f[*] &6Name&f: &b" + Settings.getName);
         Color.log(" &f[*] &6Author&f: &b" + Settings.getDeveloper);
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+
+        updateCheck(getProxy().getConsole(), true);
     }
 
     private void loadCommands() {
@@ -77,17 +71,20 @@ public class BungeeStaffChat extends Plugin {
             }
             return;
         });
-        manager.registerCommand(new StaffChatCommand());
-        manager.registerCommand(new ReloadCommand());
+        manager.registerCommand(new StaffChatCommand(this));
+        manager.registerCommand(new ReloadCommand(this));
         manager.registerCommand(new ToggleCommand());
+        Color.log("&aLoaded commands.");
     }
 
     private void loadListeners() {
         getProxy().getPluginManager().registerListener(this, new JoinListener());
         getProxy().getPluginManager().registerListener(this, new ChatListener());
+        Color.log("&aLoaded listeners.");
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
+        Color.log("&aChecking for updates!");
         try {
             String urlString = "https://updatecheck.refracdev.ml";
             URL url = new URL(urlString);

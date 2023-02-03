@@ -26,7 +26,8 @@ public class ConfigurationManager extends AbstractConfigurationManager {
                 "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.",
                 "&8- &d/staffchatreload &7- Reloads the config files.",
                 ""
-        ))
+        )),
+        VELOCITY("velocity", false, "Enable this to allow messages", "To be sent using the BungeeCord", "Plugin Messaging Protocol", "This allows Velocity to receive staffchat messages")
         ;
 
         private final String key;

@@ -3,6 +3,7 @@ package me.refracdevelopment.simplestaffchat.bungee.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.google.common.base.Joiner;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
@@ -15,6 +16,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 @Description("Send messages to your staff privately")
 public class StaffChatCommand extends BaseCommand {
 
+    private final BungeeStaffChat plugin;
+
+    public StaffChatCommand(BungeeStaffChat plugin) {
+        this.plugin = plugin;
+    }
+
     @Default
     @CommandCompletion("@players")
     public void execute(CommandSender sender, String[] args) {
@@ -25,7 +32,7 @@ public class StaffChatCommand extends BaseCommand {
             format = (sender instanceof ProxiedPlayer) ? Config.FORMAT_STAFFCHAT.toString().replace("%server%", ((ProxiedPlayer) sender).getServer().getInfo().getName())
                     .replace("%message%", message) : Config.CONSOLE_STAFFCHAT.toString().replace("%message%", message);
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+            for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     p.sendMessage(Color.translate(sender, format));
                 }
@@ -34,12 +41,13 @@ public class StaffChatCommand extends BaseCommand {
         } else {
             if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(sender, "&c/staffchat <message>", true);
+                    Color.sendMessage(sender, Config.MESSAGES_USAGE.toString(), true);
                     return;
                 }
 
-                for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList())
+                for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList()) {
                     Color.sendMessage(sender, s, true);
+                }
             } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;
@@ -59,7 +67,7 @@ public class StaffChatCommand extends BaseCommand {
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(sender, "&c/staffchat <message>", true);
+                    Color.sendMessage(sender, Config.MESSAGES_USAGE.toString(), true);
                     return;
                 }
 

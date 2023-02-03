@@ -16,9 +16,15 @@ import net.md_5.bungee.api.CommandSender;
 @Description("Reloads the config file.")
 public class ReloadCommand extends BaseCommand {
 
+    private final BungeeStaffChat plugin;
+
+    public ReloadCommand(BungeeStaffChat plugin) {
+        this.plugin = plugin;
+    }
+
     @Default
     public void execute(CommandSender sender) {
-        BungeeStaffChat.getInstance().getConfigFile().load();
+        plugin.getConfigFile().load();
         Color.sendMessage(sender, Config.MESSAGES_RELOAD.toString(), true);
     }
 }

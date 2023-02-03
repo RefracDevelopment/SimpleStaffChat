@@ -15,30 +15,14 @@
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
-# Used to send messages to adminchat without the
-# need to type in /adminchat <message> or /adminchattoggle
-# this uses the same format as /adminchat <message>
-adminchat-symbol: "#"
-# Used to send messages to devchat without the
-# need to type in /devchat <message> or /devchattoggle
-# this uses the same format as /devchat <message>
-devchat-symbol: "%"
 # Change to true if you have LuckPerms installed
 luckperms: false
 
 format:
-  # AdminChat Format
-  adminchat-format: "&8[&c&lAdminChat&8] &e(%server%) &c&l%player%&7: &f%message%"
-  # DevChat Format
-  devchat-format: "&8[&d&lDevChat&8] &e(%server%) &b&l%player%&7: &f%message%"
   # Minecraft format
   minecraft-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
   # Format for messages sent by the console.
   console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
-  # Format for messages sent by the console.
-  console-adminchat-format: "&8[&c&lAdminChat&8] &c&lConsole&7: &f%message%"
-  # Format for messages sent by the console.
-  console-devchat-format: "&8[&d&lDevChat&8] &b&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit

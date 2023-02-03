@@ -8,8 +8,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class Color {
 
-    public static TextComponent translate(CommandSender player, String source) {
-        source = Placeholders.setPlaceholders(player, source);
+    public static TextComponent translate(CommandSender sender, String source) {
+        source = Placeholders.setPlaceholders(sender, source);
 
         return new TextComponent(translate(source));
     }

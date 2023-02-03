@@ -21,20 +21,31 @@ import java.util.UUID;
 @Description("Allows you to toggle staffchat.")
 public class ToggleCommand extends BaseCommand {
 
+    private final SimpleStaffChat plugin;
+
     public static List<UUID> insc = new ArrayList<>();
+
+    public ToggleCommand(SimpleStaffChat plugin) {
+        this.plugin = plugin;
+    }
 
     @Default
     public void execute(CommandSender sender) {
-        Player player = (Player) sender;
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+        if (!(sender instanceof Player)) {
+            locale.sendCommandMessage(sender, "no-console");
+            return;
+        }
+
+        Player player = (Player) sender;
 
         if (insc.contains(player.getUniqueId())) {
             insc.remove(player.getUniqueId());
-            locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+            locale.sendCommandMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
         } else {
             insc.add(player.getUniqueId());
-            locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
+            locale.sendCommandMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
         }
     }
 }

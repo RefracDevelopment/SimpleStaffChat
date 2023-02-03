@@ -3,7 +3,7 @@ version: '@version@'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
 author:  RefracDevelopment
 api-version: "1.13"
-softdepend:
+depend:
   - PlaceholderAPI
 description: A Simple StaffChat Plugin
 website: https://discord.refracdev.ml/
@@ -15,10 +15,10 @@ permissions:
     children:
       simplestaffchat.command.help: true
       simplestaffchat.command.staffchat: true
-      simplestaffchat.command.staffchat.toggle: true
+      simplestaffchat.command.toggle: true
       simplestaffchat.command.reload: true
-      simplestaffchat.staffchat.see: true
-      simplestaffchat.staffchat.symbol: true
+      simplestaffchat.see: true
+      simplestaffchat.symbol: true
       simplestaffchat.join: true
       simplestaffchat.quit: true
   simplestaffchat.command.help:
@@ -27,16 +27,16 @@ permissions:
   simplestaffchat.command.staffchat:
     default: op
     description: Allows you to use the staffchat command
-  simplestaffchat.command.staffchat.toggle:
+  simplestaffchat.command.toggle:
     default: op
     description: Allows you to toggle staffchat
   simplestaffchat.command.reload:
     default: op
     description: Allows you to reload the config file
-  simplestaffchat.staffchat.see:
+  simplestaffchat.see:
     default: op
     description: Allows you to see the staffchat messages
-  simplestaffchat.staffchat.symbol:
+  simplestaffchat.symbol:
     default: op
     description: Allows you to use the staffchat symbol
   simplestaffchat.join:

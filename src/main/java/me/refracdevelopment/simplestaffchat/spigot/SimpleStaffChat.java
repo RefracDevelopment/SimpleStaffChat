@@ -7,11 +7,13 @@ import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.manager.Manager;
 import dev.rosewood.rosegarden.utils.NMSUtil;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
+import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
@@ -42,46 +44,48 @@ public final class SimpleStaffChat extends RosePlugin {
     protected void enable() {
         // Plugin startup logic
         long startTiming = System.currentTimeMillis();
-        PluginManager pluginManager = this.getServer().getPluginManager();
+        PluginManager pluginManager = getServer().getPluginManager();
 
         Config.loadConfig();
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
 
         // Make sure the server has PlaceholderAPI
         if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
-            this.getServer().getPluginManager().disablePlugin(this);
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        // Make sure the server is on MC 1.13
-        if (NMSUtil.getVersionNumber() < 13) {
-            Color.log("&cThis plugin only supports 1.13+ Minecraft.");
-            this.getServer().getPluginManager().disablePlugin(this);
+        // Make sure the server is on MC 1.16
+        if (NMSUtil.getVersionNumber() < 16) {
+            Color.log("&cThis plugin only supports 1.16+ Minecraft.");
+            getServer().getPluginManager().disablePlugin(this);
             return;
+        }
+
+        if (Config.VELOCITY) {
+            getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+            getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
         }
 
         loadCommands();
-        Color.log("&aLoaded commands.");
         loadListeners();
-        Color.log("&aLoaded listeners.");
 
-        Color.log("&aChecking for updates!");
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
+        Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
+        Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+
         updateCheck(Bukkit.getConsoleSender(), true);
-
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Color.log("&e" + this.getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(" &f[*] &6Version&f: &b" + this.getDescription().getVersion());
-        Color.log(" &f[*] &6Name&f: &b" + this.getDescription().getName());
-        Color.log(" &f[*] &6Author&f: &b" + this.getDescription().getAuthors().get(0));
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
     }
 
     @Override
     protected void disable() {
-        // unused
+        if (Config.VELOCITY) {
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
+        }
     }
 
     @Override
@@ -91,17 +95,20 @@ public final class SimpleStaffChat extends RosePlugin {
 
     private void loadCommands() {
         BukkitCommandManager manager = new BukkitCommandManager(this);
-        manager.registerCommand(new StaffChatCommand());
-        manager.registerCommand(new ToggleCommand());
-        manager.registerCommand(new ReloadCommand());
+        manager.registerCommand(new StaffChatCommand(this));
+        manager.registerCommand(new ToggleCommand(this));
+        manager.registerCommand(new ReloadCommand(this));
+        Color.log("&aLoaded commands.");
     }
 
     private void loadListeners() {
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
+        Color.log("&aLoaded listeners.");
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
+        Color.log("&aChecking for updates!");
         try {
             String urlString = "https://updatecheck.refracdev.ml";
             URL url = new URL(urlString);
@@ -119,19 +126,19 @@ public final class SimpleStaffChat extends RosePlugin {
 
             if (object.has("plugins")) {
                 JsonObject plugins = object.get("plugins").getAsJsonObject();
-                JsonObject info = plugins.get(this.getDescription().getName()).getAsJsonObject();
+                JsonObject info = plugins.get(getDescription().getName()).getAsJsonObject();
                 String version = info.get("version").getAsString();
-                if (version.equals(this.getDescription().getVersion())) {
+                if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        sender.sendMessage(Color.translate("&a" + this.getDescription().getName() + " is on the latest version."));
+                        sender.sendMessage(Color.translate("&a" + Settings.getName + " is on the latest version."));
                     }
                 } else {
                     sender.sendMessage(Color.translate(""));
                     sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour " + this.getDescription().getName() + " version is out of date!"));
+                    sender.sendMessage(Color.translate("&cYour " + Settings.getName + " version is out of date!"));
                     sender.sendMessage(Color.translate("&cWe recommend updating ASAP!"));
                     sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour Version: &e" + this.getDescription().getVersion()));
+                    sender.sendMessage(Color.translate("&cYour Version: &e" + Settings.getVersion));
                     sender.sendMessage(Color.translate("&aNewest Version: &e" + version));
                     sender.sendMessage(Color.translate(""));
                     sender.sendMessage(Color.translate(""));

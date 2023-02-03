@@ -17,17 +17,23 @@ import org.bukkit.command.CommandSender;
 @Description("Reloads the config file")
 public class ReloadCommand extends BaseCommand {
 
+    private final SimpleStaffChat plugin;
+
+    public ReloadCommand(SimpleStaffChat plugin) {
+        this.plugin = plugin;
+    }
+
     @Default
     public void onDefault(CommandSender sender) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
+            locale.sendCommandMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
             return;
         }
 
-        SimpleStaffChat.getInstance().reload();
+        plugin.reload();
         Config.loadConfig();
-        locale.sendMessage(sender, "reload", Placeholders.setPlaceholders(sender));
+        locale.sendCommandMessage(sender, "reload", Placeholders.setPlaceholders(sender));
     }
 }

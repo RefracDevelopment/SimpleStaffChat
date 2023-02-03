@@ -14,18 +14,25 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
 
+    private final SimpleStaffChat plugin;
+    private final PluginMessage pluginMessage = new PluginMessage(SimpleStaffChat.getInstance());
+
+    public ChatListener(SimpleStaffChat plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onStaffChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
             event.setCancelled(true);
 
             if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
                 ToggleCommand.insc.remove(player.getUniqueId());
-                locale.sendMessage(player, "toggle-off");
+                locale.sendCommandMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
                 return;
             }
 
@@ -37,6 +44,9 @@ public class ChatListener implements Listener {
                     locale.sendCustomMessage(p, Placeholders.setPlaceholders(player, format));
                 }
             });
+            if (Config.VELOCITY) {
+                pluginMessage.sendMessage(Color.translate(player, format));
+            }
             Color.log2(Placeholders.setPlaceholders(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
@@ -52,6 +62,9 @@ public class ChatListener implements Listener {
                     locale.sendCustomMessage(p, Placeholders.setPlaceholders(player, format));
                 }
             });
+            if (Config.VELOCITY) {
+                pluginMessage.sendMessage(Color.translate(player, format));
+            }
             Color.log2(Placeholders.setPlaceholders(player, format));
         }
     }

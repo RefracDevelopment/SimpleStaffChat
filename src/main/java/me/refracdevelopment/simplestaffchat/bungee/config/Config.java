@@ -3,6 +3,7 @@ package me.refracdevelopment.simplestaffchat.bungee.config;
 import lombok.Getter;
 import lombok.Setter;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,15 +16,9 @@ import java.util.List;
 public enum Config {
 
     STAFFCHAT_SYMBOL("staffchat-symbol", "@"),
-    ADMINCHAT_SYMBOL("adminchat-symbol", "#"),
-    DEVCHAT_SYMBOL("devchat-symbol", "%"),
     LUCKPERMS("luckperms", false),
-    FORMAT_ADMINCHAT("format.adminchat-format", "&8[&c&lAdminChat&8] &e(%server%) &c&l%player%&7: &f%message%"),
-    FORMAT_DEVCHAT("format.devchat-format", "&8[&d&lDevChat&8] &e(%server%) &b&l%player%&7: &f%message%"),
     FORMAT_STAFFCHAT("format.minecraft-format", "%prefix% &e(%server%) &6&l%player%&7: &f%message%"),
     CONSOLE_STAFFCHAT("format.console-staffchat-format", "%prefix% &6&lConsole&7: &f%message%"),
-    CONSOLE_ADMINCHAT("format.console-adminchat-format", "&8[&c&lAdminChat&8] &c&lConsole&7: &f%message%"),
-    CONSOLE_DEVCHAT("format.console-devchat-format", "&8[&d&lDevChat&8] &e&lConsole&7: &f%message%"),
     JOIN_ENABLED("join.enabled", false),
     JOIN_FORMAT("join.join-format", "&8[&a+&8] &9%player% &fjoined &e%server%&f."),
     SWITCH_FORMAT("join.switch-format", "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."),
@@ -31,24 +26,17 @@ public enum Config {
     MESSAGES_PREFIX("messages.prefix", "&8[&4&lStaffChat&8]"),
     MESSAGES_NO_PERMISSION("messages.no-permission", "&cYou don't have permission to execute this command."),
     MESSAGES_RELOAD("messages.reload", "&7Config files reloaded. Changes should be live in-game."),
+    MESSAGES_USAGE("messages.usage", "&c/staffchat <message>"),
     MESSAGES_TOGGLE_ON("messages.toggle-on", "%prefix% &7StaffChat toggled &aon&7."),
     MESSAGES_TOGGLE_OFF("messages.toggle-off", "%prefix% &7StaffChat toggled &coff&7."),
-    MESSAGES_ADMINCHAT_TOGGLE_ON("messages.adminchat-toggle-on", "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."),
-    MESSAGES_ADMINCHAT_TOGGLE_OFF("messages.adminchat-toggle-off", "&8[&c&lAdminChat&8] &7AdminChat toggled &coff&7."),
-    MESSAGES_DEVCHAT_TOGGLE_ON("messages.devchat-toggle-on", "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."),
-    MESSAGES_DEVCHAT_TOGGLE_OFF("messages.devchat-toggle-off", "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."),
     MESSAGES_STAFFCHAT_OUTPUT("messages.staffchat-output", "default"),
     MESSAGES_STAFFCHAT_MESSAGE("messages.staffchat-message", Arrays.asList(
             "",
-            "&c&lSimpleStaffChat2 %arrow2% Help",
+            "<g:#8A2387:#E94057:#F27121>SimpleStaffChat2 &8| &f Available Commands:",
             "",
-            "&c/staffchat <message> - Send staffchat messages.",
-            "&c/adminchat <message> - Send adminchat messages.",
-            "&c/devchat <message> - Send devchat messages.",
-            "&c/staffchattoggle - Send staffchat messages without needing to type a command.",
-            "&c/adminchattoggle - Send adminchat messages without needing to type a command.",
-            "&c/devchattoggle - Send devchat messages without needing to type a command.",
-            "&c/staffchatreload - Reload the config file.",
+            "&8- &d/staffchat <message> &7- Send staffchat messages.",
+            "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.",
+            "&8- &d/staffchatreload &7- Reload the config file.",
             ""
     ));
 
@@ -73,6 +61,9 @@ public enum Config {
             }
         });
         plugin.getConfigFile().save();
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
     }
 
     public boolean toBoolean() {

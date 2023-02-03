@@ -5,11 +5,11 @@ import co.aikar.commands.annotation.*;
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.config.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -18,10 +18,17 @@ import org.bukkit.entity.Player;
 @Description("Send messages to your staff privately")
 public class StaffChatCommand extends BaseCommand {
 
+    private final SimpleStaffChat plugin;
+    private final PluginMessage pluginMessage = new PluginMessage(SimpleStaffChat.getInstance());
+
+    public StaffChatCommand(SimpleStaffChat plugin) {
+        this.plugin = plugin;
+    }
+
     @Default
     @CommandCompletion("@players")
     public void execute(CommandSender sender, String[] args) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         String message = Joiner.on(" ").join(args);
 
@@ -29,16 +36,19 @@ public class StaffChatCommand extends BaseCommand {
             String format = (sender instanceof Player) ? Config.MINECRAFT_FORMAT.replace("%message%", message) :
                     Config.CONSOLE_FORMAT.replace("%message%", message);
 
-            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     locale.sendCustomMessage(p, Placeholders.setPlaceholders(sender, format));
+                    if (Config.VELOCITY) {
+                        pluginMessage.sendMessage(Color.translate(sender, format));
+                    }
                 }
             }
             Color.log2(Placeholders.setPlaceholders(sender, format));
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendCustomMessage(sender, "&c/staffchat <message>");
+                    locale.sendCommandMessage(sender, "usage", Placeholders.setPlaceholders(sender));
                     return;
                 }
 
@@ -54,15 +64,15 @@ public class StaffChatCommand extends BaseCommand {
 
                     if (ToggleCommand.insc.contains(player.getUniqueId())) {
                         ToggleCommand.insc.remove(player.getUniqueId());
-                        locale.sendMessage(sender, "toggle-off", Placeholders.setPlaceholders(sender));
+                        locale.sendCommandMessage(sender, "toggle-off", Placeholders.setPlaceholders(sender));
                     } else {
                         ToggleCommand.insc.add(player.getUniqueId());
-                        locale.sendMessage(sender, "toggle-on", Placeholders.setPlaceholders(sender));
+                        locale.sendCommandMessage(sender, "toggle-on", Placeholders.setPlaceholders(sender));
                     }
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendCustomMessage(sender, "&c/staffchat <message>");
+                    locale.sendCommandMessage(sender, "usage", Placeholders.setPlaceholders(sender));
                     return;
                 }
 

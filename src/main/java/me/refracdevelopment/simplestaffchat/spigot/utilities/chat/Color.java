@@ -4,8 +4,15 @@ import dev.rosewood.rosegarden.utils.HexUtils;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 
 public class Color {
+
+    public static String translate(CommandSender sender, String source) {
+        source = Placeholders.setPlaceholders(sender, source);
+
+        return HexUtils.colorify(source);
+    }
 
     public static String translate(String source) {
         return HexUtils.colorify(source);
