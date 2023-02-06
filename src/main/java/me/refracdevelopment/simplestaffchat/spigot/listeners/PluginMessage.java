@@ -4,8 +4,9 @@ import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -36,7 +37,9 @@ public class PluginMessage implements PluginMessageListener {
                 String somedata = msgin.readUTF(); // Read the data in the same way you wrote it
                 short somenumber = msgin.readShort();
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(Color.translate(player, somedata));
+                    if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                        p.sendMessage(Color.translate(player, somedata));
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
