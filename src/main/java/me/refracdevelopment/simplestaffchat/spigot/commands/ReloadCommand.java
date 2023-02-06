@@ -28,12 +28,12 @@ public class ReloadCommand extends BaseCommand {
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            locale.sendCommandMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
+            locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
             return;
         }
 
         plugin.reload();
         Config.loadConfig();
-        locale.sendCommandMessage(sender, "reload", Placeholders.setPlaceholders(sender));
+        locale.sendMessage(sender, "reload", Placeholders.setPlaceholders(sender));
     }
 }

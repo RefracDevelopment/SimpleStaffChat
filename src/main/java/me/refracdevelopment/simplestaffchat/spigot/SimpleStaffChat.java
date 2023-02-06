@@ -7,7 +7,6 @@ import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.manager.Manager;
 import dev.rosewood.rosegarden.utils.NMSUtil;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
@@ -34,6 +33,7 @@ public final class SimpleStaffChat extends RosePlugin {
 
     @Getter
     private static SimpleStaffChat instance;
+    private PluginMessage pluginMessage;
 
     public SimpleStaffChat() {
         super(91883, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
@@ -65,6 +65,7 @@ public final class SimpleStaffChat extends RosePlugin {
         if (Config.VELOCITY) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
+            pluginMessage = new PluginMessage(this);
         }
 
         loadCommands();
@@ -130,15 +131,15 @@ public final class SimpleStaffChat extends RosePlugin {
                 String version = info.get("version").getAsString();
                 if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        sender.sendMessage(Color.translate("&a" + Settings.getName + " is on the latest version."));
+                        sender.sendMessage(Color.translate("&a" + getDescription().getName() + " is on the latest version."));
                     }
                 } else {
                     sender.sendMessage(Color.translate(""));
                     sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour " + Settings.getName + " version is out of date!"));
+                    sender.sendMessage(Color.translate("&cYour " + getDescription().getName() + " version is out of date!"));
                     sender.sendMessage(Color.translate("&cWe recommend updating ASAP!"));
                     sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour Version: &e" + Settings.getVersion));
+                    sender.sendMessage(Color.translate("&cYour Version: &e" + getDescription().getVersion()));
                     sender.sendMessage(Color.translate("&aNewest Version: &e" + version));
                     sender.sendMessage(Color.translate(""));
                     sender.sendMessage(Color.translate(""));

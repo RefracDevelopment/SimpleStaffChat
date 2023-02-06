@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.*;
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
@@ -19,7 +18,6 @@ import org.bukkit.entity.Player;
 public class StaffChatCommand extends BaseCommand {
 
     private final SimpleStaffChat plugin;
-    private final PluginMessage pluginMessage = new PluginMessage(SimpleStaffChat.getInstance());
 
     public StaffChatCommand(SimpleStaffChat plugin) {
         this.plugin = plugin;
@@ -39,16 +37,16 @@ public class StaffChatCommand extends BaseCommand {
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     locale.sendCustomMessage(p, Placeholders.setPlaceholders(sender, format));
-                    if (Config.VELOCITY) {
-                        pluginMessage.sendMessage(Color.translate(sender, format));
-                    }
                 }
+            }
+            if (Config.VELOCITY) {
+                plugin.getPluginMessage().sendMessage(Color.translate(sender, format));
             }
             Color.log2(Placeholders.setPlaceholders(sender, format));
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendCommandMessage(sender, "usage", Placeholders.setPlaceholders(sender));
+                    locale.sendMessage(sender, "usage", Placeholders.setPlaceholders(sender));
                     return;
                 }
 
@@ -64,15 +62,15 @@ public class StaffChatCommand extends BaseCommand {
 
                     if (ToggleCommand.insc.contains(player.getUniqueId())) {
                         ToggleCommand.insc.remove(player.getUniqueId());
-                        locale.sendCommandMessage(sender, "toggle-off", Placeholders.setPlaceholders(sender));
+                        locale.sendMessage(sender, "toggle-off", Placeholders.setPlaceholders(sender));
                     } else {
                         ToggleCommand.insc.add(player.getUniqueId());
-                        locale.sendCommandMessage(sender, "toggle-on", Placeholders.setPlaceholders(sender));
+                        locale.sendMessage(sender, "toggle-on", Placeholders.setPlaceholders(sender));
                     }
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendCommandMessage(sender, "usage", Placeholders.setPlaceholders(sender));
+                    locale.sendMessage(sender, "usage", Placeholders.setPlaceholders(sender));
                     return;
                 }
 

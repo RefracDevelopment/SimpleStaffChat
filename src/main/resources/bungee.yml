@@ -1,9 +1,9 @@
 name: SimpleStaffChat2
 version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
+author: RefracDevelopment
 softDepends:
   - LuckPerms
-author: RefracDevelopment
 description: A Simple StaffChat Plugin
 website: https://discord.refracdev.ml/
 

@@ -8,7 +8,6 @@ import me.refracdevelopment.simplestaffchat.bungee.config.Config;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 @CommandAlias("staffchat|sc")
@@ -34,10 +33,10 @@ public class StaffChatCommand extends BaseCommand {
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(sender, format));
+                    Color.sendMessage(p, Color.translate(sender, format), true);
                 }
             }
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(sender, format));
+            Color.log2(Color.translate(sender, format));
         } else {
             if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("custom") && Config.MESSAGES_STAFFCHAT_MESSAGE.toList() != null) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {

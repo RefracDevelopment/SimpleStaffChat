@@ -8,10 +8,10 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class Color {
 
-    public static TextComponent translate(CommandSender sender, String source) {
+    public static String translate(CommandSender sender, String source) {
         source = Placeholders.setPlaceholders(sender, source);
 
-        return new TextComponent(translate(source));
+        return translate(source);
     }
 
     public static String translate(String source) {
@@ -30,5 +30,9 @@ public class Color {
 
     public static void log(String message) {
         sendMessage(ProxyServer.getInstance().getConsole(), Config.MESSAGES_PREFIX.toString() + " " + message, true);
+    }
+
+    public static void log2(String message) {
+        sendMessage(ProxyServer.getInstance().getConsole(), message, true);
     }
 }

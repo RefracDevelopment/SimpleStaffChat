@@ -15,7 +15,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class ChatListener implements Listener {
 
     private final SimpleStaffChat plugin;
-    private final PluginMessage pluginMessage = new PluginMessage(SimpleStaffChat.getInstance());
 
     public ChatListener(SimpleStaffChat plugin) {
         this.plugin = plugin;
@@ -45,7 +44,7 @@ public class ChatListener implements Listener {
                 }
             });
             if (Config.VELOCITY) {
-                pluginMessage.sendMessage(Color.translate(player, format));
+                plugin.getPluginMessage().sendMessage(Color.translate(player, format));
             }
             Color.log2(Placeholders.setPlaceholders(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
@@ -63,7 +62,7 @@ public class ChatListener implements Listener {
                 }
             });
             if (Config.VELOCITY) {
-                pluginMessage.sendMessage(Color.translate(player, format));
+                plugin.getPluginMessage().sendMessage(Color.translate(player, format));
             }
             Color.log2(Placeholders.setPlaceholders(player, format));
         }

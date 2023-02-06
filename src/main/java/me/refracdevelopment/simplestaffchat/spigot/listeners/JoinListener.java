@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class JoinListener implements Listener {
 
     private final SimpleStaffChat plugin;
-    private final PluginMessage pluginMessage = new PluginMessage(SimpleStaffChat.getInstance());
 
     public JoinListener(SimpleStaffChat plugin) {
         this.plugin = plugin;
@@ -38,9 +37,9 @@ public class JoinListener implements Listener {
                 }
             }
             if (Config.VELOCITY) {
-                pluginMessage.sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+                plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
             }
-            Color.log(Placeholders.setPlaceholders(player, Config.JOIN_FORMAT));
+            Color.log2(Placeholders.setPlaceholders(player, Config.JOIN_FORMAT));
         }
 
         if (player.getUniqueId().equals(Settings.getDevUUID)) {
@@ -65,9 +64,9 @@ public class JoinListener implements Listener {
             }
         }
         if (Config.VELOCITY) {
-            pluginMessage.sendMessage(Color.translate(player, Config.JOIN_QUIT_FORMAT));
+            plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_QUIT_FORMAT));
         }
-        Color.log(Placeholders.setPlaceholders(player, Config.JOIN_QUIT_FORMAT));
+        Color.log2(Placeholders.setPlaceholders(player, Config.JOIN_QUIT_FORMAT));
     }
 
     private void sendDevMessage(Player player) {

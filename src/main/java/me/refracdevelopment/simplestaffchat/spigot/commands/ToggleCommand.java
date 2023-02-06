@@ -34,7 +34,7 @@ public class ToggleCommand extends BaseCommand {
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (!(sender instanceof Player)) {
-            locale.sendCommandMessage(sender, "no-console");
+            locale.sendMessage(sender, "no-console");
             return;
         }
 
@@ -42,10 +42,10 @@ public class ToggleCommand extends BaseCommand {
 
         if (insc.contains(player.getUniqueId())) {
             insc.remove(player.getUniqueId());
-            locale.sendCommandMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+            locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
         } else {
             insc.add(player.getUniqueId());
-            locale.sendCommandMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
+            locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
         }
     }
 }
