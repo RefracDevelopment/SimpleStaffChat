@@ -36,13 +36,13 @@ public class StaffChatCommand extends BaseCommand {
 
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(p, Placeholders.setPlaceholders(sender, format));
+                    locale.sendCustomMessage(p, Color.translate(sender, format));
                 }
             }
             if (Config.VELOCITY) {
                 plugin.getPluginMessage().sendMessage(Color.translate(sender, format));
             }
-            Color.log2(Placeholders.setPlaceholders(sender, format));
+            Color.log2(Color.translate(sender, format));
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
@@ -75,7 +75,7 @@ public class StaffChatCommand extends BaseCommand {
                 }
 
                 locale.sendCustomMessage(sender, "");
-                locale.sendCustomMessage(sender, Placeholders.setPlaceholders(sender, "<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &fAvailable Commands:"));
+                locale.sendCustomMessage(sender, "<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &fAvailable Commands:".replace("|", "\u239F"));
                 locale.sendCustomMessage(sender, "");
                 locale.sendCustomMessage(sender, "&8- &d/staffchat <message> &7- Send staffchat messages.");
                 locale.sendCustomMessage(sender, "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.");

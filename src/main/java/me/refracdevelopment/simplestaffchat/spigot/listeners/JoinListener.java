@@ -5,7 +5,6 @@ import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,13 +32,13 @@ public class JoinListener implements Listener {
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(player, Placeholders.setPlaceholders(player, Config.JOIN_FORMAT));
+                    locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_FORMAT));
                 }
             }
             if (Config.VELOCITY) {
                 plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
             }
-            Color.log2(Placeholders.setPlaceholders(player, Config.JOIN_FORMAT));
+            Color.log2(Color.translate(player, Config.JOIN_FORMAT));
         }
 
         if (player.getUniqueId().equals(Settings.getDevUUID)) {
@@ -60,13 +59,13 @@ public class JoinListener implements Listener {
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                locale.sendCustomMessage(player, Placeholders.setPlaceholders(player, Config.JOIN_QUIT_FORMAT));
+                locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_QUIT_FORMAT));
             }
         }
         if (Config.VELOCITY) {
             plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_QUIT_FORMAT));
         }
-        Color.log2(Placeholders.setPlaceholders(player, Config.JOIN_QUIT_FORMAT));
+        Color.log2(Color.translate(player, Config.JOIN_QUIT_FORMAT));
     }
 
     private void sendDevMessage(Player player) {

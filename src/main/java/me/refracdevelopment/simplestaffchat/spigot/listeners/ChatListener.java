@@ -40,13 +40,13 @@ public class ChatListener implements Listener {
 
             event.getRecipients().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(p, Placeholders.setPlaceholders(player, format));
+                    locale.sendCustomMessage(p, Color.translate(player, format));
                 }
             });
             if (Config.VELOCITY) {
                 plugin.getPluginMessage().sendMessage(Color.translate(player, format));
             }
-            Color.log2(Placeholders.setPlaceholders(player, format));
+            Color.log2(Color.translate(player, format));
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
@@ -58,13 +58,13 @@ public class ChatListener implements Listener {
 
             event.getRecipients().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(p, Placeholders.setPlaceholders(player, format));
+                    locale.sendCustomMessage(p, Color.translate(player, format));
                 }
             });
             if (Config.VELOCITY) {
                 plugin.getPluginMessage().sendMessage(Color.translate(player, format));
             }
-            Color.log2(Placeholders.setPlaceholders(player, format));
+            Color.log2(Color.translate(player, format));
         }
     }
 }
