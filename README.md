@@ -16,5 +16,7 @@ Please view the [LICENSE](LICENSE) file for more information on the license of t
 
 ### Libraries Used
 [RoseGarden](https://github.com/Rosewood-Development/RoseGarden) By [Rosewood Developement](https://github.com/Rosewood-Development)
+
 [Lombok](https://github.com/projectlombok/lombok) By [Project Lombok](https://github.com/projectlombok)
+
 [Aikar Command Manager](https://github.com/aikar/commands) By [Aikar](https://github.com/aikar)
