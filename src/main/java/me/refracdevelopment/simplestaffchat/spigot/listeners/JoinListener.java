@@ -46,6 +46,12 @@ public class JoinListener implements Listener {
         } else if (player.getUniqueId().equals(Settings.getDevUUID2)) {
             sendDevMessage(player);
         }
+
+        if (Config.UPDATE_ON_JOIN) {
+            if (!player.hasPermission(Permissions.UPDATE_ON_JOIN)) return;
+
+            plugin.updateCheck(player, true);
+        }
     }
 
     @EventHandler

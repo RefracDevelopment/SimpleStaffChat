@@ -22,11 +22,11 @@ public class JoinListener implements Listener {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
             if (player.getServer() != null) return;
 
-            for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+            ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
                 }
-            }
+            });
             ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
         }
 
@@ -46,12 +46,12 @@ public class JoinListener implements Listener {
 
         if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
 
-        for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+        ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
             }
-        }
+        });
         ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
     }
@@ -65,11 +65,11 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
         if (player.getServer() == null) return;
 
-        for (ProxiedPlayer p : ProxyServer.getInstance().getPlayers()) {
+        ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
             }
-        }
+        });
         ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
     }
 

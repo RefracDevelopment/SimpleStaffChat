@@ -44,9 +44,9 @@ public class StaffChatCommand extends BaseCommand {
                     return;
                 }
 
-                for (String s : Config.MESSAGES_STAFFCHAT_MESSAGE.toList()) {
+                Config.MESSAGES_STAFFCHAT_MESSAGE.toList().forEach(s -> {
                     Color.sendMessage(sender, s, true);
-                }
+                });
             } else if (Config.MESSAGES_STAFFCHAT_OUTPUT.toString().equalsIgnoreCase("toggle")) {
                 if (sender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) sender;

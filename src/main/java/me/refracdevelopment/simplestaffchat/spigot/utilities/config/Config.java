@@ -22,6 +22,7 @@ public class Config {
 
     // Settings
     public static boolean VELOCITY;
+    public static boolean UPDATE_ON_JOIN;
 
     public static void loadConfig() {
         // General
@@ -41,6 +42,7 @@ public class Config {
 
         // Settings
         VELOCITY = ConfigurationManager.Setting.VELOCITY.getBoolean();
+        UPDATE_ON_JOIN = ConfigurationManager.Setting.UPDATE_ON_JOIN.getBoolean();
 
         Color.log("&c==========================================");
         Color.log("&aAll files have been loaded correctly!");

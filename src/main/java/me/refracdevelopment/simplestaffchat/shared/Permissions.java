@@ -12,5 +12,6 @@ public class Permissions {
     public static final String STAFFCHAT_SYMBOL = "simplestaffchat.symbol";
     public static final String STAFFCHAT_RELOAD = "simplestaffchat.command.reload";
     public static final String STAFFCHAT_HELP = "simplestaffchat.command.help";
+    public static final String UPDATE_ON_JOIN = "simplestaffchat.update";
 
 }
