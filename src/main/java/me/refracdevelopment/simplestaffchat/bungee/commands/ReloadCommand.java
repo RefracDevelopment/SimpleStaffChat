@@ -11,7 +11,7 @@ import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 
-@CommandAlias("staffchatrelaod|screload")
+@CommandAlias("staffchatreload|screload")
 @CommandPermission(Permissions.STAFFCHAT_RELOAD)
 @Description("Reloads the config file.")
 public class ReloadCommand extends BaseCommand {
