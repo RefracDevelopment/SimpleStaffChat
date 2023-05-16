@@ -8,7 +8,7 @@ import co.aikar.commands.annotation.Description;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

@@ -10,13 +10,13 @@ import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -46,8 +46,6 @@ public final class SimpleStaffChat extends RosePlugin {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
-        Config.loadConfig();
-
         // Make sure the server has PlaceholderAPI
         if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
@@ -61,6 +59,8 @@ public final class SimpleStaffChat extends RosePlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        Config.loadConfig();
 
         if (Config.VELOCITY) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");

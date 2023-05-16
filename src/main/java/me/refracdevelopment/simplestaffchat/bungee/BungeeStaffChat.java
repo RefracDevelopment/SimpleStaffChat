@@ -41,6 +41,9 @@ public class BungeeStaffChat extends Plugin {
         this.configFile = new YMLBase(this, "config.yml");
         Config.setConfig(this.configFile);
         Config.load();
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
 
         loadCommands();
         loadListeners();

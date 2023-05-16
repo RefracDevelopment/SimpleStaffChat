@@ -1,7 +1,8 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
+package me.refracdevelopment.simplestaffchat.spigot.utilities;
 
 import dev.rosewood.rosegarden.utils.StringPlaceholders;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ public class Placeholders {
         final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
 
         placeholder = placeholder.replace("%prefix%", locale.getLocaleMessage("prefix"));
+        placeholder = placeholder.replace("%server%", Config.SERVER_NAME);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
@@ -29,23 +31,24 @@ public class Placeholders {
     }
 
     public static StringPlaceholders setPlaceholders(CommandSender sender) {
-        StringPlaceholders placeholders = StringPlaceholders.builder().build();
+        StringPlaceholders.Builder placeholders = StringPlaceholders.builder();
         final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
 
-        placeholders.addPlaceholder("prefix", locale.getLocaleMessage("prefix"));
+        placeholders.add("prefix", locale.getLocaleMessage("prefix"));
+        placeholders.add("server", Config.SERVER_NAME);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            placeholders.addPlaceholder("player", player.getName());
-            placeholders.addPlaceholder("displayname", player.getDisplayName());
+            placeholders.add("player", player.getName());
+            placeholders.add("displayname", player.getDisplayName());
         }
-        placeholders.addPlaceholder("arrow", "\u00BB");
-        placeholders.addPlaceholder("arrow2", "\u27A5");
-        placeholders.addPlaceholder("arrow_2", "\u27A5");
-        placeholders.addPlaceholder("star", "\u2726");
-        placeholders.addPlaceholder("circle", "\u2219");
-        placeholders.addPlaceholder("|", "\u239F");
+        placeholders.add("arrow", "\u00BB");
+        placeholders.add("arrow2", "\u27A5");
+        placeholders.add("arrow_2", "\u27A5");
+        placeholders.add("star", "\u2726");
+        placeholders.add("circle", "\u2219");
+        placeholders.add("|", "\u239F");
 
-        return placeholders;
+        return placeholders.build();
     }
 }

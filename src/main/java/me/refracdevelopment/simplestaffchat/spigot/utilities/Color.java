@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
+package me.refracdevelopment.simplestaffchat.spigot.utilities;
 
 import dev.rosewood.rosegarden.hook.PlaceholderAPIHook;
 import dev.rosewood.rosegarden.utils.HexUtils;

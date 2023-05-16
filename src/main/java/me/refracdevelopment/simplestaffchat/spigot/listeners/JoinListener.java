@@ -3,9 +3,9 @@ package me.refracdevelopment.simplestaffchat.spigot.listeners;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,12 +45,6 @@ public class JoinListener implements Listener {
             sendDevMessage(player);
         } else if (player.getUniqueId().equals(Settings.getDevUUID2)) {
             sendDevMessage(player);
-        }
-
-        if (Config.UPDATE_ON_JOIN) {
-            if (!player.hasPermission(Permissions.UPDATE_ON_JOIN)) return;
-
-            plugin.updateCheck(player, true);
         }
     }
 

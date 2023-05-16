@@ -1,7 +1,7 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities.config;
+package me.refracdevelopment.simplestaffchat.spigot.config;
 
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class Config {
 
     // Settings
     public static boolean VELOCITY;
-    public static boolean UPDATE_ON_JOIN;
+    public static String SERVER_NAME;
 
     public static void loadConfig() {
         // General
@@ -42,7 +42,7 @@ public class Config {
 
         // Settings
         VELOCITY = ConfigurationManager.Setting.VELOCITY.getBoolean();
-        UPDATE_ON_JOIN = ConfigurationManager.Setting.UPDATE_ON_JOIN.getBoolean();
+        SERVER_NAME = ConfigurationManager.Setting.SERVER_NAME.getString();
 
         Color.log("&c==========================================");
         Color.log("&aAll files have been loaded correctly!");

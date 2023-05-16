@@ -49,7 +49,7 @@ public class ChatListener implements Listener {
                     Color.sendMessage(p, Color.translate(player, format), true);
                 }
             });
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, format));
+            Color.log2(Color.translate(player, format));
         }
     }
 }

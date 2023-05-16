@@ -24,10 +24,10 @@ public class JoinListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    p.sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
+                    Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())), true);
                 }
             });
-            ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
+            Color.log2(Color.translate(player, Config.JOIN_FORMAT.toString().replace("%server%", event.getTarget().getName())));
         }
 
         if (player.getUniqueId().equals(Settings.getDevUUID)) {
@@ -48,11 +48,11 @@ public class JoinListener implements Listener {
 
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
-                        .replace("%from%", event.getFrom().getName())));
+                Color.sendMessage(p, Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
+                        .replace("%from%", event.getFrom().getName())), true);
             }
         });
-        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
+        Color.log2(Color.translate(player, Config.SWITCH_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
     }
 
@@ -67,10 +67,10 @@ public class JoinListener implements Listener {
 
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
+                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())), true);
             }
         });
-        ProxyServer.getInstance().getConsole().sendMessage(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
+        Color.log2(Color.translate(player, Config.QUIT_FORMAT.toString().replace("%server%", player.getServer().getInfo().getName())));
     }
 
     private void sendDevMessage(ProxiedPlayer player) {

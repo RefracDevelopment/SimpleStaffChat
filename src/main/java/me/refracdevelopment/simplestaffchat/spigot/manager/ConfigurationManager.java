@@ -28,7 +28,7 @@ public class ConfigurationManager extends AbstractConfigurationManager {
                 ""
         )),
         VELOCITY("velocity", false, "Enable this to allow messages", "To be sent using the BungeeCord", "Plugin Messaging Protocol", "This allows Velocity to receive staffchat messages"),
-        UPDATE_ON_JOIN("update-on-join", true, "Enable this to receive a join message", "when there is an update available")
+        SERVER_NAME("server-name", "hub", "This is so stuff like Discord can get the server name")
         ;
 
         private final String key;

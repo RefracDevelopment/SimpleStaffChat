@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.bungee.config;
 import lombok.Getter;
 import lombok.Setter;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +37,15 @@ public enum Config {
             "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.",
             "&8- &d/staffchatreload &7- Reload the config file.",
             ""
-    ));
+    )),
+    DISCORD_ENABLED("discord.enabled", false),
+    DISCORD_STAFFCHAT_FORMAT("discord.staffchat-format", "&9discord %arrow_2% %prefix% &e(%server%) &6&l%player%&7: &f%message%"),
+    DISCORD_CHAT_TITLE("discord.title", "%player%"),
+    DISCORD_CHAT_FORMAT("discord.format", "%message%"),
+    DISCORD_JOIN_FORMAT("discord.join-format", "%player% joined %server%"),
+    DISCORD_SWITCH_FORMAT("discord.switch-format", "%player% switched %from% %arrow_2% %server%"),
+    DISCORD_QUIT_FORMAT("discord.quit-format", "%player% left %server%")
+    ;
 
     @Getter
     private String path;
@@ -61,9 +68,6 @@ public enum Config {
             }
         });
         plugin.getConfigFile().save();
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
     }
 
     public boolean toBoolean() {
