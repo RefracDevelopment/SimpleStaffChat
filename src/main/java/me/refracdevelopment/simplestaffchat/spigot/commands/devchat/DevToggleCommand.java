@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.commands;
+package me.refracdevelopment.simplestaffchat.spigot.commands.devchat;
 
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
@@ -14,20 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ToggleCommand extends Command {
+public class DevToggleCommand extends Command {
 
     private final SimpleStaffChat plugin;
 
-    public static List<UUID> insc = new ArrayList<>();
+    public static List<UUID> indc = new ArrayList<>();
 
-    public ToggleCommand(SimpleStaffChat plugin) {
-        super(Commands.TOGGLE_COMMAND, Permissions.STAFFCHAT_TOGGLE, Commands.TOGGLE_ALIAS);
+    public DevToggleCommand(SimpleStaffChat plugin) {
+        super(Commands.DEV_TOGGLE_COMMAND, Permissions.DEVCHAT_TOGGLE, Commands.DEV_TOGGLE_ALIAS);
         this.plugin = plugin;
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!Commands.TOGGLE_COMMAND_ENABLED) return false;
+        if (!Commands.DEV_TOGGLE_COMMAND_ENABLED) return false;
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
@@ -38,17 +38,17 @@ public class ToggleCommand extends Command {
 
         Player player = (Player) sender;
 
-        if (!sender.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+        if (!sender.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
             locale.sendMessage(sender, "no-permission");
             return true;
         }
 
-        if (insc.contains(player.getUniqueId())) {
-            insc.remove(player.getUniqueId());
-            locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+        if (indc.contains(player.getUniqueId())) {
+            indc.remove(player.getUniqueId());
+            locale.sendMessage(player, "devchat-toggle-off", Placeholders.setPlaceholders(player));
         } else {
-            insc.add(player.getUniqueId());
-            locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
+            indc.add(player.getUniqueId());
+            locale.sendMessage(player, "devchat-toggle-on", Placeholders.setPlaceholders(player));
         }
         return true;
     }

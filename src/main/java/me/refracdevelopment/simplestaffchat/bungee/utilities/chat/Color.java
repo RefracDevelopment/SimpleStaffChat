@@ -1,7 +1,7 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import dev.rosewood.rosegarden.utils.HexUtils;
-import me.refracdevelopment.simplestaffchat.bungee.config.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,7 +15,7 @@ public class Color {
     }
 
     public static String translate(String source) {
-        return HexUtils.colorify(source);
+        return ChatColor.translateAlternateColorCodes('&', source);
     }
 
     public static void sendMessage(CommandSender sender, String source, boolean color) {
@@ -29,7 +29,7 @@ public class Color {
     }
 
     public static void log(String message) {
-        sendMessage(ProxyServer.getInstance().getConsole(), Config.MESSAGES_PREFIX.toString() + " " + message, true);
+        sendMessage(ProxyServer.getInstance().getConsole(), Config.PREFIX + " " + message, true);
     }
 
     public static void log2(String message) {

@@ -7,5 +7,9 @@ no-permission: '&cYou don''t have permission for that!'
 no-console: '&cOnly players may execute this command.'
 reload: '&eConfig files reloaded. Changes should be live in-game.'
 usage: '&c/staffchat <message>'
-toggle-on: '&7StaffChat toggled &aon&7.'
-toggle-off: '&7StaffChat toggled &coff&7.'
+toggle-on: "&8[&c&lStaffChat&8] &eStaffChat toggled &aon&7."
+toggle-off: "%prefix% &eStaffChat toggled &coff&7."
+adminchat-toggle-on: "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."
+adminchat-toggle-off: "&8[&c&lAdminChat&8] &7AdminChat toggled &coff&7."
+devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
+devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."

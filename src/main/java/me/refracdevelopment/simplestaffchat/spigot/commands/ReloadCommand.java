@@ -1,39 +1,45 @@
 package me.refracdevelopment.simplestaffchat.spigot.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-@CommandAlias("staffchatreload|screload")
-@CommandPermission(Permissions.STAFFCHAT_RELOAD)
-@Description("Reloads the config file")
-public class ReloadCommand extends BaseCommand {
+public class ReloadCommand extends Command {
 
     private final SimpleStaffChat plugin;
 
     public ReloadCommand(SimpleStaffChat plugin) {
+        super(Commands.RELOAD_COMMAND, Permissions.STAFFCHAT_RELOAD, Commands.RELOAD_ALIAS);
         this.plugin = plugin;
     }
 
-    @Default
-    public void onDefault(CommandSender sender) {
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        if (!Commands.RELOAD_COMMAND_ENABLED) return false;
+
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
-            return;
+            locale.sendMessage(sender, "no-permission");
+            return true;
         }
 
         plugin.reload();
+        plugin.getCommandsFile().load();
         Config.loadConfig();
+        Commands.loadConfig();
         locale.sendMessage(sender, "reload", Placeholders.setPlaceholders(sender));
+        return true;
+    }
+
+    @Override
+    public int compareTo(@NotNull Command o) {
+        return 0;
     }
 }

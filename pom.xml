@@ -6,13 +6,13 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>2.9-SNAPSHOT-2</version>
+    <version>3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -97,8 +97,8 @@
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
         <repository>
-            <id>rosewood</id>
-            <url>https://repo.rosewooddev.io/repository/public/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -140,20 +140,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-bungee</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.rosewood</groupId>
-            <artifactId>rosegarden</artifactId>
+            <groupId>com.github.Refrac</groupId>
+            <artifactId>RoseGarden</artifactId>
             <version>1.2.3</version>
         </dependency>
     </dependencies>

@@ -1,19 +1,18 @@
 package me.refracdevelopment.simplestaffchat.spigot;
 
-import co.aikar.commands.BukkitCommandManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.manager.Manager;
 import dev.rosewood.rosegarden.utils.NMSUtil;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
+import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
@@ -33,10 +32,14 @@ public final class SimpleStaffChat extends RosePlugin {
 
     @Getter
     private static SimpleStaffChat instance;
+
+    private CommandManager commandManager;
+
     private PluginMessage pluginMessage;
+    private ConfigFile commandsFile;
 
     public SimpleStaffChat() {
-        super(91883, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
+        super(-1, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
         instance = this;
     }
 
@@ -53,16 +56,19 @@ public final class SimpleStaffChat extends RosePlugin {
             return;
         }
 
-        // Make sure the server is on MC 1.16
-        if (NMSUtil.getVersionNumber() < 16) {
-            Color.log("&cThis plugin only supports 1.16+ Minecraft.");
-            getServer().getPluginManager().disablePlugin(this);
+        // Check if the server is on 1.7
+        if (NMSUtil.getVersionNumber() == 7) {
+            Color.log("&cSimpleGems 1.7 is in legacy mode, please update to 1.8+");
+            this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
+        this.commandsFile = new ConfigFile(this, "commands.yml");
+        this.commandsFile.load();
         Config.loadConfig();
+        Commands.loadConfig();
 
-        if (Config.VELOCITY) {
+        if (Config.BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
             pluginMessage = new PluginMessage(this);
@@ -83,7 +89,7 @@ public final class SimpleStaffChat extends RosePlugin {
 
     @Override
     protected void disable() {
-        if (Config.VELOCITY) {
+        if (Config.BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
         }
@@ -95,10 +101,8 @@ public final class SimpleStaffChat extends RosePlugin {
     }
 
     private void loadCommands() {
-        BukkitCommandManager manager = new BukkitCommandManager(this);
-        manager.registerCommand(new StaffChatCommand(this));
-        manager.registerCommand(new ToggleCommand(this));
-        manager.registerCommand(new ReloadCommand(this));
+        this.commandManager = new CommandManager(this);
+        commandManager.registerAll();
         Color.log("&aLoaded commands.");
     }
 
@@ -145,15 +149,12 @@ public final class SimpleStaffChat extends RosePlugin {
                     sender.sendMessage(Color.translate(""));
                     return;
                 }
-                return;
             } else {
                 sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
-                return;
             }
         } catch (
                 Exception ex) {
             sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
-            return;
         }
     }
 }

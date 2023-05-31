@@ -1,0 +1,13 @@
+commands:
+  staffchat:
+    enabled: true
+    command: "staffchat"
+    alias: "sc"
+  toggle:
+    enabled: true
+    command: "staffchattoggle"
+    alias: "sctoggle"
+  reload:
+    enabled: true
+    command: "staffchatreload"
+    alias: "screload"

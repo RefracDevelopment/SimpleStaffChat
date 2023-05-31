@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.bungee.commands;
+package me.refracdevelopment.simplestaffchat.bungee.commands.adminchat;
 
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
@@ -12,32 +12,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ToggleCommand extends Command {
+public class AdminToggleCommand extends Command {
 
-    public static List<UUID> insc = new ArrayList<>();
+    public static List<UUID> inac = new ArrayList<>();
 
-    public ToggleCommand() {
-        super(Commands.TOGGLE_COMMAND, "", Commands.TOGGLE_ALIAS);
+    public AdminToggleCommand() {
+        super(Commands.ADMIN_TOGGLE_COMMAND, "", Commands.ADMIN_TOGGLE_ALIAS);
     }
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        if (!Commands.TOGGLE_COMMAND_ENABLED) return;
+        if (!Commands.ADMIN_TOGGLE_COMMAND_ENABLED) return;
         if (!(commandSender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+        if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
             Color.sendMessage(player, Config.NO_PERMISSION, true);
             return;
         }
 
-        if (insc.contains(player.getUniqueId())) {
-            insc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF, true);
+        if (inac.contains(player.getUniqueId())) {
+            inac.remove(player.getUniqueId());
+            Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF, true);
         } else {
-            insc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON, true);
+            inac.add(player.getUniqueId());
+            Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_ON, true);
         }
     }
 }

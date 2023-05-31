@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.commands;
+package me.refracdevelopment.simplestaffchat.spigot.commands.adminchat;
 
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
@@ -14,20 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ToggleCommand extends Command {
+public class AdminToggleCommand extends Command {
 
     private final SimpleStaffChat plugin;
 
-    public static List<UUID> insc = new ArrayList<>();
+    public static List<UUID> inac = new ArrayList<>();
 
-    public ToggleCommand(SimpleStaffChat plugin) {
-        super(Commands.TOGGLE_COMMAND, Permissions.STAFFCHAT_TOGGLE, Commands.TOGGLE_ALIAS);
+    public AdminToggleCommand(SimpleStaffChat plugin) {
+        super(Commands.ADMIN_TOGGLE_COMMAND, Permissions.ADMINCHAT_TOGGLE, Commands.ADMIN_TOGGLE_ALIAS);
         this.plugin = plugin;
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!Commands.TOGGLE_COMMAND_ENABLED) return false;
+        if (!Commands.ADMIN_TOGGLE_COMMAND_ENABLED) return false;
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
@@ -38,17 +38,17 @@ public class ToggleCommand extends Command {
 
         Player player = (Player) sender;
 
-        if (!sender.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
+        if (!sender.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
             locale.sendMessage(sender, "no-permission");
             return true;
         }
 
-        if (insc.contains(player.getUniqueId())) {
-            insc.remove(player.getUniqueId());
-            locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+        if (inac.contains(player.getUniqueId())) {
+            inac.remove(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-toggle-off", Placeholders.setPlaceholders(player));
         } else {
-            insc.add(player.getUniqueId());
-            locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
+            inac.add(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-toggle-on", Placeholders.setPlaceholders(player));
         }
         return true;
     }

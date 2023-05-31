@@ -15,6 +15,8 @@
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
+adminchat-symbol: "#"
+devchat-symbol: "%"
 # Change to true if you have LuckPerms installed
 luckperms: false
 
@@ -23,6 +25,14 @@ format:
   minecraft-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
   # Format for messages sent by the console.
   console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
+  # AdminChat format
+  adminchat-format: "&8[&4&lAdminChat&8] &e(%server%) &6&l%player%&7: &f%message%"
+  # Format for messages sent by the console.
+  console-adminchat-format: "&8[&4&lAdminChat&8] &6&lConsole&7: &f%message%"
+  # DevChat format
+  devchat-format: "&8[&b&lDevChat&8] &e(%server%) &6&l%player%&7: &f%message%"
+  # Format for messages sent by the console.
+  console-devchat-format: "&8[&b&lDevChat&8] &6&lConsole&7: &f%message%"
 
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
@@ -33,11 +43,11 @@ join:
   quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."
 
 messages:
-  prefix: "&8[&4&lStaffChat&8]"
+  prefix: "&8[&c&lStaffChat&8]"
   no-permission: "&cYou don't have permission to execute this command."
   reload: "&7Config files reloaded. Changes should be live in-game."
-  toggle-on: "%prefix% &eStaffChat toggled &aon&7."
-  toggle-off: "%prefix% &eStaffChat toggled &coff&7."
+  toggle-on: "%prefix% &7StaffChat toggled &aon&7."
+  toggle-off: "%prefix% &7StaffChat toggled &coff&7."
   adminchat-toggle-on: "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."
   adminchat-toggle-off: "&8[&c&lAdminChat&8] &7AdminChat toggled &coff&7."
   devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."

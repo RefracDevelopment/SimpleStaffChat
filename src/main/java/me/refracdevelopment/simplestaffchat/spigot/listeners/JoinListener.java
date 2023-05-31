@@ -35,8 +35,8 @@ public class JoinListener implements Listener {
                     locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_FORMAT));
                 }
             }
-            if (Config.VELOCITY) {
-                plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_FORMAT));
+            if (Config.BUNGEECORD) {
+                plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_FORMAT));
             }
             Color.log2(Color.translate(player, Config.JOIN_FORMAT));
         }
@@ -62,8 +62,8 @@ public class JoinListener implements Listener {
                 locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_QUIT_FORMAT));
             }
         }
-        if (Config.VELOCITY) {
-            plugin.getPluginMessage().sendMessage(Color.translate(player, Config.JOIN_QUIT_FORMAT));
+        if (Config.BUNGEECORD) {
+            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_QUIT_FORMAT));
         }
         Color.log2(Color.translate(player, Config.JOIN_QUIT_FORMAT));
     }
@@ -72,9 +72,9 @@ public class JoinListener implements Listener {
         final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
 
         locale.sendCustomMessage(player, " ");
-        locale.sendCustomMessage(player, "&aWelcome " + Settings.getName + " Developer!");
-        locale.sendCustomMessage(player, "&aThis server is currently running " + Settings.getName + " &bv" + Settings.getVersion + "&a.");
-        locale.sendCustomMessage(player, "&aPlugin name&7: &f" + Settings.getName);
+        locale.sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
+        locale.sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
+        locale.sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
         locale.sendCustomMessage(player, " ");
         locale.sendCustomMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion());
         locale.sendCustomMessage(player, " ");

@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /*
-* Taken from
-* https://github.com/IllusionTheDev/SkyblockCore/blob/master/src/main/java/me/illusion/skyblockcore/bungee/utilities/YMLBase.java
-* Modified for my needs
-*/
+ * Taken from
+ * https://github.com/IllusionTheDev/SkyblockCore/blob/master/src/main/java/me/illusion/skyblockcore/bungee/utilities/YMLBase.java
+ * Modified for my needs
+ */
 @Getter
 public class YMLBase {
 

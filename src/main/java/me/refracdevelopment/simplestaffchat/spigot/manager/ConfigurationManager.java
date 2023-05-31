@@ -12,9 +12,17 @@ public class ConfigurationManager extends AbstractConfigurationManager {
 
     public enum Setting implements RoseSetting {
         // Config Settings
-        STAFFCHAT_SYMBOL("staffchat-symbol", "#", "Used to send messages to staffchat without the", "need to type in /staffchat <message> or /staffchat toggle", "this uses the same format as /staffchat <message>"),
-        MINECRAFT_FORMAT("minecraft-format", "%prefix%&6&l%player%&7: &f%message%", "Minecraft format"),
-        CONSOLE_FORMAT("console-format", "%prefix%&6&lConsole&7: &f%message%", "Format for messages sent by the console", "PlaceholderAPI is not supported here"),
+        BUNGEECORD("bungeecord", false, "Enable this to allow messages", "To be sent using the BungeeCord", "Plugin Messaging Protocol", "This allows Velocity to receive staffchat messages"),
+        SERVER_NAME("server-name", "hub", "This is so stuff like Discord can get the server name"),
+        STAFFCHAT_SYMBOL("staffchat-symbol", "#", "Used to send messages to staffchat without the", "need to type in commands", "this uses the same format as /staffchat <message>"),
+        ADMINCHAT_SYMBOL("staffchat-symbol", "@"),
+        DEVCHAT_SYMBOL("staffchat-symbol", "%"),
+        MINECRAFT_FORMAT("minecraft-format", "&8[&c&lStaffChat&8] &6&l%player%&7: &f%message%", "Minecraft format"),
+        CONSOLE_FORMAT("console-format", "&8[&c&lStaffChat&8] &6&lConsole&7: &f%message%", "Format for messages sent by the console", "PlaceholderAPI is not supported here"),
+        ADMINCHAT_FORMAT("adminchat-format", "&8[&4&lAdminChat&8] &6&l%player%&7: &f%message%", "AdminChat format"),
+        CONSOLE_ADMINCHAT_FORMAT("console-adminchat-format", "&8[&4&lAdminChat&8] &6&lConsole&7: &f%message%", "Format for messages sent by the console", "PlaceholderAPI is not supported here"),
+        DEVCHAT_FORMAT("devchat-format", "&8[&b&lDevChat&8] &6&l%player%&7: &f%message%", "DevChat format"),
+        CONSOLE_DEVCHAT_FORMAT("console-devchat-format", "&8[&b&lDevChat&8] &6&lConsole&7: &f%message%", "Format for messages sent by the console", "PlaceholderAPI is not supported here"),
         JOIN_ENABLED("join.enabled", false, "This is for staff joins only", "permission: simplestaffchat.join or simplestaffchat.quit"),
         JOIN_FORMAT("join.join-format", "&8[&a+&8] &9%player% &fjoined&f."),
         JOIN_QUIT_FORMAT("join.quit-format", "&8[&c-&8] &9%player% &fleft&f."),
@@ -26,10 +34,7 @@ public class ConfigurationManager extends AbstractConfigurationManager {
                 "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.",
                 "&8- &d/staffchatreload &7- Reloads the config files.",
                 ""
-        )),
-        VELOCITY("velocity", false, "Enable this to allow messages", "To be sent using the BungeeCord", "Plugin Messaging Protocol", "This allows Velocity to receive staffchat messages"),
-        SERVER_NAME("server-name", "hub", "This is so stuff like Discord can get the server name")
-        ;
+        ));
 
         private final String key;
         private final Object defaultValue;

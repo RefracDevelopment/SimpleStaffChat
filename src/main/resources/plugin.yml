@@ -1,9 +1,9 @@
 name: SimpleStaffChat2
 version: '@version@'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
-author:  RefracDevelopment
+author: RefracDevelopment
 api-version: "1.13"
-depend:
+softdepend:
   - PlaceholderAPI
 description: A Simple StaffChat Plugin
 website: https://discord.refracdev.ml/
@@ -15,10 +15,16 @@ permissions:
     children:
       simplestaffchat.command.help: true
       simplestaffchat.command.staffchat: true
+      simplestaffchat.command.adminchat: true
+      simplestaffchat.command.devchat: true
       simplestaffchat.command.toggle: true
       simplestaffchat.command.reload: true
       simplestaffchat.see: true
       simplestaffchat.symbol: true
+      simplestaffchat.adminchat.see: true
+      simplestaffchat.adminchat.symbol: true
+      simplestaffchat.devchat.see: true
+      simplestaffchat.devchat.symbol: true
       simplestaffchat.join: true
       simplestaffchat.quit: true
   simplestaffchat.command.help:
@@ -39,6 +45,18 @@ permissions:
   simplestaffchat.symbol:
     default: op
     description: Allows you to use the staffchat symbol
+  simplestaffchat.adminchat.see:
+    default: op
+    description: Allows you to see the adminchat messages
+  simplestaffchat.adminchat.symbol:
+    default: op
+    description: Allows you to use the adminchat symbol
+  simplestaffchat.devchat.see:
+    default: op
+    description: Allows you to see the devchat messages
+  simplestaffchat.devchat.symbol:
+    default: op
+    description: Allows you to use the devchat symbol
   simplestaffchat.join:
     default: op
     description: Sends a join message when a staff member joins.
