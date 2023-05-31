@@ -45,7 +45,7 @@ public class DevChatCommand extends Command {
             }
             if (Config.BUNGEECORD && sender instanceof Player) {
                 Player player = (Player) sender;
-                plugin.getPluginMessage().sendStaffChat(player, Color.translate(sender, format));
+                plugin.getPluginMessage().sendDevChat(player, Color.translate(sender, format));
             }
             Color.log2(Color.translate(sender, format));
         }
