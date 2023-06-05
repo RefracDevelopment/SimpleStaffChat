@@ -39,8 +39,8 @@ public class DevToggleCommand extends Command {
             Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF);
         } else {
             if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.add(player.getUniqueId());
-                ToggleCommand.insc.add(player.getUniqueId());
+                AdminToggleCommand.inac.remove(player.getUniqueId());
+                ToggleCommand.insc.remove(player.getUniqueId());
             }
             indc.add(player.getUniqueId());
             Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON);

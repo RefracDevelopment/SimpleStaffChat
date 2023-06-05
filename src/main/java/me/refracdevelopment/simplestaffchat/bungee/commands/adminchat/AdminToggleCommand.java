@@ -39,8 +39,8 @@ public class AdminToggleCommand extends Command {
             Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF);
         } else {
             if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                DevToggleCommand.indc.add(player.getUniqueId());
-                ToggleCommand.insc.add(player.getUniqueId());
+                DevToggleCommand.indc.remove(player.getUniqueId());
+                ToggleCommand.insc.remove(player.getUniqueId());
             }
             inac.add(player.getUniqueId());
             Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_ON);
