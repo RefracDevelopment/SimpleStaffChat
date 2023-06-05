@@ -15,7 +15,8 @@ import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.FoliaUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -57,10 +58,14 @@ public final class SimpleStaffChat extends RosePlugin {
         }
 
         // Check if the server is on 1.7
-        if (NMSUtil.getVersionNumber() == 7) {
+        if (NMSUtil.getVersionNumber() <= 7) {
             Color.log("&cSimpleGems 1.7 is in legacy mode, please update to 1.8+");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
+        }
+
+        if (FoliaUtil.isFolia()) {
+            getLogger().warning("Support for Folia has not been tested and is only for experimental purposes.");
         }
 
         this.commandsFile = new ConfigFile(this, "commands.yml");
@@ -91,7 +96,7 @@ public final class SimpleStaffChat extends RosePlugin {
     protected void disable() {
         if (Config.BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
-            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", pluginMessage);
         }
     }
 

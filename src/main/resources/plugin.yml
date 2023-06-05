@@ -3,10 +3,11 @@ version: '@version@'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
 author: RefracDevelopment
 api-version: "1.13"
-softdepend:
+depend:
   - PlaceholderAPI
 description: A Simple StaffChat Plugin
 website: https://discord.refracdev.ml/
+folia-supported: true
 
 permissions:
   simplestaffchat.*:
