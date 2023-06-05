@@ -51,7 +51,7 @@ public final class SimpleStaffChat extends RosePlugin {
         PluginManager pluginManager = getServer().getPluginManager();
 
         // Make sure the server has PlaceholderAPI
-        if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
+        if (!pluginManager.isPluginEnabled("PlaceholderAPI") && !FoliaUtil.isFolia()) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
