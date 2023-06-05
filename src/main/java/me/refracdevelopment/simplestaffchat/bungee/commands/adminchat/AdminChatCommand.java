@@ -30,14 +30,14 @@ public class AdminChatCommand extends Command {
             format = (commandSender instanceof ProxiedPlayer) ? Config.ADMINCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
                     .replace("%message%", message) : Config.CONSOLE_ADMINCHAT_FORMAT.replace("%message%", message);
 
-            if (!commandSender.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-                Color.sendMessage(commandSender, Config.NO_PERMISSION, true);
+            if (!commandSender.hasPermission(Permissions.ADMINCHAT_COMMAND)) {
+                Color.sendMessage(commandSender, Config.NO_PERMISSION);
                 return;
             }
 
             for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
                 if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(commandSender, format), true);
+                    Color.sendMessage(p, Color.translate(commandSender, format));
                 }
             }
             Color.log2(Color.translate(commandSender, format));

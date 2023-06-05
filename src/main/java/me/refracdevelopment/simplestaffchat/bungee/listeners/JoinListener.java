@@ -25,7 +25,7 @@ public class JoinListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())), true);
+                    Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
                 }
             });
             Color.log2(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
@@ -50,7 +50,7 @@ public class JoinListener implements Listener {
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 Color.sendMessage(p, Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                        .replace("%from%", event.getFrom().getName())), true);
+                        .replace("%from%", event.getFrom().getName())));
             }
         });
         Color.log2(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
@@ -68,19 +68,19 @@ public class JoinListener implements Listener {
 
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())), true);
+                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
             }
         });
         Color.log2(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
     }
 
     private void sendDevMessage(ProxiedPlayer player) {
-        Color.sendMessage(player, " ", false);
-        Color.sendMessage(player, "&aWelcome " + BungeeStaffChat.getInstance().getDescription().getName() + " Developer!", true);
-        Color.sendMessage(player, "&aThis server is currently running " + BungeeStaffChat.getInstance().getDescription().getName() + " &bv" + BungeeStaffChat.getInstance().getDescription().getVersion() + "&a.", true);
-        Color.sendMessage(player, "&aPlugin name&7: &f" + BungeeStaffChat.getInstance().getDescription().getName(), true);
-        Color.sendMessage(player, " ", false);
-        Color.sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion(), true);
-        Color.sendMessage(player, " ", false);
+        Color.sendMessage(player, " ");
+        Color.sendMessage(player, "&aWelcome " + BungeeStaffChat.getInstance().getDescription().getName() + " Developer!");
+        Color.sendMessage(player, "&aThis server is currently running " + BungeeStaffChat.getInstance().getDescription().getName() + " &bv" + BungeeStaffChat.getInstance().getDescription().getVersion() + "&a.");
+        Color.sendMessage(player, "&aPlugin name&7: &f" + BungeeStaffChat.getInstance().getDescription().getName());
+        Color.sendMessage(player, " ");
+        Color.sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion());
+        Color.sendMessage(player, " ");
     }
 }

@@ -5,7 +5,7 @@ import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ public class ReloadCommand extends Command {
     private final SimpleStaffChat plugin;
 
     public ReloadCommand(SimpleStaffChat plugin) {
-        super(Commands.RELOAD_COMMAND, Permissions.STAFFCHAT_RELOAD, Commands.RELOAD_ALIAS);
+        super(Commands.RELOAD_COMMAND, "", Commands.RELOAD_ALIAS);
         this.plugin = plugin;
     }
 

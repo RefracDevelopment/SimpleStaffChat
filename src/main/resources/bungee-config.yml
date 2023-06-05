@@ -48,8 +48,8 @@ messages:
   reload: "&7Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% &7StaffChat toggled &aon&7."
   toggle-off: "%prefix% &7StaffChat toggled &coff&7."
-  adminchat-toggle-on: "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."
-  adminchat-toggle-off: "&8[&c&lAdminChat&8] &7AdminChat toggled &coff&7."
+  adminchat-toggle-on: "&8[&4&lAdminChat&8] &7AdminChat toggled &aon&7."
+  adminchat-toggle-off: "&8[&4&lAdminChat&8] &7AdminChat toggled &coff&7."
   devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
   devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
   # If this is set to "custom" you can change the /sc output message to anything

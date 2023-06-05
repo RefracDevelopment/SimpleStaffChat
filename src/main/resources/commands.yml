@@ -11,3 +11,19 @@ commands:
     enabled: true
     command: "staffchatreload"
     alias: "screload"
+  adminchat:
+    enabled: true
+    command: "adminchat"
+    alias: "ac"
+  admin-toggle:
+    enabled: true
+    command: "adminchattoggle"
+    alias: "actoggle"
+  devchat:
+    enabled: true
+    command: "devchat"
+    alias: "dc"
+  dev-toggle:
+    enabled: true
+    command: "devchattoggle"
+    alias: "dctoggle"

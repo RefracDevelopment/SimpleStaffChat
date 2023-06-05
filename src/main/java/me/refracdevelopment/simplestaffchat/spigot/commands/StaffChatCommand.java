@@ -6,8 +6,8 @@ import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class StaffChatCommand extends Command {
     private final SimpleStaffChat plugin;
 
     public StaffChatCommand(SimpleStaffChat plugin) {
-        super(Commands.STAFFCHAT_COMMAND, Permissions.STAFFCHAT_COMMAND, Commands.STAFFCHAT_ALIAS);
+        super(Commands.STAFFCHAT_COMMAND, "", Commands.STAFFCHAT_ALIAS);
         this.plugin = plugin;
     }
 
@@ -34,6 +34,11 @@ public class StaffChatCommand extends Command {
             String format = (sender instanceof Player) ? Config.MINECRAFT_FORMAT.replace("%message%", message) :
                     Config.CONSOLE_FORMAT.replace("%message%", message);
 
+            if (!sender.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
+                locale.sendMessage(sender, "no-permission");
+                return true;
+            }
+
             for (Player p : plugin.getServer().getOnlinePlayers()) {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                     locale.sendCustomMessage(p, Color.translate(sender, format));
@@ -47,7 +52,7 @@ public class StaffChatCommand extends Command {
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendMessage(sender, "usage", Placeholders.setPlaceholders(sender));
+                    locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
                     return true;
                 }
 
@@ -57,7 +62,7 @@ public class StaffChatCommand extends Command {
                     Player player = (Player) sender;
 
                     if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Config.STAFFCHAT_MESSAGE.forEach(s -> locale.sendCustomMessage(sender, Placeholders.setPlaceholders(sender, s)));
+                        locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
                         return true;
                     }
 
@@ -71,17 +76,20 @@ public class StaffChatCommand extends Command {
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendMessage(sender, "usage", Placeholders.setPlaceholders(sender));
+                    locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
                     return true;
                 }
 
                 locale.sendCustomMessage(sender, "");
                 locale.sendCustomMessage(sender, "<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &fAvailable Commands:".replace("|", "\u239F"));
                 locale.sendCustomMessage(sender, "");
-                locale.sendCustomMessage(sender, "&8- &d/staffchat <message> &7- Send staffchat messages.");
-                locale.sendCustomMessage(sender, "&8- &d/staffchattoggle &7- Send staffchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&8- &d/staffchatreload &7- Reload the config file.");
-                locale.sendCustomMessage(sender, "");
+                locale.sendCustomMessage(sender, "&c/" + Commands.STAFFCHAT_COMMAND + " <message> - Send staffchat messages.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.TOGGLE_COMMAND + " - Send staffchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send adminchat messages.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send devchat messages.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&c/" + Commands.RELOAD_COMMAND + " - Reload the config file.");
             }
         }
         return true;

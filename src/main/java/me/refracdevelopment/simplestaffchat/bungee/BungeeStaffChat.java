@@ -54,7 +54,7 @@ public class BungeeStaffChat extends Plugin {
         loadCommands();
         loadListeners();
 
-        if (Config.LUCKPERMS) {
+        if (Config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Color.log("&eHooked into LuckPerms.");
         }

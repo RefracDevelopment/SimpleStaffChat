@@ -6,7 +6,7 @@ import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class DevChatCommand extends Command {
     private final SimpleStaffChat plugin;
 
     public DevChatCommand(SimpleStaffChat plugin) {
-        super(Commands.DEVCHAT_COMMAND, Permissions.DEVCHAT_COMMAND, Commands.DEVCHAT_ALIAS);
+        super(Commands.DEVCHAT_COMMAND, "", Commands.DEVCHAT_ALIAS);
         this.plugin = plugin;
     }
 

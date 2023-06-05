@@ -1,5 +1,7 @@
 package me.refracdevelopment.simplestaffchat.bungee.commands;
 
+import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
@@ -28,16 +30,20 @@ public class ToggleCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
         if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.NO_PERMISSION, true);
+            Color.sendMessage(player, Config.NO_PERMISSION);
             return;
         }
 
         if (insc.contains(player.getUniqueId())) {
             insc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF, true);
+            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF);
         } else {
+            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
+                AdminToggleCommand.inac.add(player.getUniqueId());
+                DevToggleCommand.indc.add(player.getUniqueId());
+            }
             insc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON, true);
+            Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON);
         }
     }
 }

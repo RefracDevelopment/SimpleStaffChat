@@ -7,8 +7,8 @@ import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggl
 import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,13 +29,13 @@ public class ChatListener implements Listener {
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
                 ToggleCommand.insc.remove(player.getUniqueId());
                 locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.MINECRAFT_FORMAT.replace("%message%", message);
@@ -77,13 +77,13 @@ public class ChatListener implements Listener {
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (AdminToggleCommand.inac.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
                 AdminToggleCommand.inac.remove(player.getUniqueId());
                 locale.sendMessage(player, "adminchat-toggle-off", Placeholders.setPlaceholders(player));
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.ADMINCHAT_FORMAT.replace("%message%", message);
@@ -125,13 +125,13 @@ public class ChatListener implements Listener {
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         if (DevToggleCommand.indc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
                 DevToggleCommand.indc.remove(player.getUniqueId());
                 locale.sendMessage(player, "devchat-toggle-off", Placeholders.setPlaceholders(player));
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.DEVCHAT_FORMAT.replace("%message%", message);

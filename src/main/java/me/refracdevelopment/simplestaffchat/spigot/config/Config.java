@@ -1,7 +1,7 @@
 package me.refracdevelopment.simplestaffchat.spigot.config;
 
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities;
+package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
 import dev.rosewood.rosegarden.utils.StringPlaceholders;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;

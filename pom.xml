@@ -6,7 +6,7 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>
@@ -34,11 +34,11 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>me.refracdevelopment.simplestaffchat.bungee.bstats</shadedPattern>
+                                    <shadedPattern>me.refracdevelopment.libs.org.bstats</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>dev.rosewood.rosegarden</pattern>
-                                    <shadedPattern>me.refracdevelopment.simplestaffchat.rosegarden</shadedPattern>
+                                    <shadedPattern>me.refracdevelopment.libs.dev.rosewood.rosegarden</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -131,7 +131,6 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bungeecord</artifactId>
             <version>3.0.2</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>

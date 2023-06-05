@@ -21,8 +21,8 @@ public class ReloadCommand extends Command {
     public void execute(CommandSender commandSender, String[] strings) {
         if (!Commands.RELOAD_COMMAND_ENABLED) return;
 
-        if (!commandSender.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            Color.sendMessage(commandSender, Config.NO_PERMISSION, true);
+        if (!commandSender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
+            Color.sendMessage(commandSender, Config.NO_PERMISSION);
             return;
         }
 
@@ -30,6 +30,6 @@ public class ReloadCommand extends Command {
         plugin.getCommandsFile().load();
         Config.loadConfig();
         Commands.loadConfig();
-        Color.sendMessage(commandSender, Config.RELOAD, true);
+        Color.sendMessage(commandSender, Config.RELOAD);
     }
 }

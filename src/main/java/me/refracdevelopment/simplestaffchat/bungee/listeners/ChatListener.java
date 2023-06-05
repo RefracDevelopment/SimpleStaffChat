@@ -19,13 +19,13 @@ public class ChatListener implements Listener {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.isCommand()) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
                 ToggleCommand.insc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF, true);
+                Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF);
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
@@ -33,7 +33,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));
@@ -48,7 +48,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));
@@ -60,13 +60,13 @@ public class ChatListener implements Listener {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         if (AdminToggleCommand.inac.contains(player.getUniqueId()) && !event.isCommand()) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
                 AdminToggleCommand.inac.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF, true);
+                Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF);
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
@@ -74,7 +74,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));
@@ -89,7 +89,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));
@@ -101,13 +101,13 @@ public class ChatListener implements Listener {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         if (DevToggleCommand.indc.contains(player.getUniqueId()) && !event.isCommand()) {
-            event.setCancelled(true);
-
             if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
                 DevToggleCommand.indc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF, true);
+                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF);
                 return;
             }
+
+            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = Config.DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
@@ -115,7 +115,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));
@@ -130,7 +130,7 @@ public class ChatListener implements Listener {
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format), true);
+                    Color.sendMessage(p, Color.translate(player, format));
                 }
             });
             Color.log2(Color.translate(player, format));

@@ -12,7 +12,7 @@ public class Placeholders {
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
-            if (Config.LUCKPERMS && LuckPermsUtil.getLuckPerms() != null) {
+            if (Config.LUCKPERMS || LuckPermsUtil.getLuckPerms() != null) {
                 placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
                 placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
             } else {

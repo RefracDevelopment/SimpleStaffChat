@@ -14,10 +14,16 @@ permissions:
     children:
       simplestaffchat.command.help: true
       simplestaffchat.command.staffchat: true
+      simplestaffchat.command.adminchat: true
+      simplestaffchat.command.devchat: true
       simplestaffchat.command.toggle: true
       simplestaffchat.command.reload: true
       simplestaffchat.see: true
       simplestaffchat.symbol: true
+      simplestaffchat.adminchat.see: true
+      simplestaffchat.adminchat.symbol: true
+      simplestaffchat.devchat.see: true
+      simplestaffchat.devchat.symbol: true
       simplestaffchat.join: true
       simplestaffchat.switch: true
       simplestaffchat.quit: true
@@ -39,12 +45,24 @@ permissions:
   simplestaffchat.symbol:
     default: op
     description: Allows you to use the staffchat symbol
+  simplestaffchat.adminchat.see:
+    default: op
+    description: Allows you to see the adminchat messages
+  simplestaffchat.adminchat.symbol:
+    default: op
+    description: Allows you to use the adminchat symbol
+  simplestaffchat.devchat.see:
+    default: op
+    description: Allows you to see the devchat messages
+  simplestaffchat.devchat.symbol:
+    default: op
+    description: Allows you to use the devchat symbol
   simplestaffchat.join:
     default: op
     description: Sends a join message when a staff member joins.
   simplestaffchat.switch:
     default: op
-    description: Sends a join message when a staff member switch servers.
+    description: Sends a server switch message when a staff member joins a new server.
   simplestaffchat.quit:
     default: op
     description: Sends a join message when a staff member leaves the server.

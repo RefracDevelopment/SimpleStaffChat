@@ -2,9 +2,11 @@ package me.refracdevelopment.simplestaffchat.spigot.commands;
 
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Placeholders;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,7 +23,7 @@ public class ToggleCommand extends Command {
     public static List<UUID> insc = new ArrayList<>();
 
     public ToggleCommand(SimpleStaffChat plugin) {
-        super(Commands.TOGGLE_COMMAND, Permissions.STAFFCHAT_TOGGLE, Commands.TOGGLE_ALIAS);
+        super(Commands.TOGGLE_COMMAND, "", Commands.TOGGLE_ALIAS);
         this.plugin = plugin;
     }
 
@@ -47,6 +49,10 @@ public class ToggleCommand extends Command {
             insc.remove(player.getUniqueId());
             locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
         } else {
+            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
+                AdminToggleCommand.inac.remove(player.getUniqueId());
+                DevToggleCommand.indc.remove(player.getUniqueId());
+            }
             insc.add(player.getUniqueId());
             locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
         }
