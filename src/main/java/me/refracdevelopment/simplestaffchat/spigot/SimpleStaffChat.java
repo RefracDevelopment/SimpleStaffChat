@@ -15,8 +15,8 @@ import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.FoliaUtil;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -59,17 +59,16 @@ public final class SimpleStaffChat extends RosePlugin {
 
         // Check if the server is on 1.7
         if (NMSUtil.getVersionNumber() <= 7) {
-            Color.log("&cSimpleGems 1.7 is in legacy mode, please update to 1.8+");
+            Color.log("&cSimpleStaffChat2 1.7 is in legacy mode, please update to 1.8+");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         if (FoliaUtil.isFolia()) {
-            getLogger().warning("Support for Folia has not been tested and is only for experimental purposes.");
+            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
         }
 
         this.commandsFile = new ConfigFile(this, "commands.yml");
-        this.commandsFile.load();
         Config.loadConfig();
         Commands.loadConfig();
 
@@ -81,6 +80,11 @@ public final class SimpleStaffChat extends RosePlugin {
 
         loadCommands();
         loadListeners();
+
+        if (!getAntiPopupAddon()) {
+            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+                    "consider downloading https://github.com/KaspianDev/AntiPopup/releases/latest");
+        }
 
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
@@ -115,6 +119,11 @@ public final class SimpleStaffChat extends RosePlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         Color.log("&aLoaded listeners.");
+    }
+
+    @SuppressWarnings("ALL")
+    public boolean getAntiPopupAddon() {
+        return getServer().getPluginManager().isPluginEnabled("AntiPopup");
     }
 
     public void updateCheck(CommandSender sender, boolean console) {

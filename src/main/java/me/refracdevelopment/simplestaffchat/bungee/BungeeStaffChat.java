@@ -41,15 +41,7 @@ public class BungeeStaffChat extends Plugin {
         instance = this;
         long startTiming = System.currentTimeMillis();
 
-        this.configFile = new YMLBase(this, "bungee-config.yml");
-        this.commandsFile = new YMLBase(this, "bungee-commands.yml");
-        configFile.load();
-        commandsFile.load();
-        Config.loadConfig();
-        Commands.loadConfig();
-        Color.log("&c==========================================");
-        Color.log("&eAll files have been loaded correctly!");
-        Color.log("&c==========================================");
+        loadFiles();
 
         loadCommands();
         loadListeners();
@@ -57,6 +49,11 @@ public class BungeeStaffChat extends Plugin {
         if (Config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Color.log("&eHooked into LuckPerms.");
+        }
+
+        if (!getAntiPopupAddon() && getViaVersion()) {
+            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on BungeeCord, " +
+                    "consider downloading https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-bungeecord-viaversion-addon-%E2%9C%A8.104628/");
         }
 
         new Metrics(this, 12096);
@@ -69,6 +66,16 @@ public class BungeeStaffChat extends Plugin {
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck(getProxy().getConsole(), true);
+    }
+
+    private void loadFiles() {
+        this.configFile = new YMLBase(this, "bungee-config.yml");
+        this.commandsFile = new YMLBase(this, "commands.yml");
+        Config.loadConfig();
+        Commands.loadConfig();
+        Color.log("&c==========================================");
+        Color.log("&eAll files have been loaded correctly!");
+        Color.log("&c==========================================");
     }
 
     private void loadCommands() {
@@ -87,6 +94,14 @@ public class BungeeStaffChat extends Plugin {
         getProxy().getPluginManager().registerListener(this, new JoinListener());
         getProxy().getPluginManager().registerListener(this, new ChatListener());
         Color.log("&eLoaded listeners.");
+    }
+
+    public boolean getAntiPopupAddon() {
+        return getProxy().getPluginManager().getPlugin("AntiPopup-Via") != null;
+    }
+
+    public boolean getViaVersion() {
+        return getProxy().getPluginManager().getPlugin("ViaVersion") != null;
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
