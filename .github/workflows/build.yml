@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - velocity
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
       - name: Prepare Project
         uses: actions/checkout@v3
         with:
-          ref: 'master'
+          ref: 'velocity'
 
       - name: Set up JDK 8
         uses: actions/setup-java@v3
