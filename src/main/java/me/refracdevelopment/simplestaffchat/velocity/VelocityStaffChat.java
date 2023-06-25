@@ -78,7 +78,7 @@ public class VelocityStaffChat {
         loadCommands();
         loadListeners();
 
-        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().getPlugin("LuckPerms").isPresent()) {
+        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().getPlugin("luckperms").isPresent()) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Color.log(Level.INFO, "§eHooked into LuckPerms.");
         }
