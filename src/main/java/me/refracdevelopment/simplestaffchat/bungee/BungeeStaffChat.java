@@ -106,7 +106,7 @@ public class BungeeStaffChat extends Plugin {
 
     public void updateCheck(CommandSender sender, boolean console) {
         try {
-            String urlString = "https://updatecheck.refracdev.ml";
+            String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

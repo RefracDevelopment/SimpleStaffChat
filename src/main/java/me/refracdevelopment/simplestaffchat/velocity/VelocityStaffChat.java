@@ -78,7 +78,10 @@ public class VelocityStaffChat {
         loadCommands();
         loadListeners();
 
-        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().getPlugin("luckperms").isPresent()) {
+        Color.log(Level.WARN, "§ePlease note that this is an experimental build for" +
+                "Velocity support some things will not work.");
+
+        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().isLoaded("luckperms")) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Color.log(Level.INFO, "§eHooked into LuckPerms.");
         }
@@ -166,7 +169,7 @@ public class VelocityStaffChat {
 
     public void updateCheck(CommandSource sender, boolean console) {
         try {
-            String urlString = "https://updatecheck.refracdev.ml";
+            String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
