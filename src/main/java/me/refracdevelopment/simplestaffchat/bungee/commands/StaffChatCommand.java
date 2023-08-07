@@ -79,8 +79,8 @@ public class StaffChatCommand extends Command {
                 Color.sendMessage(commandSender, "");
                 Color.sendMessage(commandSender, "&c/" + Commands.STAFFCHAT_COMMAND + " <message> - Send staffchat messages.");
                 Color.sendMessage(commandSender, "&c/" + Commands.TOGGLE_COMMAND + " - Send staffchat messages without needing to type a command.");
-                Color.sendMessage(commandSender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send adminchat messages.");
-                Color.sendMessage(commandSender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
+                Color.sendMessage(commandSender, "&c/" + Commands.ADMINCHAT_COMMAND + " <message> - Send adminchat messages.");
+                Color.sendMessage(commandSender, "&c/" + Commands.ADMIN_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
                 Color.sendMessage(commandSender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send devchat messages.");
                 Color.sendMessage(commandSender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
                 Color.sendMessage(commandSender, "&c/" + Commands.RELOAD_COMMAND + " - Reload the config file.");

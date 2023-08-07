@@ -1,5 +1,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.CommandSender;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +10,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
 
 public final class HexUtils {
 

@@ -83,13 +83,13 @@ public class StaffChatCommand extends Command {
                 locale.sendCustomMessage(sender, "");
                 locale.sendCustomMessage(sender, "<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &fAvailable Commands:".replace("|", "\u239F"));
                 locale.sendCustomMessage(sender, "");
-                locale.sendCustomMessage(sender, "&c/" + Commands.STAFFCHAT_COMMAND + " <message> - Send staffchat messages.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.TOGGLE_COMMAND + " - Send staffchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send adminchat messages.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send devchat messages.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&c/" + Commands.RELOAD_COMMAND + " - Reload the config file.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.STAFFCHAT_COMMAND + " <message> &7- Send staffchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.TOGGLE_COMMAND + " &7- Send staffchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.DEVCHAT_COMMAND + " <message> - Send adminchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send adminchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.DEVCHAT_COMMAND + " <message> &7- Send devchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send devchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.RELOAD_COMMAND + " &7- Reload the config file.");
             }
         }
         return true;
