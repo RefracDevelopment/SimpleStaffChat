@@ -27,9 +27,9 @@ public enum Config {
     STAFFCHAT_TOGGLE_ON("messages.toggle-on"),
     STAFFCHAT_TOGGLE_OFF("messages.toggle-off"),
     ADMINCHAT_TOGGLE_ON("messages.adminchat-toggle-on"),
-    ADMINCHAT_TOGGLE_OFF("messages.adminchat-toggle-on"),
+    ADMINCHAT_TOGGLE_OFF("messages.adminchat-toggle-off"),
     DEVCHAT_TOGGLE_ON("messages.devchat-toggle-on"),
-    DEVCHAT_TOGGLE_OFF("messages.devchat-toggle-on"),
+    DEVCHAT_TOGGLE_OFF("messages.devchat-toggle-off"),
     STAFFCHAT_OUTPUT("messages.staffchat-output"),
     STAFFCHAT_MESSAGE("messages.staffchat-message");
 
