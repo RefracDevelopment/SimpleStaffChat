@@ -8,7 +8,7 @@ public enum Config {
 
     // General
     STAFFCHAT_SYMBOL("staffchat-symbol"),
-    ADMINCHAT_SYMBOL("amdinchat-symbol"),
+    ADMINCHAT_SYMBOL("adminchat-symbol"),
     DEVCHAT_SYMBOL("devchat-symbol"),
     LUCKPERMS("luckperms"),
     STAFFCHAT_FORMAT("format.minecraft-format"),

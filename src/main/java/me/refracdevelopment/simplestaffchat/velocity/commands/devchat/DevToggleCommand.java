@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat.velocity.commands.devchat;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
@@ -20,25 +21,27 @@ public class DevToggleCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         if (!Commands.DEV_TOGGLE_COMMAND_ENABLED.getBoolean()) return;
-        if (!(invocation.source() instanceof Player)) return;
+        CommandSource commandSource = invocation.source();
 
-        Player player = (Player) invocation.source();
+        if (commandSource instanceof Player) {
+            Player player = (Player) invocation.source();
 
-        if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.NO_PERMISSION.getString());
-            return;
-        }
-
-        if (indc.contains(player.getUniqueId())) {
-            indc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF.getString());
-        } else {
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
+            if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
+                Color.sendMessage(player, Config.NO_PERMISSION.getString());
+                return;
             }
-            indc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON.getString());
+
+            if (indc.contains(player.getUniqueId())) {
+                indc.remove(player.getUniqueId());
+                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF.getString());
+            } else {
+                if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                    AdminToggleCommand.inac.remove(player.getUniqueId());
+                    ToggleCommand.insc.remove(player.getUniqueId());
+                }
+                indc.add(player.getUniqueId());
+                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON.getString());
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ public enum Commands {
     ADMINCHAT_COMMAND_ENABLED("commands.adminchat.enabled"),
     ADMINCHAT_ALIASES("commands.adminchat.aliases"),
 
-    ADMIN_TOGGLE_COMMAND_ENABLED("commands.toggle.enabled"),
+    ADMIN_TOGGLE_COMMAND_ENABLED("commands.admin-toggle.enabled"),
     ADMIN_TOGGLE_ALIASES("commands.admin-toggle.aliases"),
 
     DEVCHAT_COMMAND_ENABLED("commands.devchat.enabled"),

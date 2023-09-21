@@ -26,7 +26,6 @@ import me.refracdevelopment.simplestaffchat.velocity.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.velocity.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.LuckPermsUtil;
-import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.1",
+        version = "3.2-beta.1",
         dependencies = {@Dependency(id = "unsignedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.refracdev.ml",
         description = "A Simple StaffChat Plugin",
@@ -75,30 +74,30 @@ public class VelocityStaffChat {
 
         loadFiles();
 
-        loadCommands();
-        loadListeners();
-
-        Color.log(Level.WARN, "§ePlease note that this is an experimental build for" +
+        Color.log(Level.WARN, "&cPlease note that this is an experimental build for " +
                 "Velocity support some things will not work.");
 
-        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().isLoaded("luckperms")) {
-            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Color.log(Level.INFO, "§eHooked into LuckPerms.");
-        }
-
         if (!getUnsignedVelocityAddon()) {
-            Color.log(Level.WARN, "§cIf you get kicked out in 1.19+ while typing in a staffchat on Velocity, " +
+            Color.log(Level.WARN, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Velocity, " +
                     "consider downloading https://github.com/4drian3d/UnSignedVelocity/releases/latest");
         }
 
-        metricsFactory.make(this, 15921);
-        
-        Color.log(Level.INFO, "§8§m==§c§m=====§f§m======================§c§m=====§8§m==");
-        Color.log(Level.INFO, "§e" + getContainer().getDescription().getName().get() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(Level.INFO, " §f[*] §6Version§f: §b" + getContainer().getDescription().getVersion().get());
-        Color.log(Level.INFO, " §f[*] §6Name§f: §b" + getContainer().getDescription().getName().get());
-        Color.log(Level.INFO, " §f[*] §6Author§f: §b" + getContainer().getDescription().getAuthors().get(0));
-        Color.log(Level.INFO, "§8§m==§c§m=====§f§m======================§c§m=====§8§m==");
+        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().isLoaded("luckperms")) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            Color.log(Level.INFO, "&eHooked into LuckPerms.");
+        }
+
+        loadCommands();
+        loadListeners();
+
+        metricsFactory.make(this, 12096);
+
+        Color.log(Level.INFO, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log(Level.INFO, "&e" + getContainer().getDescription().getName().get() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log(Level.INFO, " &f[*] &6Version&f: &b" + getContainer().getDescription().getVersion().get());
+        Color.log(Level.INFO, " &f[*] &6Name&f: &b" + getContainer().getDescription().getName().get());
+        Color.log(Level.INFO, " &f[*] &6Author&f: &b" + getContainer().getDescription().getAuthors().get(0));
+        Color.log(Level.INFO, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck(server.getConsoleCommandSource(), true);
     }
@@ -106,9 +105,16 @@ public class VelocityStaffChat {
     public void loadFiles() {
         this.configFile = new ConfigFile(path, "bungee-config.yml");
         this.commandsFile = new ConfigFile(path, "velocity-commands.yml");
-        Color.log(Level.INFO, "§c==========================================");
-        Color.log(Level.INFO, "§eAll files have been loaded correctly!");
-        Color.log(Level.INFO, "§c==========================================");
+        Color.log(Level.INFO, "&c==========================================");
+        Color.log(Level.INFO, "&eAll files have been loaded correctly!");
+        Color.log(Level.INFO, "&c==========================================");
+    }
+
+    public void reloadFiles() {
+        ConfigFile.reloadAll();
+        Color.log(Level.INFO, "&c==========================================");
+        Color.log(Level.INFO, "&eAll files have been loaded correctly!");
+        Color.log(Level.INFO, "&c==========================================");
     }
 
     private void loadCommands() {
@@ -153,13 +159,13 @@ public class VelocityStaffChat {
                 .metaBuilder(Commands.DEV_TOGGLE_ALIASES.getStringList().get(0))
                 .aliases(aliases_devchat_toggle)
                 .build(), new DevToggleCommand());
-        Color.log(Level.INFO, "§eLoaded commands.");
+        Color.log(Level.INFO, "&eLoaded commands.");
     }
 
     private void loadListeners() {
         server.getEventManager().register(this, new ChatListener());
         server.getEventManager().register(this, new JoinListener());
-        Color.log(Level.INFO, "§eLoaded listeners.");
+        Color.log(Level.INFO, "&eLoaded listeners.");
     }
 
     @SuppressWarnings("ALL")
@@ -189,26 +195,26 @@ public class VelocityStaffChat {
                 String version = info.get("version").getAsString();
                 if (version.equals(getContainer().getDescription().getVersion().get())) {
                     if (console) {
-                        sender.sendMessage(Component.text(Color.translate("§a" + getContainer().getDescription().getName().get() + " is on the latest version.")));
+                        Color.sendMessage(sender, "&a" + getContainer().getDescription().getName().get() + " is on the latest version.");
                     }
                 } else {
-                    sender.sendMessage(Component.text(""));
-                    sender.sendMessage(Component.text(""));
-                    sender.sendMessage(Component.text("§cYour " + getContainer().getDescription().getName().get() + " version is out of date!"));
-                    sender.sendMessage(Component.text("§cWe recommend updating ASAP!"));
-                    sender.sendMessage(Component.text(""));
-                    sender.sendMessage(Component.text("§cYour Version: §e" + getContainer().getDescription().getVersion().get()));
-                    sender.sendMessage(Component.text("§aNewest Version: §e" + version));
-                    sender.sendMessage(Component.text(""));
-                    sender.sendMessage(Component.text(""));
+                    Color.sendMessage(sender, " ");
+                    Color.sendMessage(sender, " ");
+                    Color.sendMessage(sender, "&cYour " + getContainer().getDescription().getName().get() + " version is out of date!");
+                    Color.sendMessage(sender, "&cWe recommend updating ASAP!");
+                    Color.sendMessage(sender, "");
+                    Color.sendMessage(sender, "&cYour Version: &e" + getContainer().getDescription().getVersion().get());
+                    Color.sendMessage(sender, "&aNewest Version: &e" + version);
+                    Color.sendMessage(sender, " ");
+                    Color.sendMessage(sender, " ");
                     return;
                 }
             } else {
-                sender.sendMessage(Component.text("§cWrong response from update API, contact plugin developer!"));
+                Color.sendMessage(sender, "&cWrong response from update API, contact plugin developer!");
             }
         } catch (
                 Exception ex) {
-            sender.sendMessage(Component.text("§cFailed to get updater check. (" + ex.getMessage() + ")"));
+            Color.sendMessage(sender, "&cFailed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

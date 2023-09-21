@@ -19,7 +19,6 @@ public class ConfigFile extends YamlConfiguration {
 
     @SneakyThrows
     public ConfigFile(Path path, String fileName) {
-
         if (!Files.exists(path)) {
             Files.createDirectory(path);
         }
@@ -36,7 +35,6 @@ public class ConfigFile extends YamlConfiguration {
         yamlFile.load();
 
         list.add(this);
-
     }
 
     public YamlFile getConfig() {

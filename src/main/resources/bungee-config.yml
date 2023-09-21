@@ -43,6 +43,7 @@ join:
   quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."
 
 messages:
+  # Used for the %prefix% placeholder in messages
   prefix: "&8[&c&lStaffChat&8]"
   no-permission: "&cYou don't have permission to execute this command."
   reload: "&7Config files reloaded. Changes should be live in-game."

@@ -6,10 +6,11 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
-import net.kyori.adventure.text.Component;
 
 public final class StaffChatCommand implements SimpleCommand {
 
@@ -32,7 +33,7 @@ public final class StaffChatCommand implements SimpleCommand {
                     .replace("%message%", message) : Config.CONSOLE_STAFFCHAT_FORMAT.getString().replace("%message%", message);
             
             if (!commandSource.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
-                commandSource.sendMessage(Component.text(Config.NO_PERMISSION.getString()));
+                Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
                 return;
             }
 
@@ -65,6 +66,10 @@ public final class StaffChatCommand implements SimpleCommand {
                         ToggleCommand.insc.remove(player.getUniqueId());
                         Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF.getString());
                     } else {
+                        if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
+                            AdminToggleCommand.inac.remove(player.getUniqueId());
+                            DevToggleCommand.indc.remove(player.getUniqueId());
+                        }
                         ToggleCommand.insc.add(player.getUniqueId());
                         Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON.getString());
                     }

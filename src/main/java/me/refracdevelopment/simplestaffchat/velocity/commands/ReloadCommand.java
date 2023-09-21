@@ -27,7 +27,7 @@ public class ReloadCommand implements SimpleCommand {
             return;
         }
 
-        plugin.loadFiles();
+        plugin.reloadFiles();
         Color.sendMessage(commandSource, Config.RELOAD.getString());
     }
 }
