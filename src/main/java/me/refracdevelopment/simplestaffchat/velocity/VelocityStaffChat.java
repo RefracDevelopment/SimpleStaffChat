@@ -12,6 +12,7 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.velocity.commands.ChatCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
@@ -40,7 +41,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.2-beta.1",
+        version = "3.2-beta.2",
         dependencies = {@Dependency(id = "unsignedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.refracdev.ml",
         description = "A Simple StaffChat Plugin",
@@ -73,9 +74,6 @@ public class VelocityStaffChat {
         long startTiming = System.currentTimeMillis();
 
         loadFiles();
-
-        Color.log(Level.WARN, "&cPlease note that this is an experimental build for " +
-                "Velocity support some things will not work.");
 
         if (!getUnsignedVelocityAddon()) {
             Color.log(Level.WARN, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Velocity, " +
@@ -159,6 +157,12 @@ public class VelocityStaffChat {
                 .metaBuilder(Commands.DEV_TOGGLE_ALIASES.getStringList().get(0))
                 .aliases(aliases_devchat_toggle)
                 .build(), new DevToggleCommand());
+
+        final String[] aliases_chat = Commands.CHAT_ALIASES.getStringList().toArray(new String[0]);
+        server.getCommandManager().register(server.getCommandManager()
+                .metaBuilder(Commands.CHAT_ALIASES.getStringList().get(0))
+                .aliases(aliases_chat)
+                .build(), new ChatCommand());
         Color.log(Level.INFO, "&eLoaded commands.");
     }
 

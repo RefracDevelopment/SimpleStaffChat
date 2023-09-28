@@ -49,10 +49,15 @@ public class ChatListener implements Listener {
                 plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, format));
             }
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
+
+            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
+                AdminToggleCommand.inac.remove(player.getUniqueId());
+                DevToggleCommand.indc.remove(player.getUniqueId());
+            }
 
             String message = event.getMessage();
             String format = Config.MINECRAFT_FORMAT.replace("%message%", message
@@ -97,10 +102,15 @@ public class ChatListener implements Listener {
                 plugin.getPluginMessage().sendAdminChat(player, Color.translate(player, format));
             }
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
+
+            if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                DevToggleCommand.indc.remove(player.getUniqueId());
+                ToggleCommand.insc.remove(player.getUniqueId());
+            }
 
             String message = event.getMessage();
             String format = Config.ADMINCHAT_FORMAT.replace("%message%", message
@@ -145,10 +155,15 @@ public class ChatListener implements Listener {
                 plugin.getPluginMessage().sendDevChat(player, Color.translate(player, format));
             }
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
+
+            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
+                AdminToggleCommand.inac.remove(player.getUniqueId());
+                ToggleCommand.insc.remove(player.getUniqueId());
+            }
 
             String message = event.getMessage();
             String format = Config.DEVCHAT_FORMAT.replace("%message%", message

@@ -32,6 +32,10 @@ public class Commands {
     public static String DEV_TOGGLE_COMMAND;
     public static String DEV_TOGGLE_ALIAS;
 
+    public static boolean CHAT_COMMAND_ENABLED;
+    public static String CHAT_COMMAND;
+    public static String CHAT_ALIAS;
+
     public static void loadConfig() {
         STAFFCHAT_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.staffchat.enabled");
         STAFFCHAT_COMMAND = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.staffchat.command");
@@ -60,5 +64,9 @@ public class Commands {
         DEV_TOGGLE_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.dev-toggle.enabled");
         DEV_TOGGLE_COMMAND = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.dev-toggle.command");
         DEV_TOGGLE_ALIAS = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.dev-toggle.alias");
+
+        CHAT_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.chat.enabled");
+        CHAT_COMMAND = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.chat.command");
+        CHAT_ALIAS = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.chat.alias");
     }
 }

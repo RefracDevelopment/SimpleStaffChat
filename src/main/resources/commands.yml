@@ -27,3 +27,7 @@ commands:
     enabled: true
     command: "devchattoggle"
     alias: "dctoggle"
+  chat:
+    enabled: true
+    command: "chat"
+    alias: ""

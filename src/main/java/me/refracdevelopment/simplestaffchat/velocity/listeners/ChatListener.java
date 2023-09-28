@@ -41,7 +41,7 @@ public class ChatListener {
                 }
             });
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL.getString())) return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());
@@ -89,7 +89,7 @@ public class ChatListener {
                 }
             });
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL.getString())) return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());
@@ -136,7 +136,7 @@ public class ChatListener {
                 }
             });
             Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.DEVCHAT_SYMBOL)) {
+        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL.getString())) return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());

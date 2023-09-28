@@ -6,6 +6,7 @@ import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
@@ -61,18 +62,7 @@ public class StaffChatCommand extends Command {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
-                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
-                        return true;
-                    }
-
-                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
-                        ToggleCommand.insc.remove(player.getUniqueId());
-                        locale.sendMessage(sender, "toggle-off", Placeholders.setPlaceholders(sender));
-                    } else {
-                        ToggleCommand.insc.add(player.getUniqueId());
-                        locale.sendMessage(sender, "toggle-on", Placeholders.setPlaceholders(sender));
-                    }
+                    Methods.toggleStaffChat(player);
                 }
             } else {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
@@ -89,6 +79,7 @@ public class StaffChatCommand extends Command {
                 locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send adminchat messages without needing to type a command.");
                 locale.sendCustomMessage(sender, "&d/" + Commands.DEVCHAT_COMMAND + " <message> &7- Send devchat messages.");
                 locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send devchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + Commands.CHAT_COMMAND + " <type:staff|admin|dev> &7- Send chat messages without needing to type a command.");
                 locale.sendCustomMessage(sender, "&d/" + Commands.RELOAD_COMMAND + " &7- Reload the config file.");
             }
         }

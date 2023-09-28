@@ -13,6 +13,7 @@ public class ConfigurationManager extends AbstractConfigurationManager {
     public enum Setting implements RoseSetting {
         // Config Settings
         BUNGEECORD("bungeecord", false, "Enable this to allow messages", "To be sent using the BungeeCord", "Plugin Messaging Protocol", "This allows Velocity to receive staffchat messages"),
+        SYMBOLS("symbols", true, "Change to false if you want to disable all chat symbols."),
         SERVER_NAME("server-name", "hub", "This is so stuff like Discord can get the server name"),
         STAFFCHAT_SYMBOL("staffchat-symbol", "#", "Used to send messages to staffchat without the", "need to type in commands", "this uses the same format as /staffchat <message>"),
         ADMINCHAT_SYMBOL("adminchat-symbol", "@"),

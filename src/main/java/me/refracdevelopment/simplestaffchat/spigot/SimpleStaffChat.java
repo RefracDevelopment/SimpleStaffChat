@@ -50,17 +50,17 @@ public final class SimpleStaffChat extends RosePlugin {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
-        // Make sure the server has PlaceholderAPI
-        if (!pluginManager.isPluginEnabled("PlaceholderAPI") && !FoliaUtil.isFolia()) {
-            Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         // Check if the server is on 1.7
         if (NMSUtil.getVersionNumber() <= 7) {
             Color.log("&cSimpleStaffChat2 1.7 is in legacy mode, please update to 1.8+");
             this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Make sure the server has PlaceholderAPI
+        if (pluginManager.getPlugin("PlaceholderAPI") == null && !FoliaUtil.isFolia()) {
+            Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
 

@@ -1,6 +1,7 @@
 package me.refracdevelopment.simplestaffchat.spigot.manager;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.commands.ChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
@@ -32,7 +33,8 @@ public class CommandManager {
                 new AdminChatCommand(plugin),
                 new AdminToggleCommand(plugin),
                 new DevChatCommand(plugin),
-                new DevToggleCommand(plugin)
+                new DevToggleCommand(plugin),
+                new ChatCommand(plugin)
         ));
     }
 

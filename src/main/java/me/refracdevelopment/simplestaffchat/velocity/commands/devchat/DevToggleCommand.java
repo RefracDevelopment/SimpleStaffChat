@@ -3,12 +3,8 @@ package me.refracdevelopment.simplestaffchat.velocity.commands.devchat;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,25 +19,10 @@ public class DevToggleCommand implements SimpleCommand {
         if (!Commands.DEV_TOGGLE_COMMAND_ENABLED.getBoolean()) return;
         CommandSource commandSource = invocation.source();
 
-        if (commandSource instanceof Player) {
-            Player player = (Player) invocation.source();
+        if (!(commandSource instanceof Player)) return;
 
-            if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION.getString());
-                return;
-            }
+        Player player = (Player) invocation.source();
 
-            if (indc.contains(player.getUniqueId())) {
-                indc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF.getString());
-            } else {
-                if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                    AdminToggleCommand.inac.remove(player.getUniqueId());
-                    ToggleCommand.insc.remove(player.getUniqueId());
-                }
-                indc.add(player.getUniqueId());
-                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON.getString());
-            }
-        }
+        Methods.toggleDevChat(player);
     }
 }

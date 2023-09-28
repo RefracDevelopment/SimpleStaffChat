@@ -19,6 +19,8 @@ adminchat-symbol: "#"
 devchat-symbol: "%"
 # Change to true if you have LuckPerms installed
 luckperms: false
+# Change to false if you want to disable all chat symbols
+symbols: true
 
 format:
   # Minecraft format

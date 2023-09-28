@@ -21,7 +21,7 @@ public class JoinListener implements Listener {
 
         if (Config.JOIN_ENABLED) {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-            if (player.getServer() != null) return;
+            if (event.getReason() == ServerConnectEvent.Reason.JOIN_PROXY) return;
 
             ProxyServer.getInstance().getPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {

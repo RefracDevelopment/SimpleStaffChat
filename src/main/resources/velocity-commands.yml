@@ -8,7 +8,7 @@ commands:
       - "simplesc"
       - "simplestaffchat"
   toggle:
-    enabled: false
+    enabled: true
     aliases:
       - "staffchattoggle"
       - "sctoggle"
@@ -32,7 +32,7 @@ commands:
       - "simpleac"
       - "simpleadminchat"
   admin-toggle:
-    enabled: false
+    enabled: true
     aliases:
       - "adminchattoggle"
       - "actoggle"
@@ -48,10 +48,14 @@ commands:
       - "simpledc"
       - "simpledevchat"
   dev-toggle:
-    enabled: false
+    enabled: true
     aliases:
       - "devchattoggle"
       - "dctoggle"
       - "devtoggle"
       - "simpledctoggle"
       - "simpledevchattoggle"
+  chat:
+    enabled: true
+    aliases:
+      - "chat"

@@ -18,7 +18,7 @@ public class JoinListener {
 
         if (Config.JOIN_ENABLED.getBoolean()) {
             if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-            if (player.getCurrentServer().isPresent()) return;
+            if (!player.getCurrentServer().isPresent()) return;
 
             VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
                 if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -37,8 +37,8 @@ public class JoinListener {
 
     @Subscribe
     public void onSwitch(ServerConnectedEvent event) {
-        if (!event.getPreviousServer().isPresent()) return;
         if (!Config.JOIN_ENABLED.getBoolean()) return;
+        if (!event.getPreviousServer().isPresent()) return;
 
         Player player = event.getPlayer();
 

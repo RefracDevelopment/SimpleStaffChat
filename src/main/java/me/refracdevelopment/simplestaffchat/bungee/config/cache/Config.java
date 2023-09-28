@@ -11,6 +11,7 @@ public class Config {
     public static String ADMINCHAT_SYMBOL;
     public static String DEVCHAT_SYMBOL;
     public static boolean LUCKPERMS;
+    public static boolean SYMBOLS;
 
     // Format
     public static String STAFFCHAT_FORMAT;
@@ -44,6 +45,7 @@ public class Config {
         ADMINCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("adminchat-symbol");
         DEVCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("devchat-symbol");
         LUCKPERMS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("luckperms");
+        SYMBOLS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("symbols");
 
         STAFFCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.minecraft-format");
         CONSOLE_STAFFCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.console-staffchat-format");

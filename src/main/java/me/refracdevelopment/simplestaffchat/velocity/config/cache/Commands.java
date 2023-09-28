@@ -25,7 +25,9 @@ public enum Commands {
     DEVCHAT_ALIASES("commands.devchat.aliases"),
 
     DEV_TOGGLE_COMMAND_ENABLED("commands.dev-toggle.enabled"),
-    DEV_TOGGLE_ALIASES("commands.dev-toggle.aliases");
+    DEV_TOGGLE_ALIASES("commands.dev-toggle.aliases"),
+    CHAT_COMMAND_ENABLED("commands.chat.enabled"),
+    CHAT_ALIASES("commands.chat.aliases");
 
     private final String path;
     public static final VelocityStaffChat instance = VelocityStaffChat.getInstance();

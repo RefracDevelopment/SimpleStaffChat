@@ -4,6 +4,7 @@ import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
@@ -55,18 +56,7 @@ public class StaffChatCommand extends Command {
                 if (commandSender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION);
-                        return;
-                    }
-
-                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
-                        ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF);
-                    } else {
-                        ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON);
-                    }
+                    Methods.toggleStaffChat(player);
                 }
             } else {
                 if (!commandSender.hasPermission(Permissions.STAFFCHAT_HELP)) {
@@ -83,6 +73,7 @@ public class StaffChatCommand extends Command {
                 Color.sendMessage(commandSender, "&c/" + Commands.ADMIN_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
                 Color.sendMessage(commandSender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send devchat messages.");
                 Color.sendMessage(commandSender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
+                Color.sendMessage(commandSender, "&c/" + Commands.CHAT_COMMAND + " <type:staff|admin|dev> - Send chat messages without needing to type a command.");
                 Color.sendMessage(commandSender, "&c/" + Commands.RELOAD_COMMAND + " - Reload the config file.");
                 Color.sendMessage(commandSender, "");
             }

@@ -3,6 +3,7 @@ package me.refracdevelopment.simplestaffchat.bungee;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.bungee.commands.ChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
@@ -87,6 +88,7 @@ public class BungeeStaffChat extends Plugin {
         pluginManager.registerCommand(this, new AdminToggleCommand());
         pluginManager.registerCommand(this, new DevChatCommand(this));
         pluginManager.registerCommand(this, new DevToggleCommand());
+        pluginManager.registerCommand(this, new ChatCommand());
         Color.log("&eLoaded commands.");
     }
 

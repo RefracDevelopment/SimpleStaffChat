@@ -31,6 +31,7 @@ public class Config {
     // Settings
     public static boolean BUNGEECORD;
     public static String SERVER_NAME;
+    public static boolean SYMBOLS;
 
     public static void loadConfig() {
         // General
@@ -58,6 +59,7 @@ public class Config {
         // Settings
         BUNGEECORD = ConfigurationManager.Setting.BUNGEECORD.getBoolean();
         SERVER_NAME = ConfigurationManager.Setting.SERVER_NAME.getString();
+        SYMBOLS = ConfigurationManager.Setting.SYMBOLS.getBoolean();
 
         Color.log("&c==========================================");
         Color.log("&aAll files have been loaded correctly!");

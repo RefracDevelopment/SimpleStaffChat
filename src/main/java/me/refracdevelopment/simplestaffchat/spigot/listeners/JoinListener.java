@@ -27,25 +27,24 @@ public class JoinListener implements Listener {
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (Config.JOIN_ENABLED) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_FORMAT));
-                }
-            }
-            if (Config.BUNGEECORD) {
-                plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_FORMAT));
-            }
-            Color.log2(Color.translate(player, Config.JOIN_FORMAT));
-        }
-
         if (player.getUniqueId().equals(Settings.getDevUUID)) {
             sendDevMessage(player);
         } else if (player.getUniqueId().equals(Settings.getDevUUID2)) {
             sendDevMessage(player);
         }
+
+        if (!Config.JOIN_ENABLED) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                locale.sendCustomMessage(p, Color.translate(player, Config.JOIN_FORMAT));
+            }
+        }
+        if (Config.BUNGEECORD) {
+            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_FORMAT));
+        }
+        Color.log2(Color.translate(player, Config.JOIN_FORMAT));
     }
 
     @EventHandler

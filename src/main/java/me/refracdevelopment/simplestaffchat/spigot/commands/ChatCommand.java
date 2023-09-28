@@ -1,36 +1,26 @@
 package me.refracdevelopment.simplestaffchat.spigot.commands;
 
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-public class ToggleCommand extends Command {
+public class ChatCommand extends Command {
 
     private final SimpleStaffChat plugin;
 
-    public static List<UUID> insc = new ArrayList<>();
-
-    public ToggleCommand(SimpleStaffChat plugin) {
-        super(Commands.TOGGLE_COMMAND, "", Commands.TOGGLE_ALIAS);
+    public ChatCommand(SimpleStaffChat plugin) {
+        super(Commands.CHAT_COMMAND, "", Commands.CHAT_ALIAS);
         this.plugin = plugin;
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!Commands.TOGGLE_COMMAND_ENABLED) return false;
+        if (!Commands.CHAT_COMMAND_ENABLED) return false;
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
@@ -41,7 +31,17 @@ public class ToggleCommand extends Command {
 
         Player player = (Player) sender;
 
-        Methods.toggleStaffChat(player);
+        switch (args[0]) {
+            case "staff":
+                Methods.toggleStaffChat(player);
+                break;
+            case "admin":
+                Methods.toggleAdminChat(player);
+                break;
+            case "dev":
+                Methods.toggleDevChat(player);
+                break;
+        }
         return true;
     }
 

@@ -9,6 +9,7 @@ import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleC
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,25 +24,10 @@ public class ToggleCommand implements SimpleCommand {
         if (!Commands.TOGGLE_COMMAND_ENABLED.getBoolean()) return;
         CommandSource commandSource = invocation.source();
 
-        if (commandSource instanceof Player) {
-            Player player = (Player) commandSource;
+        if (!(commandSource instanceof Player)) return;
 
-            if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                Color.sendMessage(player, Config.NO_PERMISSION.getString());
-                return;
-            }
+        Player player = (Player) commandSource;
 
-            if (insc.contains(player.getUniqueId())) {
-                insc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF.getString());
-            } else {
-                if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
-                    AdminToggleCommand.inac.remove(player.getUniqueId());
-                    DevToggleCommand.indc.remove(player.getUniqueId());
-                }
-                insc.add(player.getUniqueId());
-                Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON.getString());
-            }
-        }
+        Methods.toggleStaffChat(player);
     }
 }

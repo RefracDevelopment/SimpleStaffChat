@@ -6,11 +6,10 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
 
 public final class StaffChatCommand implements SimpleCommand {
 
@@ -57,22 +56,7 @@ public final class StaffChatCommand implements SimpleCommand {
                 if (commandSource instanceof Player) {
                     Player player = (Player) commandSource;
 
-                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION.getString());
-                        return;
-                    }
-
-                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
-                        ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF.getString());
-                    } else {
-                        if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
-                            AdminToggleCommand.inac.remove(player.getUniqueId());
-                            DevToggleCommand.indc.remove(player.getUniqueId());
-                        }
-                        ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON.getString());
-                    }
+                    Methods.toggleStaffChat(player);
                 }
             } else {
                 if (!commandSource.hasPermission(Permissions.STAFFCHAT_HELP)) {
@@ -89,6 +73,7 @@ public final class StaffChatCommand implements SimpleCommand {
                 Color.sendMessage(commandSource, "&c/" + Commands.ADMIN_TOGGLE_ALIASES.getStringList().get(0) + " - Send adminchat messages without needing to type a command.");
                 Color.sendMessage(commandSource, "&c/" + Commands.DEVCHAT_ALIASES.getStringList().get(0) + " <message> - Send devchat messages.");
                 Color.sendMessage(commandSource, "&c/" + Commands.DEV_TOGGLE_ALIASES.getStringList().get(0) + " - Send devchat messages without needing to type a command.");
+                Color.sendMessage(commandSource, "&c/" + Commands.DEV_TOGGLE_ALIASES.getStringList().get(0) + " <type:staff|admin|dev> - Send chat messages without needing to type a command.");
                 Color.sendMessage(commandSource, "&c/" + Commands.RELOAD_ALIASES.getStringList().get(0) + " - Reload the config file.");
                 Color.sendMessage(commandSource, "");
             }
