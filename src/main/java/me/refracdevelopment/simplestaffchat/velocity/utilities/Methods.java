@@ -65,4 +65,10 @@ public class Methods {
             Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON.getString());
         }
     }
+
+    public static void toggleAllChat(Player player) {
+        ToggleCommand.insc.remove(player);
+        DevToggleCommand.indc.remove(player);
+        AdminToggleCommand.inac.remove(player);
+    }
 }

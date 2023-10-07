@@ -73,4 +73,10 @@ public class Methods {
             locale.sendMessage(player, "devchat-toggle-on", Placeholders.setPlaceholders(player));
         }
     }
+
+    public static void toggleAllChat(Player player) {
+        ToggleCommand.insc.remove(player);
+        DevToggleCommand.indc.remove(player);
+        AdminToggleCommand.inac.remove(player);
+    }
 }

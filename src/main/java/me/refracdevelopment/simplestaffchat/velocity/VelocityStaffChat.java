@@ -41,7 +41,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.2-beta.2",
+        version = "3.2-beta.3",
         dependencies = {@Dependency(id = "unsignedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.refracdev.ml",
         description = "A Simple StaffChat Plugin",

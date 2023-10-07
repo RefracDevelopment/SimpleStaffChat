@@ -6,7 +6,7 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>3.2-beta.2</version>
+    <version>3.2-beta.3</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>
@@ -103,12 +103,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

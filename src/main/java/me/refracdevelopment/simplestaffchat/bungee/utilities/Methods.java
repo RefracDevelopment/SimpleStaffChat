@@ -8,6 +8,7 @@ import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.bukkit.entity.Player;
 
 public class Methods {
 
@@ -68,5 +69,11 @@ public class Methods {
             DevToggleCommand.indc.add(player.getUniqueId());
             Color.sendMessage(player, Placeholders.setPlaceholders(player, Config.DEVCHAT_TOGGLE_ON));
         }
+    }
+
+    public static void toggleAllChat(ProxiedPlayer player) {
+        ToggleCommand.insc.remove(player);
+        DevToggleCommand.indc.remove(player);
+        AdminToggleCommand.inac.remove(player);
     }
 }

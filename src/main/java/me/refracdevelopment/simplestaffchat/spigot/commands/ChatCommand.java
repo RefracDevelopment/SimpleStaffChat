@@ -41,6 +41,9 @@ public class ChatCommand extends Command {
             case "dev":
                 Methods.toggleDevChat(player);
                 break;
+            case "all":
+                Methods.toggleAllChat(player);
+                break;
         }
         return true;
     }

@@ -24,6 +24,9 @@ public class ChatCommand implements SimpleCommand {
             case "dev":
                 Methods.toggleDevChat(player);
                 break;
+            case "all":
+                Methods.toggleAllChat(player);
+                break;
         }
     }
 }

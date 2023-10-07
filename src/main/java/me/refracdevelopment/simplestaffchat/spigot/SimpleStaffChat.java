@@ -74,8 +74,7 @@ public final class SimpleStaffChat extends RosePlugin {
 
         if (Config.BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-            getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
-            pluginMessage = new PluginMessage(this);
+            getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", pluginMessage = new PluginMessage(this));
         }
 
         loadCommands();
