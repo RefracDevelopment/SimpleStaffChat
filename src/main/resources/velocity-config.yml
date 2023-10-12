@@ -1,0 +1,72 @@
+# SimpleStaffChat2 by RefracDevelopment
+#--------------------------------------
+# Placeholders:
+# %player% - Get the player name
+# %displayname% - Get the player display name
+# %server% - Get the player server
+# %message% - Get the message
+# %arrow% - Get an arrow for a message
+# %arrow_2% - Get alt arrow for a message
+# %star% - Get a star for a message
+# %circle% - Get a circle for a message
+# %empty% - Disable any message with this placeholder
+#--------------------------------------
+# Used to send messages to staffchat without the
+# need to type in /staffchat <message> or /staffchattoggle
+# this uses the same format as /staffchat <message>
+staffchat-symbol: "@"
+adminchat-symbol: "#"
+devchat-symbol: "%"
+# Change to true if you have LuckPerms installed
+luckperms: false
+# Change to false if you want to disable all chat symbols
+symbols: true
+
+format:
+  # Minecraft format
+  minecraft-format: "%prefix% <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
+  # Format for messages sent by the console.
+  console-staffchat-format: "%prefix% <gold><bold>Console<gray>: <white>%message%"
+  # AdminChat format
+  adminchat-format: "<gray>[<red><bold>AdminChat<gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
+  # Format for messages sent by the console.
+  console-adminchat-format: "<gray>[<red><bold>AdminChat<gray>] <gold><bold>Console<gray>: <white>%message%"
+  # DevChat format
+  devchat-format: "<gray>[<aqua><bold>DevChat<gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
+  # Format for messages sent by the console.
+  console-devchat-format: "<gray>[<aqua><bold>DevChat<gray>] <gold><bold>Console<gray>: <white>%message%"
+
+# This is for staff joins only
+# permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
+join:
+  enabled: false
+  join-format: "<gray>[<aqua>+<gray>] <blue>%player% <white>joined <yellow>%server%<white>."
+  switch-format: "<gray>[<aqua>+<gray>] <blue>%player% <white>switched server <gray>(<yellow>%from% <white>%arrow% <yellow>%server%<gray>)<white>."
+  quit-format: "<gray>[<red>-<gray>] <blue>%player% <white>left <yellow>%server%<white>."
+
+messages:
+  # Used for the %prefix% placeholder in messages
+  prefix: "<gray>[<red><bold>StaffChat<gray>]"
+  no-permission: "<red>You don't have permission to execute this command."
+  reload: "<gray>Config files reloaded. Changes should be live in-game."
+  toggle-on: "%prefix% <yellow>StaffChat toggled <green>on<yellow>."
+  toggle-off: "%prefix% <yellow>StaffChat toggled <red>off<yellow>."
+  adminchat-toggle-on: "<gray>[<red><bold>AdminChat<gray>] <yellow>AdminChat toggled <green>on<yellow>."
+  adminchat-toggle-off: "<gray>[<red><bold>AdminChat<gray>] <yellow>AdminChat toggled <red>off<yellow>."
+  devchat-toggle-on: "<gray>[<aqua><bold>DevChat<gray>] <yellow>DevChat toggled <green>on<yellow>."
+  devchat-toggle-off: "<gray>[<aqua><bold>DevChat<gray>] <yellow>DevChat toggled <red>off<yellow>."
+  allchat-toggle-on: "<yellow>All chat toggled <green>on<yellow>."
+  # If this is set to "toggle" you can use /sc to toggle into staffchat easier
+  staffchat-output: "default"
+  staffchat-message:
+    - ""
+    - "<red><bold>SimpleStaffChat2 %arrow2% Help"
+    - ""
+    - "<red>/staffchat <message> <gray>- Send staffchat messages."
+    - "<red>/adminchat <message> <gray>- Send adminchat messages."
+    - "<red>/devchat <message> <gray>- Send devchat messages."
+    - "<red>/staffchattoggle <gray>- Send staffchat messages without needing to type a command."
+    - "<red>/adminchattoggle <gray>- Send adminchat messages without needing to type a command."
+    - "<red>/devchattoggle <gray>- Send devchat messages without needing to type a command."
+    - "<red>/staffchatreload <gray>- Reload the config file."
+    - ""

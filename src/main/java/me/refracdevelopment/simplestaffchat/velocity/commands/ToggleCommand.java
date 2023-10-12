@@ -3,12 +3,7 @@ package me.refracdevelopment.simplestaffchat.velocity.commands;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
 
 import java.util.ArrayList;

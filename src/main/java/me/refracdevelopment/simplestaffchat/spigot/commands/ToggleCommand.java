@@ -1,13 +1,9 @@
 package me.refracdevelopment.simplestaffchat.spigot.commands;
 
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -43,10 +39,5 @@ public class ToggleCommand extends Command {
 
         Methods.toggleStaffChat(player);
         return true;
-    }
-
-    @Override
-    public int compareTo(@NotNull Command o) {
-        return 0;
     }
 }

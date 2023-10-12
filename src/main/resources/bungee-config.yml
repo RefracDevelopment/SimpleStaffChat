@@ -55,6 +55,7 @@ messages:
   adminchat-toggle-off: "&8[&4&lAdminChat&8] &7AdminChat toggled &coff&7."
   devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
   devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
+  allchat-toggle-on: "&eAll chat toggled &aon&e."
   # If this is set to "custom" you can change the /sc output message to anything
   # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"

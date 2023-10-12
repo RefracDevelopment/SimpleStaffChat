@@ -3,8 +3,7 @@ package me.refracdevelopment.simplestaffchat.velocity.utilities;
 import com.velocitypowered.api.command.CommandSource;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import net.kyori.adventure.text.Component;
-import org.slf4j.event.Level;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class Color {
 
@@ -23,27 +22,14 @@ public class Color {
 
         source = Placeholders.setPlaceholders(sender, source);
 
-        sender.sendMessage(Component.text(translate(source)));
+        sender.sendMessage(MiniMessage.miniMessage().deserialize(source));
     }
 
-    public static void log(Level type, String message) {
-        switch (type) {
-            case INFO:
-                VelocityStaffChat.getInstance().getLogger().info(translate(Config.PREFIX.getString() + " " + message));
-                break;
-            case WARN:
-                VelocityStaffChat.getInstance().getLogger().warn(translate(Config.PREFIX.getString() + " " + message));
-                break;
-            case ERROR:
-                VelocityStaffChat.getInstance().getLogger().error(translate(Config.PREFIX.getString() + " " + message));
-                break;
-            case DEBUG:
-                VelocityStaffChat.getInstance().getLogger().debug(translate(Config.PREFIX.getString() + " " + message));
-                break;
-        }
+    public static void log(String message) {
+        sendMessage(VelocityStaffChat.getInstance().getServer().getConsoleCommandSource(), Config.PREFIX.getString() + " " + message);
     }
 
     public static void log2(String message) {
-        VelocityStaffChat.getInstance().getLogger().info(translate(message));
+        sendMessage(VelocityStaffChat.getInstance().getServer().getConsoleCommandSource(), message);
     }
 }

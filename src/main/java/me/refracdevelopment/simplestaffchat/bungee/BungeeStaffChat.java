@@ -3,25 +3,19 @@ package me.refracdevelopment.simplestaffchat.bungee;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.api.BungeeStaffChatAPI;
 import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
+import me.refracdevelopment.simplestaffchat.bungee.manager.CommandManager;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
 
 import java.io.BufferedReader;
@@ -34,8 +28,16 @@ public class BungeeStaffChat extends Plugin {
 
     @Getter
     private static BungeeStaffChat instance;
+
+    private CommandManager commandManager;
+
+    private BungeeStaffChatAPI staffChatAPI;
+
     private YMLBase configFile;
     private YMLBase commandsFile;
+    private YMLBase discordFile;
+
+    private DiscordImpl discord;
 
     @Override
     public void onEnable() {
@@ -59,6 +61,9 @@ public class BungeeStaffChat extends Plugin {
 
         new Metrics(this, 12096);
 
+        this.staffChatAPI = new BungeeStaffChatAPI();
+        this.discord = new DiscordImpl();
+
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
         Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
@@ -72,6 +77,7 @@ public class BungeeStaffChat extends Plugin {
     private void loadFiles() {
         this.configFile = new YMLBase(this, "bungee-config.yml");
         this.commandsFile = new YMLBase(this, "commands.yml");
+        this.discordFile = new YMLBase(this, "discord.yml");
         Config.loadConfig();
         Commands.loadConfig();
         Color.log("&c==========================================");
@@ -80,15 +86,8 @@ public class BungeeStaffChat extends Plugin {
     }
 
     private void loadCommands() {
-        PluginManager pluginManager = getProxy().getPluginManager();
-        pluginManager.registerCommand(this, new StaffChatCommand(this));
-        pluginManager.registerCommand(this, new ToggleCommand());
-        pluginManager.registerCommand(this, new ReloadCommand(this));
-        pluginManager.registerCommand(this, new AdminChatCommand(this));
-        pluginManager.registerCommand(this, new AdminToggleCommand());
-        pluginManager.registerCommand(this, new DevChatCommand(this));
-        pluginManager.registerCommand(this, new DevToggleCommand());
-        pluginManager.registerCommand(this, new ChatCommand());
+        this.commandManager = new CommandManager(this);
+        commandManager.registerAll();
         Color.log("&eLoaded commands.");
     }
 

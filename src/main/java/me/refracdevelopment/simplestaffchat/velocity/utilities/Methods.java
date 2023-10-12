@@ -1,13 +1,90 @@
 package me.refracdevelopment.simplestaffchat.velocity.utilities;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 
 public class Methods {
+
+    public static void sendStaffChat(CommandSource commandSource, String format, String message) {
+        if (!commandSource.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
+            Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+            return;
+        }
+
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendMessage(p, Color.translate(commandSource, format));
+            }
+        }
+        Color.log2(Color.translate(commandSource, format));
+        if (commandSource instanceof Player) {
+            Player player = (Player) commandSource;
+            VelocityStaffChat.getInstance().getDiscord().sendStaffChat(player, message
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", player.getUsername())
+            );
+        } else {
+            VelocityStaffChat.getInstance().getDiscord().sendStaffChat(commandSource, message
+                    .replace("%player%", "Console")
+            );
+        }
+    }
+
+    public static void sendDevChat(CommandSource commandSource, String format, String message) {
+        if (!commandSource.hasPermission(Permissions.DEVCHAT_COMMAND)) {
+            Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+            return;
+        }
+
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
+                Color.sendMessage(p, Color.translate(commandSource, format));
+            }
+        }
+        Color.log2(Color.translate(commandSource, format));
+        if (commandSource instanceof Player) {
+            Player player = (Player) commandSource;
+            VelocityStaffChat.getInstance().getDiscord().sendDevChat(player, message
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", player.getUsername())
+            );
+        } else {
+            VelocityStaffChat.getInstance().getDiscord().sendDevChat(commandSource, message
+                    .replace("%player%", "Console")
+            );
+        }
+    }
+
+    public static void sendAdminChat(CommandSource commandSource, String format, String message) {
+        if (!commandSource.hasPermission(Permissions.ADMINCHAT_COMMAND)) {
+            Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+            return;
+        }
+
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
+                Color.sendMessage(p, Color.translate(commandSource, format));
+            }
+        }
+        Color.log2(Color.translate(commandSource, format));
+        if (commandSource instanceof Player) {
+            Player player = (Player) commandSource;
+            VelocityStaffChat.getInstance().getDiscord().sendAdminChat(player, message
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", player.getUsername())
+            );
+        } else {
+            VelocityStaffChat.getInstance().getDiscord().sendAdminChat(commandSource, message
+                    .replace("%player%", "Console")
+            );
+        }
+    }
 
     public static void toggleStaffChat(Player player) {
         if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
@@ -67,8 +144,12 @@ public class Methods {
     }
 
     public static void toggleAllChat(Player player) {
-        ToggleCommand.insc.remove(player);
-        DevToggleCommand.indc.remove(player);
-        AdminToggleCommand.inac.remove(player);
+        if (ToggleCommand.insc.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())
+                || AdminToggleCommand.inac.contains(player.getUniqueId())) {
+            ToggleCommand.insc.remove(player.getUniqueId());
+            ToggleCommand.insc.remove(player.getUniqueId());
+            ToggleCommand.insc.remove(player.getUniqueId());
+            Color.sendMessage(player, Config.ALLCHAT_TOGGLE_ON.getString());
+        }
     }
 }

@@ -5,12 +5,12 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
 
 public class ChatListener {
 
@@ -35,12 +35,7 @@ public class ChatListener {
             String format = Config.STAFFCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendStaffChat(player, format, message);
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL.getString())) return;
 
@@ -53,16 +48,11 @@ public class ChatListener {
                 DevToggleCommand.indc.remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
+            String message = event.getMessage().replaceFirst(Config.STAFFCHAT_SYMBOL.getString(), "");
             String format = Config.STAFFCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL.getString(), ""));
+                    .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendStaffChat(player, format, message);
         }
     }
 
@@ -83,12 +73,7 @@ public class ChatListener {
             String format = Config.ADMINCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendAdminChat(player, format, message);
         } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL.getString())) return;
 
@@ -100,16 +85,11 @@ public class ChatListener {
                 DevToggleCommand.indc.remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
+            String message = event.getMessage().replaceFirst(Config.ADMINCHAT_SYMBOL.getString(), "");
             String format = Config.ADMINCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.ADMINCHAT_SYMBOL.getString(), ""));
+                    .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendAdminChat(player, format, message);
         }
     }
 
@@ -130,12 +110,7 @@ public class ChatListener {
             String format = Config.DEVCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendDevChat(player, format, message);
         } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL.getString()) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && Config.SYMBOLS.getBoolean()) {
             if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL.getString())) return;
 
@@ -147,16 +122,11 @@ public class ChatListener {
                 DevToggleCommand.indc.remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
+            String message = event.getMessage().replaceFirst(Config.DEVCHAT_SYMBOL.getString(), "");
             String format = Config.DEVCHAT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.DEVCHAT_SYMBOL.getString(), ""));
+                    .replace("%message%", message);
 
-            VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendDevChat(player, format, message);
         }
     }
 }

@@ -1,7 +1,7 @@
 package me.refracdevelopment.simplestaffchat.spigot.commands;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
@@ -46,10 +46,5 @@ public class ChatCommand extends Command {
                 break;
         }
         return true;
-    }
-
-    @Override
-    public int compareTo(@NotNull Command o) {
-        return 0;
     }
 }

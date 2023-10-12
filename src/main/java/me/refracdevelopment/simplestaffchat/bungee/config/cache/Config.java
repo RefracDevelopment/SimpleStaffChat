@@ -37,6 +37,7 @@ public class Config {
     public static String ADMINCHAT_TOGGLE_OFF;
     public static String DEVCHAT_TOGGLE_ON;
     public static String DEVCHAT_TOGGLE_OFF;
+    public static String ALLCHAT_TOGGLE_ON;
     public static String STAFFCHAT_OUTPUT;
     public static List<String> STAFFCHAT_MESSAGE;
 
@@ -68,6 +69,7 @@ public class Config {
         ADMINCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-off");
         DEVCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-on");
         DEVCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-off");
+        ALLCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.allchat-toggle-on");
         STAFFCHAT_OUTPUT = BungeeStaffChat.getInstance().getConfigFile().getString("messages.staffchat-output");
         STAFFCHAT_MESSAGE = BungeeStaffChat.getInstance().getConfigFile().getStringList("messages.staffchat-message");
     }

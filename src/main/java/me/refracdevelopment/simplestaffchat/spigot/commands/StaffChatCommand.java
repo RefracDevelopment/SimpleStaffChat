@@ -3,11 +3,10 @@ package me.refracdevelopment.simplestaffchat.spigot.commands;
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,21 +34,7 @@ public class StaffChatCommand extends Command {
             String format = (sender instanceof Player) ? Config.MINECRAFT_FORMAT.replace("%message%", message) :
                     Config.CONSOLE_FORMAT.replace("%message%", message);
 
-            if (!sender.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
-                locale.sendMessage(sender, "no-permission");
-                return true;
-            }
-
-            for (Player p : plugin.getServer().getOnlinePlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    locale.sendCustomMessage(p, Color.translate(sender, format));
-                }
-            }
-            if (Config.BUNGEECORD && sender instanceof Player) {
-                Player player = (Player) sender;
-                plugin.getPluginMessage().sendStaffChat(player, Color.translate(sender, format));
-            }
-            Color.log2(Color.translate(sender, format));
+            Methods.sendStaffChat(sender, format);
         } else {
             if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
@@ -84,10 +69,5 @@ public class StaffChatCommand extends Command {
             }
         }
         return true;
-    }
-
-    @Override
-    public int compareTo(@NotNull Command o) {
-        return 0;
     }
 }

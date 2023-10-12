@@ -6,7 +6,7 @@ api-version: "1.13"
 softdepend:
   - PlaceholderAPI
 description: A Simple StaffChat Plugin
-website: https://discord.refracdev.ml/
+website: https://discord.gg/EFeSKPg739
 folia-supported: true
 
 permissions:

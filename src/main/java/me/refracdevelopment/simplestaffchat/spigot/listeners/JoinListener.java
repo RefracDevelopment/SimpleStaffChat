@@ -1,9 +1,10 @@
 package me.refracdevelopment.simplestaffchat.spigot.listeners;
 
+import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
@@ -45,6 +46,10 @@ public class JoinListener implements Listener {
             plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_FORMAT));
         }
         Color.log2(Color.translate(player, Config.JOIN_FORMAT));
+        plugin.getDiscord().sendJoin(player, JoinType.JOIN, Config.JOIN_FORMAT
+                .replace("%server%", Config.SERVER_NAME)
+                .replace("%player%", player.getName())
+        );
     }
 
     @EventHandler
@@ -65,6 +70,10 @@ public class JoinListener implements Listener {
             plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, Config.JOIN_QUIT_FORMAT));
         }
         Color.log2(Color.translate(player, Config.JOIN_QUIT_FORMAT));
+        plugin.getDiscord().sendJoin(player, JoinType.LEAVE, Config.JOIN_QUIT_FORMAT
+                .replace("%server%", Config.SERVER_NAME)
+                .replace("%player%", player.getName())
+        );
     }
 
     private void sendDevMessage(Player player) {

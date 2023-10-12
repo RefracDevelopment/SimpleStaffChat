@@ -5,6 +5,7 @@ import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -99,5 +100,10 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
     public Command setUsage(String usage) {
         this.usage = Color.translate(usage);
         return this;
+    }
+
+    @Override
+    public int compareTo(@NotNull Command o) {
+        return 0;
     }
 }

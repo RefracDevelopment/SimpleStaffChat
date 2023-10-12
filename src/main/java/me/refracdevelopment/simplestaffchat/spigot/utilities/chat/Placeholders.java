@@ -2,7 +2,7 @@ package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
 import dev.rosewood.rosegarden.utils.StringPlaceholders;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

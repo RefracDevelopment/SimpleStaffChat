@@ -3,6 +3,7 @@ package me.refracdevelopment.simplestaffchat.bungee.listeners;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.shared.Settings;
 import net.md_5.bungee.api.ProxyServer;
@@ -19,23 +20,28 @@ public class JoinListener implements Listener {
     public void onJoin(ServerConnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 
-        if (Config.JOIN_ENABLED) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-            if (event.getReason() == ServerConnectEvent.Reason.JOIN_PROXY) return;
-
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
-                }
-            });
-            Color.log2(Color.translate(player, Config.JOIN_FORMAT.replace("%server%", event.getTarget().getName())));
-        }
-
         if (player.getUniqueId().equals(Settings.getDevUUID)) {
             sendDevMessage(player);
         } else if (player.getUniqueId().equals(Settings.getDevUUID2)) {
             sendDevMessage(player);
         }
+
+        if (!Config.JOIN_ENABLED) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
+        if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY) return;
+
+        ProxyServer.getInstance().getPlayers().forEach(p -> {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT
+                        .replace("%server%", event.getTarget().getName())));
+            }
+        });
+        Color.log2(Color.translate(player, Config.JOIN_FORMAT
+                .replace("%server%", event.getTarget().getName())));
+        BungeeStaffChat.getInstance().getDiscord().sendJoin(player, JoinType.JOIN, Config.JOIN_FORMAT
+                .replace("%server%", event.getTarget().getName())
+                .replace("%player%", player.getName())
+        );
     }
 
     @EventHandler
@@ -49,12 +55,20 @@ public class JoinListener implements Listener {
 
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+                Color.sendMessage(p, Color.translate(player, Config.SWITCH_FORMAT
+                        .replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
             }
         });
-        Color.log2(Color.translate(player, Config.SWITCH_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+        Color.log2(Color.translate(player, Config.SWITCH_FORMAT
+                .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName())));
+        BungeeStaffChat.getInstance().getDiscord().sendJoin(player, JoinType.SWITCH, Config.SWITCH_FORMAT
+                .replace("%server%", player.getServer().getInfo().getName())
+                .replace("%from%", event.getFrom().getName())
+                .replace("%player%", player.getName())
+                .replace("%arrow%", "\u00BB")
+        );
     }
 
     @EventHandler
@@ -68,10 +82,16 @@ public class JoinListener implements Listener {
 
         ProxyServer.getInstance().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT
+                        .replace("%server%", player.getServer().getInfo().getName())));
             }
         });
-        Color.log2(Color.translate(player, Config.QUIT_FORMAT.replace("%server%", player.getServer().getInfo().getName())));
+        Color.log2(Color.translate(player, Config.QUIT_FORMAT
+                .replace("%server%", player.getServer().getInfo().getName())));
+        BungeeStaffChat.getInstance().getDiscord().sendJoin(player, JoinType.LEAVE, Config.QUIT_FORMAT
+                .replace("%server%", player.getServer().getInfo().getName())
+                .replace("%player%", player.getName())
+        );
     }
 
     private void sendDevMessage(ProxiedPlayer player) {

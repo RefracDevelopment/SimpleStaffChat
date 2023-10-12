@@ -30,9 +30,9 @@ public class CommandManager {
                 new StaffChatCommand(plugin),
                 new ToggleCommand(plugin),
                 new ReloadCommand(plugin),
-                new AdminChatCommand(plugin),
+                new AdminChatCommand(),
                 new AdminToggleCommand(plugin),
-                new DevChatCommand(plugin),
+                new DevChatCommand(),
                 new DevToggleCommand(plugin),
                 new ChatCommand(plugin)
         ));

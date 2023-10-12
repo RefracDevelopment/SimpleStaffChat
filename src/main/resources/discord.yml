@@ -1,0 +1,27 @@
+webhook:
+  # StaffChat messages webhook
+  staffchat: "WEBHOOK-URL-HERE"
+  # DevChat messages webhook
+  devchat: "WEBHOOK-URL-HERE"
+  # AdminChat messages webhook
+  adminchat: "WEBHOOK-URL-HERE"
+  # Join messages webhook
+  join: "WEBHOOK-URL-HERE"
+
+discord:
+  enabled: false
+  # Do you want an embed or a normal message?
+  embed-message: true
+  # This will either be the username or the embed title
+  title: "StaffChat Logs"
+  footer: "Created by RefracDevelopment"
+  # These settings are for the Velocity proxy only.
+  velocity:
+    # The chat format
+    format: "%server% %player% %message%"
+    # The join format
+    join-format: "%player% joined %server%"
+    # The switch format
+    switch-format: "%player% switched %from% to %server%"
+    # The leave format
+    leave-format: "%player% left %server%"

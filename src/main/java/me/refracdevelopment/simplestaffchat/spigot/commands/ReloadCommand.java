@@ -2,8 +2,9 @@ package me.refracdevelopment.simplestaffchat.spigot.commands;
 
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
@@ -32,14 +33,11 @@ public class ReloadCommand extends Command {
 
         plugin.reload();
         plugin.getCommandsFile().load();
+        plugin.getDiscordFile().load();
         Config.loadConfig();
         Commands.loadConfig();
+        Discord.loadConfig();
         locale.sendMessage(sender, "reload", Placeholders.setPlaceholders(sender));
         return true;
-    }
-
-    @Override
-    public int compareTo(@NotNull Command o) {
-        return 0;
     }
 }

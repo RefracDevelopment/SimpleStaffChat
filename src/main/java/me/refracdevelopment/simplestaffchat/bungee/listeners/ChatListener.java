@@ -4,9 +4,9 @@ import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -31,12 +31,7 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendStaffChat(player, format);
         } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
 
@@ -51,12 +46,7 @@ public class ChatListener implements Listener {
             String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendStaffChat(player, format);
         }
     }
 
@@ -77,12 +67,7 @@ public class ChatListener implements Listener {
             String format = Config.ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendAdminChat(player, format);
         } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL)) return;
 
@@ -97,12 +82,7 @@ public class ChatListener implements Listener {
             String format = Config.ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message.replaceFirst(Config.ADMINCHAT_SYMBOL, ""));
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendAdminChat(player, format);
         }
     }
 
@@ -123,12 +103,7 @@ public class ChatListener implements Listener {
             String format = Config.DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendDevChat(player, format);
         } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && Config.SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL)) return;
 
@@ -143,12 +118,7 @@ public class ChatListener implements Listener {
             String format = Config.DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
                     .replace("%message%", message.replaceFirst(Config.DEVCHAT_SYMBOL, ""));
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            Methods.sendDevChat(player, format);
         }
     }
 }

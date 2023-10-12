@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.config;
+package me.refracdevelopment.simplestaffchat.spigot.config.cache;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 

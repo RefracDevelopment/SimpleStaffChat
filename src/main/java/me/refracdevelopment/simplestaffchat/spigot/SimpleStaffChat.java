@@ -6,15 +6,18 @@ import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.manager.Manager;
 import dev.rosewood.rosegarden.utils.NMSUtil;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
+import me.refracdevelopment.simplestaffchat.spigot.api.SimpleStaffChatAPI;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.FoliaUtil;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.Bukkit;
@@ -36,8 +39,13 @@ public final class SimpleStaffChat extends RosePlugin {
 
     private CommandManager commandManager;
 
+    private SimpleStaffChatAPI staffChatAPI;
+
     private PluginMessage pluginMessage;
     private ConfigFile commandsFile;
+    private ConfigFile discordFile;
+
+    private DiscordImpl discord;
 
     public SimpleStaffChat() {
         super(-1, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
@@ -69,8 +77,12 @@ public final class SimpleStaffChat extends RosePlugin {
         }
 
         this.commandsFile = new ConfigFile(this, "commands.yml");
+        this.discordFile = new ConfigFile(this, "discord.yml");
         Config.loadConfig();
         Commands.loadConfig();
+        Discord.loadConfig();
+
+        this.discord = new DiscordImpl();
 
         if (Config.BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -84,6 +96,8 @@ public final class SimpleStaffChat extends RosePlugin {
             Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
                     "consider downloading https://github.com/KaspianDev/AntiPopup/releases/latest");
         }
+
+        this.staffChatAPI = new SimpleStaffChatAPI();
 
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");

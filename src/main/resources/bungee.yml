@@ -5,7 +5,7 @@ author: RefracDevelopment
 softDepends:
   - LuckPerms
 description: A Simple StaffChat Plugin
-website: https://discord.refracdev.ml/
+website: https://discord.gg/EFeSKPg739
 
 permissions:
   simplestaffchat.*:
