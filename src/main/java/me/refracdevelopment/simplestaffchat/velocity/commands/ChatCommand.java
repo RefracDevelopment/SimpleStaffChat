@@ -2,30 +2,40 @@ package me.refracdevelopment.simplestaffchat.velocity.commands;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 
 public class ChatCommand implements SimpleCommand {
 
+    private VelocityStaffChat plugin;
+
+    public ChatCommand(VelocityStaffChat plugin) {
+        this.plugin = plugin;
+    }
+    
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.CHAT_COMMAND_ENABLED.getBoolean()) return;
+        if (!plugin.getCommands().CHAT_COMMAND_ENABLED) return;
         if (!(invocation.source() instanceof Player)) return;
 
         Player player = (Player) invocation.source();
 
+        if (!player.hasPermission(plugin.getCommands().CHAT_COMMAND_PERMISSION)) {
+            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            return;
+        }
+
         switch (invocation.arguments()[0]) {
             case "staff":
-                Methods.toggleStaffChat(player);
+                plugin.getMethods().toggleStaffChat(player);
                 break;
             case "admin":
-                Methods.toggleAdminChat(player);
+                plugin.getMethods().toggleAdminChat(player);
                 break;
             case "dev":
-                Methods.toggleDevChat(player);
+                plugin.getMethods().toggleDevChat(player);
                 break;
             case "all":
-                Methods.toggleAllChat(player);
+                plugin.getMethods().toggleAllChat(player);
                 break;
         }
     }

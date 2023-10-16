@@ -2,18 +2,22 @@ package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
 import dev.rosewood.rosegarden.utils.StringPlaceholders;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Placeholders {
+public class Placeholders extends Manager {
 
-    public static String setPlaceholders(CommandSender sender, String placeholder) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public Placeholders(SimpleStaffChat plugin) {
+        super(plugin);
+    }
+
+    public String setPlaceholders(CommandSender sender, String placeholder) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         placeholder = placeholder.replace("%prefix%", locale.getLocaleMessage("prefix"));
-        placeholder = placeholder.replace("%server%", Config.SERVER_NAME);
+        placeholder = placeholder.replace("%server%", plugin.getSettings().SERVER_NAME);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
@@ -30,12 +34,12 @@ public class Placeholders {
         return placeholder;
     }
 
-    public static StringPlaceholders setPlaceholders(CommandSender sender) {
+    public StringPlaceholders setPlaceholders(CommandSender sender) {
         StringPlaceholders.Builder placeholders = StringPlaceholders.builder();
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         placeholders.add("prefix", locale.getLocaleMessage("prefix"));
-        placeholders.add("server", Config.SERVER_NAME);
+        placeholders.add("server", plugin.getSettings().SERVER_NAME);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 

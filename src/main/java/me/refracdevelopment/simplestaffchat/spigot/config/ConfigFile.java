@@ -1,10 +1,9 @@
 package me.refracdevelopment.simplestaffchat.spigot.config;
 
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +18,10 @@ import java.util.stream.Collectors;
 public class ConfigFile extends YamlConfiguration {
 
     private File file;
-    private final JavaPlugin plugin;
+    private final SimpleStaffChat plugin;
     private final String name;
 
-    public ConfigFile(JavaPlugin plugin, String name) {
+    public ConfigFile(SimpleStaffChat plugin, String name) {
         this.file = new File(plugin.getDataFolder(), name);
         this.plugin = plugin;
         this.name = name;
@@ -89,12 +88,12 @@ public class ConfigFile extends YamlConfiguration {
 
     @Override
     public List<String> getStringList(String path) {
-        return super.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        return super.getStringList(path).stream().map(this.plugin.getColor()::translate).collect(Collectors.toList());
     }
 
     public List<String> getStringList(String path, boolean check) {
         if (!super.contains(path)) return null;
-        return super.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        return super.getStringList(path).stream().map(this.plugin.getColor()::translate).collect(Collectors.toList());
     }
 
     public boolean getOption(String option) {

@@ -4,41 +4,48 @@ import com.google.common.base.Joiner;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 
 public final class StaffChatCommand implements SimpleCommand {
+
+    private VelocityStaffChat plugin;
+
+    public StaffChatCommand(VelocityStaffChat plugin) {
+        this.plugin = plugin;
+    }
     
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.STAFFCHAT_COMMAND_ENABLED.getBoolean()) return;
+        if (!plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) return;
         CommandSource commandSource = invocation.source();
 
         String message = Joiner.on(" ").join(invocation.arguments());
 
-        if (invocation.arguments().length >= 1) {
-            String format = (commandSource instanceof Player) ? Config.STAFFCHAT_FORMAT.getString().replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_STAFFCHAT_FORMAT.getString().replace("%message%", message);
+        if (!commandSource.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
+            plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+            return;
+        }
 
-            Methods.sendStaffChat(commandSource, format, message);
+        if (invocation.arguments().length >= 1) {
+            String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT.replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT.replace("%message%", message);
+
+            plugin.getMethods().sendStaffChat(commandSource, format, message);
         } else {
-            if (Config.STAFFCHAT_OUTPUT.getString().equalsIgnoreCase("default") && Config.STAFFCHAT_MESSAGE.getStringList() != null) {
-                if (!commandSource.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+            if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") && plugin.getConfig().STAFFCHAT_MESSAGE != null) {
+                if (!commandSource.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
+                    plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
                     return;
                 }
 
-                Config.STAFFCHAT_MESSAGE.getStringList().forEach(s -> {
-                    Color.sendMessage(commandSource, s);
+                plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
+                    plugin.getColor().sendMessage(commandSource, s);
                 });
-            } else if (Config.STAFFCHAT_OUTPUT.getString().equalsIgnoreCase("toggle")) {
+            } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSource instanceof Player) {
                     Player player = (Player) commandSource;
 
-                    Methods.toggleStaffChat(player);
+                    plugin.getMethods().toggleStaffChat(player);
                 }
             }
         }

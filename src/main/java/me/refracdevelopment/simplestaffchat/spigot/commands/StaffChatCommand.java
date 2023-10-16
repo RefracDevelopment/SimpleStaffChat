@@ -1,13 +1,8 @@
 package me.refracdevelopment.simplestaffchat.spigot.commands;
 
 import com.google.common.base.Joiner;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,54 +13,62 @@ public class StaffChatCommand extends Command {
     private final SimpleStaffChat plugin;
 
     public StaffChatCommand(SimpleStaffChat plugin) {
-        super(Commands.STAFFCHAT_COMMAND, "", Commands.STAFFCHAT_ALIAS);
+        super(plugin, plugin.getCommands().STAFFCHAT_COMMAND, "", plugin.getCommands().STAFFCHAT_COMMAND_ALIAS);
         this.plugin = plugin;
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!Commands.STAFFCHAT_COMMAND_ENABLED) return false;
+        if (!plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) return false;
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         String message = Joiner.on(" ").join(args);
 
-        if (args.length >= 1) {
-            String format = (sender instanceof Player) ? Config.MINECRAFT_FORMAT.replace("%message%", message) :
-                    Config.CONSOLE_FORMAT.replace("%message%", message);
+        if (!sender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
+            locale.sendMessage(sender, "no-permission");
+            return true;
+        }
 
-            Methods.sendStaffChat(sender, format);
+        if (args.length >= 1) {
+            String format = (sender instanceof Player) ? plugin.getSettings().MINECRAFT_FORMAT.replace("%message%", message) :
+                    plugin.getSettings().CONSOLE_FORMAT.replace("%message%", message);
+
+            plugin.getMethods().sendStaffChat(sender, format);
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
-                if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
+            if (plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
+                if (!sender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
+                    locale.sendMessage(sender, "no-permission", plugin.getPlaceholders().setPlaceholders(sender));
                     return true;
                 }
 
-                Config.STAFFCHAT_MESSAGE.forEach(s -> locale.sendCustomMessage(sender, Placeholders.setPlaceholders(sender, s)));
-            } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+                plugin.getSettings().STAFFCHAT_MESSAGE.forEach(s -> locale.sendCustomMessage(sender, plugin.getPlaceholders().setPlaceholders(sender, s)));
+            } else if (plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
-                    Methods.toggleStaffChat(player);
+                    plugin.getMethods().toggleStaffChat(player);
                 }
             } else {
-                if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    locale.sendMessage(sender, "no-permission", Placeholders.setPlaceholders(sender));
+                if (!sender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
+                    locale.sendMessage(sender, "no-permission", plugin.getPlaceholders().setPlaceholders(sender));
                     return true;
                 }
 
                 locale.sendCustomMessage(sender, "");
                 locale.sendCustomMessage(sender, "<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &fAvailable Commands:".replace("|", "\u239F"));
                 locale.sendCustomMessage(sender, "");
-                locale.sendCustomMessage(sender, "&d/" + Commands.STAFFCHAT_COMMAND + " <message> &7- Send staffchat messages.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.TOGGLE_COMMAND + " &7- Send staffchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.DEVCHAT_COMMAND + " <message> - Send adminchat messages.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send adminchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.DEVCHAT_COMMAND + " <message> &7- Send devchat messages.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.DEV_TOGGLE_COMMAND + " &7- Send devchat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.CHAT_COMMAND + " <type:staff|admin|dev> &7- Send chat messages without needing to type a command.");
-                locale.sendCustomMessage(sender, "&d/" + Commands.RELOAD_COMMAND + " &7- Reload the config file.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().STAFFCHAT_COMMAND + " <message> &7- Send staffchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().STAFF_TOGGLE_COMMAND + " &7- Send staffchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().DEVCHAT_COMMAND + " <message> &7- Send adminchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().DEV_TOGGLE_COMMAND + " &7- Send adminchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().DEVCHAT_COMMAND + " <message> &7- Send devchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().DEV_TOGGLE_COMMAND + " &7- Send devchat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().CHAT_COMMAND + " <type:staff|admin|dev> &7- Send chat messages without needing to type a command.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().STAFF_HIDE_COMMAND + " <type:staff|admin|dev> &7- Allows you to hide staffchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().ADMIN_HIDE_COMMAND + " <type:staff|admin|dev> &7- Allows you to hide adminchat messages.");
+                locale.sendCustomMessage(sender, "&d/" + plugin.getCommands().DEV_HIDE_COMMAND + " <type:staff|admin|dev> &7- Allows you to hide devchat messages.");
+                locale.sendCustomMessage(sender, "&d/staffchatreload &7- Reload the config file.");
             }
         }
         return true;

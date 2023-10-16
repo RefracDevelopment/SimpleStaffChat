@@ -2,32 +2,55 @@ commands:
   staffchat:
     enabled: true
     command: "staffchat"
+    permission: "simplestaffchat.command.staffchat"
     alias: "sc"
   toggle:
     enabled: true
     command: "staffchattoggle"
+    permission: "simplestaffchat.command.toggle"
     alias: "sctoggle"
   reload:
     enabled: true
     command: "staffchatreload"
+    permission: "simplestaffchat.command.reload"
     alias: "screload"
   adminchat:
     enabled: true
     command: "adminchat"
+    permission: "simplestaffchat.command.adminchat"
     alias: "ac"
   admin-toggle:
     enabled: true
     command: "adminchattoggle"
+    permission: "simplestaffchat.command.adminchat.toggle"
     alias: "actoggle"
   devchat:
     enabled: true
     command: "devchat"
+    permission: "simplestaffchat.command.devchat"
     alias: "dc"
   dev-toggle:
     enabled: true
     command: "devchattoggle"
+    permission: "simplestaffchat.command.devchat.toggle"
     alias: "dctoggle"
   chat:
     enabled: true
     command: "chat"
+    permission: "simplestaffchat.command.chat"
     alias: ""
+  hide:
+    enabled: true
+    command: "staffchathide"
+    permission: "simplestaffchat.command.hide"
+    alias: "schide"
+  admin-hide:
+    enabled: true
+    command: "adminchathide"
+    permission: "simplestaffchat.command.adminchat.hide"
+    alias: "achide"
+  dev-hide:
+    enabled: true
+    command: "devchathide"
+    permission: "simplestaffchat.command.devchat.hide"
+    alias: "dchide"

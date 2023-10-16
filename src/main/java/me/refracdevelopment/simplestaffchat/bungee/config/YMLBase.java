@@ -1,9 +1,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.config;
 
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -23,15 +22,17 @@ import java.util.stream.Collectors;
 @Getter
 public class YMLBase {
 
+    private final BungeeStaffChat plugin;
     private final File file;
     private Configuration configuration;
 
-    public YMLBase(Plugin plugin, String name) {
+    public YMLBase(BungeeStaffChat plugin, String name) {
         this(plugin, new File(plugin.getDataFolder(), name), true);
     }
 
-    public YMLBase(Plugin plugin, File file, boolean existsOnSource) {
+    public YMLBase(BungeeStaffChat plugin, File file, boolean existsOnSource) {
         this.file = file;
+        this.plugin = plugin;
 
         if (!file.exists()) {
             try (InputStream stream = plugin.getResourceAsStream(file.getName())) {
@@ -42,7 +43,7 @@ public class YMLBase {
                 } else
                     file.createNewFile();
             } catch (IOException e) {
-                Color.log(e.getMessage());
+                plugin.getColor().log(e.getMessage());
             }
         }
 
@@ -53,7 +54,7 @@ public class YMLBase {
         try {
             this.configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
         } catch (IOException e) {
-            Color.log(e.getMessage());
+            plugin.getColor().log(e.getMessage());
         }
     }
 
@@ -61,7 +62,7 @@ public class YMLBase {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(configuration, file);
         } catch (IOException e) {
-            Color.log(e.getMessage());
+            plugin.getColor().log(e.getMessage());
         }
     }
 
@@ -90,12 +91,12 @@ public class YMLBase {
     }
 
     public List<String> getStringList(String path) {
-        return configuration.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        return configuration.getStringList(path).stream().map(this.plugin.getColor()::translate).collect(Collectors.toList());
     }
 
     public List<String> getStringList(String path, boolean check) {
         if (!configuration.contains(path)) return null;
-        return configuration.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        return configuration.getStringList(path).stream().map(this.plugin.getColor()::translate).collect(Collectors.toList());
     }
 
 }

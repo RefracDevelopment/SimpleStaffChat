@@ -28,34 +28,40 @@ format:
   # Format for messages sent by the console.
   console-staffchat-format: "%prefix% <gold><bold>Console<gray>: <white>%message%"
   # AdminChat format
-  adminchat-format: "<gray>[<red><bold>AdminChat<gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
+  adminchat-format: "<dark_gray>[<dark_red><bold>AdminChat<dark_gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
   # Format for messages sent by the console.
-  console-adminchat-format: "<gray>[<red><bold>AdminChat<gray>] <gold><bold>Console<gray>: <white>%message%"
+  console-adminchat-format: "<dark_gray>[<dark_red><bold>AdminChat<dark_gray>] <gold><bold>Console<gray>: <white>%message%"
   # DevChat format
-  devchat-format: "<gray>[<aqua><bold>DevChat<gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
+  devchat-format: "<dark_gray>[<aqua><bold>DevChat<dark_gray>] <yellow>(%server%) <gold><bold>%player%<gray>: <white>%message%"
   # Format for messages sent by the console.
-  console-devchat-format: "<gray>[<aqua><bold>DevChat<gray>] <gold><bold>Console<gray>: <white>%message%"
+  console-devchat-format: "<dark_gray>[<aqua><bold>DevChat<dark_gray>] <gold><bold>Console<gray>: <white>%message%"
 
 # This is for staff joins only
 # permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
 join:
   enabled: false
-  join-format: "<gray>[<aqua>+<gray>] <blue>%player% <white>joined <yellow>%server%<white>."
-  switch-format: "<gray>[<aqua>+<gray>] <blue>%player% <white>switched server <gray>(<yellow>%from% <white>%arrow% <yellow>%server%<gray>)<white>."
-  quit-format: "<gray>[<red>-<gray>] <blue>%player% <white>left <yellow>%server%<white>."
+  join-format: "<dark_gray>[<aqua>+<dark_gray>] <blue>%player% <white>joined <yellow>%server%<white>."
+  switch-format: "<dark_gray>[<aqua>+<dark_gray>] <blue>%player% <white>switched server <gray>(<yellow>%from% <white>%arrow% <yellow>%server%<gray>)<white>."
+  quit-format: "<dark_gray>[<red>-<dark_gray>] <blue>%player% <white>left <yellow>%server%<white>."
 
 messages:
   # Used for the %prefix% placeholder in messages
-  prefix: "<gray>[<red><bold>StaffChat<gray>]"
+  prefix: "<dark_gray>[<red><bold>StaffChat<dark_gray>]"
   no-permission: "<red>You don't have permission to execute this command."
   reload: "<gray>Config files reloaded. Changes should be live in-game."
   toggle-on: "%prefix% <yellow>StaffChat toggled <green>on<yellow>."
   toggle-off: "%prefix% <yellow>StaffChat toggled <red>off<yellow>."
-  adminchat-toggle-on: "<gray>[<red><bold>AdminChat<gray>] <yellow>AdminChat toggled <green>on<yellow>."
-  adminchat-toggle-off: "<gray>[<red><bold>AdminChat<gray>] <yellow>AdminChat toggled <red>off<yellow>."
-  devchat-toggle-on: "<gray>[<aqua><bold>DevChat<gray>] <yellow>DevChat toggled <green>on<yellow>."
-  devchat-toggle-off: "<gray>[<aqua><bold>DevChat<gray>] <yellow>DevChat toggled <red>off<yellow>."
+  adminchat-toggle-on: "<dark_gray>[<red><bold>AdminChat<dark_gray>] <yellow>AdminChat toggled <green>on<yellow>."
+  adminchat-toggle-off: "<dark_gray>[<red><bold>AdminChat<dark_gray>] <yellow>AdminChat toggled <red>off<yellow>."
+  devchat-toggle-on: "<dark_gray>[<aqua><bold>DevChat<dark_gray>] <yellow>DevChat toggled <green>on<yellow>."
+  devchat-toggle-off: "<dark_gray>[<aqua><bold>DevChat<dark_gray>] <yellow>DevChat toggled <red>off<yellow>."
   allchat-toggle-on: "<yellow>All chat toggled <green>on<yellow>."
+  staffchat-muted-on: "<yellow>Your StaffChat has been muted."
+  staffchat-muted-off: "<yellow>Your StaffChat has been un-muted."
+  adminchat-muted-on: "<yellow>Your AdminChat has been muted."
+  adminchat-muted-off: "<yellow>Your AdminChat has been un-muted."
+  devchat-muted-on: "<yellow>Your DevChat has been muted."
+  devchat-muted-off: "<yellow>Your DevChat has been un-muted."
   # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"
   staffchat-message:

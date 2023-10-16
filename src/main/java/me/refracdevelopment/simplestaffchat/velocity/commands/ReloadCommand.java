@@ -2,11 +2,7 @@ package me.refracdevelopment.simplestaffchat.velocity.commands;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
 
 public class ReloadCommand implements SimpleCommand {
 
@@ -18,16 +14,14 @@ public class ReloadCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.RELOAD_COMMAND_ENABLED.getBoolean()) return;
-
         CommandSource commandSource = invocation.source();
 
-        if (!commandSource.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+        if (!commandSource.hasPermission(plugin.getPermissions().STAFFCHAT_RELOAD)) {
+            plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
         plugin.reloadFiles();
-        Color.sendMessage(commandSource, Config.RELOAD.getString());
+        plugin.getColor().sendMessage(commandSource, plugin.getConfig().RELOAD);
     }
 }

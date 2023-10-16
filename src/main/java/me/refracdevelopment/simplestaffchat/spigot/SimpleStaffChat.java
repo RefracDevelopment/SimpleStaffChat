@@ -6,6 +6,7 @@ import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.manager.Manager;
 import dev.rosewood.rosegarden.utils.NMSUtil;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.api.SimpleStaffChatAPI;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
@@ -18,8 +19,9 @@ import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.DiscordImpl;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.FoliaUtil;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -34,9 +36,6 @@ import java.util.List;
 @Getter
 public final class SimpleStaffChat extends RosePlugin {
 
-    @Getter
-    private static SimpleStaffChat instance;
-
     private CommandManager commandManager;
 
     private SimpleStaffChatAPI staffChatAPI;
@@ -45,11 +44,19 @@ public final class SimpleStaffChat extends RosePlugin {
     private ConfigFile commandsFile;
     private ConfigFile discordFile;
 
-    private DiscordImpl discord;
+    @Getter
+    private Config settings;
+    private Commands commands;
+    private Discord discord;
+
+    private DiscordImpl discordImpl;
+    private Methods methods;
+    private Permissions permissions;
+    private Color color;
+    private Placeholders placeholders;
 
     public SimpleStaffChat() {
         super(-1, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
-        instance = this;
     }
 
     @Override
@@ -58,33 +65,34 @@ public final class SimpleStaffChat extends RosePlugin {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
+        this.permissions = new Permissions();
+        this.color = new Color(this);
+        this.placeholders = new Placeholders(this);
+
+        loadFiles();
+
         // Check if the server is on 1.7
         if (NMSUtil.getVersionNumber() <= 7) {
-            Color.log("&cSimpleStaffChat2 1.7 is in legacy mode, please update to 1.8+");
+            this.color.log("&cSimpleStaffChat2 1.7 is in legacy mode, please update to 1.8+");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
         // Make sure the server has PlaceholderAPI
-        if (pluginManager.getPlugin("PlaceholderAPI") == null && !FoliaUtil.isFolia()) {
-            Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
+        if (pluginManager.getPlugin("PlaceholderAPI") == null && !isFolia()) {
+            this.color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        if (FoliaUtil.isFolia()) {
-            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
+        if (isFolia()) {
+            this.color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
         }
 
-        this.commandsFile = new ConfigFile(this, "commands.yml");
-        this.discordFile = new ConfigFile(this, "discord.yml");
-        Config.loadConfig();
-        Commands.loadConfig();
-        Discord.loadConfig();
+        this.discordImpl = new DiscordImpl(this);
+        this.methods = new Methods(this);
 
-        this.discord = new DiscordImpl();
-
-        if (Config.BUNGEECORD) {
+        if (this.settings.BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", pluginMessage = new PluginMessage(this));
         }
@@ -93,25 +101,25 @@ public final class SimpleStaffChat extends RosePlugin {
         loadListeners();
 
         if (!getAntiPopupAddon()) {
-            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+            this.color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
                     "consider downloading https://github.com/KaspianDev/AntiPopup/releases/latest");
         }
 
-        this.staffChatAPI = new SimpleStaffChatAPI();
+        this.staffChatAPI = new SimpleStaffChatAPI(this);
 
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
-        Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
-        Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        this.color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        this.color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        this.color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
+        this.color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
+        this.color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
+        this.color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck(Bukkit.getConsoleSender(), true);
     }
 
     @Override
     protected void disable() {
-        if (Config.BUNGEECORD) {
+        if (this.settings.BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", pluginMessage);
         }
@@ -122,16 +130,36 @@ public final class SimpleStaffChat extends RosePlugin {
         return Collections.emptyList();
     }
 
+    private void loadFiles() {
+        this.commandsFile = new ConfigFile(this, "commands.yml");
+        this.discordFile = new ConfigFile(this, "discord.yml");
+        this.settings = new Config(this);
+        this.commands = new Commands(this);
+        this.discord = new Discord(this);
+        this.settings.loadConfig();
+        this.commands.loadConfig();
+        this.discord.loadConfig();
+    }
+
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
         commandManager.registerAll();
-        Color.log("&aLoaded commands.");
+        this.color.log("&aLoaded commands.");
     }
 
     private void loadListeners() {
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
-        Color.log("&aLoaded listeners.");
+        this.color.log("&aLoaded listeners.");
+    }
+
+    public boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     @SuppressWarnings("ALL")
@@ -140,7 +168,7 @@ public final class SimpleStaffChat extends RosePlugin {
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
-        Color.log("&aChecking for updates!");
+        this.color.log("&aChecking for updates!");
         try {
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
@@ -162,26 +190,34 @@ public final class SimpleStaffChat extends RosePlugin {
                 String version = info.get("version").getAsString();
                 if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        sender.sendMessage(Color.translate("&a" + getDescription().getName() + " is on the latest version."));
+                        sender.sendMessage(this.color.translate("&a" + getDescription().getName() + " is on the latest version."));
                     }
                 } else {
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour " + getDescription().getName() + " version is out of date!"));
-                    sender.sendMessage(Color.translate("&cWe recommend updating ASAP!"));
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour Version: &e" + getDescription().getVersion()));
-                    sender.sendMessage(Color.translate("&aNewest Version: &e" + version));
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(this.color.translate(""));
+                    sender.sendMessage(this.color.translate(""));
+                    sender.sendMessage(this.color.translate("&cYour " + getDescription().getName() + " version is out of date!"));
+                    sender.sendMessage(this.color.translate("&cWe recommend updating ASAP!"));
+                    sender.sendMessage(this.color.translate(""));
+                    sender.sendMessage(this.color.translate("&cYour Version: &e" + getDescription().getVersion()));
+                    sender.sendMessage(this.color.translate("&aNewest Version: &e" + version));
+                    sender.sendMessage(this.color.translate(""));
+                    sender.sendMessage(this.color.translate(""));
                     return;
                 }
             } else {
-                sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
+                sender.sendMessage(this.color.translate("&cWrong response from update API, contact plugin developer!"));
             }
         } catch (
                 Exception ex) {
-            sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
+            sender.sendMessage(this.color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
         }
+    }
+
+    public void reloadFiles() {
+        this.commandsFile.load();
+        this.discordFile.load();
+        this.settings.loadConfig();
+        this.commands.loadConfig();
+        this.discord.loadConfig();
     }
 }

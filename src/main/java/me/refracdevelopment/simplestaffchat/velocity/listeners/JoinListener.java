@@ -5,83 +5,89 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.shared.Settings;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
-public class JoinListener {
+import java.util.UUID;
+
+public class JoinListener extends Manager {
+
+    private final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
+    private final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
+
+    public JoinListener(VelocityStaffChat plugin) {
+        super(plugin);
+    }
 
     @Subscribe
     public void onJoin(ServerPostConnectEvent event) {
         Player player = event.getPlayer();
 
-        if (player.getUniqueId().equals(Settings.getDevUUID)) {
+        if (player.getUniqueId().equals(getDevUUID)) {
             sendDevMessage(player);
-        } else if (player.getUniqueId().equals(Settings.getDevUUID2)) {
+        } else if (player.getUniqueId().equals(getDevUUID2)) {
             sendDevMessage(player);
         }
 
-        if (!Config.JOIN_ENABLED.getBoolean()) return;
-        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
+        if (!plugin.getConfig().JOIN_ENABLED) return;
+        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_JOIN)) return;
         if (event.getPreviousServer() != null) return;
         if (!player.getCurrentServer().isPresent()) return;
 
-        VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.JOIN_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getServer().getAllPlayers().forEach(p -> {
+            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
+                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
-        Color.log2(Color.translate(player, Config.JOIN_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
-        VelocityStaffChat.getInstance().getDiscord().sendJoin(JoinType.JOIN, player, player.getCurrentServer().get().getServerInfo().getName(), "");
+        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getDiscordImpl().sendJoin(JoinType.JOIN, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
     @Subscribe
     public void onSwitch(ServerPostConnectEvent event) {
-        if (!Config.JOIN_ENABLED.getBoolean()) return;
+        if (!plugin.getConfig().JOIN_ENABLED) return;
         if (event.getPreviousServer() == null) return;
 
         Player player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
+        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_SWITCH)) return;
         if (!player.getCurrentServer().isPresent()) return;
 
-        VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.SWITCH_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServer().getServerInfo().getName())
+        plugin.getServer().getAllPlayers().forEach(p -> {
+            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
+                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT.replace("%server%", player.getCurrentServer().get().getServer().getServerInfo().getName())
                         .replace("%from%", event.getPreviousServer().getServerInfo().getName())));
             }
         });
-        Color.log2(Color.translate(player, Config.SWITCH_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%from%", event.getPreviousServer().getServerInfo().getName())));
-        VelocityStaffChat.getInstance().getDiscord().sendJoin(JoinType.SWITCH, player, player.getCurrentServer().get().getServerInfo().getName(), event.getPreviousServer().getServerInfo().getName());
+        plugin.getDiscordImpl().sendJoin(JoinType.SWITCH, player, player.getCurrentServer().get().getServerInfo().getName(), event.getPreviousServer().getServerInfo().getName());
     }
 
     @Subscribe
     public void onQuit(DisconnectEvent event) {
-        if (!Config.JOIN_ENABLED.getBoolean()) return;
+        if (!plugin.getConfig().JOIN_ENABLED) return;
 
         Player player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
+        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_QUIT)) return;
 
-        VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                Color.sendMessage(p, Color.translate(player, Config.QUIT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getServer().getAllPlayers().forEach(p -> {
+            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
+                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
-        Color.log2(Color.translate(player, Config.QUIT_FORMAT.getString().replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
-        VelocityStaffChat.getInstance().getDiscord().sendJoin(JoinType.LEAVE, player, player.getCurrentServer().get().getServerInfo().getName(), "");
+        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getDiscordImpl().sendJoin(JoinType.LEAVE, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
     private void sendDevMessage(Player player) {
-        Color.sendMessage(player, " ");
-        Color.sendMessage(player, "&aWelcome " + VelocityStaffChat.getInstance().getContainer().getDescription().getName().get() + " Developer!");
-        Color.sendMessage(player, "&aThis server is currently running " + VelocityStaffChat.getInstance().getContainer().getDescription().getName().get() + " &bv" + VelocityStaffChat.getInstance().getContainer().getDescription().getVersion().get() + "&a.");
-        Color.sendMessage(player, "&aPlugin name&7: &f" + VelocityStaffChat.getInstance().getContainer().getDescription().getName().get());
-        Color.sendMessage(player, " ");
-        Color.sendMessage(player, "&aServer version&7: &f" + VelocityStaffChat.getInstance().getServer().getVersion());
-        Color.sendMessage(player, " ");
+        plugin.getColor().sendMessage(player, " ");
+        plugin.getColor().sendMessage(player, "<green>Welcome " + plugin.getContainer().getDescription().getName().get() + " Developer!");
+        plugin.getColor().sendMessage(player, "<green>This server is currently running " + plugin.getContainer().getDescription().getName().get() + " <aqua>v" + plugin.getContainer().getDescription().getVersion().get() + "<green>.");
+        plugin.getColor().sendMessage(player, "<green>Plugin name<gray>: <white>" + plugin.getContainer().getDescription().getName().get());
+        plugin.getColor().sendMessage(player, " ");
+        plugin.getColor().sendMessage(player, "<green>Server version<gray>: <white>" + plugin.getServer().getVersion());
+        plugin.getColor().sendMessage(player, " ");
     }
 }

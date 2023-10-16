@@ -1,18 +1,22 @@
-package me.refracdevelopment.simplestaffchat.velocity.utilities;
+package me.refracdevelopment.simplestaffchat.velocity.utilities.chat;
 
 import com.velocitypowered.api.proxy.Player;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.UtilityClass;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 
-@UtilityClass
-public class LuckPermsUtil {
+@Getter
+@Setter
+public class LuckPermsUtil extends Manager {
 
-    @Getter
-    @Setter
     private LuckPerms luckPerms;
+
+    public LuckPermsUtil(VelocityStaffChat plugin) {
+        super(plugin);
+    }
 
     public String getPrefix(Player player) {
         User lpUser = luckPerms.getUserManager().getUser(player.getUniqueId());

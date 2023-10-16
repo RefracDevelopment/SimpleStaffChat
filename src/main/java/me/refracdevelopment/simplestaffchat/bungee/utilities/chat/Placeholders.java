@@ -1,20 +1,24 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class Placeholders {
+public class Placeholders extends Manager {
 
-    public static String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
+    public Placeholders(BungeeStaffChat plugin) {
+        super(plugin);
+    }
+
+    public String setPlaceholders(CommandSender sender, String placeholder) {
+        placeholder = placeholder.replace("%prefix%", plugin.getConfig().PREFIX);
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
-            if (Config.LUCKPERMS || LuckPermsUtil.getLuckPerms() != null) {
-                placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
-                placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
+            if (plugin.getConfig().LUCKPERMS || plugin.getLuckPermsUtil() != null) {
+                placeholder = placeholder.replace("%luckperms_prefix%", plugin.getLuckPermsUtil().getPrefix(player));
+                placeholder = placeholder.replace("%luckperms_suffix%", plugin.getLuckPermsUtil().getSuffix(player));
             } else {
                 placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
                 placeholder = placeholder.replace("%luckperms_suffix%", "N/A");

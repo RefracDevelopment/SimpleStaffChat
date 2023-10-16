@@ -1,19 +1,24 @@
-package me.refracdevelopment.simplestaffchat.velocity.utilities;
+package me.refracdevelopment.simplestaffchat.velocity.utilities.chat;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
-public class Placeholders {
+public class Placeholders extends Manager {
 
-    public static String setPlaceholders(CommandSource sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX.getString());
+    public Placeholders(VelocityStaffChat plugin) {
+        super(plugin);
+    }
+
+    public String setPlaceholders(CommandSource sender, String placeholder) {
+        placeholder = placeholder.replace("%prefix%", plugin.getConfig().PREFIX);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (Config.LUCKPERMS.getBoolean() || LuckPermsUtil.getLuckPerms() != null) {
-                placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
-                placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
+            if (plugin.getConfig().LUCKPERMS || plugin.getLuckPermsUtil() != null) {
+                placeholder = placeholder.replace("%luckperms_prefix%", plugin.getLuckPermsUtil().getPrefix(player));
+                placeholder = placeholder.replace("%luckperms_suffix%", plugin.getLuckPermsUtil().getSuffix(player));
             } else {
                 placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
                 placeholder = placeholder.replace("%luckperms_suffix%", "N/A");

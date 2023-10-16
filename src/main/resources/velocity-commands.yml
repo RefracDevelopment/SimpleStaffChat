@@ -1,6 +1,7 @@
 commands:
   staffchat:
     enabled: true
+    permission: "simplestaffchat.command.staffchat"
     aliases:
       - "staffchat"
       - "sc"
@@ -9,6 +10,7 @@ commands:
       - "simplestaffchat"
   toggle:
     enabled: true
+    permission: "simplestaffchat.command.toggle"
     aliases:
       - "staffchattoggle"
       - "sctoggle"
@@ -17,6 +19,7 @@ commands:
       - "simplestaffchattoggle"
   reload:
     enabled: true
+    permission: "simplestaffchat.command.reload"
     aliases:
       - "staffchatreload"
       - "screload"
@@ -25,6 +28,7 @@ commands:
       - "simplestaffchatreload"
   adminchat:
     enabled: true
+    permission: "simplestaffchat.command.adminchat"
     aliases:
       - "adminchat"
       - "ac"
@@ -33,6 +37,7 @@ commands:
       - "simpleadminchat"
   admin-toggle:
     enabled: true
+    permission: "simplestaffchat.command.adminchat.toggle"
     aliases:
       - "adminchattoggle"
       - "actoggle"
@@ -41,6 +46,7 @@ commands:
       - "simpleadminchattoggle"
   devchat:
     enabled: true
+    permission: "simplestaffchat.command.devchat"
     aliases:
       - "devchat"
       - "dc"
@@ -49,6 +55,7 @@ commands:
       - "simpledevchat"
   dev-toggle:
     enabled: true
+    permission: "simplestaffchat.command.devchat.toggle"
     aliases:
       - "devchattoggle"
       - "dctoggle"
@@ -57,5 +64,27 @@ commands:
       - "simpledevchattoggle"
   chat:
     enabled: true
+    permission: "simplestaffchat.command.chat"
     aliases:
       - "chat"
+  hide:
+    enabled: true
+    permission: "simplestaffchat.command.hide"
+    aliases:
+      - "staffchathide"
+      - "schide"
+      - "scmute"
+  admin-hide:
+    enabled: true
+    permission: "simplestaffchat.command.adminchat.hide"
+    aliases:
+      - "adminchathide"
+      - "achide"
+      - "acmute"
+  dev-hide:
+    enabled: true
+    permission: "simplestaffchat.command.devchat.hide"
+    aliases:
+      - "devchathide"
+      - "dchide"
+      - "dcmute"

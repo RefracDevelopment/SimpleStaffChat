@@ -1,34 +1,44 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 
-public class Color {
+@Getter
+public class Color extends Manager {
 
-    public static String translate(CommandSender sender, String source) {
-        source = Placeholders.setPlaceholders(sender, source);
+    private HexUtils hexUtils;
+
+    public Color(BungeeStaffChat plugin) {
+        super(plugin);
+        this.hexUtils = new HexUtils();
+    }
+
+    public String translate(CommandSender sender, String source) {
+        source = plugin.getPlaceholders().setPlaceholders(sender, source);
 
         return translate(source);
     }
 
-    public static String translate(String source) {
-        return HexUtils.colorify(source);
+    public String translate(String source) {
+        return hexUtils.colorify(source);
     }
 
-    public static void sendMessage(CommandSender sender, String source) {
+    public void sendMessage(CommandSender sender, String source) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
 
-        source = Placeholders.setPlaceholders(sender, source);
+        source = plugin.getPlaceholders().setPlaceholders(sender, source);
 
-        HexUtils.sendMessage(sender, source);
+        hexUtils.sendMessage(sender, source);
     }
 
-    public static void log(String message) {
-        sendMessage(ProxyServer.getInstance().getConsole(), Config.PREFIX + " " + message);
+    public void log(String message) {
+        sendMessage(ProxyServer.getInstance().getConsole(), plugin.getConfig().PREFIX + " " + message);
     }
 
-    public static void log2(String message) {
+    public void log2(String message) {
         sendMessage(ProxyServer.getInstance().getConsole(), message);
     }
 }

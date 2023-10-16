@@ -56,6 +56,12 @@ messages:
   devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
   devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
   allchat-toggle-on: "&eAll chat toggled &aon&e."
+  staffchat-muted-on: "&eYour StaffChat has been muted."
+  staffchat-muted-off: "&eYour StaffChat has been un-muted."
+  adminchat-muted-on: "&eYour AdminChat has been muted."
+  adminchat-muted-off: "&eYour AdminChat has been un-muted."
+  devchat-muted-on: "&eYour DevChat has been muted."
+  devchat-muted-off: "&eYour DevChat has been un-muted."
   # If this is set to "custom" you can change the /sc output message to anything
   # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"

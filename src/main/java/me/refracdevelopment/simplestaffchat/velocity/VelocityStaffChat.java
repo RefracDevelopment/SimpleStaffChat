@@ -12,23 +12,26 @@ import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.api.VelocityStaffChatAPI;
-import me.refracdevelopment.simplestaffchat.velocity.commands.ChatCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.velocity.commands.*;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminChatCommand;
+import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevChatCommand;
+import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevHideCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.velocity.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.velocity.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.velocity.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.DiscordImpl;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Placeholders;
 import net.luckperms.api.LuckPermsProvider;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
@@ -42,27 +45,34 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.2-beta.4",
+        version = "3.2-beta.5",
         dependencies = {@Dependency(id = "unsignedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "A Simple StaffChat Plugin",
         authors = "RefracDevelopment")
 public class VelocityStaffChat {
 
-    @Getter
-    private static VelocityStaffChat instance;
-
-    private VelocityStaffChatAPI staffChatAPI;
-
     private final Metrics.Factory metricsFactory;
     private final ProxyServer server;
     private final Logger logger;
     private final Path path;
+
     private ConfigFile configFile;
     private ConfigFile commandsFile;
     private ConfigFile discordFile;
+    
+    private Config config;
+    private Commands commands;
+    private Discord discord;
 
-    private DiscordImpl discord;
+    private Color color;
+    private Placeholders placeholders;
+    private DiscordImpl discordImpl;
+    private Methods methods;
+    private Permissions permissions;
+    private LuckPermsUtil luckPermsUtil;
+
+    private VelocityStaffChatAPI staffChatAPI;
 
     @Inject
     public VelocityStaffChat(ProxyServer server, @DataDirectory Path path, Logger logger, Metrics.Factory metricsFactory) {
@@ -77,35 +87,42 @@ public class VelocityStaffChat {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        instance = this;
         long startTiming = System.currentTimeMillis();
 
         loadFiles();
 
+        metricsFactory.make(this, 12096);
+        this.color = new Color(this);
+        this.placeholders = new Placeholders(this);
+        this.permissions = new Permissions();
+        this.discordImpl = new DiscordImpl(this);
+        this.methods = new Methods(this);
+        this.staffChatAPI = new VelocityStaffChatAPI(this);
+
+        this.color.log("<red>==========================================");
+        this.color.log("<yellow>All files have been loaded correctly!");
+        this.color.log("<red>==========================================");
+
         if (!getUnsignedVelocityAddon()) {
-            Color.log("<red>If you get kicked out in 1.19+ while typing in a staffchat on Velocity, " +
+            this.color.log("<red>If you get kicked out in 1.19+ while typing in a staffchat on Velocity, " +
                     "consider downloading https://github.com/4drian3d/UnSignedVelocity/releases/latest");
         }
 
-        if (Config.LUCKPERMS.getBoolean() || server.getPluginManager().isLoaded("luckperms")) {
-            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Color.log("<yellow>Hooked into LuckPerms.");
+        if (getConfig().LUCKPERMS || server.getPluginManager().isLoaded("luckperms")) {
+            this.luckPermsUtil = new LuckPermsUtil(this);
+            this.luckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            this.color.log("<yellow>Hooked into LuckPerms.");
         }
 
         loadCommands();
         loadListeners();
 
-        metricsFactory.make(this, 12096);
-
-        this.staffChatAPI = new VelocityStaffChatAPI();
-        this.discord = new DiscordImpl();
-
-        Color.log("<gray><strikethrough>==<red><strikethrough>=====<white><strikethrough>======================<red><strikethrough>=====<gray><strikethrough>==");
-        Color.log("<yellow>" + getContainer().getDescription().getName().get() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(" <white>[*] <gold>Version&f: <aqua>" + getContainer().getDescription().getVersion().get());
-        Color.log(" <white>[*] <gold>Name&f: <aqua>" + getContainer().getDescription().getName().get());
-        Color.log(" <white>[*] <gold>Author&f: <aqua>" + getContainer().getDescription().getAuthors().get(0));
-        Color.log("<gray><strikethrough>==<red><strikethrough>=====<white><strikethrough>======================<red><strikethrough>=====<gray><strikethrough>==");
+        this.color.log("<gray><strikethrough>==<red><strikethrough>=====<white><strikethrough>======================<red><strikethrough>=====<gray><strikethrough>==");
+        this.color.log("<yellow>" + getContainer().getDescription().getName().get() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        this.color.log(" <white>[*] <gold>Version<white>: <aqua>" + getContainer().getDescription().getVersion().get());
+        this.color.log(" <white>[*] <gold>Name<white>: <aqua>" + getContainer().getDescription().getName().get());
+        this.color.log(" <white>[*] <gold>Author<white>: <aqua>" + getContainer().getDescription().getAuthors().get(0));
+        this.color.log("<gray><strikethrough>==<red><strikethrough>=====<white><strikethrough>======================<red><strikethrough>=====<gray><strikethrough>==");
 
         updateCheck(server.getConsoleCommandSource(), true);
     }
@@ -114,73 +131,98 @@ public class VelocityStaffChat {
         this.configFile = new ConfigFile(path, "velocity-config.yml");
         this.commandsFile = new ConfigFile(path, "velocity-commands.yml");
         this.discordFile = new ConfigFile(path, "discord.yml");
-        Color.log("<red>==========================================");
-        Color.log("<yellow>All files have been loaded correctly!");
-        Color.log("<red>==========================================");
+        this.configFile.reload();
+        this.commandsFile.reload();
+        this.discordFile.reload();
+        this.config = new Config(this);
+        this.commands = new Commands(this);
+        this.discord = new Discord(this);
     }
 
     public void reloadFiles() {
-        ConfigFile.reloadAll();
-        Color.log("<red>==========================================");
-        Color.log("<yellow>All files have been loaded correctly!");
-        Color.log("<red>==========================================");
+        this.configFile.reload();
+        this.commandsFile.reload();
+        this.discordFile.reload();
+        this.config.loadConfig();
+        this.commands.loadConfig();
+        this.discord.loadConfig();
+        this.color.log("<red>==========================================");
+        this.color.log("<yellow>All files have been loaded correctly!");
+        this.color.log("<red>==========================================");
     }
 
     private void loadCommands() {
-        final String[] aliases_staffchat = Commands.STAFFCHAT_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_staffchat = commands.STAFFCHAT_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                        .metaBuilder(Commands.STAFFCHAT_ALIASES.getStringList().get(0))
+                        .metaBuilder(commands.STAFFCHAT_COMMAND_ALIASES.get(0))
                         .aliases(aliases_staffchat)
-                        .build(), new StaffChatCommand());
+                        .build(), new StaffChatCommand(this));
 
-        final String[] aliases_toggle = Commands.TOGGLE_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_toggle = commands.STAFF_TOGGLE_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.TOGGLE_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.STAFF_TOGGLE_COMMAND_ALIASES.get(0))
                 .aliases(aliases_toggle)
-                .build(), new ToggleCommand());
+                .build(), new ToggleCommand(this));
 
-        final String[] aliases_reload = Commands.RELOAD_ALIASES.getStringList().toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.RELOAD_ALIASES.getStringList().get(0))
-                .aliases(aliases_reload)
+                .metaBuilder("staffchatreload")
+                .aliases("screload")
                 .build(), new ReloadCommand(this));
 
-        final String[] aliases_adminchat = Commands.ADMINCHAT_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_adminchat = commands.ADMINCHAT_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.ADMINCHAT_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.ADMINCHAT_COMMAND_ALIASES.get(0))
                 .aliases(aliases_adminchat)
-                .build(), new AdminChatCommand());
+                .build(), new AdminChatCommand(this));
 
-        final String[] aliases_adminchat_toggle = Commands.ADMIN_TOGGLE_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_adminchat_toggle = commands.ADMIN_TOGGLE_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.ADMIN_TOGGLE_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.ADMIN_TOGGLE_COMMAND_ALIASES.get(0))
                 .aliases(aliases_adminchat_toggle)
-                .build(), new AdminToggleCommand());
+                .build(), new AdminToggleCommand(this));
 
-        final String[] aliases_devchat = Commands.DEVCHAT_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_devchat = commands.DEVCHAT_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.DEVCHAT_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.DEVCHAT_COMMAND_ALIASES.get(0))
                 .aliases(aliases_devchat)
-                .build(), new DevChatCommand());
+                .build(), new DevChatCommand(this));
 
-        final String[] aliases_devchat_toggle = Commands.DEV_TOGGLE_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_devchat_toggle = commands.DEV_TOGGLE_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.DEV_TOGGLE_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.DEV_TOGGLE_COMMAND_ALIASES.get(0))
                 .aliases(aliases_devchat_toggle)
-                .build(), new DevToggleCommand());
+                .build(), new DevToggleCommand(this));
 
-        final String[] aliases_chat = Commands.CHAT_ALIASES.getStringList().toArray(new String[0]);
+        final String[] aliases_chat = commands.CHAT_COMMAND_ALIASES.toArray(new String[0]);
         server.getCommandManager().register(server.getCommandManager()
-                .metaBuilder(Commands.CHAT_ALIASES.getStringList().get(0))
+                .metaBuilder(commands.CHAT_COMMAND_ALIASES.get(0))
                 .aliases(aliases_chat)
-                .build(), new ChatCommand());
-        Color.log("<yellow>Loaded commands.");
+                .build(), new ChatCommand(this));
+
+        final String[] aliases_hide = commands.STAFF_HIDE_COMMAND_ALIASES.toArray(new String[0]);
+        server.getCommandManager().register(server.getCommandManager()
+                .metaBuilder(commands.STAFF_HIDE_COMMAND_ALIASES.get(0))
+                .aliases(aliases_hide)
+                .build(), new HideCommand(this));
+
+        final String[] aliases_admin_hide = commands.ADMIN_HIDE_COMMAND_ALIASES.toArray(new String[0]);
+        server.getCommandManager().register(server.getCommandManager()
+                .metaBuilder(commands.CHAT_COMMAND_ALIASES.get(0))
+                .aliases(aliases_admin_hide)
+                .build(), new AdminHideCommand(this));
+
+        final String[] aliases_dev_hide = commands.DEV_HIDE_COMMAND_ALIASES.toArray(new String[0]);
+        server.getCommandManager().register(server.getCommandManager()
+                .metaBuilder(commands.DEV_HIDE_COMMAND_ALIASES.get(0))
+                .aliases(aliases_dev_hide)
+                .build(), new DevHideCommand(this));
+        this.color.log("<yellow>Loaded commands.");
     }
 
     private void loadListeners() {
-        server.getEventManager().register(this, new ChatListener());
-        server.getEventManager().register(this, new JoinListener());
-        Color.log("<yellow>Loaded listeners.");
+        server.getEventManager().register(this, new ChatListener(this));
+        server.getEventManager().register(this, new JoinListener(this));
+        this.color.log("<yellow>Loaded listeners.");
     }
 
     @SuppressWarnings("ALL")
@@ -210,26 +252,26 @@ public class VelocityStaffChat {
                 String version = info.get("version").getAsString();
                 if (version.equals(getContainer().getDescription().getVersion().get())) {
                     if (console) {
-                        Color.sendMessage(sender, "<green>" + getContainer().getDescription().getName().get() + " is on the latest version.");
+                        this.color.sendMessage(sender, "<green>" + getContainer().getDescription().getName().get() + " is on the latest version.");
                     }
                 } else {
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, "<red>Your " + getContainer().getDescription().getName().get() + " version is out of date!");
-                    Color.sendMessage(sender, "<red>We recommend updating ASAP!");
-                    Color.sendMessage(sender, "");
-                    Color.sendMessage(sender, "<red>Your Version: <yellow>" + getContainer().getDescription().getVersion().get());
-                    Color.sendMessage(sender, "<green>Newest Version: <yellow>" + version);
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, " ");
+                    this.color.sendMessage(sender, " ");
+                    this.color.sendMessage(sender, " ");
+                    this.color.sendMessage(sender, "<red>Your " + getContainer().getDescription().getName().get() + " version is out of date!");
+                    this.color.sendMessage(sender, "<red>We recommend updating ASAP!");
+                    this.color.sendMessage(sender, "");
+                    this.color.sendMessage(sender, "<red>Your Version: <yellow>" + getContainer().getDescription().getVersion().get());
+                    this.color.sendMessage(sender, "<green>Newest Version: <yellow>" + version);
+                    this.color.sendMessage(sender, " ");
+                    this.color.sendMessage(sender, " ");
                     return;
                 }
             } else {
-                Color.sendMessage(sender, "<red>Wrong response from update API, contact plugin developer!");
+                this.color.sendMessage(sender, "<red>Wrong response from update API, contact plugin developer!");
             }
         } catch (
                 Exception ex) {
-            Color.sendMessage(sender, "<red>Failed to get updater check. (" + ex.getMessage() + ")");
+            this.color.sendMessage(sender, "<red>Failed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

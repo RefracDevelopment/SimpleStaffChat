@@ -1,14 +1,7 @@
 package me.refracdevelopment.simplestaffchat.spigot.listeners;
 
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,34 +21,34 @@ public class ChatListener implements Listener {
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                ToggleCommand.insc.remove(player.getUniqueId());
-                locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+        if (plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
+            if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
+                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
+                locale.sendMessage(player, "toggle-off", plugin.getPlaceholders().setPlaceholders(player));
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.MINECRAFT_FORMAT.replace("%message%", message);
+            String format = plugin.getSettings().MINECRAFT_FORMAT.replace("%message%", message);
 
-            Methods.sendStaffChat(player, format);
-        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && Config.SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
+            plugin.getMethods().sendStaffChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getSettings().STAFFCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().STAFFCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getSettings().STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                DevToggleCommand.indc.remove(player.getUniqueId());
+            if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId())) {
+                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
+                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage();
-            String format = Config.MINECRAFT_FORMAT.replace("%message%", message
-                    .replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
+            String format = plugin.getSettings().MINECRAFT_FORMAT.replace("%message%", message
+                    .replaceFirst(plugin.getSettings().STAFFCHAT_SYMBOL, ""));
 
-            Methods.sendStaffChat(player, format);
+            plugin.getMethods().sendStaffChat(player, format);
         }
     }
 
@@ -65,34 +58,34 @@ public class ChatListener implements Listener {
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (AdminToggleCommand.inac.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                locale.sendMessage(player, "adminchat-toggle-off", Placeholders.setPlaceholders(player));
+        if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
+            if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
+                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
+                locale.sendMessage(player, "adminchat-toggle-off", plugin.getPlaceholders().setPlaceholders(player));
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.ADMINCHAT_FORMAT.replace("%message%", message);
+            String format = plugin.getSettings().ADMINCHAT_FORMAT.replace("%message%", message);
 
-            Methods.sendAdminChat(player, format);
-        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && Config.SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL)) return;
+            plugin.getMethods().sendAdminChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getSettings().ADMINCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().ADMINCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getSettings().ADMINCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                DevToggleCommand.indc.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
+            if (plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId())) {
+                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
+                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage();
-            String format = Config.ADMINCHAT_FORMAT.replace("%message%", message
-                    .replaceFirst(Config.ADMINCHAT_SYMBOL, ""));
+            String format = plugin.getSettings().ADMINCHAT_FORMAT.replace("%message%", message
+                    .replaceFirst(plugin.getSettings().ADMINCHAT_SYMBOL, ""));
 
-            Methods.sendAdminChat(player, format);
+            plugin.getMethods().sendAdminChat(player, format);
         }
     }
 
@@ -102,34 +95,34 @@ public class ChatListener implements Listener {
 
         final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (DevToggleCommand.indc.contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
-            if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-                DevToggleCommand.indc.remove(player.getUniqueId());
-                locale.sendMessage(player, "devchat-toggle-off", Placeholders.setPlaceholders(player));
+        if (plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId()) && !event.getMessage().startsWith("/")) {
+            if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
+                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
+                locale.sendMessage(player, "devchat-toggle-off", plugin.getPlaceholders().setPlaceholders(player));
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.DEVCHAT_FORMAT.replace("%message%", message);
+            String format = plugin.getSettings().DEVCHAT_FORMAT.replace("%message%", message);
 
-            Methods.sendDevChat(player, format);
-        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && Config.SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL)) return;
+            plugin.getMethods().sendDevChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getSettings().DEVCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().DEVCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getSettings().DEVCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
+            if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId())) {
+                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
+                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage();
-            String format = Config.DEVCHAT_FORMAT.replace("%message%", message
-                    .replaceFirst(Config.DEVCHAT_SYMBOL, ""));
+            String format = plugin.getSettings().DEVCHAT_FORMAT.replace("%message%", message
+                    .replaceFirst(plugin.getSettings().DEVCHAT_SYMBOL, ""));
 
-            Methods.sendDevChat(player, format);
+            plugin.getMethods().sendDevChat(player, format);
         }
     }
 }

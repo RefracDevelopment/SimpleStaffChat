@@ -4,26 +4,31 @@ import dev.rosewood.rosegarden.hook.PlaceholderAPIHook;
 import dev.rosewood.rosegarden.utils.HexUtils;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Color {
+public class Color extends Manager {
 
-    public static String translate(CommandSender sender, String source) {
-        source = Placeholders.setPlaceholders(sender, source);
+    public Color(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
-        if (sender instanceof Player && SimpleStaffChat.getInstance().getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+    public String translate(CommandSender sender, String source) {
+        source = plugin.getPlaceholders().setPlaceholders(sender, source);
+
+        if (sender instanceof Player && plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             return PlaceholderAPIHook.applyPlaceholders((Player) sender, translate(source));
         } else return translate(source);
     }
 
-    public static String translate(String source) {
+    public String translate(String source) {
         return HexUtils.colorify(source);
     }
 
-    public static void log(String message) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void log(String message) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         String prefix = locale.getLocaleMessage("prefix");
 
@@ -31,8 +36,8 @@ public class Color {
     }
 
     // Used for console StaffChat messages
-    public static void log2(String message) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void log2(String message) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         locale.sendCustomMessage(Bukkit.getConsoleSender(), message);
     }

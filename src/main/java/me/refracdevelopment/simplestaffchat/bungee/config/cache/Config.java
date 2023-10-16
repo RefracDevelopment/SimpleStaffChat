@@ -1,76 +1,93 @@
 package me.refracdevelopment.simplestaffchat.bungee.config.cache;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 
 import java.util.List;
 
-public class Config {
+public class Config extends Manager {
 
     // General
-    public static String STAFFCHAT_SYMBOL;
-    public static String ADMINCHAT_SYMBOL;
-    public static String DEVCHAT_SYMBOL;
-    public static boolean LUCKPERMS;
-    public static boolean SYMBOLS;
+    public String STAFFCHAT_SYMBOL;
+    public String ADMINCHAT_SYMBOL;
+    public String DEVCHAT_SYMBOL;
+    public boolean LUCKPERMS;
+    public boolean SYMBOLS;
 
     // Format
-    public static String STAFFCHAT_FORMAT;
-    public static String CONSOLE_STAFFCHAT_FORMAT;
-    public static String ADMINCHAT_FORMAT;
-    public static String CONSOLE_ADMINCHAT_FORMAT;
-    public static String DEVCHAT_FORMAT;
-    public static String CONSOLE_DEVCHAT_FORMAT;
+    public String STAFFCHAT_FORMAT;
+    public String CONSOLE_STAFFCHAT_FORMAT;
+    public String ADMINCHAT_FORMAT;
+    public String CONSOLE_ADMINCHAT_FORMAT;
+    public String DEVCHAT_FORMAT;
+    public String CONSOLE_DEVCHAT_FORMAT;
 
     // Join
-    public static boolean JOIN_ENABLED;
-    public static String JOIN_FORMAT;
-    public static String SWITCH_FORMAT;
-    public static String QUIT_FORMAT;
+    public boolean JOIN_ENABLED;
+    public String JOIN_FORMAT;
+    public String SWITCH_FORMAT;
+    public String QUIT_FORMAT;
 
     // Messages
-    public static String PREFIX;
-    public static String NO_PERMISSION;
-    public static String RELOAD;
-    public static String STAFFCHAT_TOGGLE_ON;
-    public static String STAFFCHAT_TOGGLE_OFF;
-    public static String ADMINCHAT_TOGGLE_ON;
-    public static String ADMINCHAT_TOGGLE_OFF;
-    public static String DEVCHAT_TOGGLE_ON;
-    public static String DEVCHAT_TOGGLE_OFF;
-    public static String ALLCHAT_TOGGLE_ON;
-    public static String STAFFCHAT_OUTPUT;
-    public static List<String> STAFFCHAT_MESSAGE;
+    public String PREFIX;
+    public String NO_PERMISSION;
+    public String RELOAD;
+    public String STAFFCHAT_TOGGLE_ON;
+    public String STAFFCHAT_TOGGLE_OFF;
+    public String ADMINCHAT_TOGGLE_ON;
+    public String ADMINCHAT_TOGGLE_OFF;
+    public String DEVCHAT_TOGGLE_ON;
+    public String DEVCHAT_TOGGLE_OFF;
+    public String ALLCHAT_TOGGLE_ON;
+    public String STAFFCHAT_MUTED_ON;
+    public String STAFFCHAT_MUTED_OFF;
+    public String ADMINCHAT_MUTED_ON;
+    public String ADMINCHAT_MUTED_OFF;
+    public String DEVCHAT_MUTED_ON;
+    public String DEVCHAT_MUTED_OFF;
+    public String STAFFCHAT_OUTPUT;
+    public List<String> STAFFCHAT_MESSAGE;
 
-    public static void loadConfig() {
-        STAFFCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("staffchat-symbol");
-        ADMINCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("adminchat-symbol");
-        DEVCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("devchat-symbol");
-        LUCKPERMS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("luckperms");
-        SYMBOLS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("symbols");
+    public Config(BungeeStaffChat plugin) {
+        super(plugin);
+    }
 
-        STAFFCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.minecraft-format");
-        CONSOLE_STAFFCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.console-staffchat-format");
-        ADMINCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.adminchat-format");
-        CONSOLE_ADMINCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.console-adminchat-format");
-        DEVCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.devchat-format");
-        CONSOLE_DEVCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.console-devchat-format");
+    public void loadConfig() {
+        STAFFCHAT_SYMBOL = plugin.getConfigFile().getString("staffchat-symbol");
+        ADMINCHAT_SYMBOL = plugin.getConfigFile().getString("adminchat-symbol");
+        DEVCHAT_SYMBOL = plugin.getConfigFile().getString("devchat-symbol");
+        LUCKPERMS = plugin.getConfigFile().getBoolean("luckperms");
+        SYMBOLS = plugin.getConfigFile().getBoolean("symbols");
 
-        JOIN_ENABLED = BungeeStaffChat.getInstance().getConfigFile().getBoolean("join.enabled");
-        JOIN_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("join.join-format");
-        SWITCH_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("join.switch-format");
-        QUIT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("join.quit-format");
+        STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.minecraft-format");
+        CONSOLE_STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.console-staffchat-format");
+        ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.adminchat-format");
+        CONSOLE_ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.console-adminchat-format");
+        DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.devchat-format");
+        CONSOLE_DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.console-devchat-format");
 
-        PREFIX = BungeeStaffChat.getInstance().getConfigFile().getString("messages.prefix");
-        NO_PERMISSION = BungeeStaffChat.getInstance().getConfigFile().getString("messages.no-permission");
-        RELOAD = BungeeStaffChat.getInstance().getConfigFile().getString("messages.reload");
-        STAFFCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.toggle-on");
-        STAFFCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.toggle-off");
-        ADMINCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-on");
-        ADMINCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-off");
-        DEVCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-on");
-        DEVCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-off");
-        ALLCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.allchat-toggle-on");
-        STAFFCHAT_OUTPUT = BungeeStaffChat.getInstance().getConfigFile().getString("messages.staffchat-output");
-        STAFFCHAT_MESSAGE = BungeeStaffChat.getInstance().getConfigFile().getStringList("messages.staffchat-message");
+        JOIN_ENABLED = plugin.getConfigFile().getBoolean("join.enabled");
+        JOIN_FORMAT = plugin.getConfigFile().getString("join.join-format");
+        SWITCH_FORMAT = plugin.getConfigFile().getString("join.switch-format");
+        QUIT_FORMAT = plugin.getConfigFile().getString("join.quit-format");
+
+        PREFIX = plugin.getConfigFile().getString("messages.prefix");
+        NO_PERMISSION = plugin.getConfigFile().getString("messages.no-permission");
+        RELOAD = plugin.getConfigFile().getString("messages.reload");
+        STAFFCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.toggle-on");
+        STAFFCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.toggle-off");
+        ADMINCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.adminchat-toggle-on");
+        ADMINCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.adminchat-toggle-off");
+        DEVCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.devchat-toggle-on");
+        DEVCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.devchat-toggle-off");
+        ALLCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.allchat-toggle-on");
+        STAFFCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.staffchat-muted-on");
+        STAFFCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.staffchat-muted-off");
+        ADMINCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.adminchat-muted-on");
+        ADMINCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.adminchat-muted-off");
+        DEVCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.devchat-muted-on");
+        DEVCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.devchat-muted-off");
+        STAFFCHAT_OUTPUT = plugin.getConfigFile().getString("messages.staffchat-output");
+        STAFFCHAT_MESSAGE = plugin.getConfigFile().getStringList("messages.staffchat-message");
     }
 }

@@ -1,13 +1,12 @@
 package me.refracdevelopment.simplestaffchat.spigot.manager;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.commands.*;
 import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
 
@@ -30,11 +29,14 @@ public class CommandManager {
                 new StaffChatCommand(plugin),
                 new ToggleCommand(plugin),
                 new ReloadCommand(plugin),
-                new AdminChatCommand(),
+                new AdminChatCommand(plugin),
                 new AdminToggleCommand(plugin),
-                new DevChatCommand(),
+                new DevChatCommand(plugin),
                 new DevToggleCommand(plugin),
-                new ChatCommand(plugin)
+                new ChatCommand(plugin),
+                new HideCommand(plugin),
+                new AdminHideCommand(plugin),
+                new DevHideCommand(plugin)
         ));
     }
 

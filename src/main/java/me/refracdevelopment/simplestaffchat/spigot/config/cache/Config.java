@@ -1,39 +1,45 @@
 package me.refracdevelopment.simplestaffchat.spigot.config.cache;
 
+import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 
 import java.util.List;
 
-public class Config {
+public class Config extends Manager {
+
     // General
-    public static String STAFFCHAT_SYMBOL;
-    public static String ADMINCHAT_SYMBOL;
-    public static String DEVCHAT_SYMBOL;
+    public String STAFFCHAT_SYMBOL;
+    public String ADMINCHAT_SYMBOL;
+    public String DEVCHAT_SYMBOL;
 
     // Format
-    public static String MINECRAFT_FORMAT;
-    public static String CONSOLE_FORMAT;
-    public static String ADMINCHAT_FORMAT;
-    public static String CONSOLE_ADMINCHAT_FORMAT;
-    public static String DEVCHAT_FORMAT;
-    public static String CONSOLE_DEVCHAT_FORMAT;
+    public String MINECRAFT_FORMAT;
+    public String CONSOLE_FORMAT;
+    public String ADMINCHAT_FORMAT;
+    public String CONSOLE_ADMINCHAT_FORMAT;
+    public String DEVCHAT_FORMAT;
+    public String CONSOLE_DEVCHAT_FORMAT;
 
     // Join
-    public static boolean JOIN_ENABLED;
-    public static String JOIN_FORMAT;
-    public static String JOIN_QUIT_FORMAT;
+    public boolean JOIN_ENABLED;
+    public String JOIN_FORMAT;
+    public String JOIN_QUIT_FORMAT;
 
     // Messages
-    public static String STAFFCHAT_OUTPUT;
-    public static List<String> STAFFCHAT_MESSAGE;
+    public String STAFFCHAT_OUTPUT;
+    public List<String> STAFFCHAT_MESSAGE;
 
     // Settings
-    public static boolean BUNGEECORD;
-    public static String SERVER_NAME;
-    public static boolean SYMBOLS;
+    public boolean BUNGEECORD;
+    public String SERVER_NAME;
+    public boolean SYMBOLS;
 
-    public static void loadConfig() {
+    public Config(SimpleStaffChat plugin) {
+        super(plugin);
+    }
+
+    public void loadConfig() {
         // General
         STAFFCHAT_SYMBOL = ConfigurationManager.Setting.STAFFCHAT_SYMBOL.getString();
         ADMINCHAT_SYMBOL = ConfigurationManager.Setting.ADMINCHAT_SYMBOL.getString();
@@ -61,8 +67,8 @@ public class Config {
         SERVER_NAME = ConfigurationManager.Setting.SERVER_NAME.getString();
         SYMBOLS = ConfigurationManager.Setting.SYMBOLS.getBoolean();
 
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
+        plugin.getColor().log("&c==========================================");
+        plugin.getColor().log("&aAll files have been loaded correctly!");
+        plugin.getColor().log("&c==========================================");
     }
 }

@@ -4,11 +4,12 @@ import dev.rosewood.rosegarden.RosePlugin;
 import dev.rosewood.rosegarden.config.CommentedFileConfiguration;
 import dev.rosewood.rosegarden.config.RoseSetting;
 import dev.rosewood.rosegarden.manager.AbstractConfigurationManager;
-import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 
 import java.util.Arrays;
 
 public class ConfigurationManager extends AbstractConfigurationManager {
+
+    private static RosePlugin rosePlugin;
 
     public enum Setting implements RoseSetting {
         // Config Settings
@@ -75,12 +76,13 @@ public class ConfigurationManager extends AbstractConfigurationManager {
 
         @Override
         public CommentedFileConfiguration getBaseConfig() {
-            return SimpleStaffChat.getInstance().getManager(ConfigurationManager.class).getConfig();
+            return rosePlugin.getManager(ConfigurationManager.class).getConfig();
         }
     }
 
     public ConfigurationManager(RosePlugin rosePlugin) {
         super(rosePlugin, Setting.class);
+        ConfigurationManager.rosePlugin = rosePlugin;
     }
 
     @Override

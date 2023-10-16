@@ -1,72 +1,113 @@
 package me.refracdevelopment.simplestaffchat.spigot.config.cache;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 
-public class Commands {
+public class Commands extends Manager {
 
-    public static boolean STAFFCHAT_COMMAND_ENABLED;
-    public static String STAFFCHAT_COMMAND;
-    public static String STAFFCHAT_ALIAS;
+    public boolean STAFFCHAT_COMMAND_ENABLED;
+    public String STAFFCHAT_COMMAND;
+    public String STAFFCHAT_COMMAND_PERMISSION;
+    public String STAFFCHAT_COMMAND_ALIAS;
 
-    public static boolean TOGGLE_COMMAND_ENABLED;
-    public static String TOGGLE_COMMAND;
-    public static String TOGGLE_ALIAS;
+    public boolean STAFF_TOGGLE_COMMAND_ENABLED;
+    public String STAFF_TOGGLE_COMMAND;
+    public String STAFF_TOGGLE_COMMAND_PERMISSION;
+    public String STAFF_TOGGLE_COMMAND_ALIAS;
 
-    public static boolean RELOAD_COMMAND_ENABLED;
-    public static String RELOAD_COMMAND;
-    public static String RELOAD_ALIAS;
+    public boolean ADMINCHAT_COMMAND_ENABLED;
+    public String ADMINCHAT_COMMAND;
+    public String ADMINCHAT_COMMAND_PERMISSION;
+    public String ADMINCHAT_COMMAND_ALIAS;
 
-    public static boolean ADMINCHAT_COMMAND_ENABLED;
-    public static String ADMINCHAT_COMMAND;
-    public static String ADMINCHAT_ALIAS;
+    public boolean ADMIN_TOGGLE_COMMAND_ENABLED;
+    public String ADMIN_TOGGLE_COMMAND;
+    public String ADMIN_TOGGLE_COMMAND_PERMISSION;
+    public String ADMIN_TOGGLE_COMMAND_ALIAS;
 
-    public static boolean ADMIN_TOGGLE_COMMAND_ENABLED;
-    public static String ADMIN_TOGGLE_COMMAND;
-    public static String ADMIN_TOGGLE_ALIAS;
+    public boolean DEVCHAT_COMMAND_ENABLED;
+    public String DEVCHAT_COMMAND;
+    public String DEVCHAT_COMMAND_PERMISSION;
+    public String DEVCHAT_COMMAND_ALIAS;
 
-    public static boolean DEVCHAT_COMMAND_ENABLED;
-    public static String DEVCHAT_COMMAND;
-    public static String DEVCHAT_ALIAS;
+    public boolean DEV_TOGGLE_COMMAND_ENABLED;
+    public String DEV_TOGGLE_COMMAND;
+    public String DEV_TOGGLE_COMMAND_PERMISSION;
+    public String DEV_TOGGLE_COMMAND_ALIAS;
 
-    public static boolean DEV_TOGGLE_COMMAND_ENABLED;
-    public static String DEV_TOGGLE_COMMAND;
-    public static String DEV_TOGGLE_ALIAS;
+    public boolean CHAT_COMMAND_ENABLED;
+    public String CHAT_COMMAND;
+    public String CHAT_COMMAND_PERMISSION;
+    public String CHAT_COMMAND_ALIAS;
 
-    public static boolean CHAT_COMMAND_ENABLED;
-    public static String CHAT_COMMAND;
-    public static String CHAT_ALIAS;
+    public boolean STAFF_HIDE_COMMAND_ENABLED;
+    public String STAFF_HIDE_COMMAND;
+    public String STAFF_HIDE_COMMAND_PERMISSION;
+    public String STAFF_HIDE_COMMAND_ALIAS;
 
-    public static void loadConfig() {
-        STAFFCHAT_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.staffchat.enabled");
-        STAFFCHAT_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.staffchat.command");
-        STAFFCHAT_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.staffchat.alias");
+    public boolean ADMIN_HIDE_COMMAND_ENABLED;
+    public String ADMIN_HIDE_COMMAND;
+    public String ADMIN_HIDE_COMMAND_PERMISSION;
+    public String ADMIN_HIDE_COMMAND_ALIAS;
 
-        TOGGLE_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.toggle.enabled");
-        TOGGLE_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.toggle.command");
-        TOGGLE_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.toggle.alias");
+    public boolean DEV_HIDE_COMMAND_ENABLED;
+    public String DEV_HIDE_COMMAND;
+    public String DEV_HIDE_COMMAND_PERMISSION;
+    public String DEV_HIDE_COMMAND_ALIAS;
 
-        RELOAD_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.reload.enabled");
-        RELOAD_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.reload.command");
-        RELOAD_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.reload.alias");
+    public Commands(SimpleStaffChat plugin) {
+        super(plugin);
+    }
 
-        ADMINCHAT_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.adminchat.enabled");
-        ADMINCHAT_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.adminchat.command");
-        ADMINCHAT_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.adminchat.alias");
+    public void loadConfig() {
+        STAFFCHAT_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.staffchat.enabled");
+        STAFFCHAT_COMMAND = plugin.getCommandsFile().getString("commands.staffchat.command");
+        STAFFCHAT_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.staffchat.permission");
+        STAFFCHAT_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.staffchat.alias");
 
-        ADMIN_TOGGLE_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.toggle.enabled");
-        ADMIN_TOGGLE_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.admin-toggle.command");
-        ADMIN_TOGGLE_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.admin-toggle.alias");
+        STAFF_TOGGLE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.toggle.enabled");
+        STAFF_TOGGLE_COMMAND = plugin.getCommandsFile().getString("commands.toggle.command");
+        STAFF_TOGGLE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.toggle.permission");
+        STAFF_TOGGLE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.toggle.alias");
 
-        DEVCHAT_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.devchat.enabled");
-        DEVCHAT_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.devchat.command");
-        DEVCHAT_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.devchat.alias");
+        ADMINCHAT_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.adminchat.enabled");
+        ADMINCHAT_COMMAND = plugin.getCommandsFile().getString("commands.adminchat.command");
+        ADMINCHAT_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.adminchat.permission");
+        ADMINCHAT_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.adminchat.alias");
 
-        DEV_TOGGLE_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.dev-toggle.enabled");
-        DEV_TOGGLE_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.dev-toggle.command");
-        DEV_TOGGLE_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.dev-toggle.alias");
+        ADMIN_TOGGLE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.toggle.enabled");
+        ADMIN_TOGGLE_COMMAND = plugin.getCommandsFile().getString("commands.admin-toggle.command");
+        ADMIN_TOGGLE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.admin-toggle.permission");
+        ADMIN_TOGGLE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.admin-toggle.alias");
 
-        CHAT_COMMAND_ENABLED = SimpleStaffChat.getInstance().getCommandsFile().getBoolean("commands.chat.enabled");
-        CHAT_COMMAND = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.chat.command");
-        CHAT_ALIAS = SimpleStaffChat.getInstance().getCommandsFile().getString("commands.chat.alias");
+        DEVCHAT_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.devchat.enabled");
+        DEVCHAT_COMMAND = plugin.getCommandsFile().getString("commands.devchat.command");
+        DEVCHAT_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.devchat.permission");
+        DEVCHAT_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.devchat.alias");
+
+        DEV_TOGGLE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.dev-toggle.enabled");
+        DEV_TOGGLE_COMMAND = plugin.getCommandsFile().getString("commands.dev-toggle.command");
+        DEV_TOGGLE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.dev-toggle.permission");
+        DEV_TOGGLE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.dev-toggle.alias");
+
+        CHAT_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.chat.enabled");
+        CHAT_COMMAND = plugin.getCommandsFile().getString("commands.chat.command");
+        CHAT_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.chat.permission");
+        CHAT_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.chat.alias");
+
+        STAFF_HIDE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.hide.enabled");
+        STAFF_HIDE_COMMAND = plugin.getCommandsFile().getString("commands.hide.command");
+        STAFF_HIDE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.hide.permission");
+        STAFF_HIDE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.hide.alias");
+
+        ADMIN_HIDE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.admin-hide.enabled");
+        ADMIN_HIDE_COMMAND = plugin.getCommandsFile().getString("commands.admin-hide.command");
+        ADMIN_HIDE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.admin-hide.permission");
+        ADMIN_HIDE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.admin-hide.alias");
+
+        DEV_HIDE_COMMAND_ENABLED = plugin.getCommandsFile().getBoolean("commands.dev-hide.enabled");
+        DEV_HIDE_COMMAND = plugin.getCommandsFile().getString("commands.dev-hide.command");
+        DEV_HIDE_COMMAND_PERMISSION = plugin.getCommandsFile().getString("commands.dev-hide.permission");
+        DEV_HIDE_COMMAND_ALIAS = plugin.getCommandsFile().getString("commands.dev-hide.alias");
     }
 }

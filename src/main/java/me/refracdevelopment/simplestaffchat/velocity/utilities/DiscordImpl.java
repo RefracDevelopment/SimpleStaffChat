@@ -4,22 +4,26 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.DiscordWebhook;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Discord;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 
-public class DiscordImpl {
+public class DiscordImpl extends Manager {
+
+    public DiscordImpl(VelocityStaffChat plugin) {
+        super(plugin);
+    }
 
     private void sendMessage(@Nullable Player player, String content, String url) {
-        if (!Discord.DISCORD_ENABLED.getBoolean()) return;
+        if (!plugin.getDiscord().DISCORD_ENABLED) return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);
         if (player != null) {
             webhook.setAvatarUrl("https://crafatar.com/avatars/" + player.getUniqueId().toString() + "?overlay=1");
         }
-        webhook.setUsername(Discord.DISCORD_TITLE.getString());
+        webhook.setUsername(plugin.getDiscord().DISCORD_TITLE);
         webhook.setContent(content);
 
         try {
@@ -30,13 +34,13 @@ public class DiscordImpl {
     }
 
     private void sendEmbed(@Nullable Player player, String content, String url, java.awt.Color color) {
-        if (!Discord.DISCORD_ENABLED.getBoolean()) return;
+        if (!plugin.getDiscord().DISCORD_ENABLED) return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                .setTitle(Discord.DISCORD_TITLE.getString())
+                .setTitle(plugin.getDiscord().DISCORD_TITLE)
                 .setDescription(content).setColor(color)
-                .setFooter(Discord.DISCORD_FOOTER.getString(), null));
+                .setFooter(plugin.getDiscord().DISCORD_FOOTER, null));
 
         if (player != null) {
             webhook.setAvatarUrl("https://crafatar.com/avatars/" + player.getUniqueId().toString() + "?overlay=1");
@@ -50,149 +54,149 @@ public class DiscordImpl {
     }
 
     public void sendStaffChat(CommandSource commandSource, String content) {
-        if (Discord.DISCORD_EMBED.getBoolean()) {
+        if (plugin.getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        Discord.STAFFCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.STAFFCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, Discord.DISCORD_FORMAT.getString()
+                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        Discord.STAFFCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().STAFFCHAT_WEBHOOK);
             } else {
-                sendMessage(null, Discord.DISCORD_FORMAT.getString()
+                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.STAFFCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().STAFFCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendDevChat(CommandSource commandSource, String content) {
-        if (Discord.DISCORD_EMBED.getBoolean()) {
+        if (plugin.getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        Discord.DEVCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.DEVCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, Discord.DISCORD_FORMAT.getString()
+                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        Discord.DEVCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().DEVCHAT_WEBHOOK);
             } else {
-                sendMessage(null, Discord.DISCORD_FORMAT.getString()
+                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.DEVCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().DEVCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendAdminChat(CommandSource commandSource, String content) {
-        if (Discord.DISCORD_EMBED.getBoolean()) {
+        if (plugin.getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        Discord.ADMINCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, Discord.DISCORD_FORMAT.getString()
+                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.ADMINCHAT_WEBHOOK.getString(), java.awt.Color.BLACK);
+                        plugin.getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, Discord.DISCORD_FORMAT.getString()
+                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        Discord.ADMINCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().ADMINCHAT_WEBHOOK);
             } else {
-                sendMessage(null, Discord.DISCORD_FORMAT.getString()
+                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        Discord.ADMINCHAT_WEBHOOK.getString());
+                        plugin.getDiscord().ADMINCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendJoin(JoinType type, Player player, String currentServer, String previousServer) {
-        if (Discord.DISCORD_EMBED.getBoolean()) {
+        if (plugin.getDiscord().DISCORD_EMBED) {
             switch (type) {
                 case JOIN:
-                    sendEmbed(player, Discord.DISCORD_JOIN_FORMAT.getString()
+                    sendEmbed(player, plugin.getDiscord().DISCORD_JOIN_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            Discord.JOIN_WEBHOOK.getString(), Color.GREEN);
+                            plugin.getDiscord().JOIN_WEBHOOK, Color.GREEN);
                     break;
                 case SWITCH:
-                    sendEmbed(player, Discord.DISCORD_SWITCH_FORMAT.getString()
+                    sendEmbed(player, plugin.getDiscord().DISCORD_SWITCH_FORMAT
                                     .replace("%from%", previousServer)
                                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                     .replace("%player%", player.getUsername())
                                     .replace("%arrow%", "\u00BB"),
-                            Discord.JOIN_WEBHOOK.getString(), Color.CYAN);
+                            plugin.getDiscord().JOIN_WEBHOOK, Color.CYAN);
                     break;
                 case LEAVE:
-                    sendEmbed(player, Discord.DISCORD_LEAVE_FORMAT.getString()
+                    sendEmbed(player, plugin.getDiscord().DISCORD_LEAVE_FORMAT
                                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                     .replace("%player%", player.getUsername()),
-                            Discord.JOIN_WEBHOOK.getString(), Color.RED);
+                            plugin.getDiscord().JOIN_WEBHOOK, Color.RED);
                     break;
             }
         } else {
             switch (type) {
                 case JOIN:
-                    sendMessage(player, Discord.DISCORD_JOIN_FORMAT.getString()
+                    sendMessage(player, plugin.getDiscord().DISCORD_JOIN_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            Discord.JOIN_WEBHOOK.getString());
+                            plugin.getDiscord().JOIN_WEBHOOK);
                     break;
                 case SWITCH:
-                    sendMessage(player, Discord.DISCORD_SWITCH_FORMAT.getString()
+                    sendMessage(player, plugin.getDiscord().DISCORD_SWITCH_FORMAT
                                     .replace("%from%", previousServer)
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername())
                                     .replace("%arrow%", "\u00BB"),
-                            Discord.JOIN_WEBHOOK.getString());
+                            plugin.getDiscord().JOIN_WEBHOOK);
                     break;
                 case LEAVE:
-                    sendMessage(player, Discord.DISCORD_LEAVE_FORMAT.getString()
+                    sendMessage(player, plugin.getDiscord().DISCORD_LEAVE_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            Discord.JOIN_WEBHOOK.getString());
+                            plugin.getDiscord().JOIN_WEBHOOK);
                     break;
             }
         }

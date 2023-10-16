@@ -13,17 +13,17 @@ import java.util.stream.Collectors;
 
 public final class HexUtils {
 
-    private static final int CHARS_UNTIL_LOOP = 30;
-    private static final Pattern RAINBOW_PATTERN = Pattern.compile("<(?<type>rainbow|r)(#(?<speed>\\d+))?(:(?<saturation>\\d*\\.?\\d+))?(:(?<brightness>\\d*\\.?\\d+))?(:(?<loop>l|L|loop))?>");
-    private static final Pattern GRADIENT_PATTERN = Pattern.compile("<(?<type>gradient|g)(#(?<speed>\\d+))?(?<hex>(:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(?<loop>l|L|loop))?>");
-    private static final List<Pattern> HEX_PATTERNS = Arrays.asList(
+    private final int CHARS_UNTIL_LOOP = 30;
+    private final Pattern RAINBOW_PATTERN = Pattern.compile("<(?<type>rainbow|r)(#(?<speed>\\d+))?(:(?<saturation>\\d*\\.?\\d+))?(:(?<brightness>\\d*\\.?\\d+))?(:(?<loop>l|L|loop))?>");
+    private final Pattern GRADIENT_PATTERN = Pattern.compile("<(?<type>gradient|g)(#(?<speed>\\d+))?(?<hex>(:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(?<loop>l|L|loop))?>");
+    private final List<Pattern> HEX_PATTERNS = Arrays.asList(
             Pattern.compile("<#([A-Fa-f0-9]){6}>"),   // <#FFFFFF>
             Pattern.compile("\\{#([A-Fa-f0-9]){6}}"), // {#FFFFFF}
             Pattern.compile("&#([A-Fa-f0-9]){6}"),    // &#FFFFFF
             Pattern.compile("#([A-Fa-f0-9]){6}")      // #FFFFFF
     );
 
-    private static final Pattern STOP = Pattern.compile(
+    private final Pattern STOP = Pattern.compile(
             "<(rainbow|r)(#(\\d+))?(:(\\d*\\.?\\d+))?(:(\\d*\\.?\\d+))?(:(l|L|loop))?>|" +
                     "<(gradient|g)(#(\\d+))?((:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(l|L|loop))?>|" +
                     "(&[a-f0-9r])|" +
@@ -34,9 +34,7 @@ public final class HexUtils {
                     org.bukkit.ChatColor.COLOR_CHAR
     );
 
-    private HexUtils() {
-
-    }
+    public HexUtils() {}
 
     /**
      * Gets a capture group from a regex Matcher if it exists
@@ -45,7 +43,7 @@ public final class HexUtils {
      * @param group The group name
      * @return the capture group value, or null if not found
      */
-    private static String getCaptureGroup(Matcher matcher, String group) {
+    private String getCaptureGroup(Matcher matcher, String group) {
         try {
             return matcher.group(group);
         } catch (IllegalStateException | IllegalArgumentException e) {
@@ -59,7 +57,7 @@ public final class HexUtils {
      * @param sender  The CommandSender to send to
      * @param message The message to send
      */
-    public static void sendMessage(CommandSender sender, String message) {
+    public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(colorify(message));
     }
 
@@ -69,7 +67,7 @@ public final class HexUtils {
      * @param message The message
      * @return A color-replaced message
      */
-    public static String colorify(String message) {
+    public String colorify(String message) {
         String parsed = message;
         parsed = parseRainbow(parsed);
         parsed = parseGradients(parsed);
@@ -78,7 +76,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public static String parseRainbow(String message) {
+    public String parseRainbow(String message) {
         String parsed = message;
 
         Matcher matcher = RAINBOW_PATTERN.matcher(parsed);
@@ -153,7 +151,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public static String parseGradients(String message) {
+    public String parseGradients(String message) {
         String parsed = message;
 
         Matcher matcher = GRADIENT_PATTERN.matcher(parsed);
@@ -215,7 +213,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public static String parseHex(String message) {
+    public String parseHex(String message) {
         String parsed = message;
 
         for (Pattern pattern : HEX_PATTERNS) {
@@ -232,7 +230,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public static String parseLegacy(String message) {
+    public String parseLegacy(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -243,7 +241,7 @@ public final class HexUtils {
      * @param searchAfter The index at which to search after
      * @return the index of the color stop, or the end of the string index if none is found
      */
-    private static int findStop(String content, int searchAfter) {
+    private int findStop(String content, int searchAfter) {
         Matcher matcher = STOP.matcher(content);
         while (matcher.find()) {
             if (matcher.start() > searchAfter)
@@ -252,7 +250,7 @@ public final class HexUtils {
         return content.length();
     }
 
-    private static String cleanHex(String hex) {
+    private String cleanHex(String hex) {
         if (hex.startsWith("<") || hex.startsWith("{")) {
             return hex.substring(1, hex.length() - 1);
         } else if (hex.startsWith("&")) {
@@ -268,11 +266,11 @@ public final class HexUtils {
      * @param hex The hex color
      * @return The closest ChatColor value
      */
-    public static ChatColor translateHex(String hex) {
+    public ChatColor translateHex(String hex) {
         return ChatColor.of(hex);
     }
 
-    public static ChatColor translateHex(Color color) {
+    public ChatColor translateHex(Color color) {
         return ChatColor.of(color);
     }
 
@@ -293,7 +291,7 @@ public final class HexUtils {
     /**
      * Allows generation of a multi-part gradient with a defined number of steps
      */
-    public static class Gradient implements ColorGenerator {
+    public class Gradient implements ColorGenerator {
 
         private final List<TwoStopGradient> gradients;
         private final int steps;
@@ -339,7 +337,7 @@ public final class HexUtils {
             return color;
         }
 
-        public static class TwoStopGradient {
+        public class TwoStopGradient {
 
             private final Color startColor;
             private final Color endColor;
@@ -382,7 +380,7 @@ public final class HexUtils {
     /**
      * Allows generation of an animated multi-part gradient with a defined number of steps
      */
-    public static class AnimatedGradient extends Gradient {
+    public class AnimatedGradient extends Gradient {
 
         public AnimatedGradient(List<Color> colors, int steps, int speed) {
             super(colors, steps);
@@ -395,7 +393,7 @@ public final class HexUtils {
     /**
      * Allows generation of a rainbow gradient with a fixed number of steps
      */
-    public static class Rainbow implements ColorGenerator {
+    public class Rainbow implements ColorGenerator {
 
         protected final float hueStep, saturation, brightness;
         protected float hue;
@@ -427,7 +425,7 @@ public final class HexUtils {
     /**
      * Allows generation of an animated rainbow gradient with a fixed number of steps
      */
-    public static class AnimatedRainbow extends Rainbow {
+    public class AnimatedRainbow extends Rainbow {
 
         public AnimatedRainbow(int totalColors, float saturation, float brightness, int speed) {
             super(totalColors, saturation, brightness);

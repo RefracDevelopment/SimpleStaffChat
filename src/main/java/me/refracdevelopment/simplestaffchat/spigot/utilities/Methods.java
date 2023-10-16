@@ -1,201 +1,229 @@
 package me.refracdevelopment.simplestaffchat.spigot.utilities;
 
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
+import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Methods {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-    public static void sendStaffChat(CommandSender sender, String format) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+@Getter
+public class Methods extends Manager {
 
-        if (!sender.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
-            locale.sendMessage(sender, "no-permission");
-            return;
-        }
+    private List<UUID> staffChatMuted = new ArrayList<>();
+    private List<UUID> adminChatMuted = new ArrayList<>();
+    private List<UUID> devChatMuted = new ArrayList<>();
+    private List<UUID> staffChatPlayers = new ArrayList<>();
+    private List<UUID> adminChatPlayers = new ArrayList<>();
+    private List<UUID> devChatPlayers = new ArrayList<>();
+
+    public Methods(SimpleStaffChat plugin) {
+        super(plugin);
+    }
+
+    public void sendStaffChat(CommandSender sender, String format) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                locale.sendCustomMessage(p, Color.translate(sender, format));
+            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE) && !staffChatMuted.contains(p.getUniqueId())) {
+                locale.sendCustomMessage(p, plugin.getColor().translate(sender, format));
             }
         }
 
-        if (Config.BUNGEECORD && sender instanceof Player) {
+        if (plugin.getSettings().BUNGEECORD && sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendStaffChat(player, Color.translate(sender, format));
+            plugin.getPluginMessage().sendStaffChat(player, plugin.getColor().translate(sender, format));
         }
-        Color.log2(Color.translate(sender, format));
+        plugin.getColor().log2(plugin.getColor().translate(sender, format));
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getDiscord().sendStaffChat(player, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendStaffChat(player, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "\u00BB")
             );
         } else {
-            SimpleStaffChat.getInstance().getDiscord().sendStaffChat(null, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendStaffChat(null, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "\u00BB")
             );
         }
     }
 
-    public static void sendDevChat(CommandSender sender, String format) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
-
-        if (!sender.hasPermission(Permissions.DEVCHAT_COMMAND)) {
-            locale.sendMessage(sender, "no-permission");
-            return;
-        }
+    public void sendDevChat(CommandSender sender, String format) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                locale.sendCustomMessage(p, Color.translate(sender, format));
+            if (p.hasPermission(plugin.getPermissions().DEVCHAT_SEE) && !devChatMuted.contains(p.getUniqueId())) {
+                locale.sendCustomMessage(p, plugin.getColor().translate(sender, format));
             }
         }
 
-        if (Config.BUNGEECORD && sender instanceof Player) {
+        if (plugin.getSettings().BUNGEECORD && sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(player, Color.translate(sender, format));
+            plugin.getPluginMessage().sendDevChat(player, plugin.getColor().translate(sender, format));
         }
-        Color.log2(Color.translate(sender, format));
+        plugin.getColor().log2(plugin.getColor().translate(sender, format));
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getDiscord().sendDevChat(player, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendDevChat(player, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "\u00BB")
             );
         } else {
-            SimpleStaffChat.getInstance().getDiscord().sendDevChat(null, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendDevChat(null, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "\u00BB")
             );
         }
     }
 
-    public static void sendAdminChat(CommandSender sender, String format) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
-
-        if (!sender.hasPermission(Permissions.ADMINCHAT_COMMAND)) {
-            locale.sendMessage(sender, "no-permission");
-            return;
-        }
+    public void sendAdminChat(CommandSender sender, String format) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                locale.sendCustomMessage(p, Color.translate(sender, format));
+            if (p.hasPermission(plugin.getPermissions().ADMINCHAT_SEE) && !adminChatMuted.contains(p.getUniqueId())) {
+                locale.sendCustomMessage(p, plugin.getColor().translate(sender, format));
             }
         }
 
-        if (Config.BUNGEECORD && sender instanceof Player) {
+        if (plugin.getSettings().BUNGEECORD && sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(player, Color.translate(sender, format));
+            plugin.getPluginMessage().sendDevChat(player, plugin.getColor().translate(sender, format));
         }
-        Color.log2(Color.translate(sender, format));
+        plugin.getColor().log2(plugin.getColor().translate(sender, format));
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getDiscord().sendAdminChat(player, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendAdminChat(player, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "\u00BB")
             );
         } else {
-            SimpleStaffChat.getInstance().getDiscord().sendAdminChat(null, format
-                    .replace("%server%", Config.SERVER_NAME)
+            plugin.getDiscordImpl().sendAdminChat(null, format
+                    .replace("%server%", plugin.getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "\u00BB")
             );
         }
     }
 
-    public static void toggleStaffChat(Player player) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void toggleStaffChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-            locale.sendMessage(player, "no-permission", Placeholders.setPlaceholders(player));
-            return;
-        }
-
-        if (ToggleCommand.insc.contains(player.getUniqueId())) {
-            ToggleCommand.insc.remove(player.getUniqueId());
-            locale.sendMessage(player, "toggle-off", Placeholders.setPlaceholders(player));
+        if (staffChatPlayers.contains(player.getUniqueId())) {
+            staffChatPlayers.remove(player.getUniqueId());
+            locale.sendMessage(player, "toggle-off", plugin.getPlaceholders().setPlaceholders(player));
         } else {
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                DevToggleCommand.indc.remove(player.getUniqueId());
+            if (adminChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())) {
+                adminChatPlayers.remove(player.getUniqueId());
+                devChatPlayers.remove(player.getUniqueId());
             }
-            ToggleCommand.insc.add(player.getUniqueId());
-            locale.sendMessage(player, "toggle-on", Placeholders.setPlaceholders(player));
+            staffChatPlayers.add(player.getUniqueId());
+            locale.sendMessage(player, "toggle-on", plugin.getPlaceholders().setPlaceholders(player));
         }
     }
 
-    public static void toggleAdminChat(Player player) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void toggleAdminChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-            locale.sendMessage(player, "no-permission");
-            return;
-        }
-
-        if (AdminToggleCommand.inac.contains(player.getUniqueId())) {
-            AdminToggleCommand.inac.remove(player.getUniqueId());
-            locale.sendMessage(player, "adminchat-toggle-off", Placeholders.setPlaceholders(player));
+        if (adminChatPlayers.contains(player.getUniqueId())) {
+            adminChatPlayers.remove(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-toggle-off", plugin.getPlaceholders().setPlaceholders(player));
         } else {
-            if (DevToggleCommand.indc.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                DevToggleCommand.indc.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
+            if (devChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
+                devChatPlayers.remove(player.getUniqueId());
+                staffChatPlayers.remove(player.getUniqueId());
             }
-            AdminToggleCommand.inac.add(player.getUniqueId());
-            locale.sendMessage(player, "adminchat-toggle-on", Placeholders.setPlaceholders(player));
+            adminChatPlayers.add(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-toggle-on", plugin.getPlaceholders().setPlaceholders(player));
         }
     }
 
-    public static void toggleDevChat(Player player) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void toggleDevChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-            locale.sendMessage(player, "no-permission");
-            return;
-        }
-
-        if (DevToggleCommand.indc.contains(player.getUniqueId())) {
-            DevToggleCommand.indc.remove(player.getUniqueId());
-            locale.sendMessage(player, "devchat-toggle-off", Placeholders.setPlaceholders(player));
+        if (devChatPlayers.contains(player.getUniqueId())) {
+            devChatPlayers.remove(player.getUniqueId());
+            locale.sendMessage(player, "devchat-toggle-off", plugin.getPlaceholders().setPlaceholders(player));
         } else {
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
+            if (adminChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
+                adminChatPlayers.remove(player.getUniqueId());
+                staffChatPlayers.remove(player.getUniqueId());
             }
-            DevToggleCommand.indc.add(player.getUniqueId());
-            locale.sendMessage(player, "devchat-toggle-on", Placeholders.setPlaceholders(player));
+            devChatPlayers.add(player.getUniqueId());
+            locale.sendMessage(player, "devchat-toggle-on", plugin.getPlaceholders().setPlaceholders(player));
         }
     }
 
-    public static void toggleAllChat(Player player) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public void toggleAllChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
 
-        if (ToggleCommand.insc.contains(player.getUniqueId()) || DevToggleCommand.indc.contains(player.getUniqueId())
-                || AdminToggleCommand.inac.contains(player.getUniqueId())) {
-            ToggleCommand.insc.remove(player.getUniqueId());
-            DevToggleCommand.indc.remove(player.getUniqueId());
-            AdminToggleCommand.inac.remove(player.getUniqueId());
+        if (staffChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())
+                || adminChatPlayers.contains(player.getUniqueId())) {
+            staffChatPlayers.remove(player.getUniqueId());
+            devChatPlayers.remove(player.getUniqueId());
+            adminChatPlayers.remove(player.getUniqueId());
             locale.sendMessage(player, "allchat-toggle-on");
+        }
+    }
+
+    public void hideStaffChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+        
+        if (staffChatMuted.contains(player.getUniqueId())) {
+            staffChatMuted.remove(player.getUniqueId());
+            locale.sendMessage(player, "staffchat-muted-off");
+        } else {
+            if (adminChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
+                adminChatMuted.remove(player.getUniqueId());
+                devChatMuted.remove(player.getUniqueId());
+            }
+            staffChatMuted.add(player.getUniqueId());
+            locale.sendMessage(player, "staffchat-muted-on");
+        }
+    }
+
+    public void hideAdminChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+
+        if (adminChatMuted.contains(player.getUniqueId())) {
+            adminChatMuted.remove(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-muted-off");
+        } else {
+            if (staffChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
+                staffChatMuted.remove(player.getUniqueId());
+                devChatMuted.remove(player.getUniqueId());
+            }
+            adminChatMuted.add(player.getUniqueId());
+            locale.sendMessage(player, "adminchat-muted-on");
+        }
+    }
+
+    public void hideDevChat(Player player) {
+        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+
+        if (devChatMuted.contains(player.getUniqueId())) {
+            devChatMuted.remove(player.getUniqueId());
+            locale.sendMessage(player, "devchat-muted-off");
+        } else {
+            if (adminChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
+                adminChatMuted.remove(player.getUniqueId());
+                staffChatMuted.remove(player.getUniqueId());
+            }
+            devChatMuted.add(player.getUniqueId());
+            locale.sendMessage(player, "devchat-muted-on");
         }
     }
 }

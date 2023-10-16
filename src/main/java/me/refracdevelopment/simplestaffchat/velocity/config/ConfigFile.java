@@ -15,7 +15,7 @@ public class ConfigFile extends YamlConfiguration {
 
     private final YamlFile yamlFile;
 
-    private static final List<ConfigFile> list = Lists.newArrayList();
+    private final List<ConfigFile> list = Lists.newArrayList();
 
     @SneakyThrows
     public ConfigFile(Path path, String fileName) {
@@ -46,7 +46,7 @@ public class ConfigFile extends YamlConfiguration {
         yamlFile.load();
     }
 
-    public static void reloadAll() {
+    public void reloadAll() {
         list.forEach(ConfigFile::reload);
     }
 }

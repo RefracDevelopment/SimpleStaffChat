@@ -1,32 +1,37 @@
 package me.refracdevelopment.simplestaffchat.spigot.config.cache;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 
-public class Discord {
+public class Discord extends Manager {
 
     // Webhooks
-    public static String STAFFCHAT_WEBHOOK;
-    public static String DEVCHAT_WEBHOOK;
-    public static String ADMINCHAT_WEBHOOK;
-    public static String JOIN_WEBHOOK;
+    public String STAFFCHAT_WEBHOOK;
+    public String DEVCHAT_WEBHOOK;
+    public String ADMINCHAT_WEBHOOK;
+    public String JOIN_WEBHOOK;
 
     // General
-    public static boolean DISCORD_ENABLED;
-    public static boolean DISCORD_EMBED;
-    public static String DISCORD_TITLE;
-    public static String DISCORD_FOOTER;
+    public boolean DISCORD_ENABLED;
+    public boolean DISCORD_EMBED;
+    public String DISCORD_TITLE;
+    public String DISCORD_FOOTER;
 
-    public static void loadConfig() {
+    public Discord(SimpleStaffChat plugin) {
+        super(plugin);
+    }
+
+    public void loadConfig() {
         // Webhooks
-        STAFFCHAT_WEBHOOK = SimpleStaffChat.getInstance().getDiscordFile().getString("webhook.staffchat");
-        DEVCHAT_WEBHOOK = SimpleStaffChat.getInstance().getDiscordFile().getString("webhook.devchat");
-        ADMINCHAT_WEBHOOK = SimpleStaffChat.getInstance().getDiscordFile().getString("webhook.adminchat");
-        JOIN_WEBHOOK = SimpleStaffChat.getInstance().getDiscordFile().getString("webhook.join");
+        STAFFCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.staffchat");
+        DEVCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.devchat");
+        ADMINCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.adminchat");
+        JOIN_WEBHOOK = plugin.getDiscordFile().getString("webhook.join");
 
         // General
-        DISCORD_ENABLED = SimpleStaffChat.getInstance().getDiscordFile().getBoolean("discord.enabled");
-        DISCORD_EMBED = SimpleStaffChat.getInstance().getDiscordFile().getBoolean("discord.embed-message");
-        DISCORD_TITLE = SimpleStaffChat.getInstance().getDiscordFile().getString("discord.title");
-        DISCORD_FOOTER = SimpleStaffChat.getInstance().getDiscordFile().getString("discord.footer");
+        DISCORD_ENABLED = plugin.getDiscordFile().getBoolean("discord.enabled");
+        DISCORD_EMBED = plugin.getDiscordFile().getBoolean("discord.embed-message");
+        DISCORD_TITLE = plugin.getDiscordFile().getString("discord.title");
+        DISCORD_FOOTER = plugin.getDiscordFile().getString("discord.footer");
     }
 }

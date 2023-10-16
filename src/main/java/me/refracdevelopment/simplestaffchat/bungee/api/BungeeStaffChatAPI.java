@@ -2,28 +2,25 @@ package me.refracdevelopment.simplestaffchat.bungee.api;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.manager.CommandManager;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 
 /**
  * The BungeeStaffChatAPI allows you to hook into SimpleStaffChat to either modify and grab data
  * or to add new features and events.
  */
-public class BungeeStaffChatAPI {
+public class BungeeStaffChatAPI extends Manager {
 
-    private BungeeStaffChat plugin = BungeeStaffChat.getInstance();
-    public static BungeeStaffChatAPI INSTANCE;
-
-    public BungeeStaffChatAPI() {
-        INSTANCE = this;
-        Color.log("&eSimpleStaffChatAPI has been enabled!");
-        Color.log("&eWiki: https://refracdevelopment.gitbook.io/");
+    public BungeeStaffChatAPI(BungeeStaffChat plugin) {
+        super(plugin);
+        plugin.getColor().log("&eSimpleStaffChatAPI has been enabled!");
+        plugin.getColor().log("&eWiki: https://refracdevelopment.gitbook.io/");
     }
 
     /**
      * @return Is the SimpleGemsAPI enabled and registered?
      */
-    public static boolean isRegistered() {
-        return INSTANCE != null;
+    public boolean isRegistered() {
+        return plugin != null;
     }
 
     /**

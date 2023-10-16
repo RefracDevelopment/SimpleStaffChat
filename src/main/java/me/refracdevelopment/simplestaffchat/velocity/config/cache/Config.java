@@ -1,57 +1,85 @@
 package me.refracdevelopment.simplestaffchat.velocity.config.cache;
 
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
 import java.util.List;
 
-public enum Config {
+public class Config extends Manager {
 
     // General
-    STAFFCHAT_SYMBOL("staffchat-symbol"),
-    ADMINCHAT_SYMBOL("adminchat-symbol"),
-    DEVCHAT_SYMBOL("devchat-symbol"),
-    LUCKPERMS("luckperms"),
-    SYMBOLS("symbols"),
-    STAFFCHAT_FORMAT("format.minecraft-format"),
-    CONSOLE_STAFFCHAT_FORMAT("format.console-staffchat-format"),
-    ADMINCHAT_FORMAT("format.adminchat-format"),
-    CONSOLE_ADMINCHAT_FORMAT("format.console-adminchat-format"),
-    DEVCHAT_FORMAT("format.devchat-format"),
-    CONSOLE_DEVCHAT_FORMAT("format.console-devchat-format"),
-    JOIN_ENABLED("join.enabled"),
-    JOIN_FORMAT("join.join-format"),
-    SWITCH_FORMAT("join.switch-format"),
-    QUIT_FORMAT("join.quit-format"),
-    PREFIX("messages.prefix"),
-    NO_PERMISSION("messages.no-permission"),
-    RELOAD("messages.reload"),
-    STAFFCHAT_TOGGLE_ON("messages.toggle-on"),
-    STAFFCHAT_TOGGLE_OFF("messages.toggle-off"),
-    ADMINCHAT_TOGGLE_ON("messages.adminchat-toggle-on"),
-    ADMINCHAT_TOGGLE_OFF("messages.adminchat-toggle-off"),
-    DEVCHAT_TOGGLE_ON("messages.devchat-toggle-on"),
-    DEVCHAT_TOGGLE_OFF("messages.devchat-toggle-off"),
-    ALLCHAT_TOGGLE_ON("messages.allcat-toggle-on"),
-    STAFFCHAT_OUTPUT("messages.staffchat-output"),
-    STAFFCHAT_MESSAGE("messages.staffchat-message");
+    public String STAFFCHAT_SYMBOL;
+    public String ADMINCHAT_SYMBOL;
+    public String DEVCHAT_SYMBOL;
+    public boolean LUCKPERMS;
+    public boolean SYMBOLS;
+    public String STAFFCHAT_FORMAT;
+    public String CONSOLE_STAFFCHAT_FORMAT;
+    public String ADMINCHAT_FORMAT;
+    public String CONSOLE_ADMINCHAT_FORMAT;
+    public String DEVCHAT_FORMAT;
+    public String CONSOLE_DEVCHAT_FORMAT;
+    public boolean JOIN_ENABLED;
+    public String JOIN_FORMAT;
+    public String SWITCH_FORMAT;
+    public String QUIT_FORMAT;
+    public String PREFIX;
+    public String NO_PERMISSION;
+    public String RELOAD;
+    public String STAFFCHAT_TOGGLE_ON;
+    public String STAFFCHAT_TOGGLE_OFF;
+    public String ADMINCHAT_TOGGLE_ON;
+    public String ADMINCHAT_TOGGLE_OFF;
+    public String DEVCHAT_TOGGLE_ON;
+    public String DEVCHAT_TOGGLE_OFF;
+    public String ALLCHAT_TOGGLE_ON;
+    public String STAFFCHAT_MUTED_ON;
+    public String STAFFCHAT_MUTED_OFF;
+    public String ADMINCHAT_MUTED_ON;
+    public String ADMINCHAT_MUTED_OFF;
+    public String DEVCHAT_MUTED_ON;
+    public String DEVCHAT_MUTED_OFF;
+    public String STAFFCHAT_OUTPUT;
+    public List<String> STAFFCHAT_MESSAGE;
 
-    private final String path;
-    public static final VelocityStaffChat instance = VelocityStaffChat.getInstance();
-
-    Config(String path) {
-        this.path = path;
+    public Config(VelocityStaffChat plugin) {
+        super(plugin);
+        loadConfig();
     }
 
-    public String getString() {
-        return instance.getConfigFile().getConfig().getString(path);
+    public void loadConfig() {
+        STAFFCHAT_SYMBOL = plugin.getConfigFile().getString("staffchat-symbol");
+        ADMINCHAT_SYMBOL = plugin.getConfigFile().getString("adminchat-symbol");
+        DEVCHAT_SYMBOL = plugin.getConfigFile().getString("devchat-symbol");
+        LUCKPERMS = plugin.getConfigFile().getBoolean("luckperms");
+        SYMBOLS = plugin.getConfigFile().getBoolean("symbols");
+        STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.minecraft-format");
+        CONSOLE_STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.console-staffchat-format");
+        ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.adminchat-format");
+        CONSOLE_ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.console-adminchat-format");
+        DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.devchat-format");
+        CONSOLE_DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.console-devchat-format");
+        JOIN_ENABLED = plugin.getConfigFile().getBoolean("join.enabled");
+        JOIN_FORMAT = plugin.getConfigFile().getString("join.join-format");
+        SWITCH_FORMAT = plugin.getConfigFile().getString("join.switch-format");
+        QUIT_FORMAT = plugin.getConfigFile().getString("join.quit-format");
+        PREFIX = plugin.getConfigFile().getString("messages.prefix");
+        NO_PERMISSION = plugin.getConfigFile().getString("messages.no-permission");
+        RELOAD = plugin.getConfigFile().getString("messages.reload");
+        STAFFCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.toggle-on");
+        STAFFCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.toggle-off");
+        ADMINCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.adminchat-toggle-on");
+        ADMINCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.adminchat-toggle-off");
+        DEVCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.devchat-toggle-on");
+        DEVCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.devchat-toggle-off");
+        ALLCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.allcat-toggle-on");
+        STAFFCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.staffchat-muted-on");
+        STAFFCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.staffchat-muted-off");
+        ADMINCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.adminchat-muted-on");
+        ADMINCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.adminchat-muted-off");
+        DEVCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.devchat-muted-on");
+        DEVCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.devchat-muted-off");
+        STAFFCHAT_OUTPUT = plugin.getConfigFile().getString("messages.staffchat-output");
+        STAFFCHAT_MESSAGE = plugin.getConfigFile().getStringList("messages.staffchat-message");
     }
-
-    public List<String> getStringList() {
-        return instance.getConfigFile().getConfig().getStringList(path);
-    }
-
-    public Boolean getBoolean() {
-        return instance.getConfigFile().getConfig().getBoolean(path);
-    }
-
 }
