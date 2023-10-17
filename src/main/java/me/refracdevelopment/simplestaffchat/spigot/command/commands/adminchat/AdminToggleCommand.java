@@ -1,8 +1,7 @@
-package me.refracdevelopment.simplestaffchat.spigot.commands.adminchat;
+package me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +11,7 @@ public class AdminToggleCommand extends Command {
     private final SimpleStaffChat plugin;
 
     public AdminToggleCommand(SimpleStaffChat plugin) {
-        super(plugin, plugin.getCommands().ADMIN_TOGGLE_COMMAND, "", plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIAS);
+        super(plugin, plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIASES.get(0), "", plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
@@ -20,17 +19,17 @@ public class AdminToggleCommand extends Command {
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         if (!plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) return false;
 
-        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+        
 
         if (!(sender instanceof Player)) {
-            locale.sendMessage(sender, "no-console");
+            plugin.getColor().sendMessage(sender, "no-console");
             return true;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
-            locale.sendMessage(player, "no-permission");
+            plugin.getColor().sendMessage(player, "no-permission");
             return true;
         }
 

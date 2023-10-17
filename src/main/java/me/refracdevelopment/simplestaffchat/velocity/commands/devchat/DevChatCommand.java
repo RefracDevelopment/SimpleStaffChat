@@ -28,8 +28,13 @@ public class DevChatCommand implements SimpleCommand {
         }
 
         if (invocation.arguments().length >= 1) {
-            String format = (commandSource instanceof Player) ? plugin.getConfig().DEVCHAT_FORMAT.replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT.replace("%message%", message);
+            String format = (commandSource instanceof Player) ? plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", ((Player) commandSource).getUsername())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", "Console")
+                    .replace("%message%", message);
 
             plugin.getMethods().sendDevChat(commandSource, format, message);
         }

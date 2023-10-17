@@ -1,6 +1,5 @@
-package me.refracdevelopment.simplestaffchat.velocity.config;
+package me.refracdevelopment.simplestaffchat.bungee.config;
 
-import com.velocitypowered.api.plugin.PluginContainer;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
@@ -8,23 +7,22 @@ import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 public class ConfigFile extends Manager {
 
     private YamlDocument configFile;
 
-    public ConfigFile(VelocityStaffChat plugin, String name) {
+    public ConfigFile(BungeeStaffChat plugin, String name) {
         super(plugin);
         try {
-            configFile = YamlDocument.create(new File(plugin.getPath().toFile(), name),
+            configFile = YamlDocument.create(new File(plugin.getDataFolder(), name),
                     getClass().getResourceAsStream("/" + name),
                     GeneralSettings.DEFAULT,
                     LoaderSettings.builder().setAutoUpdate(true).build(),
@@ -35,10 +33,9 @@ public class ConfigFile extends Manager {
 
             configFile.update();
             configFile.save();
-        } catch (IOException exception) {
-            plugin.getLogger().error("Failed to load config file! This plugin will now shutdown.");
-            Optional<PluginContainer> container = plugin.getServer().getPluginManager().getPlugin("simplestaffchat2");
-            container.ifPresent(pluginContainer -> pluginContainer.getExecutorService().shutdown());
+        } catch (IOException e) {
+            plugin.getColor().log("&cFailed to load config file!");
+            e.printStackTrace();
         }
     }
 
@@ -65,7 +62,7 @@ public class ConfigFile extends Manager {
     public double getDouble(String path) {
         return configFile.getDouble(path, 0.0);
     }
-    
+
     public boolean getBoolean(String path) {
         return configFile.getBoolean(path, false);
     }
@@ -90,4 +87,5 @@ public class ConfigFile extends Manager {
         if (!configFile.contains(path)) return null;
         return getStringList(path);
     }
+
 }

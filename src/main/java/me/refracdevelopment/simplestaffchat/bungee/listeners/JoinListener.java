@@ -2,7 +2,6 @@ package me.refracdevelopment.simplestaffchat.bungee.listeners;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -37,7 +36,7 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_JOIN)) return;
         if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY) return;
 
-        ProxyServer.getInstance().getPlayers().forEach(p -> {
+        plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
                 plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT
                         .replace("%server%", event.getTarget().getName())));
@@ -60,7 +59,7 @@ public class JoinListener implements Listener {
 
         if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_SWITCH)) return;
 
-        ProxyServer.getInstance().getPlayers().forEach(p -> {
+        plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
                 plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT
                         .replace("%server%", player.getServer().getInfo().getName())
@@ -87,7 +86,7 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_QUIT)) return;
         if (player.getServer() == null) return;
 
-        ProxyServer.getInstance().getPlayers().forEach(p -> {
+        plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
                 plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT
                         .replace("%server%", player.getServer().getInfo().getName())));
@@ -107,7 +106,7 @@ public class JoinListener implements Listener {
         plugin.getColor().sendMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
         plugin.getColor().sendMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
         plugin.getColor().sendMessage(player, " ");
-        plugin.getColor().sendMessage(player, "&aServer version&7: &f" + ProxyServer.getInstance().getVersion());
+        plugin.getColor().sendMessage(player, "&aServer version&7: &f" + plugin.getProxy().getVersion());
         plugin.getColor().sendMessage(player, " ");
     }
 }

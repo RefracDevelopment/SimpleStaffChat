@@ -10,7 +10,7 @@ public class DevHideCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public DevHideCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().DEV_HIDE_COMMAND, "", plugin.getCommands().DEV_HIDE_COMMAND_ALIAS);
+        super(plugin.getCommands().DEV_HIDE_COMMAND_ALIASES.get(0), "", plugin.getCommands().DEV_HIDE_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 

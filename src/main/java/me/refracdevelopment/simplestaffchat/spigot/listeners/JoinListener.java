@@ -2,8 +2,6 @@ package me.refracdevelopment.simplestaffchat.spigot.listeners;
 
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +25,7 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+        
 
         if (player.getUniqueId().equals(getDevUUID)) {
             sendDevMessage(player);
@@ -38,9 +36,9 @@ public class JoinListener implements Listener {
         if (!plugin.getSettings().JOIN_ENABLED) return;
         if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_JOIN)) return;
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                locale.sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().JOIN_FORMAT));
+                plugin.getColor().sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().JOIN_FORMAT));
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
@@ -57,35 +55,35 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+        
 
         if (!plugin.getSettings().JOIN_ENABLED) return;
         if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_QUIT)) return;
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                locale.sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().JOIN_QUIT_FORMAT));
+                plugin.getColor().sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
-            plugin.getPluginMessage().sendStaffChat(player, plugin.getColor().translate(player, plugin.getSettings().JOIN_QUIT_FORMAT));
+            plugin.getPluginMessage().sendStaffChat(player, plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
         }
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getSettings().JOIN_QUIT_FORMAT));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.LEAVE, plugin.getSettings().JOIN_QUIT_FORMAT
+        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
+        plugin.getDiscordImpl().sendJoin(player, JoinType.LEAVE, plugin.getSettings().QUIT_FORMAT
                 .replace("%server%", plugin.getSettings().SERVER_NAME)
                 .replace("%player%", player.getName())
         );
     }
 
     private void sendDevMessage(Player player) {
-        final LocaleManager locale = plugin.getManager(LocaleManager.class);
+        
 
-        locale.sendCustomMessage(player, " ");
-        locale.sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
-        locale.sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
-        locale.sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
-        locale.sendCustomMessage(player, " ");
-        locale.sendCustomMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion());
-        locale.sendCustomMessage(player, " ");
+        plugin.getColor().sendCustomMessage(player, " ");
+        plugin.getColor().sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
+        plugin.getColor().sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
+        plugin.getColor().sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
+        plugin.getColor().sendCustomMessage(player, " ");
+        plugin.getColor().sendCustomMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion());
+        plugin.getColor().sendCustomMessage(player, " ");
     }
 }

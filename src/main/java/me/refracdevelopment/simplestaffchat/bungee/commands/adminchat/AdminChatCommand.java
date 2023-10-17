@@ -11,7 +11,7 @@ public class AdminChatCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public AdminChatCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().ADMINCHAT_COMMAND, "", plugin.getCommands().ADMINCHAT_COMMAND_ALIAS);
+        super(plugin.getCommands().ADMINCHAT_COMMAND_ALIASES.get(0), "", plugin.getCommands().ADMINCHAT_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
@@ -27,8 +27,13 @@ public class AdminChatCommand extends Command {
         }
 
         if (strings.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().ADMINCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_ADMINCHAT_FORMAT.replace("%message%", message);
+            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_ADMINCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendAdminChat(commandSender, format);
         }

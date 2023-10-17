@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.bungee.api.BungeeStaffChatAPI;
-import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
+import me.refracdevelopment.simplestaffchat.bungee.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Discord;
@@ -15,7 +15,6 @@ import me.refracdevelopment.simplestaffchat.bungee.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Placeholders;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
@@ -34,9 +33,9 @@ public class BungeeStaffChat extends Plugin {
 
     private BungeeStaffChatAPI staffChatAPI;
 
-    private YMLBase configFile;
-    private YMLBase commandsFile;
-    private YMLBase discordFile;
+    private ConfigFile configFile;
+    private ConfigFile commandsFile;
+    private ConfigFile discordFile;
 
     private Config config;
     private Commands commands;
@@ -46,18 +45,19 @@ public class BungeeStaffChat extends Plugin {
     private Methods methods;
     private Permissions permissions;
     private Color color;
-    private Placeholders placeholders;
     private LuckPermsUtil luckPermsUtil;
 
     @Override
     public void onEnable() {
         long startTiming = System.currentTimeMillis();
-        
-        this.color = new Color(this);
-        this.placeholders = new Placeholders(this);
-        this.permissions = new Permissions();
 
         loadFiles();
+
+        new Metrics(this, 12096);
+        this.color = new Color(this);
+        this.permissions = new Permissions();
+        this.discordImpl = new DiscordImpl(this);
+        this.methods = new Methods(this);
 
         loadCommands();
         loadListeners();
@@ -73,14 +73,10 @@ public class BungeeStaffChat extends Plugin {
                     "consider downloading https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-bungeecord-viaversion-addon-%E2%9C%A8.104628/");
         }
 
-        new Metrics(this, 12096);
-
         this.staffChatAPI = new BungeeStaffChatAPI(this);
-        this.discordImpl = new DiscordImpl(this);
-        this.methods = new Methods(this);
 
         this.color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        this.color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        this.color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
         this.color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
         this.color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
         this.color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthor());
@@ -90,24 +86,21 @@ public class BungeeStaffChat extends Plugin {
     }
 
     private void loadFiles() {
-        this.configFile = new YMLBase(this, "bungee-config.yml");
-        this.commandsFile = new YMLBase(this, "commands.yml");
-        this.discordFile = new YMLBase(this, "discord.yml");
+        // Files
+        this.configFile = new ConfigFile(this, "bungee-config.yml");
+        this.commandsFile = new ConfigFile(this, "commands.yml");
+        this.discordFile = new ConfigFile(this, "discord.yml");
+
+        // Caches
         this.config = new Config(this);
         this.commands = new Commands(this);
         this.discord = new Discord(this);
-        this.config.loadConfig();
-        this.commands.loadConfig();
-        this.discord.loadConfig();
-        this.color.log("&c==========================================");
-        this.color.log("&eAll files have been loaded correctly!");
-        this.color.log("&c==========================================");
     }
 
     public void reloadFiles() {
-        this.configFile.load();
-        this.commandsFile.load();
-        this.discordFile.load();
+        this.configFile.reload();
+        this.commandsFile.reload();
+        this.discordFile.reload();
         this.config.loadConfig();
         this.commands.loadConfig();
         this.discord.loadConfig();

@@ -18,7 +18,7 @@ public class ChatListener extends Manager {
         Player player = event.getPlayer();
 
         if (plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId())) {
-            // requires UnsignedVelocity/VPacketEvents to be installed to work
+            // requires SignedVelocity to be installed to work
             // this is purely from my testing may not be required for every setup
             // this cancels the message but kicks the player
             // if signed chat messages are enabled

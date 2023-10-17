@@ -1,24 +1,19 @@
-# SimpleStaffChat2 by RefracDevelopment
-#--------------------------------------
-# Placeholders:
-# %player% - Get the player name
-# %displayname% - Get the player display name
-# %server% - Get the player server
-# %message% - Get the message
-# %arrow% - Get an arrow for a message
-# %arrow_2% - Get alt arrow for a message
-# %star% - Get a star for a message
-# %circle% - Get a circle for a message
-# %empty% - Disable any message with this placeholder
-#--------------------------------------
+#   ___________                __           _________ __           _____  ______________  /\             __
+#  /   _____/__| _____ ______ |  |   ____  /   _____//  |______  _/ ____\/ ____\_   ___ \|  |__ _____  _/  |_
+#  \_____  \|  |/     \\____ \|  | _/ __ \ \_____  \\   __\__  \ \   __\\   __\/    \  \/|  |  \\__  \ \   __\
+#  /        \  |  | |  \  |_\ \  |__  ___/_/        \|  |  / __ \_|  |   |  |  \     \____      \/ __ \_|  |
+# /_______  /__|__|_|  /   ___/____/\___  /_______  /|__| (____  /|_ |   |_ |   \______  /___|  /____  /|__|
+#         \/         \/|__|             \/        \/           \/   \/     \/          \/     \/     \/
+
+# This is used for automatic file updating purposes
+config-version: 1
+
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
 adminchat-symbol: "#"
 devchat-symbol: "%"
-# Change to true if you have LuckPerms installed
-luckperms: false
 # Change to false if you want to disable all chat symbols
 symbols: true
 

@@ -11,7 +11,6 @@ public class Config extends Manager {
     public String STAFFCHAT_SYMBOL;
     public String ADMINCHAT_SYMBOL;
     public String DEVCHAT_SYMBOL;
-    public boolean LUCKPERMS;
     public boolean SYMBOLS;
     public String STAFFCHAT_FORMAT;
     public String CONSOLE_STAFFCHAT_FORMAT;
@@ -51,7 +50,6 @@ public class Config extends Manager {
         STAFFCHAT_SYMBOL = plugin.getConfigFile().getString("staffchat-symbol");
         ADMINCHAT_SYMBOL = plugin.getConfigFile().getString("adminchat-symbol");
         DEVCHAT_SYMBOL = plugin.getConfigFile().getString("devchat-symbol");
-        LUCKPERMS = plugin.getConfigFile().getBoolean("luckperms");
         SYMBOLS = plugin.getConfigFile().getBoolean("symbols");
         STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.minecraft-format");
         CONSOLE_STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.console-staffchat-format");

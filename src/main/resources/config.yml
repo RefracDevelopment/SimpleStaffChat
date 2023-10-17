@@ -8,14 +8,25 @@
 # This is used for automatic file updating purposes
 config-version: 1
 
+# Enable this to allow messages
+# To be sent using the BungeeCord
+# Plugin Messaging Protocol
+# This allows Velocity/BungeeCord to receive staffchat messages
+bungeecord: false
+
+# This is so stuff like Discord can get the server name
+# Placeholder: %server%
+server-name: hub
+
+# Change to false if you want to disable all chat symbols
+symbols: true
+
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
 staffchat-symbol: "@"
 adminchat-symbol: "#"
 devchat-symbol: "%"
-# Change to false if you want to disable all chat symbols
-symbols: true
 
 format:
   # Minecraft format
@@ -32,11 +43,10 @@ format:
   console-devchat-format: "&8[&b&lDevChat&8] &6&lConsole&7: &f%message%"
 
 # This is for staff joins only
-# permissions: simplestaffchat.join, simplestaffchat.switch, simplestaffchat.quit
+# permissions: simplestaffchat.join, simplestaffchat.quit
 join:
   enabled: false
   join-format: "&8[&a+&8] &9%player% &fjoined &e%server%&f."
-  switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."
   quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."
 
 messages:

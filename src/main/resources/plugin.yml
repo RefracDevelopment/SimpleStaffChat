@@ -5,6 +5,7 @@ author: RefracDevelopment
 api-version: "1.13"
 softdepend:
   - PlaceholderAPI
+  - AntiPopup
 description: A Simple StaffChat Plugin
 website: https://discord.gg/EFeSKPg739
 folia-supported: true

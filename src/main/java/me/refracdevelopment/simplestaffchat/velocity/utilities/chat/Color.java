@@ -3,6 +3,7 @@ package me.refracdevelopment.simplestaffchat.velocity.utilities.chat;
 import com.velocitypowered.api.command.CommandSource;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class Color extends Manager {
@@ -11,18 +12,20 @@ public class Color extends Manager {
         super(plugin);
     }
 
-    public String translate(CommandSource sender, String source) {
+    public Component translate(CommandSource sender, String source) {
         source = plugin.getPlaceholders().setPlaceholders(sender, source);
 
-        return MiniMessage.miniMessage().deserialize(source).toString();
+        return translate(source);
+    }
+
+    public Component translate(String source) {
+        return MiniMessage.miniMessage().deserialize(source);
     }
 
     public void sendMessage(CommandSource sender, String source) {
         if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%") || source.isEmpty()) return;
 
-        source = plugin.getPlaceholders().setPlaceholders(sender, source);
-
-        sender.sendMessage(MiniMessage.miniMessage().deserialize(source));
+        sender.sendMessage(translate(sender, source));
     }
 
     public void log(String message) {

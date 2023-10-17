@@ -1,14 +1,14 @@
 package me.refracdevelopment.simplestaffchat.spigot.manager;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.commands.*;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminHideCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevHideCommand;
-import me.refracdevelopment.simplestaffchat.spigot.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.*;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminHideCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevHideCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevToggleCommand;
 
 import java.util.Arrays;
 import java.util.HashSet;

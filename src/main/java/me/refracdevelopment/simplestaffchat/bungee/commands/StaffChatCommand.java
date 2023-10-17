@@ -11,7 +11,7 @@ public class StaffChatCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public StaffChatCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().STAFFCHAT_COMMAND, "", plugin.getCommands().STAFFCHAT_COMMAND_ALIAS);
+        super(plugin.getCommands().STAFFCHAT_COMMAND_ALIASES.get(0), "", plugin.getCommands().STAFFCHAT_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
@@ -27,12 +27,18 @@ public class StaffChatCommand extends Command {
         }
 
         if (strings.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT.replace("%message%", message);
+            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendStaffChat(commandSender, format);
         } else {
-            if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && plugin.getConfig().STAFFCHAT_MESSAGE != null) {
+            if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
+                    plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!commandSender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
                     plugin.getColor().sendMessage(commandSender, plugin.getConfig().NO_PERMISSION);
                     return;
@@ -47,27 +53,6 @@ public class StaffChatCommand extends Command {
 
                     plugin.getMethods().toggleStaffChat(player);
                 }
-            } else {
-                if (!commandSender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
-                    plugin.getColor().sendMessage(commandSender, plugin.getConfig().NO_PERMISSION);
-                    return;
-                }
-
-                plugin.getColor().sendMessage(commandSender, "");
-                plugin.getColor().sendMessage(commandSender, "&c&lSimpleStaffChat2 %arrow% Help");
-                plugin.getColor().sendMessage(commandSender, "");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().STAFFCHAT_COMMAND + " <message> - Send staffchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().STAFF_TOGGLE_COMMAND + " - Send staffchat messages without needing to type a command.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().ADMINCHAT_COMMAND + " <message> - Send adminchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().ADMIN_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().DEVCHAT_COMMAND + " <message> - Send devchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().CHAT_COMMAND + " <type:staff|admin|dev> - Send chat messages without needing to type a command.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().STAFF_HIDE_COMMAND + " <type:staff|admin|dev> - Allows you to hide staffchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().ADMIN_HIDE_COMMAND + " <type:staff|admin|dev> - Allows you to hide adminchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/" + plugin.getCommands().DEV_HIDE_COMMAND + " <type:staff|admin|dev> - Allows you to hide devchat messages.");
-                plugin.getColor().sendMessage(commandSender, "&c/staffchatreload - Reload the config file.");
-                plugin.getColor().sendMessage(commandSender, "");
             }
         }
     }

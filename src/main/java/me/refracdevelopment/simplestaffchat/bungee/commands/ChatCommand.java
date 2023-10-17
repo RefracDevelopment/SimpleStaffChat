@@ -10,7 +10,7 @@ public class ChatCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public ChatCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().CHAT_COMMAND, "", plugin.getCommands().CHAT_COMMAND_ALIAS);
+        super(plugin.getCommands().CHAT_COMMAND_ALIASES.get(0), "", plugin.getCommands().CHAT_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 

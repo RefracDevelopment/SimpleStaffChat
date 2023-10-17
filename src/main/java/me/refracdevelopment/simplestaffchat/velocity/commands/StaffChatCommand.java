@@ -27,8 +27,13 @@ public final class StaffChatCommand implements SimpleCommand {
         }
 
         if (invocation.arguments().length >= 1) {
-            String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT.replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT.replace("%message%", message);
+            String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", ((Player) commandSource).getUsername())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", "Console")
+                    .replace("%message%", message);
 
             plugin.getMethods().sendStaffChat(commandSource, format, message);
         } else {

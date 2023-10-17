@@ -16,7 +16,7 @@ public class Placeholders extends Manager {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (plugin.getConfig().LUCKPERMS || plugin.getLuckPermsUtil() != null) {
+            if (plugin.getLuckPermsUtil() != null) {
                 placeholder = placeholder.replace("%luckperms_prefix%", plugin.getLuckPermsUtil().getPrefix(player));
                 placeholder = placeholder.replace("%luckperms_suffix%", plugin.getLuckPermsUtil().getSuffix(player));
             } else {

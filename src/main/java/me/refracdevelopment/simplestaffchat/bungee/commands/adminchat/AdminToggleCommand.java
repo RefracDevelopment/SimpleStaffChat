@@ -10,7 +10,7 @@ public class AdminToggleCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public AdminToggleCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().ADMIN_TOGGLE_COMMAND, "", plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIAS);
+        super(plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIASES.get(0), "", plugin.getCommands().ADMIN_TOGGLE_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 

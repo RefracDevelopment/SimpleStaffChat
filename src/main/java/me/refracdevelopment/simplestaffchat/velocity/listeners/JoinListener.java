@@ -3,6 +3,8 @@ package me.refracdevelopment.simplestaffchat.velocity.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.plugin.PluginManager;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
@@ -36,10 +38,13 @@ public class JoinListener extends Manager {
 
         plugin.getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+               p.sendMessage(plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getColor().log2(plugin.getConfig().JOIN_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                .replace("%player%", player.getUsername())
+        );
         plugin.getDiscordImpl().sendJoin(JoinType.JOIN, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
@@ -55,12 +60,18 @@ public class JoinListener extends Manager {
 
         plugin.getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT.replace("%server%", player.getCurrentServer().get().getServer().getServerInfo().getName())
-                        .replace("%from%", event.getPreviousServer().getServerInfo().getName())));
+                p.sendMessage(plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT
+                        .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                        .replace("%from%", event.getPreviousServer().getServerInfo().getName())
+                        .replace("%player%", player.getUsername())
+                ));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                .replace("%from%", event.getPreviousServer().getServerInfo().getName())));
+        plugin.getColor().log2(plugin.getConfig().SWITCH_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                .replace("%from%", event.getPreviousServer().getServerInfo().getName())
+                .replace("%player%", player.getUsername())
+        );
         plugin.getDiscordImpl().sendJoin(JoinType.SWITCH, player, player.getCurrentServer().get().getServerInfo().getName(), event.getPreviousServer().getServerInfo().getName());
     }
 
@@ -74,18 +85,24 @@ public class JoinListener extends Manager {
 
         plugin.getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+                p.sendMessage(plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
+        plugin.getColor().log2(plugin.getConfig().QUIT_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                .replace("%player%", player.getUsername())
+        );
         plugin.getDiscordImpl().sendJoin(JoinType.LEAVE, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
     private void sendDevMessage(Player player) {
+        PluginManager pluginManager = plugin.getServer().getPluginManager();
+        PluginContainer container = pluginManager.getPlugin("simplestaffchat2").get();
+
         plugin.getColor().sendMessage(player, " ");
-        plugin.getColor().sendMessage(player, "<green>Welcome " + plugin.getContainer().getDescription().getName().get() + " Developer!");
-        plugin.getColor().sendMessage(player, "<green>This server is currently running " + plugin.getContainer().getDescription().getName().get() + " <aqua>v" + plugin.getContainer().getDescription().getVersion().get() + "<green>.");
-        plugin.getColor().sendMessage(player, "<green>Plugin name<gray>: <white>" + plugin.getContainer().getDescription().getName().get());
+        plugin.getColor().sendMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");
+        plugin.getColor().sendMessage(player, "<green>This server is currently running " + container.getDescription().getName().get() + " <aqua>v" + container.getDescription().getVersion().get() + "<green>.");
+        plugin.getColor().sendMessage(player, "<green>Plugin name<gray>: <white>" + container.getDescription().getName().get());
         plugin.getColor().sendMessage(player, " ");
         plugin.getColor().sendMessage(player, "<green>Server version<gray>: <white>" + plugin.getServer().getVersion());
         plugin.getColor().sendMessage(player, " ");

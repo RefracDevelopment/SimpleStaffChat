@@ -1,8 +1,7 @@
-package me.refracdevelopment.simplestaffchat.spigot.commands;
+package me.refracdevelopment.simplestaffchat.spigot.command.commands;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,16 +16,13 @@ public class ReloadCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        final LocaleManager locale = plugin.getManager(LocaleManager.class);
-
         if (!sender.hasPermission(plugin.getPermissions().STAFFCHAT_RELOAD)) {
-            locale.sendMessage(sender, "no-permission");
+            plugin.getColor().sendMessage(sender, "no-permission");
             return true;
         }
 
-        plugin.reload();
         plugin.reloadFiles();
-        locale.sendMessage(sender, "reload", plugin.getPlaceholders().setPlaceholders(sender));
+        plugin.getColor().sendMessage(sender, "reload");
         return true;
     }
 }

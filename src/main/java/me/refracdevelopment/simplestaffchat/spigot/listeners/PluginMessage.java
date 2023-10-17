@@ -4,7 +4,6 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.jetbrains.annotations.NotNull;
@@ -23,19 +22,19 @@ public class PluginMessage implements PluginMessageListener {
         ByteArrayDataInput input = ByteStreams.newDataInput(message);
         String subchannel = input.readUTF();
         if (subchannel.equalsIgnoreCase("staffchat")) {
-            Bukkit.getOnlinePlayers().forEach(p -> {
+            plugin.getServer().getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
                     p.sendMessage(plugin.getColor().translate(player, input.readUTF()));
                 }
             });
         } else if (subchannel.equalsIgnoreCase("adminchat")) {
-            Bukkit.getOnlinePlayers().forEach(p -> {
+            plugin.getServer().getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission(plugin.getPermissions().ADMINCHAT_SEE)) {
                     p.sendMessage(plugin.getColor().translate(player, input.readUTF()));
                 }
             });
         } else if (subchannel.equalsIgnoreCase("devchat")) {
-            Bukkit.getOnlinePlayers().forEach(p -> {
+            plugin.getServer().getOnlinePlayers().forEach(p -> {
                 if (p.hasPermission(plugin.getPermissions().DEVCHAT_SEE)) {
                     p.sendMessage(plugin.getColor().translate(player, input.readUTF()));
                 }

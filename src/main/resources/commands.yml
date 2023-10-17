@@ -1,56 +1,93 @@
+# This is used for automatic file updating purposes
+config-version: 1
+
 commands:
   staffchat:
     enabled: true
-    command: "staffchat"
     permission: "simplestaffchat.command.staffchat"
-    alias: "sc"
+    aliases:
+      - "staffchat"
+      - "sc"
+      - "staff"
+      - "simplesc"
+      - "simplestaffchat"
   toggle:
     enabled: true
-    command: "staffchattoggle"
     permission: "simplestaffchat.command.toggle"
-    alias: "sctoggle"
+    aliases:
+      - "staffchattoggle"
+      - "sctoggle"
+      - "stafftoggle"
+      - "simplesctoggle"
+      - "simplestaffchattoggle"
   reload:
     enabled: true
-    command: "staffchatreload"
     permission: "simplestaffchat.command.reload"
-    alias: "screload"
+    aliases:
+      - "staffchatreload"
+      - "screload"
+      - "staffreload"
+      - "simplescreload"
+      - "simplestaffchatreload"
   adminchat:
     enabled: true
-    command: "adminchat"
     permission: "simplestaffchat.command.adminchat"
-    alias: "ac"
+    aliases:
+      - "adminchat"
+      - "ac"
+      - "admin"
+      - "simpleac"
+      - "simpleadminchat"
   admin-toggle:
     enabled: true
-    command: "adminchattoggle"
     permission: "simplestaffchat.command.adminchat.toggle"
-    alias: "actoggle"
+    aliases:
+      - "adminchattoggle"
+      - "actoggle"
+      - "admintoggle"
+      - "simpleactoggle"
+      - "simpleadminchattoggle"
   devchat:
     enabled: true
-    command: "devchat"
     permission: "simplestaffchat.command.devchat"
-    alias: "dc"
+    aliases:
+      - "devchat"
+      - "dc"
+      - "dev"
+      - "simpledc"
+      - "simpledevchat"
   dev-toggle:
     enabled: true
-    command: "devchattoggle"
     permission: "simplestaffchat.command.devchat.toggle"
-    alias: "dctoggle"
+    aliases:
+      - "devchattoggle"
+      - "dctoggle"
+      - "devtoggle"
+      - "simpledctoggle"
+      - "simpledevchattoggle"
   chat:
     enabled: true
-    command: "chat"
     permission: "simplestaffchat.command.chat"
-    alias: ""
+    aliases:
+      - "chat"
   hide:
     enabled: true
-    command: "staffchathide"
     permission: "simplestaffchat.command.hide"
-    alias: "schide"
+    aliases:
+      - "staffchathide"
+      - "schide"
+      - "scmute"
   admin-hide:
     enabled: true
-    command: "adminchathide"
     permission: "simplestaffchat.command.adminchat.hide"
-    alias: "achide"
+    aliases:
+      - "adminchathide"
+      - "achide"
+      - "acmute"
   dev-hide:
     enabled: true
-    command: "devchathide"
     permission: "simplestaffchat.command.devchat.hide"
-    alias: "dchide"
+    aliases:
+      - "devchathide"
+      - "dchide"
+      - "dcmute"

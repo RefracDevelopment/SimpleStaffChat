@@ -19,6 +19,7 @@ public class Discord extends Manager {
 
     public Discord(SimpleStaffChat plugin) {
         super(plugin);
+        loadConfig();
     }
 
     public void loadConfig() {

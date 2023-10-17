@@ -1,4 +1,4 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities.command;
+package me.refracdevelopment.simplestaffchat.spigot.command;
 
 import org.bukkit.command.CommandSender;
 

@@ -26,10 +26,10 @@ public class Methods extends Manager {
     public void sendStaffChat(CommandSource commandSource, String format, String message) {
         for (Player p : plugin.getServer().getAllPlayers()) {
             if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSource, format));
+                p.sendMessage(plugin.getColor().translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSource, format));
+        plugin.getColor().log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
             plugin.getDiscordImpl().sendStaffChat(player, message
@@ -46,10 +46,10 @@ public class Methods extends Manager {
     public void sendDevChat(CommandSource commandSource, String format, String message) {
         for (Player p : plugin.getServer().getAllPlayers()) {
             if (p.hasPermission(plugin.getPermissions().DEVCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSource, format));
+                p.sendMessage(plugin.getColor().translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSource, format));
+        plugin.getColor().log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
             plugin.getDiscordImpl().sendDevChat(player, message
@@ -66,10 +66,10 @@ public class Methods extends Manager {
     public void sendAdminChat(CommandSource commandSource, String format, String message) {
         for (Player p : plugin.getServer().getAllPlayers()) {
             if (p.hasPermission(plugin.getPermissions().ADMINCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSource, format));
+                p.sendMessage(plugin.getColor().translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSource, format));
+        plugin.getColor().log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
             plugin.getDiscordImpl().sendAdminChat(player, message

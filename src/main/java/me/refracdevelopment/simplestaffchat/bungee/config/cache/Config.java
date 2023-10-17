@@ -50,6 +50,7 @@ public class Config extends Manager {
 
     public Config(BungeeStaffChat plugin) {
         super(plugin);
+        loadConfig();
     }
 
     public void loadConfig() {

@@ -11,7 +11,7 @@ public class ToggleCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public ToggleCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().STAFF_TOGGLE_COMMAND, "", plugin.getCommands().STAFF_TOGGLE_COMMAND_ALIAS);
+        super(plugin.getCommands().STAFF_TOGGLE_COMMAND_ALIASES.get(0), "", plugin.getCommands().STAFF_TOGGLE_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 

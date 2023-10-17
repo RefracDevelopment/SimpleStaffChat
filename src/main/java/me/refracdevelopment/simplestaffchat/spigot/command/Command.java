@@ -1,8 +1,6 @@
-package me.refracdevelopment.simplestaffchat.spigot.utilities.command;
+package me.refracdevelopment.simplestaffchat.spigot.command;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,9 +41,9 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     private void registerBukkitCommand(String[] aliases) {
         try {
-            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            final Field bukkitCommandMap = plugin.getServer().getClass().getDeclaredField("commandMap");
             bukkitCommandMap.setAccessible(true);
-            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(plugin.getServer());
             commandMap.register("command", this);
             for (String alias : aliases) {
                 commandMap.register(alias, "command", this);
@@ -68,7 +66,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     @Override
     public String getPermissionMessage() {
-        return plugin.getColor().translate(plugin.getManager(LocaleManager.class).getLocaleMessage("no-permission"));
+        return plugin.getColor().translate(plugin.getSettings().NO_PERMISSION);
     }
 
     @Override

@@ -28,7 +28,9 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = plugin.getConfig().STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
             plugin.getMethods().sendStaffChat(player, format);
@@ -42,9 +44,11 @@ public class ChatListener implements Listener {
                 plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
-            String format = plugin.getConfig().STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(plugin.getConfig().STAFFCHAT_SYMBOL, ""));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().STAFFCHAT_SYMBOL, "");
+            String format = plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendStaffChat(player, format);
         }
@@ -64,7 +68,9 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = plugin.getConfig().ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
             plugin.getMethods().sendAdminChat(player, format);
@@ -78,9 +84,11 @@ public class ChatListener implements Listener {
                 plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
-            String format = plugin.getConfig().ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(plugin.getConfig().ADMINCHAT_SYMBOL, ""));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().ADMINCHAT_SYMBOL, "");
+            String format = plugin.getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendAdminChat(player, format);
         }
@@ -100,7 +108,9 @@ public class ChatListener implements Listener {
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = plugin.getConfig().DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
             plugin.getMethods().sendDevChat(player, format);
@@ -114,9 +124,11 @@ public class ChatListener implements Listener {
                 plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
             }
 
-            String message = event.getMessage();
-            String format = plugin.getConfig().DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(plugin.getConfig().DEVCHAT_SYMBOL, ""));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().DEVCHAT_SYMBOL, "");
+            String format = plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendDevChat(player, format);
         }

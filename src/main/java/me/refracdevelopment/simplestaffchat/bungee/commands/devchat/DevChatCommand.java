@@ -11,7 +11,7 @@ public class DevChatCommand extends Command {
     private final BungeeStaffChat plugin;
     
     public DevChatCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().DEVCHAT_COMMAND, "", plugin.getCommands().DEVCHAT_COMMAND_ALIAS);
+        super(plugin.getCommands().DEVCHAT_COMMAND_ALIASES.get(0), "", plugin.getCommands().DEVCHAT_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
@@ -27,8 +27,13 @@ public class DevChatCommand extends Command {
         }
 
         if (strings.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().DEVCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT.replace("%message%", message);
+            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message);
 
             plugin.getMethods().sendDevChat(commandSender, format);
         }
