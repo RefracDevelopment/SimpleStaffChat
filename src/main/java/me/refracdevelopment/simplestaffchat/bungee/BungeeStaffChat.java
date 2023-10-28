@@ -11,11 +11,8 @@ import me.refracdevelopment.simplestaffchat.bungee.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.bungee.manager.CommandManager;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.DiscordImpl;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.LuckPermsUtil;
 import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -29,96 +26,92 @@ import java.net.URL;
 @Getter
 public class BungeeStaffChat extends Plugin {
 
+    @Getter private static BungeeStaffChat instance;
+    
     private CommandManager commandManager;
-
     private BungeeStaffChatAPI staffChatAPI;
 
+    // Files
     private ConfigFile configFile;
     private ConfigFile commandsFile;
     private ConfigFile discordFile;
+    private ConfigFile localeFile;
 
+    // Caches
     private Config config;
     private Commands commands;
     private Discord discord;
 
-    private DiscordImpl discordImpl;
-    private Methods methods;
-    private Permissions permissions;
-    private Color color;
-    private LuckPermsUtil luckPermsUtil;
-
     @Override
     public void onEnable() {
+        instance = this;
         long startTiming = System.currentTimeMillis();
 
         loadFiles();
 
         new Metrics(this, 12096);
-        this.color = new Color(this);
-        this.permissions = new Permissions();
-        this.discordImpl = new DiscordImpl(this);
-        this.methods = new Methods(this);
+
+        if (this.config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            Color.log("&aHooked into LuckPerms.");
+        }
+
+        if (!getAntiPopupAddon() && getViaVersion()) {
+            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on BungeeCord, " +
+                    "consider downloading https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-bungeecord-viaversion-addon-%E2%9C%A8.104628/");
+        }
 
         loadCommands();
         loadListeners();
 
-        if (this.config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
-            this.luckPermsUtil = new LuckPermsUtil(this);
-            this.luckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            this.color.log("&eHooked into LuckPerms.");
-        }
+        this.staffChatAPI = new BungeeStaffChatAPI();
 
-        if (!getAntiPopupAddon() && getViaVersion()) {
-            this.color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on BungeeCord, " +
-                    "consider downloading https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-bungeecord-viaversion-addon-%E2%9C%A8.104628/");
-        }
-
-        this.staffChatAPI = new BungeeStaffChatAPI(this);
-
-        this.color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        this.color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
-        this.color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
-        this.color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
-        this.color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthor());
-        this.color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
+        Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
+        Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthor());
+        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck(getProxy().getConsole(), true);
     }
 
     private void loadFiles() {
         // Files
-        this.configFile = new ConfigFile(this, "bungee-config.yml");
-        this.commandsFile = new ConfigFile(this, "commands.yml");
-        this.discordFile = new ConfigFile(this, "discord.yml");
+        this.configFile = new ConfigFile("bungee-config.yml");
+        this.commandsFile = new ConfigFile("commands.yml");
+        this.discordFile = new ConfigFile("discord.yml");
+        this.localeFile = new ConfigFile("locale/" + this.configFile.getConfigFile().getString("locale") + ".yml");
 
         // Caches
-        this.config = new Config(this);
-        this.commands = new Commands(this);
-        this.discord = new Discord(this);
+        this.config = new Config();
+        this.commands = new Commands();
+        this.discord = new Discord();
     }
 
     public void reloadFiles() {
         this.configFile.reload();
         this.commandsFile.reload();
         this.discordFile.reload();
+        this.localeFile.reload();
         this.config.loadConfig();
         this.commands.loadConfig();
         this.discord.loadConfig();
-        this.color.log("&c==========================================");
-        this.color.log("&eAll files have been loaded correctly!");
-        this.color.log("&c==========================================");
+        Color.log("&c==========================================");
+        Color.log("&eAll files have been reloaded correctly!");
+        Color.log("&c==========================================");
     }
 
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
         commandManager.registerAll();
-        this.color.log("&eLoaded commands.");
+        Color.log("&aLoaded commands.");
     }
 
     private void loadListeners() {
         getProxy().getPluginManager().registerListener(this, new JoinListener(this));
         getProxy().getPluginManager().registerListener(this, new ChatListener(this));
-        this.color.log("&eLoaded listeners.");
+        Color.log("&aLoaded listeners.");
     }
 
     public boolean getAntiPopupAddon() {
@@ -130,6 +123,7 @@ public class BungeeStaffChat extends Plugin {
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
+        Color.sendCustomMessage(sender, "&aChecking for updates!");
         try {
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
@@ -151,26 +145,26 @@ public class BungeeStaffChat extends Plugin {
                 String version = info.get("version").getAsString();
                 if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        sender.sendMessage(this.color.translate("&a" + getDescription().getName() + " is on the latest version."));
+                        sender.sendMessage(Color.translate("&a" + getDescription().getName() + " is on the latest version."));
                     }
                 } else {
-                    sender.sendMessage(this.color.translate(""));
-                    sender.sendMessage(this.color.translate(""));
-                    sender.sendMessage(this.color.translate("&cYour " + getDescription().getName() + " version is out of date!"));
-                    sender.sendMessage(this.color.translate("&cWe recommend updating ASAP!"));
-                    sender.sendMessage(this.color.translate(""));
-                    sender.sendMessage(this.color.translate("&cYour Version: &e" + getDescription().getVersion()));
-                    sender.sendMessage(this.color.translate("&aNewest Version: &e" + version));
-                    sender.sendMessage(this.color.translate(""));
-                    sender.sendMessage(this.color.translate(""));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate("&cYour " + getDescription().getName() + " version is out of date!"));
+                    sender.sendMessage(Color.translate("&cWe recommend updating ASAP!"));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate("&cYour Version: &e" + getDescription().getVersion()));
+                    sender.sendMessage(Color.translate("&aNewest Version: &e" + version));
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate(""));
                     return;
                 }
             } else {
-                sender.sendMessage(this.color.translate("&cWrong response from update API, contact plugin developer!"));
+                sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
             }
         } catch (
                 Exception ex) {
-            sender.sendMessage(this.color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
+            sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
         }
     }
 }

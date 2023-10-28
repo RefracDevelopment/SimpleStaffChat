@@ -1,6 +1,9 @@
 package me.refracdevelopment.simplestaffchat.bungee.listeners;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -18,10 +21,12 @@ public class ChatListener implements Listener {
     public void onStaffChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId()) && !event.isCommand()) {
+        if (event.isCommand()) return;
+
+        if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
-                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
-                plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_TOGGLE_OFF);
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "staffchat-toggle-off");
                 return;
             }
 
@@ -33,15 +38,15 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendStaffChat(player, format);
-        } else if (event.getMessage().startsWith(plugin.getConfig().STAFFCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().STAFFCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            Methods.sendStaffChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getConfig().STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId())) {
-                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
-                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
+            if (Methods.getAdminChatPlayers().contains(player.getUniqueId()) || Methods.getDevChatPlayers().contains(player.getUniqueId())) {
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage().replaceFirst(plugin.getConfig().STAFFCHAT_SYMBOL, "");
@@ -50,7 +55,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendStaffChat(player, format);
+            Methods.sendStaffChat(player, format);
         }
     }
 
@@ -58,10 +63,12 @@ public class ChatListener implements Listener {
     public void onAdminChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) && !event.isCommand()) {
+        if (event.isCommand()) return;
+
+        if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
-                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
-                plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_TOGGLE_OFF);
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "adminchat-toggle-off");
                 return;
             }
 
@@ -73,15 +80,15 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendAdminChat(player, format);
-        } else if (event.getMessage().startsWith(plugin.getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().ADMINCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            Methods.sendAdminChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId())) {
-                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
-                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
+            if (Methods.getDevChatPlayers().contains(player.getUniqueId()) || Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage().replaceFirst(plugin.getConfig().ADMINCHAT_SYMBOL, "");
@@ -90,7 +97,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendAdminChat(player, format);
+            Methods.sendAdminChat(player, format);
         }
     }
 
@@ -98,10 +105,12 @@ public class ChatListener implements Listener {
     public void onDevChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (plugin.getMethods().getDevChatPlayers().contains(player.getUniqueId()) && !event.isCommand()) {
+        if (event.isCommand()) return;
+
+        if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
-                plugin.getMethods().getDevChatPlayers().remove(player.getUniqueId());
-                plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_TOGGLE_OFF);
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "devchat-toggle-off");
                 return;
             }
 
@@ -113,15 +122,15 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendDevChat(player, format);
-        } else if (event.getMessage().startsWith(plugin.getConfig().DEVCHAT_SYMBOL) && player.hasPermission(plugin.getPermissions().DEVCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            Methods.sendDevChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            if (plugin.getMethods().getAdminChatPlayers().contains(player.getUniqueId()) || plugin.getMethods().getStaffChatPlayers().contains(player.getUniqueId())) {
-                plugin.getMethods().getAdminChatPlayers().remove(player.getUniqueId());
-                plugin.getMethods().getStaffChatPlayers().remove(player.getUniqueId());
+            if (Methods.getAdminChatPlayers().contains(player.getUniqueId()) || Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
             }
 
             String message = event.getMessage().replaceFirst(plugin.getConfig().DEVCHAT_SYMBOL, "");
@@ -130,7 +139,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendDevChat(player, format);
+            Methods.sendDevChat(player, format);
         }
     }
 }

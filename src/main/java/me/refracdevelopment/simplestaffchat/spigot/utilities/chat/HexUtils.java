@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
+import me.refracdevelopment.simplestaffchat.spigot.utilities.VersionCheck;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -11,19 +12,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+// Taken from
+// https://github.com/Rosewood-Development/RoseGarden/
 public final class HexUtils {
 
-    private final int CHARS_UNTIL_LOOP = 30;
-    private final Pattern RAINBOW_PATTERN = Pattern.compile("<(?<type>rainbow|r)(#(?<speed>\\d+))?(:(?<saturation>\\d*\\.?\\d+))?(:(?<brightness>\\d*\\.?\\d+))?(:(?<loop>l|L|loop))?>");
-    private final Pattern GRADIENT_PATTERN = Pattern.compile("<(?<type>gradient|g)(#(?<speed>\\d+))?(?<hex>(:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(?<loop>l|L|loop))?>");
-    private final List<Pattern> HEX_PATTERNS = Arrays.asList(
+    private static final int CHARS_UNTIL_LOOP = 30;
+    private static final Pattern RAINBOW_PATTERN = Pattern.compile("<(?<type>rainbow|r)(#(?<speed>\\d+))?(:(?<saturation>\\d*\\.?\\d+))?(:(?<brightness>\\d*\\.?\\d+))?(:(?<loop>l|L|loop))?>");
+    private static final Pattern GRADIENT_PATTERN = Pattern.compile("<(?<type>gradient|g)(#(?<speed>\\d+))?(?<hex>(:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(?<loop>l|L|loop))?>");
+    private static final List<Pattern> HEX_PATTERNS = Arrays.asList(
             Pattern.compile("<#([A-Fa-f0-9]){6}>"),   // <#FFFFFF>
             Pattern.compile("\\{#([A-Fa-f0-9]){6}}"), // {#FFFFFF}
             Pattern.compile("&#([A-Fa-f0-9]){6}"),    // &#FFFFFF
             Pattern.compile("#([A-Fa-f0-9]){6}")      // #FFFFFF
     );
 
-    private final Pattern STOP = Pattern.compile(
+    private static final Pattern STOP = Pattern.compile(
             "<(rainbow|r)(#(\\d+))?(:(\\d*\\.?\\d+))?(:(\\d*\\.?\\d+))?(:(l|L|loop))?>|" +
                     "<(gradient|g)(#(\\d+))?((:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})){2,})(:(l|L|loop))?>|" +
                     "(&[a-f0-9r])|" +
@@ -34,7 +37,9 @@ public final class HexUtils {
                     org.bukkit.ChatColor.COLOR_CHAR
     );
 
-    public HexUtils() {}
+    private HexUtils() {
+
+    }
 
     /**
      * Gets a capture group from a regex Matcher if it exists
@@ -43,7 +48,7 @@ public final class HexUtils {
      * @param group The group name
      * @return the capture group value, or null if not found
      */
-    private String getCaptureGroup(Matcher matcher, String group) {
+    private static String getCaptureGroup(Matcher matcher, String group) {
         try {
             return matcher.group(group);
         } catch (IllegalStateException | IllegalArgumentException e) {
@@ -57,7 +62,7 @@ public final class HexUtils {
      * @param sender  The CommandSender to send to
      * @param message The message to send
      */
-    public void sendMessage(CommandSender sender, String message) {
+    public static void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(colorify(message));
     }
 
@@ -67,7 +72,7 @@ public final class HexUtils {
      * @param message The message
      * @return A color-replaced message
      */
-    public String colorify(String message) {
+    public static String colorify(String message) {
         String parsed = message;
         parsed = parseRainbow(parsed);
         parsed = parseGradients(parsed);
@@ -76,7 +81,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public String parseRainbow(String message) {
+    public static String parseRainbow(String message) {
         String parsed = message;
 
         Matcher matcher = RAINBOW_PATTERN.matcher(parsed);
@@ -151,7 +156,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public String parseGradients(String message) {
+    public static String parseGradients(String message) {
         String parsed = message;
 
         Matcher matcher = GRADIENT_PATTERN.matcher(parsed);
@@ -213,7 +218,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public String parseHex(String message) {
+    public static String parseHex(String message) {
         String parsed = message;
 
         for (Pattern pattern : HEX_PATTERNS) {
@@ -230,7 +235,7 @@ public final class HexUtils {
         return parsed;
     }
 
-    public String parseLegacy(String message) {
+    public static String parseLegacy(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -241,7 +246,7 @@ public final class HexUtils {
      * @param searchAfter The index at which to search after
      * @return the index of the color stop, or the end of the string index if none is found
      */
-    private int findStop(String content, int searchAfter) {
+    private static int findStop(String content, int searchAfter) {
         Matcher matcher = STOP.matcher(content);
         while (matcher.find()) {
             if (matcher.start() > searchAfter)
@@ -250,7 +255,7 @@ public final class HexUtils {
         return content.length();
     }
 
-    private String cleanHex(String hex) {
+    private static String cleanHex(String hex) {
         if (hex.startsWith("<") || hex.startsWith("{")) {
             return hex.substring(1, hex.length() - 1);
         } else if (hex.startsWith("&")) {
@@ -266,12 +271,80 @@ public final class HexUtils {
      * @param hex The hex color
      * @return The closest ChatColor value
      */
-    public ChatColor translateHex(String hex) {
-        return ChatColor.of(hex);
+    public static ChatColor translateHex(String hex) {
+        if (VersionCheck.isOnePointSixteenPlus())
+            return ChatColor.of(hex);
+        return translateHex(Color.decode(hex));
     }
 
-    public ChatColor translateHex(Color color) {
-        return ChatColor.of(color);
+    public static ChatColor translateHex(Color color) {
+        if (VersionCheck.isOnePointSixteenPlus())
+            return ChatColor.of(color);
+
+        int minDist = Integer.MAX_VALUE;
+        ChatColor legacy = ChatColor.WHITE;
+        for (ChatColorHexMapping mapping : ChatColorHexMapping.values()) {
+            int r = mapping.getRed() - color.getRed();
+            int g = mapping.getGreen() - color.getGreen();
+            int b = mapping.getBlue() - color.getBlue();
+            int dist = r * r + g * g + b * b;
+            if (dist < minDist) {
+                minDist = dist;
+                legacy = mapping.getChatColor();
+            }
+        }
+
+        return legacy;
+    }
+
+    /**
+     * Maps hex codes to ChatColors
+     */
+    public enum ChatColorHexMapping {
+
+        BLACK(0x000000, ChatColor.BLACK),
+        DARK_BLUE(0x0000AA, ChatColor.DARK_BLUE),
+        DARK_GREEN(0x00AA00, ChatColor.DARK_GREEN),
+        DARK_AQUA(0x00AAAA, ChatColor.DARK_AQUA),
+        DARK_RED(0xAA0000, ChatColor.DARK_RED),
+        DARK_PURPLE(0xAA00AA, ChatColor.DARK_PURPLE),
+        GOLD(0xFFAA00, ChatColor.GOLD),
+        GRAY(0xAAAAAA, ChatColor.GRAY),
+        DARK_GRAY(0x555555, ChatColor.DARK_GRAY),
+        BLUE(0x5555FF, ChatColor.BLUE),
+        GREEN(0x55FF55, ChatColor.GREEN),
+        AQUA(0x55FFFF, ChatColor.AQUA),
+        RED(0xFF5555, ChatColor.RED),
+        LIGHT_PURPLE(0xFF55FF, ChatColor.LIGHT_PURPLE),
+        YELLOW(0xFFFF55, ChatColor.YELLOW),
+        WHITE(0xFFFFFF, ChatColor.WHITE);
+
+        private final int r, g, b;
+        private final ChatColor chatColor;
+
+        ChatColorHexMapping(int hex, ChatColor chatColor) {
+            this.r = (hex >> 16) & 0xFF;
+            this.g = (hex >> 8) & 0xFF;
+            this.b = hex & 0xFF;
+            this.chatColor = chatColor;
+        }
+
+        public int getRed() {
+            return this.r;
+        }
+
+        public int getGreen() {
+            return this.g;
+        }
+
+        public int getBlue() {
+            return this.b;
+        }
+
+        public ChatColor getChatColor() {
+            return this.chatColor;
+        }
+
     }
 
     public interface ColorGenerator {
@@ -291,9 +364,9 @@ public final class HexUtils {
     /**
      * Allows generation of a multi-part gradient with a defined number of steps
      */
-    public class Gradient implements ColorGenerator {
+    public static class Gradient implements ColorGenerator {
 
-        private final List<Gradient.TwoStopGradient> gradients;
+        private final List<TwoStopGradient> gradients;
         private final int steps;
         protected long step;
 
@@ -307,13 +380,13 @@ public final class HexUtils {
 
             float increment = (float) (this.steps - 1) / (colors.size() - 1);
             for (int i = 0; i < colors.size() - 1; i++)
-                this.gradients.add(new Gradient.TwoStopGradient(colors.get(i), colors.get(i + 1), increment * i, increment * (i + 1)));
+                this.gradients.add(new TwoStopGradient(colors.get(i), colors.get(i + 1), increment * i, increment * (i + 1)));
         }
 
         @Override
         public ChatColor nextChatColor() {
             // Gradients will use the first color if the entire spectrum won't be available to preserve prettiness
-            if (this.steps <= 1)
+            if (!VersionCheck.isOnePointSixteenPlus() || this.steps <= 1)
                 return translateHex(this.gradients.get(0).colorAt(0));
             return translateHex(this.nextColor());
         }
@@ -337,7 +410,7 @@ public final class HexUtils {
             return color;
         }
 
-        public class TwoStopGradient {
+        public static class TwoStopGradient {
 
             private final Color startColor;
             private final Color endColor;
@@ -380,7 +453,7 @@ public final class HexUtils {
     /**
      * Allows generation of an animated multi-part gradient with a defined number of steps
      */
-    public class AnimatedGradient extends Gradient {
+    public static class AnimatedGradient extends Gradient {
 
         public AnimatedGradient(List<Color> colors, int steps, int speed) {
             super(colors, steps);
@@ -393,7 +466,7 @@ public final class HexUtils {
     /**
      * Allows generation of a rainbow gradient with a fixed number of steps
      */
-    public class Rainbow implements ColorGenerator {
+    public static class Rainbow implements ColorGenerator {
 
         protected final float hueStep, saturation, brightness;
         protected float hue;
@@ -425,7 +498,7 @@ public final class HexUtils {
     /**
      * Allows generation of an animated rainbow gradient with a fixed number of steps
      */
-    public class AnimatedRainbow extends Rainbow {
+    public static class AnimatedRainbow extends Rainbow {
 
         public AnimatedRainbow(int totalColors, float saturation, float brightness, int speed) {
             super(totalColors, saturation, brightness);

@@ -9,7 +9,6 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,14 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public class ConfigFile extends Manager {
+public class ConfigFile {
 
     private YamlDocument configFile;
 
-    public ConfigFile(VelocityStaffChat plugin, String name) {
-        super(plugin);
+    public ConfigFile(String name) {
         try {
-            configFile = YamlDocument.create(new File(plugin.getPath().toFile(), name),
+            configFile = YamlDocument.create(new File(VelocityStaffChat.getInstance().getPath().toFile(), name),
                     getClass().getResourceAsStream("/" + name),
                     GeneralSettings.DEFAULT,
                     LoaderSettings.builder().setAutoUpdate(true).build(),
@@ -36,8 +34,8 @@ public class ConfigFile extends Manager {
             configFile.update();
             configFile.save();
         } catch (IOException exception) {
-            plugin.getLogger().error("Failed to load config file! This plugin will now shutdown.");
-            Optional<PluginContainer> container = plugin.getServer().getPluginManager().getPlugin("simplestaffchat2");
+            VelocityStaffChat.getInstance().getLogger().error("Failed to load config file! This VelocityStaffChat.getInstance() will now shutdown.");
+            Optional<PluginContainer> container = VelocityStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat2");
             container.ifPresent(pluginContainer -> pluginContainer.getExecutorService().shutdown());
         }
     }

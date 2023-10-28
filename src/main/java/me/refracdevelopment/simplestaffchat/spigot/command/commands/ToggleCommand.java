@@ -2,6 +2,8 @@ package me.refracdevelopment.simplestaffchat.spigot.command.commands;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -20,18 +22,18 @@ public class ToggleCommand extends Command {
         if (!plugin.getCommands().STAFF_TOGGLE_COMMAND_ENABLED) return false;
 
         if (!(sender instanceof Player)) {
-            plugin.getColor().sendMessage(sender, "no-console");
+            Color.sendMessage(sender, "no-console");
             return true;
         }
 
         Player player = (Player) sender;
 
         if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, "no-permission");
+            Color.sendMessage(player, "no-permission");
             return true;
         }
 
-        plugin.getMethods().toggleStaffChat(player);
+        Methods.toggleStaffChat(player);
         return true;
     }
 }

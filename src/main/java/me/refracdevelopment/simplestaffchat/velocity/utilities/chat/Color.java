@@ -1,19 +1,16 @@
 package me.refracdevelopment.simplestaffchat.velocity.utilities.chat;
 
 import com.velocitypowered.api.command.CommandSource;
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public class Color extends Manager {
-
-    public Color(VelocityStaffChat plugin) {
-        super(plugin);
-    }
+@UtilityClass
+public class Color {
 
     public Component translate(CommandSource sender, String source) {
-        source = plugin.getPlaceholders().setPlaceholders(sender, source);
+        source = Placeholders.setPlaceholders(sender, source);
 
         return translate(source);
     }
@@ -29,10 +26,10 @@ public class Color extends Manager {
     }
 
     public void log(String message) {
-        sendMessage(plugin.getServer().getConsoleCommandSource(), plugin.getConfig().PREFIX + " " + message);
+        sendMessage(VelocityStaffChat.getInstance().getServer().getConsoleCommandSource(), VelocityStaffChat.getInstance().getConfig().PREFIX + " " + message);
     }
 
     public void log2(String message) {
-        sendMessage(plugin.getServer().getConsoleCommandSource(), message);
+        sendMessage(VelocityStaffChat.getInstance().getServer().getConsoleCommandSource(), message);
     }
 }

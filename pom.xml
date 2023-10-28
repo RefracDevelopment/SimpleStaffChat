@@ -6,17 +6,18 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>3.2-beta.6</version>
+    <version>3.2-beta.7</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -35,11 +36,15 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
                         <relocation>
+                            <pattern>me.kodysimpson</pattern>
+                            <shadedPattern>me.refracdevelopment.simplegems.libs</shadedPattern>
+                        </relocation>
+                        <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>me.refracdevelopment.simplestaffchat.libs</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>dev.dejvokep.boostedyaml</pattern>
+                            <pattern>dev.dejvokep</pattern>
                             <shadedPattern>me.refracdevelopment.simplestaffchat.libs</shadedPattern>
                         </relocation>
                     </relocations>
@@ -89,8 +94,16 @@
 
     <repositories>
         <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
             <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>bungeecord-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
         <repository>
             <id>placeholderapi</id>
@@ -104,15 +117,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
             <version>1.20.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.waterfallmc</groupId>
-            <artifactId>waterfall-api</artifactId>
-            <version>1.20-R0.1-SNAPSHOT</version>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.20-R0.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

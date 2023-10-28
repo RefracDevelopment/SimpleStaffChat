@@ -3,6 +3,8 @@ package me.refracdevelopment.simplestaffchat.velocity.commands.devchat;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class DevHideCommand implements SimpleCommand {
 
@@ -20,10 +22,10 @@ public class DevHideCommand implements SimpleCommand {
         Player player = (Player) invocation.source();
 
         if (!player.hasPermission(plugin.getCommands().DEV_HIDE_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
-        plugin.getMethods().hideDevChat(player);
+        Methods.hideDevChat(player);
     }
 }

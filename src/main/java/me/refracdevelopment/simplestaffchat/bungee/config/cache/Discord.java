@@ -1,9 +1,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.config.cache;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 
-public class Discord extends Manager {
+public class Discord {
 
     // Webhooks
     public String STAFFCHAT_WEBHOOK;
@@ -17,22 +16,21 @@ public class Discord extends Manager {
     public String DISCORD_TITLE;
     public String DISCORD_FOOTER;
 
-    public Discord(BungeeStaffChat plugin) {
-        super(plugin);
+    public Discord() {
         loadConfig();
     }
 
     public void loadConfig() {
         // Webhooks
-        STAFFCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.staffchat");
-        DEVCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.devchat");
-        ADMINCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.adminchat");
-        JOIN_WEBHOOK = plugin.getDiscordFile().getString("webhook.join");
+        STAFFCHAT_WEBHOOK = BungeeStaffChat.getInstance().getDiscordFile().getString("webhook.staffchat");
+        DEVCHAT_WEBHOOK = BungeeStaffChat.getInstance().getDiscordFile().getString("webhook.devchat");
+        ADMINCHAT_WEBHOOK = BungeeStaffChat.getInstance().getDiscordFile().getString("webhook.adminchat");
+        JOIN_WEBHOOK = BungeeStaffChat.getInstance().getDiscordFile().getString("webhook.join");
 
         // General
-        DISCORD_ENABLED = plugin.getDiscordFile().getBoolean("discord.enabled");
-        DISCORD_EMBED = plugin.getDiscordFile().getBoolean("discord.embed-message");
-        DISCORD_TITLE = plugin.getDiscordFile().getString("discord.title");
-        DISCORD_FOOTER = plugin.getDiscordFile().getString("discord.footer");
+        DISCORD_ENABLED = BungeeStaffChat.getInstance().getDiscordFile().getBoolean("discord.enabled");
+        DISCORD_EMBED = BungeeStaffChat.getInstance().getDiscordFile().getBoolean("discord.embed-message");
+        DISCORD_TITLE = BungeeStaffChat.getInstance().getDiscordFile().getString("discord.title");
+        DISCORD_FOOTER = BungeeStaffChat.getInstance().getDiscordFile().getString("discord.footer");
     }
 }

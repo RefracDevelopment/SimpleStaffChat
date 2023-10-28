@@ -1,44 +1,45 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 
-@Getter
-public class Color extends Manager {
+import java.util.List;
+import java.util.stream.Collectors;
 
-    private final HexUtils hexUtils;
-    private final Placeholders placeholders;
-    
-    public Color(BungeeStaffChat plugin) {
-        super(plugin);
-        this.hexUtils = new HexUtils();
-        this.placeholders = new Placeholders(plugin);
-    }
+@UtilityClass
+public class Color {
 
     public String translate(CommandSender sender, String source) {
-        source = placeholders.setPlaceholders(sender, source);
+        source = Placeholders.setPlaceholders(sender, source);
 
         return translate(source);
     }
 
     public String translate(String source) {
-        return hexUtils.colorify(source);
+        return HexUtils.colorify(source);
     }
 
-    public void sendMessage(CommandSender sender, String source) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
+    public List<String> translate(List<String> source) {
+        return source.stream().map(Color::translate).collect(Collectors.toList());
+    }
 
-        sender.sendMessage(TextComponent.fromLegacyText(translate(sender, source)));
+    public void sendMessage(CommandSender sender, String message) {
+        sendCustomMessage(sender, BungeeStaffChat.getInstance().getLocaleFile().getString(message));
+    }
+
+    public void sendCustomMessage(CommandSender sender, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%")) return;
+
+        sender.sendMessage(TextComponent.fromLegacyText(translate(sender, message)));
     }
 
     public void log(String message) {
-        sendMessage(plugin.getProxy().getConsole(), plugin.getConfig().PREFIX + " " + message);
+        sendCustomMessage(BungeeStaffChat.getInstance().getProxy().getConsole(), BungeeStaffChat.getInstance().getLocaleFile().getString("prefix") + " " + message);
     }
 
     public void log2(String message) {
-        sendMessage(plugin.getProxy().getConsole(), message);
+        sendCustomMessage(BungeeStaffChat.getInstance().getProxy().getConsole(), message);
     }
 }

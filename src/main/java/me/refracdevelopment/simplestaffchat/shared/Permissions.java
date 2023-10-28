@@ -1,5 +1,8 @@
 package me.refracdevelopment.simplestaffchat.shared;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class Permissions {
 
     // Other

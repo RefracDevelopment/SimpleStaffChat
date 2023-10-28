@@ -2,7 +2,10 @@ package me.refracdevelopment.simplestaffchat.spigot.manager;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.*;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.HideCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.ReloadCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.StaffChatCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminToggleCommand;
@@ -25,19 +28,43 @@ public class CommandManager {
     }
 
     public void registerAll() {
-        commands.addAll(Arrays.asList(
-                new StaffChatCommand(plugin),
-                new ToggleCommand(plugin),
-                new ReloadCommand(plugin),
-                new AdminChatCommand(plugin),
-                new AdminToggleCommand(plugin),
-                new DevChatCommand(plugin),
-                new DevToggleCommand(plugin),
-                new ChatCommand(plugin),
-                new HideCommand(plugin),
-                new AdminHideCommand(plugin),
-                new DevHideCommand(plugin)
-        ));
+        if (plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) {
+            commands.add(new StaffChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().STAFF_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new ToggleCommand(plugin));
+        }
+
+        commands.add(new ReloadCommand(plugin));
+
+        if (plugin.getCommands().STAFF_HIDE_COMMAND_ENABLED) {
+            commands.add(new HideCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEVCHAT_COMMAND_ENABLED) {
+            commands.add(new DevChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEV_HIDE_COMMAND_ENABLED) {
+            commands.add(new DevHideCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEV_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new DevToggleCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMINCHAT_COMMAND_ENABLED) {
+            commands.add(new AdminChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMIN_HIDE_COMMAND_ENABLED) {
+            commands.add(new AdminHideCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new AdminToggleCommand(plugin));
+        }
     }
 
     public void register(Command... command) {

@@ -1,6 +1,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.commands;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -22,22 +24,22 @@ public class ChatCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
         if (!player.hasPermission(plugin.getCommands().CHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
         switch (strings[0]) {
             case "staff":
-                plugin.getMethods().toggleStaffChat(player);
+                Methods.toggleStaffChat(player);
                 break;
             case "admin":
-                plugin.getMethods().toggleAdminChat(player);
+                Methods.toggleAdminChat(player);
                 break;
             case "dev":
-                plugin.getMethods().toggleDevChat(player);
+                Methods.toggleDevChat(player);
                 break;
             case "all":
-                plugin.getMethods().toggleAllChat(player);
+                Methods.toggleAllChat(player);
                 break;
         }
     }

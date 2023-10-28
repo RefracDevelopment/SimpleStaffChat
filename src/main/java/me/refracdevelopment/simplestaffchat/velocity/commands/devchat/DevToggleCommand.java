@@ -4,6 +4,8 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class DevToggleCommand implements SimpleCommand {
 
@@ -23,10 +25,10 @@ public class DevToggleCommand implements SimpleCommand {
         Player player = (Player) invocation.source();
 
         if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
-        plugin.getMethods().toggleDevChat(player);
+        Methods.toggleDevChat(player);
     }
 }

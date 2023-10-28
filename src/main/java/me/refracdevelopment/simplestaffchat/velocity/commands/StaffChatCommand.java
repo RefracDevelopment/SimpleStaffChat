@@ -4,7 +4,10 @@ import com.google.common.base.Joiner;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public final class StaffChatCommand implements SimpleCommand {
 
@@ -16,13 +19,12 @@ public final class StaffChatCommand implements SimpleCommand {
     
     @Override
     public void execute(Invocation invocation) {
-        if (!plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) return;
         CommandSource commandSource = invocation.source();
 
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
@@ -35,22 +37,22 @@ public final class StaffChatCommand implements SimpleCommand {
                     .replace("%player%", "Console")
                     .replace("%message%", message);
 
-            plugin.getMethods().sendStaffChat(commandSource, format, message);
+            Methods.sendStaffChat(commandSource, format, message);
         } else {
             if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") && plugin.getConfig().STAFFCHAT_MESSAGE != null) {
-                if (!commandSource.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
-                    plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+                if (!commandSource.hasPermission(Permissions.STAFFCHAT_HELP)) {
+                    Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
                     return;
                 }
 
                 plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
-                    plugin.getColor().sendMessage(commandSource, s);
+                    Color.sendMessage(commandSource, s);
                 });
             } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSource instanceof Player) {
                     Player player = (Player) commandSource;
 
-                    plugin.getMethods().toggleStaffChat(player);
+                    Methods.toggleStaffChat(player);
                 }
             }
         }

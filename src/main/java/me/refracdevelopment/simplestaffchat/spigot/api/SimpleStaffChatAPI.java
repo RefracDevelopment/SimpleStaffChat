@@ -2,21 +2,20 @@ package me.refracdevelopment.simplestaffchat.spigot.api;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 
-public class SimpleStaffChatAPI extends Manager {
+public class SimpleStaffChatAPI {
 
-    public SimpleStaffChatAPI(SimpleStaffChat plugin) {
-        super(plugin);
-        plugin.getColor().log("&eSimpleStaffChatAPI has been enabled!");
-        plugin.getColor().log("&eWiki: https://refracdevelopment.gitbook.io/");
+    public SimpleStaffChatAPI() {
+        Color.log("&aSimpleStaffChatAPI has been enabled!");
+        Color.log("&aWiki: https://refracdevelopment.gitbook.io/");
 }
 
     /**
      * @return Is the SimpleGemsAPI enabled and registered?
      */
     public boolean isRegistered() {
-        return plugin != null;
+        return SimpleStaffChat.getInstance() != null;
     }
 
     /**
@@ -24,7 +23,7 @@ public class SimpleStaffChatAPI extends Manager {
     * @return the command manager
     */
     public CommandManager getCommandManager() {
-        return plugin.getCommandManager();
+        return SimpleStaffChat.getInstance().getCommandManager();
     }
 
 }

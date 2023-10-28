@@ -1,11 +1,10 @@
 package me.refracdevelopment.simplestaffchat.velocity.config.cache;
 
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
 import java.util.List;
 
-public class Config extends Manager {
+public class Config {
 
     // General
     public String STAFFCHAT_SYMBOL;
@@ -41,43 +40,42 @@ public class Config extends Manager {
     public String STAFFCHAT_OUTPUT;
     public List<String> STAFFCHAT_MESSAGE;
 
-    public Config(VelocityStaffChat plugin) {
-        super(plugin);
+    public Config() {
         loadConfig();
     }
 
     public void loadConfig() {
-        STAFFCHAT_SYMBOL = plugin.getConfigFile().getString("staffchat-symbol");
-        ADMINCHAT_SYMBOL = plugin.getConfigFile().getString("adminchat-symbol");
-        DEVCHAT_SYMBOL = plugin.getConfigFile().getString("devchat-symbol");
-        SYMBOLS = plugin.getConfigFile().getBoolean("symbols");
-        STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.minecraft-format");
-        CONSOLE_STAFFCHAT_FORMAT = plugin.getConfigFile().getString("format.console-staffchat-format");
-        ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.adminchat-format");
-        CONSOLE_ADMINCHAT_FORMAT = plugin.getConfigFile().getString("format.console-adminchat-format");
-        DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.devchat-format");
-        CONSOLE_DEVCHAT_FORMAT = plugin.getConfigFile().getString("format.console-devchat-format");
-        JOIN_ENABLED = plugin.getConfigFile().getBoolean("join.enabled");
-        JOIN_FORMAT = plugin.getConfigFile().getString("join.join-format");
-        SWITCH_FORMAT = plugin.getConfigFile().getString("join.switch-format");
-        QUIT_FORMAT = plugin.getConfigFile().getString("join.quit-format");
-        PREFIX = plugin.getConfigFile().getString("messages.prefix");
-        NO_PERMISSION = plugin.getConfigFile().getString("messages.no-permission");
-        RELOAD = plugin.getConfigFile().getString("messages.reload");
-        STAFFCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.toggle-on");
-        STAFFCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.toggle-off");
-        ADMINCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.adminchat-toggle-on");
-        ADMINCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.adminchat-toggle-off");
-        DEVCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.devchat-toggle-on");
-        DEVCHAT_TOGGLE_OFF = plugin.getConfigFile().getString("messages.devchat-toggle-off");
-        ALLCHAT_TOGGLE_ON = plugin.getConfigFile().getString("messages.allcat-toggle-on");
-        STAFFCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.staffchat-muted-on");
-        STAFFCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.staffchat-muted-off");
-        ADMINCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.adminchat-muted-on");
-        ADMINCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.adminchat-muted-off");
-        DEVCHAT_MUTED_ON = plugin.getConfigFile().getString("messages.devchat-muted-on");
-        DEVCHAT_MUTED_OFF = plugin.getConfigFile().getString("messages.devchat-muted-off");
-        STAFFCHAT_OUTPUT = plugin.getConfigFile().getString("messages.staffchat-output");
-        STAFFCHAT_MESSAGE = plugin.getConfigFile().getStringList("messages.staffchat-message");
+        STAFFCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("staffchat-symbol");
+        ADMINCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("adminchat-symbol");
+        DEVCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("devchat-symbol");
+        SYMBOLS = VelocityStaffChat.getInstance().getConfigFile().getBoolean("symbols");
+        STAFFCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.minecraft-format");
+        CONSOLE_STAFFCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.console-staffchat-format");
+        ADMINCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.adminchat-format");
+        CONSOLE_ADMINCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.console-adminchat-format");
+        DEVCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.devchat-format");
+        CONSOLE_DEVCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.console-devchat-format");
+        JOIN_ENABLED = VelocityStaffChat.getInstance().getConfigFile().getBoolean("join.enabled");
+        JOIN_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("join.join-format");
+        SWITCH_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("join.switch-format");
+        QUIT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("join.quit-format");
+        PREFIX = VelocityStaffChat.getInstance().getConfigFile().getString("messages.prefix");
+        NO_PERMISSION = VelocityStaffChat.getInstance().getConfigFile().getString("messages.no-permission");
+        RELOAD = VelocityStaffChat.getInstance().getConfigFile().getString("messages.reload");
+        STAFFCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.toggle-on");
+        STAFFCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.toggle-off");
+        ADMINCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-on");
+        ADMINCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-off");
+        DEVCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-on");
+        DEVCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-off");
+        ALLCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.allcat-toggle-on");
+        STAFFCHAT_MUTED_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-muted-on");
+        STAFFCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-muted-off");
+        ADMINCHAT_MUTED_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-muted-on");
+        ADMINCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-muted-off");
+        DEVCHAT_MUTED_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-muted-on");
+        DEVCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-muted-off");
+        STAFFCHAT_OUTPUT = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-output");
+        STAFFCHAT_MESSAGE = VelocityStaffChat.getInstance().getConfigFile().getStringList("messages.staffchat-message");
     }
 }

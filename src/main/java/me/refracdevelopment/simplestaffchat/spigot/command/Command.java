@@ -1,6 +1,8 @@
 package me.refracdevelopment.simplestaffchat.spigot.command;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +32,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
         this.name = name;
         this.permission = permission;
         this.argsLength = argsLength;
-        this.usage = plugin.getColor().translate(usage);
+        this.usage = Color.translate(usage);
 
         this.aliases = new HashSet<>();
         this.aliases.add(name);
@@ -41,15 +43,15 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     private void registerBukkitCommand(String[] aliases) {
         try {
-            final Field bukkitCommandMap = plugin.getServer().getClass().getDeclaredField("commandMap");
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             bukkitCommandMap.setAccessible(true);
-            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(plugin.getServer());
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
             commandMap.register("command", this);
             for (String alias : aliases) {
                 commandMap.register(alias, "command", this);
             }
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
-            plugin.getColor().log("&cCould not register a command properly (name: " + this.name + "), stacktrace: " + exception.getMessage());
+            Color.log("&cCould not register a command properly (name: " + this.name + "), stacktrace: " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -66,7 +68,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     @Override
     public String getPermissionMessage() {
-        return plugin.getColor().translate(plugin.getSettings().NO_PERMISSION);
+        return Color.translate(plugin.getLocaleFile().getString("no-permission"));
     }
 
     @Override
@@ -97,7 +99,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     @Override
     public Command setUsage(String usage) {
-        this.usage = plugin.getColor().translate(usage);
+        this.usage = Color.translate(usage);
         return this;
     }
 

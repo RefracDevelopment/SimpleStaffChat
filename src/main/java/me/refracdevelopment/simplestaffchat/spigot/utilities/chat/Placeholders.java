@@ -1,19 +1,16 @@
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.Manager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Placeholders extends Manager {
-
-    public Placeholders(SimpleStaffChat plugin) {
-        super(plugin);
-    }
+@UtilityClass
+public class Placeholders {
 
     public String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", plugin.getSettings().PREFIX);
-        placeholder = placeholder.replace("%server%", plugin.getSettings().SERVER_NAME);
+        placeholder = placeholder.replace("%prefix%", SimpleStaffChat.getInstance().getLocaleFile().getString("prefix"));
+        placeholder = placeholder.replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME);
         if (sender instanceof Player) {
             Player player = (Player) sender;
 

@@ -3,6 +3,8 @@ package me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat;
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -20,12 +22,10 @@ public class AdminChatCommand extends Command {
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         if (!plugin.getCommands().ADMINCHAT_COMMAND_ENABLED) return false;
 
-        
-
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(plugin.getCommands().ADMINCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(sender, "no-permission");
+            Color.sendMessage(sender, "no-permission");
             return true;
         }
 
@@ -38,7 +38,7 @@ public class AdminChatCommand extends Command {
                     .replace("%player%", sender.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendAdminChat(sender, format);
+            Methods.sendAdminChat(sender, format);
         }
         return true;
     }

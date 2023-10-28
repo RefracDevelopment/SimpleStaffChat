@@ -2,6 +2,8 @@ package me.refracdevelopment.simplestaffchat.bungee.commands.devchat;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -22,7 +24,7 @@ public class DevChatCommand extends Command {
         String message = Joiner.on(" ").join(strings);
 
         if (!commandSender.hasPermission(plugin.getCommands().DEVCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(commandSender, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
@@ -35,7 +37,7 @@ public class DevChatCommand extends Command {
                     .replace("%player%", commandSender.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendDevChat(commandSender, format);
+            Methods.sendDevChat(commandSender, format);
         }
     }
 }

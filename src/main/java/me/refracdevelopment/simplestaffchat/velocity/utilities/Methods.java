@@ -3,81 +3,80 @@ package me.refracdevelopment.simplestaffchat.velocity.utilities;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-public class Methods extends Manager {
+@UtilityClass
+public class Methods {
 
-    private List<UUID> staffChatMuted = new ArrayList<>();
-    private List<UUID> adminChatMuted = new ArrayList<>();
-    private List<UUID> devChatMuted = new ArrayList<>();
-    private List<UUID> staffChatPlayers = new ArrayList<>();
-    private List<UUID> adminChatPlayers = new ArrayList<>();
-    private List<UUID> devChatPlayers = new ArrayList<>();
-
-    public Methods(VelocityStaffChat plugin) {
-        super(plugin);
-    }
+    @Getter private List<UUID> staffChatMuted = new ArrayList<>();
+    @Getter private List<UUID> adminChatMuted = new ArrayList<>();
+    @Getter private List<UUID> devChatMuted = new ArrayList<>();
+    @Getter private List<UUID> staffChatPlayers = new ArrayList<>();
+    @Getter private List<UUID> adminChatPlayers = new ArrayList<>();
+    @Getter private List<UUID> devChatPlayers = new ArrayList<>();
 
     public void sendStaffChat(CommandSource commandSource, String format, String message) {
-        for (Player p : plugin.getServer().getAllPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                p.sendMessage(plugin.getColor().translate(commandSource, format));
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                p.sendMessage(Color.translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(format);
+        Color.log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
-            plugin.getDiscordImpl().sendStaffChat(player, message
+            DiscordImpl.sendStaffChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())
             );
         } else {
-            plugin.getDiscordImpl().sendStaffChat(commandSource, message
+            DiscordImpl.sendStaffChat(commandSource, message
                     .replace("%player%", "Console")
             );
         }
     }
 
     public void sendDevChat(CommandSource commandSource, String format, String message) {
-        for (Player p : plugin.getServer().getAllPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().DEVCHAT_SEE)) {
-                p.sendMessage(plugin.getColor().translate(commandSource, format));
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
+                p.sendMessage(Color.translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(format);
+        Color.log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
-            plugin.getDiscordImpl().sendDevChat(player, message
+            DiscordImpl.sendDevChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())
             );
         } else {
-            plugin.getDiscordImpl().sendDevChat(commandSource, message
+            DiscordImpl.sendDevChat(commandSource, message
                     .replace("%player%", "Console")
             );
         }
     }
 
     public void sendAdminChat(CommandSource commandSource, String format, String message) {
-        for (Player p : plugin.getServer().getAllPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().ADMINCHAT_SEE)) {
-                p.sendMessage(plugin.getColor().translate(commandSource, format));
+        for (Player p : VelocityStaffChat.getInstance().getServer().getAllPlayers()) {
+            if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
+                p.sendMessage(Color.translate(commandSource, format));
             }
         }
-        plugin.getColor().log2(format);
+        Color.log2(format);
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
-            plugin.getDiscordImpl().sendAdminChat(player, message
+            DiscordImpl.sendAdminChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())
             );
         } else {
-            plugin.getDiscordImpl().sendAdminChat(commandSource, message
+            DiscordImpl.sendAdminChat(commandSource, message
                     .replace("%player%", "Console")
             );
         }
@@ -86,42 +85,42 @@ public class Methods extends Manager {
     public void toggleStaffChat(Player player) {
         if (staffChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().STAFFCHAT_TOGGLE_OFF);
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
                 devChatPlayers.remove(player.getUniqueId());
             }
             staffChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_TOGGLE_ON);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().STAFFCHAT_TOGGLE_ON);
         }
     }
 
     public void toggleAdminChat(Player player) {
         if (adminChatPlayers.contains(player.getUniqueId())) {
             adminChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ADMINCHAT_TOGGLE_OFF);
         } else {
             if (devChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 devChatPlayers.remove(player.getUniqueId());
                 staffChatPlayers.remove(player.getUniqueId());
             }
             adminChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_TOGGLE_ON);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ADMINCHAT_TOGGLE_ON);
         }
     }
 
     public void toggleDevChat(Player player) {
         if (devChatPlayers.contains(player.getUniqueId())) {
             devChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().DEVCHAT_TOGGLE_OFF);
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
                 staffChatPlayers.remove(player.getUniqueId());
             }
             devChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_TOGGLE_ON);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().DEVCHAT_TOGGLE_ON);
         }
     }
 
@@ -131,7 +130,7 @@ public class Methods extends Manager {
             staffChatPlayers.remove(player.getUniqueId());
             staffChatPlayers.remove(player.getUniqueId());
             staffChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ALLCHAT_TOGGLE_ON);
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ALLCHAT_TOGGLE_ON);
         }
     }
 

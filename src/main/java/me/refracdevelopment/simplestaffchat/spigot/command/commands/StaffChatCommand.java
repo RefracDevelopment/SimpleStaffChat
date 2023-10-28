@@ -1,8 +1,11 @@
 package me.refracdevelopment.simplestaffchat.spigot.command.commands;
 
 import com.google.common.base.Joiner;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +26,7 @@ public class StaffChatCommand extends Command {
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(sender, "no-permission");
+            Color.sendMessage(sender, "no-permission");
             return true;
         }
 
@@ -36,21 +39,21 @@ public class StaffChatCommand extends Command {
                             .replace("%player%", sender.getName())
                             .replace("%message%", message);
 
-            plugin.getMethods().sendStaffChat(sender, format);
+            Methods.sendStaffChat(sender, format);
         } else {
             if (plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
                     plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom"))  {
-                if (!sender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
-                    plugin.getColor().sendMessage(sender, "no-permission");
+                if (!sender.hasPermission(Permissions.STAFFCHAT_HELP)) {
+                    Color.sendMessage(sender, "no-permission");
                     return true;
                 }
 
-                plugin.getSettings().STAFFCHAT_MESSAGE.forEach(s -> plugin.getColor().sendCustomMessage(sender, plugin.getColor().translate(sender, s)));
+                plugin.getSettings().STAFFCHAT_MESSAGE.forEach(s -> Color.sendCustomMessage(sender, Color.translate(sender, s)));
             } else if (plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
 
-                    plugin.getMethods().toggleStaffChat(player);
+                    Methods.toggleStaffChat(player);
                 }
             }
         }

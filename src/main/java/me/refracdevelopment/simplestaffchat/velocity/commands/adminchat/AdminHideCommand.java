@@ -3,6 +3,8 @@ package me.refracdevelopment.simplestaffchat.velocity.commands.adminchat;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class AdminHideCommand implements SimpleCommand {
 
@@ -20,10 +22,10 @@ public class AdminHideCommand implements SimpleCommand {
         Player player = (Player) invocation.source();
 
         if (!player.hasPermission(plugin.getCommands().ADMIN_HIDE_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
-        plugin.getMethods().hideAdminChat(player);
+        Methods.hideAdminChat(player);
     }
 }

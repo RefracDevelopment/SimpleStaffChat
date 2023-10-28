@@ -1,14 +1,16 @@
 package me.refracdevelopment.simplestaffchat.bungee.manager;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.commands.*;
+import me.refracdevelopment.simplestaffchat.bungee.commands.HideCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevHideCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 import net.md_5.bungee.api.plugin.Command;
 
 import java.util.Arrays;
@@ -16,28 +18,53 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class CommandManager extends Manager {
+public class CommandManager {
 
+    private final BungeeStaffChat plugin;
     private final Set<Command> commands = new HashSet<>();
 
     public CommandManager(BungeeStaffChat plugin) {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     public void registerAll() {
-        commands.addAll(Arrays.asList(
-                new StaffChatCommand(plugin),
-                new ToggleCommand(plugin),
-                new ReloadCommand(plugin),
-                new AdminChatCommand(plugin),
-                new AdminToggleCommand(plugin),
-                new DevChatCommand(plugin),
-                new DevToggleCommand(plugin),
-                new ChatCommand(plugin),
-                new HideCommand(plugin),
-                new AdminHideCommand(plugin),
-                new DevHideCommand(plugin)
-        ));
+        if (plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) {
+            commands.add(new StaffChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().STAFF_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new ToggleCommand(plugin));
+        }
+
+        commands.add(new ReloadCommand(plugin));
+
+        if (plugin.getCommands().STAFF_HIDE_COMMAND_ENABLED) {
+            commands.add(new HideCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEVCHAT_COMMAND_ENABLED) {
+            commands.add(new DevChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEV_HIDE_COMMAND_ENABLED) {
+            commands.add(new DevHideCommand(plugin));
+        }
+
+        if (plugin.getCommands().DEV_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new DevToggleCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMINCHAT_COMMAND_ENABLED) {
+            commands.add(new AdminChatCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMIN_HIDE_COMMAND_ENABLED) {
+            commands.add(new AdminHideCommand(plugin));
+        }
+
+        if (plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) {
+            commands.add(new AdminToggleCommand(plugin));
+        }
         commands.forEach(command -> plugin.getProxy().getPluginManager().registerCommand(plugin, command));
     }
 

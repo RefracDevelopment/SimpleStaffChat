@@ -1,7 +1,10 @@
 package me.refracdevelopment.simplestaffchat.bungee.listeners;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.DiscordImpl;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.ServerConnectEvent;
@@ -15,8 +18,8 @@ public class JoinListener implements Listener {
 
     private BungeeStaffChat plugin;
 
-    private final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
-    private final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
+    protected final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
+    protected final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
     
     public JoinListener(BungeeStaffChat plugin) {
         this.plugin = plugin;
@@ -33,18 +36,18 @@ public class JoinListener implements Listener {
         }
 
         if (!plugin.getConfig().JOIN_ENABLED) return;
-        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_JOIN)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
         if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY) return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendCustomMessage(p, Color.translate(player, plugin.getConfig().JOIN_FORMAT
                         .replace("%server%", event.getTarget().getName())));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().JOIN_FORMAT
+        Color.log2(Color.translate(player, plugin.getConfig().JOIN_FORMAT
                 .replace("%server%", event.getTarget().getName())));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.JOIN, plugin.getConfig().JOIN_FORMAT
+        DiscordImpl.sendJoin(player, JoinType.JOIN, plugin.getConfig().JOIN_FORMAT
                 .replace("%server%", event.getTarget().getName())
                 .replace("%player%", player.getName())
         );
@@ -57,19 +60,19 @@ public class JoinListener implements Listener {
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_SWITCH)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendCustomMessage(p, Color.translate(player, plugin.getConfig().SWITCH_FORMAT
                         .replace("%server%", player.getServer().getInfo().getName())
                         .replace("%from%", event.getFrom().getName())));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().SWITCH_FORMAT
+        Color.log2(Color.translate(player, plugin.getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName())));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.SWITCH, plugin.getConfig().SWITCH_FORMAT
+        DiscordImpl.sendJoin(player, JoinType.SWITCH, plugin.getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName())
                 .replace("%player%", player.getName())
@@ -83,30 +86,30 @@ public class JoinListener implements Listener {
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_QUIT)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
         if (player.getServer() == null) return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendCustomMessage(p, Color.translate(player, plugin.getConfig().QUIT_FORMAT
                         .replace("%server%", player.getServer().getInfo().getName())));
             }
         });
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getConfig().QUIT_FORMAT
+        Color.log2(Color.translate(player, plugin.getConfig().QUIT_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.LEAVE, plugin.getConfig().QUIT_FORMAT
+        DiscordImpl.sendJoin(player, JoinType.LEAVE, plugin.getConfig().QUIT_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%player%", player.getName())
         );
     }
 
     private void sendDevMessage(ProxiedPlayer player) {
-        plugin.getColor().sendMessage(player, " ");
-        plugin.getColor().sendMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
-        plugin.getColor().sendMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
-        plugin.getColor().sendMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
-        plugin.getColor().sendMessage(player, " ");
-        plugin.getColor().sendMessage(player, "&aServer version&7: &f" + plugin.getProxy().getVersion());
-        plugin.getColor().sendMessage(player, " ");
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
+        Color.sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
+        Color.sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "&aServer version&7: &f" + plugin.getProxy().getVersion());
+        Color.sendCustomMessage(player, " ");
     }
 }

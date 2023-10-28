@@ -1,9 +1,8 @@
 package me.refracdevelopment.simplestaffchat.velocity.config.cache;
 
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Manager;
 
-public class Discord extends Manager {
+public class Discord {
 
     // Webhooks
     public String STAFFCHAT_WEBHOOK;
@@ -20,23 +19,22 @@ public class Discord extends Manager {
     public String DISCORD_SWITCH_FORMAT;
     public String DISCORD_LEAVE_FORMAT;
 
-    public Discord(VelocityStaffChat plugin) {
-        super(plugin);
+    public Discord() {
         loadConfig();
     }
 
     public void loadConfig() {
-        STAFFCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.staffchat");
-        DEVCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.devchat");
-        ADMINCHAT_WEBHOOK = plugin.getDiscordFile().getString("webhook.adminchat");
-        JOIN_WEBHOOK = plugin.getDiscordFile().getString("webhook.join");
-        DISCORD_ENABLED = plugin.getDiscordFile().getBoolean("discord.enabled");
-        DISCORD_EMBED = plugin.getDiscordFile().getBoolean("discord.embed-message");
-        DISCORD_TITLE = plugin.getDiscordFile().getString("discord.title");
-        DISCORD_FOOTER = plugin.getDiscordFile().getString("discord.footer");
-        DISCORD_FORMAT = plugin.getDiscordFile().getString("discord.velocity.format");
-        DISCORD_JOIN_FORMAT = plugin.getDiscordFile().getString("discord.velocity.join-format");
-        DISCORD_SWITCH_FORMAT = plugin.getDiscordFile().getString("discord.velocity.switch-format");
-        DISCORD_LEAVE_FORMAT = plugin.getDiscordFile().getString("discord.velocity.leave-format");
+        STAFFCHAT_WEBHOOK = VelocityStaffChat.getInstance().getDiscordFile().getString("webhook.staffchat");
+        DEVCHAT_WEBHOOK = VelocityStaffChat.getInstance().getDiscordFile().getString("webhook.devchat");
+        ADMINCHAT_WEBHOOK = VelocityStaffChat.getInstance().getDiscordFile().getString("webhook.adminchat");
+        JOIN_WEBHOOK = VelocityStaffChat.getInstance().getDiscordFile().getString("webhook.join");
+        DISCORD_ENABLED = VelocityStaffChat.getInstance().getDiscordFile().getBoolean("discord.enabled");
+        DISCORD_EMBED = VelocityStaffChat.getInstance().getDiscordFile().getBoolean("discord.embed-message");
+        DISCORD_TITLE = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.title");
+        DISCORD_FOOTER = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.footer");
+        DISCORD_FORMAT = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.velocity.format");
+        DISCORD_JOIN_FORMAT = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.velocity.join-format");
+        DISCORD_SWITCH_FORMAT = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.velocity.switch-format");
+        DISCORD_LEAVE_FORMAT = VelocityStaffChat.getInstance().getDiscordFile().getString("discord.velocity.leave-format");
     }
 }

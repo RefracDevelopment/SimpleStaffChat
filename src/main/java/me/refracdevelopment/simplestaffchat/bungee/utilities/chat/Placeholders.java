@@ -1,24 +1,21 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.Manager;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public class Placeholders extends Manager {
-
-    public Placeholders(BungeeStaffChat plugin) {
-        super(plugin);
-    }
+@UtilityClass
+public class Placeholders {
 
     public String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", plugin.getConfig().PREFIX);
+        placeholder = placeholder.replace("%prefix%", BungeeStaffChat.getInstance().getLocaleFile().getString("prefix"));
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
-            if (plugin.getLuckPermsUtil() != null) {
-                placeholder = placeholder.replace("%luckperms_prefix%", plugin.getLuckPermsUtil().getPrefix(player));
-                placeholder = placeholder.replace("%luckperms_suffix%", plugin.getLuckPermsUtil().getSuffix(player));
+            if (LuckPermsUtil.getLuckPerms() != null) {
+                placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
+                placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
             } else {
                 placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
                 placeholder = placeholder.replace("%luckperms_suffix%", "N/A");

@@ -2,6 +2,7 @@ package me.refracdevelopment.simplestaffchat.velocity.utilities;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.shared.DiscordWebhook;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
@@ -10,20 +11,17 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.io.IOException;
 
-public class DiscordImpl extends Manager {
-
-    public DiscordImpl(VelocityStaffChat plugin) {
-        super(plugin);
-    }
+@UtilityClass
+public class DiscordImpl {
 
     private void sendMessage(@Nullable Player player, String content, String url) {
-        if (!plugin.getDiscord().DISCORD_ENABLED) return;
+        if (!VelocityStaffChat.getInstance().getDiscord().DISCORD_ENABLED) return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);
         if (player != null) {
             webhook.setAvatarUrl("https://crafatar.com/avatars/" + player.getUniqueId().toString() + "?overlay=1");
         }
-        webhook.setUsername(plugin.getDiscord().DISCORD_TITLE);
+        webhook.setUsername(VelocityStaffChat.getInstance().getDiscord().DISCORD_TITLE);
         webhook.setContent(content);
 
         try {
@@ -34,13 +32,13 @@ public class DiscordImpl extends Manager {
     }
 
     private void sendEmbed(@Nullable Player player, String content, String url, java.awt.Color color) {
-        if (!plugin.getDiscord().DISCORD_ENABLED) return;
+        if (!VelocityStaffChat.getInstance().getDiscord().DISCORD_ENABLED) return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                .setTitle(plugin.getDiscord().DISCORD_TITLE)
+                .setTitle(VelocityStaffChat.getInstance().getDiscord().DISCORD_TITLE)
                 .setDescription(content).setColor(color)
-                .setFooter(plugin.getDiscord().DISCORD_FOOTER, null));
+                .setFooter(VelocityStaffChat.getInstance().getDiscord().DISCORD_FOOTER, null));
 
         if (player != null) {
             webhook.setAvatarUrl("https://crafatar.com/avatars/" + player.getUniqueId().toString() + "?overlay=1");
@@ -54,149 +52,149 @@ public class DiscordImpl extends Manager {
     }
 
     public void sendStaffChat(CommandSource commandSource, String content) {
-        if (plugin.getDiscord().DISCORD_EMBED) {
+        if (VelocityStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        plugin.getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        plugin.getDiscord().STAFFCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
             } else {
-                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().STAFFCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendDevChat(CommandSource commandSource, String content) {
-        if (plugin.getDiscord().DISCORD_EMBED) {
+        if (VelocityStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        plugin.getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        plugin.getDiscord().DEVCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
             } else {
-                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().DEVCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendAdminChat(CommandSource commandSource, String content) {
-        if (plugin.getDiscord().DISCORD_EMBED) {
+        if (VelocityStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendEmbed(player, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content)
                         ,
-                        plugin.getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
             } else {
-                sendEmbed(null, plugin.getDiscord().DISCORD_FORMAT
+                sendEmbed(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+                        VelocityStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
             }
         } else {
             if (commandSource instanceof Player) {
                 Player player = (Player) commandSource;
-                sendMessage(player, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                 .replace("%player%", player.getUsername())
                                 .replace("%message%", content),
-                        plugin.getDiscord().ADMINCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
             } else {
-                sendMessage(null, plugin.getDiscord().DISCORD_FORMAT
+                sendMessage(null, VelocityStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%player%", "Console")
                                 .replace("%message%", content),
-                        plugin.getDiscord().ADMINCHAT_WEBHOOK);
+                        VelocityStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
             }
         }
     }
 
     public void sendJoin(JoinType type, Player player, String currentServer, String previousServer) {
-        if (plugin.getDiscord().DISCORD_EMBED) {
+        if (VelocityStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             switch (type) {
                 case JOIN:
-                    sendEmbed(player, plugin.getDiscord().DISCORD_JOIN_FORMAT
+                    sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            plugin.getDiscord().JOIN_WEBHOOK, Color.GREEN);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.GREEN);
                     break;
                 case SWITCH:
-                    sendEmbed(player, plugin.getDiscord().DISCORD_SWITCH_FORMAT
+                    sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
                                     .replace("%from%", previousServer)
                                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                     .replace("%player%", player.getUsername())
                                     .replace("%arrow%", "\u00BB"),
-                            plugin.getDiscord().JOIN_WEBHOOK, Color.CYAN);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.CYAN);
                     break;
                 case LEAVE:
-                    sendEmbed(player, plugin.getDiscord().DISCORD_LEAVE_FORMAT
+                    sendEmbed(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
                                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                                     .replace("%player%", player.getUsername()),
-                            plugin.getDiscord().JOIN_WEBHOOK, Color.RED);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
                     break;
             }
         } else {
             switch (type) {
                 case JOIN:
-                    sendMessage(player, plugin.getDiscord().DISCORD_JOIN_FORMAT
+                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            plugin.getDiscord().JOIN_WEBHOOK);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
                     break;
                 case SWITCH:
-                    sendMessage(player, plugin.getDiscord().DISCORD_SWITCH_FORMAT
+                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
                                     .replace("%from%", previousServer)
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername())
                                     .replace("%arrow%", "\u00BB"),
-                            plugin.getDiscord().JOIN_WEBHOOK);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
                     break;
                 case LEAVE:
-                    sendMessage(player, plugin.getDiscord().DISCORD_LEAVE_FORMAT
+                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getUsername()),
-                            plugin.getDiscord().JOIN_WEBHOOK);
+                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
                     break;
             }
         }

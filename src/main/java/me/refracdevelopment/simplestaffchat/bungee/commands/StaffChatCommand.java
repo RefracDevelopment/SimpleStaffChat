@@ -2,6 +2,9 @@ package me.refracdevelopment.simplestaffchat.bungee.commands;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -22,7 +25,7 @@ public class StaffChatCommand extends Command {
         String message = Joiner.on(" ").join(strings);
 
         if (!commandSender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(commandSender, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
@@ -35,23 +38,23 @@ public class StaffChatCommand extends Command {
                     .replace("%player%", commandSender.getName())
                     .replace("%message%", message);
 
-            plugin.getMethods().sendStaffChat(commandSender, format);
+            Methods.sendStaffChat(commandSender, format);
         } else {
             if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
                     plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
-                if (!commandSender.hasPermission(plugin.getPermissions().STAFFCHAT_HELP)) {
-                    plugin.getColor().sendMessage(commandSender, plugin.getConfig().NO_PERMISSION);
+                if (!commandSender.hasPermission(Permissions.STAFFCHAT_HELP)) {
+                    Color.sendMessage(commandSender, "no-permission");
                     return;
                 }
 
                 plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
-                    plugin.getColor().sendMessage(commandSender, s);
+                    Color.sendCustomMessage(commandSender, s);
                 });
             } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-                    plugin.getMethods().toggleStaffChat(player);
+                    Methods.toggleStaffChat(player);
                 }
             }
         }

@@ -1,7 +1,10 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities;
 
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -9,75 +12,71 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-public class Methods extends Manager {
+@UtilityClass
+public class Methods {
 
-    private List<UUID> staffChatMuted = new ArrayList<>();
-    private List<UUID> adminChatMuted = new ArrayList<>();
-    private List<UUID> devChatMuted = new ArrayList<>();
-    private List<UUID> staffChatPlayers = new ArrayList<>();
-    private List<UUID> adminChatPlayers = new ArrayList<>();
-    private List<UUID> devChatPlayers = new ArrayList<>();
-
-    public Methods(BungeeStaffChat plugin) {
-        super(plugin);
-    }
+    @Getter private final List<UUID> staffChatMuted = new ArrayList<>();
+    @Getter private final List<UUID> adminChatMuted = new ArrayList<>();
+    @Getter private final List<UUID> devChatMuted = new ArrayList<>();
+    @Getter private final List<UUID> staffChatPlayers = new ArrayList<>();
+    @Getter private final List<UUID> adminChatPlayers = new ArrayList<>();
+    @Getter private final List<UUID> devChatPlayers = new ArrayList<>();
 
     public void sendStaffChat(CommandSender commandSender, String format) {
-        for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE) && !staffChatMuted.contains(p.getUniqueId())) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSender, format));
+        for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(p.getUniqueId())) {
+                Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSender, format));
+        Color.log2(Color.translate(commandSender, format));
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            plugin.getDiscordImpl().sendStaffChat(player, format
+            DiscordImpl.sendStaffChat(player, format
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            plugin.getDiscordImpl().sendStaffChat(null, format
+            DiscordImpl.sendStaffChat(null, format
                     .replace("%player%", "Console")
             );
         }
     }
 
     public void sendDevChat(CommandSender commandSender, String format) {
-        for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().DEVCHAT_SEE) && !devChatMuted.contains(p.getUniqueId())) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSender, format));
+        for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
+            if (p.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(p.getUniqueId())) {
+                Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSender, format));
+        Color.log2(Color.translate(commandSender, format));
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            plugin.getDiscordImpl().sendDevChat(player, format
+            DiscordImpl.sendDevChat(player, format
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            plugin.getDiscordImpl().sendDevChat(null, format
+            DiscordImpl.sendDevChat(null, format
                     .replace("%player%", "Console")
             );
         }
     }
 
     public void sendAdminChat(CommandSender commandSender, String format) {
-        for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (p.hasPermission(plugin.getPermissions().ADMINCHAT_SEE) && !adminChatMuted.contains(p.getUniqueId())) {
-                plugin.getColor().sendMessage(p, plugin.getColor().translate(commandSender, format));
+        for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
+            if (p.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(p.getUniqueId())) {
+                Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
-        plugin.getColor().log2(plugin.getColor().translate(commandSender, format));
+        Color.log2(Color.translate(commandSender, format));
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            plugin.getDiscordImpl().sendAdminChat(player, format
+            DiscordImpl.sendAdminChat(player, format
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            plugin.getDiscordImpl().sendAdminChat(null, format
+            DiscordImpl.sendAdminChat(null, format
                     .replace("%player%", "Console")
             );
         }
@@ -86,42 +85,42 @@ public class Methods extends Manager {
     public void toggleStaffChat(ProxiedPlayer player) {
         if (staffChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, "staffchat-toggle-off");
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
                 devChatPlayers.remove(player.getUniqueId());
             }
             staffChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_TOGGLE_ON);
+            Color.sendMessage(player, "staffchat-toggle-on");
         }
     }
 
     public void toggleAdminChat(ProxiedPlayer player) {
         if (adminChatPlayers.contains(player.getUniqueId())) {
             adminChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, "adminchat-toggle-off");
         } else {
             if (devChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 devChatPlayers.remove(player.getUniqueId());
                 staffChatPlayers.remove(player.getUniqueId());
             }
             adminChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_TOGGLE_ON);
+            Color.sendMessage(player, "adminchat-toggle-on");
         }
     }
 
     public void toggleDevChat(ProxiedPlayer player) {
         if (devChatPlayers.contains(player.getUniqueId())) {
             devChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_TOGGLE_OFF);
+            Color.sendMessage(player, "devchat-toggle-off");
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
                 staffChatPlayers.remove(player.getUniqueId());
             }
             devChatPlayers.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_TOGGLE_ON);
+            Color.sendMessage(player, "devchat-toggle-on");
         }
     }
 
@@ -131,49 +130,49 @@ public class Methods extends Manager {
             staffChatPlayers.remove(player.getUniqueId());
             devChatPlayers.remove(player.getUniqueId());
             adminChatPlayers.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ALLCHAT_TOGGLE_ON);
+            Color.sendMessage(player, "allchat-toggle-on");
         }
     }
 
     public void hideStaffChat(ProxiedPlayer player) {
         if (staffChatMuted.contains(player.getUniqueId())) {
             staffChatMuted.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_MUTED_OFF);
+            Color.sendMessage(player, "staffchat-muted-off");
         } else {
             if (adminChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
                 adminChatMuted.remove(player.getUniqueId());
                 devChatMuted.remove(player.getUniqueId());
             }
             staffChatMuted.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().STAFFCHAT_MUTED_ON);
+            Color.sendMessage(player, "staffchat-muted-on");
         }
     }
 
     public void hideAdminChat(ProxiedPlayer player) {
         if (adminChatMuted.contains(player.getUniqueId())) {
             adminChatMuted.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_MUTED_OFF);
+            Color.sendMessage(player, "adminchat-muted-off");
         } else {
             if (staffChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
                 staffChatMuted.remove(player.getUniqueId());
                 devChatMuted.remove(player.getUniqueId());
             }
             adminChatMuted.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().ADMINCHAT_MUTED_ON);
+            Color.sendMessage(player, "adminchat-muted-on");
         }
     }
 
     public void hideDevChat(ProxiedPlayer player) {
         if (devChatMuted.contains(player.getUniqueId())) {
             devChatMuted.remove(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_MUTED_OFF);
+            Color.sendMessage(player, "devchat-muted-of");
         } else {
             if (adminChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
                 adminChatMuted.remove(player.getUniqueId());
                 staffChatMuted.remove(player.getUniqueId());
             }
             devChatMuted.add(player.getUniqueId());
-            plugin.getColor().sendMessage(player, plugin.getConfig().DEVCHAT_MUTED_ON);
+            Color.sendMessage(player, "devchat-muted-on");
         }
     }
 }

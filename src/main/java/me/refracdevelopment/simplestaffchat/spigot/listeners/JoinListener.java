@@ -1,7 +1,11 @@
 package me.refracdevelopment.simplestaffchat.spigot.listeners;
 
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
+import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.DiscordImpl;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,8 +29,6 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        
-
         if (player.getUniqueId().equals(getDevUUID)) {
             sendDevMessage(player);
         } else if (player.getUniqueId().equals(getDevUUID2)) {
@@ -34,18 +36,18 @@ public class JoinListener implements Listener {
         }
 
         if (!plugin.getSettings().JOIN_ENABLED) return;
-        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_JOIN)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
 
-        for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().JOIN_FORMAT));
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendCustomMessage(p, Color.translate(player, plugin.getSettings().JOIN_FORMAT));
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
-            plugin.getPluginMessage().sendStaffChat(player, plugin.getColor().translate(player, plugin.getSettings().JOIN_FORMAT));
+            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, plugin.getSettings().JOIN_FORMAT));
         }
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getSettings().JOIN_FORMAT));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.JOIN, plugin.getSettings().JOIN_FORMAT
+        Color.log2(Color.translate(player, plugin.getSettings().JOIN_FORMAT));
+        DiscordImpl.sendJoin(player, JoinType.JOIN, plugin.getSettings().JOIN_FORMAT
                 .replace("%server%", plugin.getSettings().SERVER_NAME)
                 .replace("%player%", player.getName())
         );
@@ -55,35 +57,31 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        
-
         if (!plugin.getSettings().JOIN_ENABLED) return;
-        if (!player.hasPermission(plugin.getPermissions().STAFFCHAT_QUIT)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
 
-        for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (p.hasPermission(plugin.getPermissions().STAFFCHAT_SEE)) {
-                plugin.getColor().sendCustomMessage(p, plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
+                Color.sendCustomMessage(p, Color.translate(player, plugin.getSettings().QUIT_FORMAT));
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
-            plugin.getPluginMessage().sendStaffChat(player, plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
+            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, plugin.getSettings().QUIT_FORMAT));
         }
-        plugin.getColor().log2(plugin.getColor().translate(player, plugin.getSettings().QUIT_FORMAT));
-        plugin.getDiscordImpl().sendJoin(player, JoinType.LEAVE, plugin.getSettings().QUIT_FORMAT
+        Color.log2(Color.translate(player, plugin.getSettings().QUIT_FORMAT));
+        DiscordImpl.sendJoin(player, JoinType.LEAVE, plugin.getSettings().QUIT_FORMAT
                 .replace("%server%", plugin.getSettings().SERVER_NAME)
                 .replace("%player%", player.getName())
         );
     }
 
     private void sendDevMessage(Player player) {
-        
-
-        plugin.getColor().sendCustomMessage(player, " ");
-        plugin.getColor().sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
-        plugin.getColor().sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
-        plugin.getColor().sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
-        plugin.getColor().sendCustomMessage(player, " ");
-        plugin.getColor().sendCustomMessage(player, "&aServer version&7: &f" + plugin.getServer().getVersion());
-        plugin.getColor().sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "&aWelcome " + plugin.getDescription().getName() + " Developer!");
+        Color.sendCustomMessage(player, "&aThis server is currently running " + plugin.getDescription().getName() + " &bv" + plugin.getDescription().getVersion() + "&a.");
+        Color.sendCustomMessage(player, "&aPlugin name&7: &f" + plugin.getDescription().getName());
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "&aServer version&7: &f" + Bukkit.getVersion());
+        Color.sendCustomMessage(player, " ");
     }
 }

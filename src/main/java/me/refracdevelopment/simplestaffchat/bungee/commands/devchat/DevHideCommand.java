@@ -1,6 +1,8 @@
 package me.refracdevelopment.simplestaffchat.bungee.commands.devchat;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
@@ -22,10 +24,10 @@ public class DevHideCommand extends Command {
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
         if (!player.hasPermission(plugin.getCommands().DEV_HIDE_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(player, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
-        plugin.getMethods().hideDevChat(player);
+        Methods.hideDevChat(player);
     }
 }

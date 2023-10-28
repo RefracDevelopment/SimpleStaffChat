@@ -5,6 +5,8 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class AdminChatCommand implements SimpleCommand {
 
@@ -23,7 +25,7 @@ public class AdminChatCommand implements SimpleCommand {
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().ADMINCHAT_COMMAND_PERMISSION)) {
-            plugin.getColor().sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+            Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
@@ -36,7 +38,7 @@ public class AdminChatCommand implements SimpleCommand {
                     .replace("%player%", "Console")
                     .replace("%message%", message);
 
-            plugin.getMethods().sendAdminChat(commandSource, format, message);
+            Methods.sendAdminChat(commandSource, format, message);
         }
     }
 }

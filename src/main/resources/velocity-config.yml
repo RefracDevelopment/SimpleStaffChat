@@ -6,16 +6,17 @@
 #         \/         \/|__|             \/        \/           \/   \/     \/          \/     \/     \/
 
 # This is used for automatic file updating purposes
-config-version: 1
+config-version: 2
 
-# Used to send messages to staffchat without the
-# need to type in /staffchat <message> or /staffchattoggle
-# this uses the same format as /staffchat <message>
-staffchat-symbol: "@"
-adminchat-symbol: "#"
-devchat-symbol: "%"
-# Change to false if you want to disable all chat symbols
-symbols: true
+symbols:
+  # Change to false if you want to disable all chat symbols
+  enabled: true
+  # Used to send messages to staffchat without the
+  # need to type in /staffchat <message> or /staffchattoggle
+  # this uses the same format as /staffchat <message>
+  staffchat-symbol: "@"
+  adminchat-symbol: "#"
+  devchat-symbol: "%"
 
 format:
   # Minecraft format
