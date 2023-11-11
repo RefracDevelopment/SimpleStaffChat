@@ -1,4 +1,4 @@
-![](https://i.imgur.com/rfrfd9i.png)
+![](https://i.imgur.com/9n13hxp.png)
 
 SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
 
