@@ -65,7 +65,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         }
 
         // Make sure the server has PlaceholderAPI
-        if (pluginManager.getPlugin("PlaceholderAPI") == null && !isFolia()) {
+        if (!pluginManager.isPluginEnabled("PlaceholderAPI") && !isFolia()) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -80,7 +80,7 @@ public final class SimpleStaffChat extends JavaPlugin {
                     "consider downloading AntiPopup: https://www.spigotmc.org/resources/103782/");
         }
 
-        if (this.settings.BUNGEECORD) {
+        if (getSettings().BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this.pluginMessage = new PluginMessage(this));
         }
@@ -102,7 +102,7 @@ public final class SimpleStaffChat extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (this.settings.BUNGEECORD) {
+        if (getSettings().BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
             getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", pluginMessage);
         }
@@ -123,15 +123,15 @@ public final class SimpleStaffChat extends JavaPlugin {
 
     public void reloadFiles() {
         // Files
-        this.configFile.reload();
-        this.commandsFile.reload();
-        this.discordFile.reload();
-        this.localeFile.reload();
+        getConfigFile().reload();
+        getCommandsFile().reload();
+        getDiscordFile().reload();
+        getLocaleFile().reload();
 
         // Caches
-        this.settings.loadConfig();
-        this.commands.loadConfig();
-        this.discord.loadConfig();
+        getSettings().loadConfig();
+        getCommands().loadConfig();
+        getDiscord().loadConfig();
 
         Color.log("&c==========================================");
         Color.log("&eAll files have been reloaded correctly!");
@@ -140,7 +140,7 @@ public final class SimpleStaffChat extends JavaPlugin {
 
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
-        commandManager.registerAll();
+        getCommandManager().registerAll();
         Color.log("&aLoaded commands.");
     }
 

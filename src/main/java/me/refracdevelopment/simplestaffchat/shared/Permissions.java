@@ -14,7 +14,7 @@ public class Permissions {
     public final String STAFFCHAT_JOIN = "simplestaffchat.join";
     public final String STAFFCHAT_SWITCH = "simplestaffchat.switch";
     public final String STAFFCHAT_QUIT = "simplestaffchat.quit";
-    public final String STAFFCHAT_SYMBOL = "simplestaffchat.symbol";
+    public final String STAFFCHAT_SYMBOL = "simplestaffchat.staffchat.symbol";
     public final String ADMINCHAT_SYMBOL = "simplestaffchat.adminchat.symbol";
     public final String DEVCHAT_SYMBOL = "simplestaffchat.devchat.symbol";
 

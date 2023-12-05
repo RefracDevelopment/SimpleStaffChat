@@ -7,10 +7,10 @@ import java.util.List;
 public class Config {
 
     // General
+    public boolean SYMBOLS;
     public String STAFFCHAT_SYMBOL;
     public String ADMINCHAT_SYMBOL;
     public String DEVCHAT_SYMBOL;
-    public boolean SYMBOLS;
     public String STAFFCHAT_FORMAT;
     public String CONSOLE_STAFFCHAT_FORMAT;
     public String ADMINCHAT_FORMAT;
@@ -45,10 +45,10 @@ public class Config {
     }
 
     public void loadConfig() {
-        STAFFCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("staffchat-symbol");
-        ADMINCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("adminchat-symbol");
-        DEVCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("devchat-symbol");
-        SYMBOLS = VelocityStaffChat.getInstance().getConfigFile().getBoolean("symbols");
+        SYMBOLS = VelocityStaffChat.getInstance().getConfigFile().getBoolean("symbols.enabled");
+        STAFFCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("symbols.staffchat-symbol");
+        ADMINCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("symbols.adminchat-symbol");
+        DEVCHAT_SYMBOL = VelocityStaffChat.getInstance().getConfigFile().getString("symbols.devchat-symbol");
         STAFFCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.minecraft-format");
         CONSOLE_STAFFCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.console-staffchat-format");
         ADMINCHAT_FORMAT = VelocityStaffChat.getInstance().getConfigFile().getString("format.adminchat-format");
