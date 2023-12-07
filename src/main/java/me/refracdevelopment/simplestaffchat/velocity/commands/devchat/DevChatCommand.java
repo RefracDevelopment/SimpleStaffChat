@@ -18,8 +18,6 @@ public class DevChatCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!plugin.getCommands().DEVCHAT_COMMAND_ENABLED) return;
-
         CommandSource commandSource = invocation.source();
 
         String message = Joiner.on(" ").join(invocation.arguments());

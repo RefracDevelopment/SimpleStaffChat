@@ -2,10 +2,7 @@ package me.refracdevelopment.simplestaffchat.spigot.manager;
 
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.HideCommand;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.spigot.command.commands.*;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminChatCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminToggleCommand;
@@ -64,6 +61,10 @@ public class CommandManager {
 
         if (plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) {
             commands.add(new AdminToggleCommand(plugin));
+        }
+
+        if (plugin.getCommands().CHAT_COMMAND_ENABLED) {
+            commands.add(new ChatCommand(plugin));
         }
     }
 

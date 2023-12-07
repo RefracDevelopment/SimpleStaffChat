@@ -16,7 +16,6 @@ public class AdminToggleCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) return;
         if (!(invocation.source() instanceof Player)) return;
 
         Player player = (Player) invocation.source();

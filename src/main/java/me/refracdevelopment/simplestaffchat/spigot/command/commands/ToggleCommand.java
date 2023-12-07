@@ -19,8 +19,6 @@ public class ToggleCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!plugin.getCommands().STAFF_TOGGLE_COMMAND_ENABLED) return false;
-
         if (!(sender instanceof Player)) {
             Color.sendMessage(sender, "no-console");
             return true;

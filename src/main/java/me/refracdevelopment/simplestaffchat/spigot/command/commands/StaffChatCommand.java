@@ -21,8 +21,6 @@ public class StaffChatCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!plugin.getCommands().STAFFCHAT_COMMAND_ENABLED) return false;
-
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {

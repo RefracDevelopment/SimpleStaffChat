@@ -19,8 +19,6 @@ public class DevHideCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
-        if (!plugin.getCommands().DEV_HIDE_COMMAND_ENABLED) return false;
-
         if (!(commandSender instanceof Player)) {
             Color.sendMessage(commandSender, "no-console");
             return true;

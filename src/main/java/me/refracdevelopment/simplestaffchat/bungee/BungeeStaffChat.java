@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.bungee;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.bungee.api.BungeeStaffChatAPI;
 import me.refracdevelopment.simplestaffchat.bungee.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
@@ -29,7 +28,6 @@ public class BungeeStaffChat extends Plugin {
     @Getter private static BungeeStaffChat instance;
     
     private CommandManager commandManager;
-    private BungeeStaffChatAPI staffChatAPI;
 
     // Files
     private ConfigFile configFile;
@@ -63,8 +61,6 @@ public class BungeeStaffChat extends Plugin {
 
         loadCommands();
         loadListeners();
-
-        this.staffChatAPI = new BungeeStaffChatAPI();
 
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");

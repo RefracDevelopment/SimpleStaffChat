@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.spigot;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.spigot.api.SimpleStaffChatAPI;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
@@ -43,8 +42,6 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Config settings;
     private Commands commands;
     private Discord discord;
-
-    private SimpleStaffChatAPI staffChatAPI;
 
     @Override
     public void onEnable() {
@@ -87,8 +84,6 @@ public final class SimpleStaffChat extends JavaPlugin {
 
         loadCommands();
         loadListeners();
-
-        this.staffChatAPI = new SimpleStaffChatAPI();
 
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");

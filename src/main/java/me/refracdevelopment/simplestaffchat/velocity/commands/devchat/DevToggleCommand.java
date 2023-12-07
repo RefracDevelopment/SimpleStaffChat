@@ -17,7 +17,6 @@ public class DevToggleCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!plugin.getCommands().DEV_TOGGLE_COMMAND_ENABLED) return;
         CommandSource commandSource = invocation.source();
 
         if (!(commandSource instanceof Player)) return;

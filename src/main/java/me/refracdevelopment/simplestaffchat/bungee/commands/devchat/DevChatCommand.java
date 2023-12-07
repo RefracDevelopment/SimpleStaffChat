@@ -19,8 +19,6 @@ public class DevChatCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        if (!plugin.getCommands().DEVCHAT_COMMAND_ENABLED) return;
-
         String message = Joiner.on(" ").join(strings);
 
         if (!commandSender.hasPermission(plugin.getCommands().DEVCHAT_COMMAND_PERMISSION)) {

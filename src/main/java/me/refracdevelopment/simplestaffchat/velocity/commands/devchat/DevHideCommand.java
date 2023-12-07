@@ -16,7 +16,6 @@ public class DevHideCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!plugin.getCommands().DEV_HIDE_COMMAND_ENABLED) return;
         if (!(invocation.source() instanceof Player)) return;
 
         Player player = (Player) invocation.source();

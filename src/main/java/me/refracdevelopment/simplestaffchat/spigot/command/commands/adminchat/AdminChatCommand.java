@@ -20,8 +20,6 @@ public class AdminChatCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!plugin.getCommands().ADMINCHAT_COMMAND_ENABLED) return false;
-
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(plugin.getCommands().ADMINCHAT_COMMAND_PERMISSION)) {

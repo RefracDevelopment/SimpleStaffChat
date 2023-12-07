@@ -18,7 +18,6 @@ public class AdminHideCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        if (!plugin.getCommands().ADMIN_HIDE_COMMAND_ENABLED) return;
         if (!(commandSender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;

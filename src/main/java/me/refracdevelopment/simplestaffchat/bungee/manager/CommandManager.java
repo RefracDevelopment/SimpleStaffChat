@@ -1,10 +1,7 @@
 package me.refracdevelopment.simplestaffchat.bungee.manager;
 
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.commands.HideCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
+import me.refracdevelopment.simplestaffchat.bungee.commands.*;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminChatCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
@@ -65,6 +62,11 @@ public class CommandManager {
         if (plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) {
             commands.add(new AdminToggleCommand(plugin));
         }
+
+        if (plugin.getCommands().CHAT_COMMAND_ENABLED) {
+            commands.add(new ChatCommand(plugin));
+        }
+
         commands.forEach(command -> plugin.getProxy().getPluginManager().registerCommand(plugin, command));
     }
 

@@ -20,8 +20,6 @@ public class DevChatCommand extends Command {
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!plugin.getCommands().DEVCHAT_COMMAND_ENABLED) return false;
-
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
