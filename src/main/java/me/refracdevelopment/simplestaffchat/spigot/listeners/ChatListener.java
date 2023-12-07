@@ -26,7 +26,7 @@ public class ChatListener implements Listener {
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "toggle-off");
+                Color.sendMessage(player, "staffchat-toggle-off");
                 return;
             }
 

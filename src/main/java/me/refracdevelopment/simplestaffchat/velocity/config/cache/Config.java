@@ -62,8 +62,8 @@ public class Config {
         PREFIX = VelocityStaffChat.getInstance().getConfigFile().getString("messages.prefix");
         NO_PERMISSION = VelocityStaffChat.getInstance().getConfigFile().getString("messages.no-permission");
         RELOAD = VelocityStaffChat.getInstance().getConfigFile().getString("messages.reload");
-        STAFFCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.toggle-on");
-        STAFFCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.toggle-off");
+        STAFFCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-toggle-on");
+        STAFFCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-toggle-off");
         ADMINCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-on");
         ADMINCHAT_TOGGLE_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-off");
         DEVCHAT_TOGGLE_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-on");

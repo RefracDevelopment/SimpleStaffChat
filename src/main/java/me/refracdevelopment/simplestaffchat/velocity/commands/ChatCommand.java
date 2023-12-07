@@ -25,6 +25,10 @@ public class ChatCommand implements SimpleCommand {
             return;
         }
 
+        if (invocation.arguments().length == 0) {
+            return;
+        }
+
         switch (invocation.arguments()[0]) {
             case "staff":
                 Methods.toggleStaffChat(player);

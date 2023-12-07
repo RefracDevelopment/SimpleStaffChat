@@ -1,5 +1,5 @@
 # This is used for automatic file updating purposes
-config-version: 1
+config-version: '1'
 
 # Any changes here requires a server restart
 commands:

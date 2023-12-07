@@ -31,6 +31,10 @@ public class ChatCommand extends Command {
             return true;
         }
 
+        if (args.length == 0) {
+            return true;
+        }
+
         switch (args[0]) {
             case "staff":
                 Methods.toggleStaffChat(player);

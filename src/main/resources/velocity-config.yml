@@ -6,7 +6,7 @@
 #         \/         \/|__|             \/        \/           \/   \/     \/          \/     \/     \/
 
 # This is used for automatic file updating purposes
-config-version: 2
+config-version: '3'
 
 symbols:
   # Change to false if you want to disable all chat symbols
@@ -45,8 +45,8 @@ messages:
   prefix: "<dark_gray>[<red><bold>StaffChat<dark_gray>]"
   no-permission: "<red>You don't have permission to execute this command."
   reload: "<gray>Config files reloaded. Changes should be live in-game."
-  toggle-on: "%prefix% <yellow>StaffChat toggled <green>on<yellow>."
-  toggle-off: "%prefix% <yellow>StaffChat toggled <red>off<yellow>."
+  staffchat-toggle-on: "%prefix% <yellow>StaffChat toggled <green>on<yellow>."
+  staffchat-toggle-off: "%prefix% <yellow>StaffChat toggled <red>off<yellow>."
   adminchat-toggle-on: "<dark_gray>[<red><bold>AdminChat<dark_gray>] <yellow>AdminChat toggled <green>on<yellow>."
   adminchat-toggle-off: "<dark_gray>[<red><bold>AdminChat<dark_gray>] <yellow>AdminChat toggled <red>off<yellow>."
   devchat-toggle-on: "<dark_gray>[<aqua><bold>DevChat<dark_gray>] <yellow>DevChat toggled <green>on<yellow>."

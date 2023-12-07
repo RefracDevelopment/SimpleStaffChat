@@ -114,14 +114,14 @@ public class Methods {
     public void toggleStaffChat(Player player) {
         if (staffChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
-            Color.sendMessage(player, "toggle-off");
+            Color.sendMessage(player, "staffchat-toggle-off");
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
                 devChatPlayers.remove(player.getUniqueId());
             }
             staffChatPlayers.add(player.getUniqueId());
-            Color.sendMessage(player, "toggle-on");
+            Color.sendMessage(player, "staffchat-toggle-on");
         }
     }
 
