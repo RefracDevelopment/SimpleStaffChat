@@ -1,5 +1,5 @@
 # This is used for automatic file updating purposes
-config-version: '1'
+config-version: '2'
 
 # Any changes here requires a server restart
 commands:
@@ -78,17 +78,3 @@ commands:
       - "staffchathide"
       - "schide"
       - "scmute"
-  admin-hide:
-    enabled: true
-    permission: "simplestaffchat.command.adminchat.hide"
-    aliases:
-      - "adminchathide"
-      - "achide"
-      - "acmute"
-  dev-hide:
-    enabled: true
-    permission: "simplestaffchat.command.devchat.hide"
-    aliases:
-      - "devchathide"
-      - "dchide"
-      - "dcmute"

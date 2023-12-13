@@ -9,7 +9,7 @@ import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class DevToggleCommand implements SimpleCommand {
 
-    private VelocityStaffChat plugin;
+    private final VelocityStaffChat plugin;
 
     public DevToggleCommand(VelocityStaffChat plugin) {
         this.plugin = plugin;

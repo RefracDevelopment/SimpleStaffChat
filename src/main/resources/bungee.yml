@@ -1,7 +1,7 @@
 name: SimpleStaffChat2
 version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
-author: RefracDevelopment
+author: Refrac
 softDepends:
   - LuckPerms
   - AntiPopup-Via

@@ -6,7 +6,7 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat2</artifactId>
-    <version>3.2-rc.3</version>
+    <version>3.2-rc.4</version>
     <packaging>jar</packaging>
 
     <name>SimpleStaffChat2</name>

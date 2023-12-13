@@ -18,7 +18,7 @@ public class ToggleCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender commandSender, String[] args) {
         if (!(commandSender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;

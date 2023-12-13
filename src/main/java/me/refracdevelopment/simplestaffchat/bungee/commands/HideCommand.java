@@ -12,21 +12,39 @@ public class HideCommand extends Command {
     private final BungeeStaffChat plugin;
 
     public HideCommand(BungeeStaffChat plugin) {
-        super(plugin.getCommands().STAFF_HIDE_COMMAND_ALIASES.get(0), "", plugin.getCommands().STAFF_HIDE_COMMAND_ALIASES.toArray(new String[0]));
+        super(plugin.getCommands().HIDE_COMMAND_ALIASES.get(0), "", plugin.getCommands().HIDE_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender commandSender, String[] args) {
         if (!(commandSender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-        if (!player.hasPermission(plugin.getCommands().STAFF_HIDE_COMMAND_PERMISSION)) {
+        if (!player.hasPermission(plugin.getCommands().HIDE_COMMAND_PERMISSION)) {
             Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
-        Methods.hideStaffChat(player);
+        if (args.length == 0) {
+            Color.sendCustomMessage(player, "&c/" + getName() + " <staff|admin|dev|all>");
+            return;
+        }
+
+        switch (args[0]) {
+            case "staff":
+                Methods.hideStaffChat(player);
+                break;
+            case "admin":
+                Methods.hideAdminChat(player);
+                break;
+            case "dev":
+                Methods.hideDevChat(player);
+                break;
+            case "all":
+                Methods.hideAll(player);
+                break;
+        }
     }
 }

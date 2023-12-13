@@ -19,15 +19,15 @@ public class StaffChatCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
-        String message = Joiner.on(" ").join(strings);
+    public void execute(CommandSender commandSender, String[] args) {
+        String message = Joiner.on(" ").join(args);
 
         if (!commandSender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
             Color.sendMessage(commandSender, "no-permission");
             return;
         }
 
-        if (strings.length >= 1) {
+        if (args.length >= 1) {
             String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
                     .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
                     .replace("%player%", commandSender.getName())

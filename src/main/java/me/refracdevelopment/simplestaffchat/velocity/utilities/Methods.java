@@ -137,25 +137,56 @@ public class Methods {
     public void hideStaffChat(Player player) {
         if (staffChatMuted.contains(player.getUniqueId())) {
             staffChatMuted.remove(player.getUniqueId());
-
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().STAFFCHAT_MUTED_OFF);
         } else {
+            if (devChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
+                devChatMuted.remove(player.getUniqueId());
+                staffChatMuted.remove(player.getUniqueId());
+            }
             staffChatMuted.add(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().STAFFCHAT_MUTED_ON);
         }
     }
 
     public void hideAdminChat(Player player) {
         if (adminChatMuted.contains(player.getUniqueId())) {
             adminChatMuted.remove(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ADMINCHAT_MUTED_OFF);
         } else {
+            if (devChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
+                devChatMuted.remove(player.getUniqueId());
+                staffChatMuted.remove(player.getUniqueId());
+            }
             adminChatMuted.add(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ADMINCHAT_MUTED_ON);
         }
     }
 
     public void hideDevChat(Player player) {
         if (devChatMuted.contains(player.getUniqueId())) {
             devChatMuted.remove(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().DEVCHAT_MUTED_OFF);
         } else {
+            if (adminChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
+                adminChatMuted.remove(player.getUniqueId());
+                staffChatMuted.remove(player.getUniqueId());
+            }
             devChatMuted.add(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().DEVCHAT_MUTED_ON);
+        }
+    }
+
+    public void hideAllChat(Player player) {
+        if (staffChatMuted.contains(player.getUniqueId()) || adminChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
+            staffChatMuted.remove(player.getUniqueId());
+            adminChatMuted.remove(player.getUniqueId());
+            devChatMuted.remove(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ALLCHAT_MUTED_OFF);
+        } else {
+            staffChatMuted.add(player.getUniqueId());
+            adminChatMuted.add(player.getUniqueId());
+            devChatMuted.add(player.getUniqueId());
+            Color.sendMessage(player, VelocityStaffChat.getInstance().getConfig().ALLCHAT_MUTED_ON);
         }
     }
 }

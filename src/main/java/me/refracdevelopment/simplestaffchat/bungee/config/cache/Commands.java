@@ -34,17 +34,9 @@ public class Commands {
     public String CHAT_COMMAND_PERMISSION;
     public List<String> CHAT_COMMAND_ALIASES;
 
-    public boolean STAFF_HIDE_COMMAND_ENABLED;
-    public String STAFF_HIDE_COMMAND_PERMISSION;
-    public List<String> STAFF_HIDE_COMMAND_ALIASES;
-
-    public boolean ADMIN_HIDE_COMMAND_ENABLED;
-    public String ADMIN_HIDE_COMMAND_PERMISSION;
-    public List<String> ADMIN_HIDE_COMMAND_ALIASES;
-
-    public boolean DEV_HIDE_COMMAND_ENABLED;
-    public String DEV_HIDE_COMMAND_PERMISSION;
-    public List<String> DEV_HIDE_COMMAND_ALIASES;
+    public boolean HIDE_COMMAND_ENABLED;
+    public String HIDE_COMMAND_PERMISSION;
+    public List<String> HIDE_COMMAND_ALIASES;
 
     public Commands() {
         loadConfig();
@@ -79,16 +71,8 @@ public class Commands {
         CHAT_COMMAND_PERMISSION = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.chat.permission");
         CHAT_COMMAND_ALIASES = BungeeStaffChat.getInstance().getCommandsFile().getStringList("commands.chat.aliases");
 
-        STAFF_HIDE_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.hide.enabled");
-        STAFF_HIDE_COMMAND_PERMISSION = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.hide.permission");
-        STAFF_HIDE_COMMAND_ALIASES = BungeeStaffChat.getInstance().getCommandsFile().getStringList("commands.hide.aliases");
-
-        ADMIN_HIDE_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.admin-hide.enabled");
-        ADMIN_HIDE_COMMAND_PERMISSION = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.admin-hide.permission");
-        ADMIN_HIDE_COMMAND_ALIASES = BungeeStaffChat.getInstance().getCommandsFile().getStringList("commands.admin-hide.aliases");
-
-        DEV_HIDE_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.dev-hide.enabled");
-        DEV_HIDE_COMMAND_PERMISSION = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.dev-hide.permission");
-        DEV_HIDE_COMMAND_ALIASES = BungeeStaffChat.getInstance().getCommandsFile().getStringList("commands.dev-hide.aliases");
+        HIDE_COMMAND_ENABLED = BungeeStaffChat.getInstance().getCommandsFile().getBoolean("commands.hide.enabled");
+        HIDE_COMMAND_PERMISSION = BungeeStaffChat.getInstance().getCommandsFile().getString("commands.hide.permission");
+        HIDE_COMMAND_ALIASES = BungeeStaffChat.getInstance().getCommandsFile().getStringList("commands.hide.aliases");
     }
 }

@@ -175,4 +175,18 @@ public class Methods {
             Color.sendMessage(player, "devchat-muted-on");
         }
     }
+
+    public void hideAll(ProxiedPlayer player) {
+        if (staffChatMuted.contains(player.getUniqueId()) && adminChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
+            staffChatMuted.remove(player.getUniqueId());
+            adminChatMuted.remove(player.getUniqueId());
+            devChatMuted.remove(player.getUniqueId());
+            Color.sendMessage(player, "allchat-muted-off");
+        } else {
+            staffChatMuted.add(player.getUniqueId());
+            adminChatMuted.add(player.getUniqueId());
+            devChatMuted.add(player.getUniqueId());
+            Color.sendMessage(player, "allchat-muted-on");
+        }
+    }
 }

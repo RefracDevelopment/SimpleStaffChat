@@ -6,7 +6,7 @@
 #         \/         \/|__|             \/        \/           \/   \/     \/          \/     \/     \/
 
 # This is used for automatic file updating purposes
-config-version: '3'
+config-version: '4'
 
 symbols:
   # Change to false if you want to disable all chat symbols
@@ -58,6 +58,8 @@ messages:
   adminchat-muted-off: "<yellow>Your AdminChat has been un-muted."
   devchat-muted-on: "<yellow>Your DevChat has been muted."
   devchat-muted-off: "<yellow>Your DevChat has been un-muted."
+  allchat-muted-on: "<yellow>All channels have been muted."
+  allchat-muted-off: "<yellow>All channels have been un-muted."
   # If this is set to "toggle" you can use /sc to toggle into staffchat easier
   staffchat-output: "default"
   staffchat-message:

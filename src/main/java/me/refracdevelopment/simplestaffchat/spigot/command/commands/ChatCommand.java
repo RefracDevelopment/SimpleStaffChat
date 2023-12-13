@@ -32,6 +32,7 @@ public class ChatCommand extends Command {
         }
 
         if (args.length == 0) {
+            Color.sendCustomMessage(player, "&c/" + getName() + " <staff|admin|dev|all>");
             return true;
         }
 

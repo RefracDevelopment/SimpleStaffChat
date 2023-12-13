@@ -37,6 +37,8 @@ public class Config {
     public String ADMINCHAT_MUTED_OFF;
     public String DEVCHAT_MUTED_ON;
     public String DEVCHAT_MUTED_OFF;
+    public String ALLCHAT_MUTED_ON;
+    public String ALLCHAT_MUTED_OFF;
     public String STAFFCHAT_OUTPUT;
     public List<String> STAFFCHAT_MESSAGE;
 
@@ -75,6 +77,8 @@ public class Config {
         ADMINCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.adminchat-muted-off");
         DEVCHAT_MUTED_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-muted-on");
         DEVCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.devchat-muted-off");
+        ALLCHAT_MUTED_ON = VelocityStaffChat.getInstance().getConfigFile().getString("messages.allchat-muted-on");
+        ALLCHAT_MUTED_OFF = VelocityStaffChat.getInstance().getConfigFile().getString("messages.allchat-muted-off");
         STAFFCHAT_OUTPUT = VelocityStaffChat.getInstance().getConfigFile().getString("messages.staffchat-output");
         STAFFCHAT_MESSAGE = VelocityStaffChat.getInstance().getConfigFile().getStringList("messages.staffchat-message");
     }

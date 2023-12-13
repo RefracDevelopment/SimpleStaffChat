@@ -8,7 +8,7 @@ import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class ChatCommand implements SimpleCommand {
 
-    private VelocityStaffChat plugin;
+    private final VelocityStaffChat plugin;
 
     public ChatCommand(VelocityStaffChat plugin) {
         this.plugin = plugin;
@@ -26,6 +26,7 @@ public class ChatCommand implements SimpleCommand {
         }
 
         if (invocation.arguments().length == 0) {
+            Color.sendMessage(player, "&c/" + plugin.getCommands().CHAT_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
             return;
         }
 

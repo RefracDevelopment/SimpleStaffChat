@@ -4,10 +4,8 @@ import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.command.Command;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.*;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevHideCommand;
 import me.refracdevelopment.simplestaffchat.spigot.command.commands.devchat.DevToggleCommand;
 
 import java.util.Arrays;
@@ -35,16 +33,12 @@ public class CommandManager {
 
         commands.add(new ReloadCommand(plugin));
 
-        if (plugin.getCommands().STAFF_HIDE_COMMAND_ENABLED) {
+        if (plugin.getCommands().HIDE_COMMAND_ENABLED) {
             commands.add(new HideCommand(plugin));
         }
 
         if (plugin.getCommands().DEVCHAT_COMMAND_ENABLED) {
             commands.add(new DevChatCommand(plugin));
-        }
-
-        if (plugin.getCommands().DEV_HIDE_COMMAND_ENABLED) {
-            commands.add(new DevHideCommand(plugin));
         }
 
         if (plugin.getCommands().DEV_TOGGLE_COMMAND_ENABLED) {
@@ -53,10 +47,6 @@ public class CommandManager {
 
         if (plugin.getCommands().ADMINCHAT_COMMAND_ENABLED) {
             commands.add(new AdminChatCommand(plugin));
-        }
-
-        if (plugin.getCommands().ADMIN_HIDE_COMMAND_ENABLED) {
-            commands.add(new AdminHideCommand(plugin));
         }
 
         if (plugin.getCommands().ADMIN_TOGGLE_COMMAND_ENABLED) {

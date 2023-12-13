@@ -16,7 +16,7 @@ public class ReloadCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender commandSender, String[] args) {
         if (!commandSender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
             Color.sendMessage(commandSender, "no-permission");
             return;

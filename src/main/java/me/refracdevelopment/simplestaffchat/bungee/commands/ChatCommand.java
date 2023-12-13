@@ -17,7 +17,7 @@ public class ChatCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender commandSender, String[] args) {
         if (!(commandSender instanceof ProxiedPlayer)) return;
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
@@ -27,11 +27,12 @@ public class ChatCommand extends Command {
             return;
         }
 
-        if (strings.length == 0) {
+        if (args.length == 0) {
+            Color.sendCustomMessage(player, "&c/" + getName() + " <staff|admin|dev|all>");
             return;
         }
 
-        switch (strings[0]) {
+        switch (args[0]) {
             case "staff":
                 Methods.toggleStaffChat(player);
                 break;

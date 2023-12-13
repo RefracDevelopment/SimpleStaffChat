@@ -15,10 +15,8 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.velocity.commands.*;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminHideCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevHideCommand;
 import me.refracdevelopment.simplestaffchat.velocity.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.velocity.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
@@ -41,11 +39,11 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.2-rc.3",
+        version = "3.2-rc.4",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "A Simple StaffChat Plugin",
-        authors = "RefracDevelopment")
+        authors = "Refrac")
 public class VelocityStaffChat {
 
     @Getter private static VelocityStaffChat instance;
@@ -90,7 +88,7 @@ public class VelocityStaffChat {
 
         if (pluginManager.isLoaded("luckperms")) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Color.log("<yellow>Hooked into LuckPerms.");
+            Color.log("<green>Hooked into LuckPerms.");
         }
 
         loadCommands();
@@ -192,37 +190,21 @@ public class VelocityStaffChat {
                     .build(), new ChatCommand(this));
         }
 
-        if (getCommands().STAFF_HIDE_COMMAND_ENABLED) {
-            final String[] aliases_hide = getCommands().STAFF_HIDE_COMMAND_ALIASESES.toArray(new String[0]);
+        if (getCommands().HIDE_COMMAND_ENABLED) {
+            final String[] aliases_hide = getCommands().HIDE_COMMAND_ALIASESES.toArray(new String[0]);
             getServer().getCommandManager().register(getServer().getCommandManager()
-                    .metaBuilder(getCommands().STAFF_HIDE_COMMAND_ALIASESES.get(0))
+                    .metaBuilder(getCommands().HIDE_COMMAND_ALIASESES.get(0))
                     .aliases(aliases_hide)
                     .build(), new HideCommand(this));
         }
 
-        if (getCommands().ADMIN_HIDE_COMMAND_ENABLED) {
-            final String[] aliases_admin_hide = getCommands().ADMIN_HIDE_COMMAND_ALIASESES.toArray(new String[0]);
-            getServer().getCommandManager().register(getServer().getCommandManager()
-                    .metaBuilder(getCommands().CHAT_COMMAND_ALIASESES.get(0))
-                    .aliases(aliases_admin_hide)
-                    .build(), new AdminHideCommand(this));
-        }
-
-        if (getCommands().DEV_HIDE_COMMAND_ENABLED) {
-            final String[] aliases_dev_hide = getCommands().DEV_HIDE_COMMAND_ALIASESES.toArray(new String[0]);
-            getServer().getCommandManager().register(getServer().getCommandManager()
-                    .metaBuilder(getCommands().DEV_HIDE_COMMAND_ALIASESES.get(0))
-                    .aliases(aliases_dev_hide)
-                    .build(), new DevHideCommand(this));
-        }
-
-        Color.log("<yellow>Loaded commands.");
+        Color.log("<green>Loaded commands.");
     }
 
     private void loadListeners() {
         server.getEventManager().register(this, new ChatListener());
         server.getEventManager().register(this, new JoinListener());
-        Color.log("<yellow>Loaded listeners.");
+        Color.log("<green>Loaded listeners.");
     }
 
     @SuppressWarnings("ALL")

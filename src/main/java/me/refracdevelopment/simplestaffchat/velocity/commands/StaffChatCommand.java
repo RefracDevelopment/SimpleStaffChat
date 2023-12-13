@@ -11,7 +11,7 @@ import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public final class StaffChatCommand implements SimpleCommand {
 
-    private VelocityStaffChat plugin;
+    private final VelocityStaffChat plugin;
 
     public StaffChatCommand(VelocityStaffChat plugin) {
         this.plugin = plugin;

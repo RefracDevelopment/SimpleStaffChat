@@ -8,7 +8,7 @@ import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class HideCommand implements SimpleCommand {
 
-    private VelocityStaffChat plugin;
+    private final VelocityStaffChat plugin;
 
     public HideCommand(VelocityStaffChat plugin) {
         this.plugin = plugin;
@@ -20,11 +20,29 @@ public class HideCommand implements SimpleCommand {
         
         Player player = (Player) invocation.source();
 
-        if (!player.hasPermission(plugin.getCommands().STAFF_HIDE_COMMAND_PERMISSION)) {
+        if (!player.hasPermission(plugin.getCommands().HIDE_COMMAND_PERMISSION)) {
             Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
-        Methods.hideStaffChat(player);
+        if (invocation.arguments().length == 0) {
+            Color.sendMessage(player, "&c/" + plugin.getCommands().HIDE_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
+            return;
+        }
+
+        switch (invocation.arguments()[0]) {
+            case "staff":
+                Methods.hideStaffChat(player);
+                break;
+            case "admin":
+                Methods.hideAdminChat(player);
+                break;
+            case "dev":
+                Methods.hideDevChat(player);
+                break;
+            case "all":
+                Methods.hideAllChat(player);
+                break;
+        }
     }
 }
