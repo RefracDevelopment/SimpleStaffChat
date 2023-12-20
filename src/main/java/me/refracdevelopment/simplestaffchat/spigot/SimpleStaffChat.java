@@ -2,6 +2,7 @@ package me.refracdevelopment.simplestaffchat.spigot;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tcoded.folialib.FoliaLib;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
@@ -43,12 +44,17 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
+    // Utilities
+    private FoliaLib foliaLib;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
+
+        this.foliaLib = new FoliaLib(this);
 
         loadFiles();
 
@@ -61,15 +67,16 @@ public final class SimpleStaffChat extends JavaPlugin {
             return;
         }
 
+        // Check if the server is on Folia
+        if (getFoliaLib().isFolia()) {
+            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
+        }
+
         // Make sure the server has PlaceholderAPI
-        if (!pluginManager.isPluginEnabled("PlaceholderAPI") && !isFolia()) {
+        if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
-        }
-
-        if (isFolia()) {
-            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
         }
 
         if (!getAntiPopupAddon()) {
@@ -99,7 +106,7 @@ public final class SimpleStaffChat extends JavaPlugin {
     public void onDisable() {
         if (getSettings().BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
-            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", pluginMessage);
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", getPluginMessage());
         }
     }
 
@@ -108,12 +115,16 @@ public final class SimpleStaffChat extends JavaPlugin {
         this.configFile = new ConfigFile("config.yml");
         this.commandsFile = new ConfigFile("commands.yml");
         this.discordFile = new ConfigFile("discord.yml");
-        this.localeFile = new ConfigFile("locale/" + configFile.getString("locale") + ".yml");
+        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
 
         // Caches
         this.settings = new Config();
         this.commands = new Commands();
         this.discord = new Discord();
+
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
     }
 
     public void reloadFiles() {
@@ -129,7 +140,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         getDiscord().loadConfig();
 
         Color.log("&c==========================================");
-        Color.log("&eAll files have been reloaded correctly!");
+        Color.log("&aAll files have been reloaded correctly!");
         Color.log("&c==========================================");
     }
 
@@ -143,15 +154,6 @@ public final class SimpleStaffChat extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         Color.log("&aLoaded listeners.");
-    }
-
-    public boolean isFolia() {
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServerInitEvent");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 
     @SuppressWarnings("ALL")
