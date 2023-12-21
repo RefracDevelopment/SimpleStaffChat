@@ -1,11 +1,12 @@
 name: SimpleStaffChat2
 version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
-author: Refrac
+authors:
+  - Refrac
 api-version: "1.13"
 softdepend:
   - PlaceholderAPI
   - AntiPopup
-description: A Simple StaffChat Plugin
+description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
 website: https://discord.gg/EFeSKPg739
 folia-supported: true

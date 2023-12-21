@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.refracdevelopment</groupId>
-    <artifactId>SimpleStaffChat2</artifactId>
-    <version>3.2-rc.4</version>
+    <artifactId>SimpleStaffChat</artifactId>
+    <version>3.2</version>
     <packaging>jar</packaging>
 
-    <name>SimpleStaffChat2</name>
+    <name>SimpleStaffChat</name>
 
     <properties>
         <java.version>1.8</java.version>

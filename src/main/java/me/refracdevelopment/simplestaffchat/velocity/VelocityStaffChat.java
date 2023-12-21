@@ -39,11 +39,11 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat2",
         name = "SimpleStaffChat2",
-        version = "3.2-rc.4",
+        version = "3.2",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
-        description = "A Simple StaffChat Plugin",
-        authors = "Refrac")
+        description = "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
+        authors = {"Refrac"})
 public class VelocityStaffChat {
 
     @Getter private static VelocityStaffChat instance;

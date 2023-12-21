@@ -5,5 +5,5 @@ author: Refrac
 softDepends:
   - LuckPerms
   - AntiPopup-Via
-description: A Simple StaffChat Plugin
+description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
 website: https://discord.gg/EFeSKPg739
