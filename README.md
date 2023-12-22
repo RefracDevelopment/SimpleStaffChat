@@ -1,5 +1,6 @@
-# SimpleStaffchat
-A simple lightweight staffchat plugin.
+![](https://i.imgur.com/9n13hxp.png)
+
+SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
 
 [Spigot](https://www.spigotmc.org/resources/simplestaffchat2-1-7-1-18.91883/) [Craftaro](https://craftaro.com/marketplace/product/simplestaffchat2.645) [BuiltByBit](https://www.mc-market.org/resources/22491/) [Modrinth](https://modrinth.com/plugin/simplestaffchat2)
 
@@ -13,3 +14,5 @@ Suggestion can be posted in [Issues](https://github.com/RefracDevelopment/Simple
 
 ### License
 Please view the [LICENSE](LICENSE) file for more information on the license of this source code.
+
+[icon from flaticon](https://www.flaticon.com/)
