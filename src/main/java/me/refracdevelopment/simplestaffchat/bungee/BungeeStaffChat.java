@@ -3,24 +3,18 @@ package me.refracdevelopment.simplestaffchat.bungee;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ReloadCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.StaffChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevChatCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.config.YMLBase;
+import me.refracdevelopment.simplestaffchat.bungee.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.bungee.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.bungee.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.LuckPermsUtil;
 import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.api.plugin.PluginManager;
 import org.bstats.bungeecord.Metrics;
 
 import java.io.BufferedReader;
@@ -31,10 +25,20 @@ import java.net.URL;
 @Getter
 public class BungeeStaffChat extends Plugin {
 
-    @Getter
-    private static BungeeStaffChat instance;
-    private YMLBase configFile;
-    private YMLBase commandsFile;
+    @Getter private static BungeeStaffChat instance;
+    
+    private CommandManager commandManager;
+
+    // Files
+    private ConfigFile configFile;
+    private ConfigFile commandsFile;
+    private ConfigFile discordFile;
+    private ConfigFile localeFile;
+
+    // Caches
+    private Config config;
+    private Commands commands;
+    private Discord discord;
 
     @Override
     public void onEnable() {
@@ -43,12 +47,11 @@ public class BungeeStaffChat extends Plugin {
 
         loadFiles();
 
-        loadCommands();
-        loadListeners();
+        new Metrics(this, 12096);
 
-        if (Config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
+        if (this.config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Color.log("&eHooked into LuckPerms.");
+            Color.log("&aHooked into LuckPerms.");
         }
 
         if (!getAntiPopupAddon() && getViaVersion()) {
@@ -56,10 +59,11 @@ public class BungeeStaffChat extends Plugin {
                     "consider downloading https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-bungeecord-viaversion-addon-%E2%9C%A8.104628/");
         }
 
-        new Metrics(this, 12096);
+        loadCommands();
+        loadListeners();
 
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
         Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
         Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
         Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthor());
@@ -69,31 +73,41 @@ public class BungeeStaffChat extends Plugin {
     }
 
     private void loadFiles() {
-        this.configFile = new YMLBase(this, "bungee-config.yml");
-        this.commandsFile = new YMLBase(this, "commands.yml");
-        Config.loadConfig();
-        Commands.loadConfig();
+        // Files
+        this.configFile = new ConfigFile("bungee-config.yml");
+        this.commandsFile = new ConfigFile("commands.yml");
+        this.discordFile = new ConfigFile("discord.yml");
+        this.localeFile = new ConfigFile("locale/" + this.configFile.getConfigFile().getString("locale") + ".yml");
+
+        // Caches
+        this.config = new Config();
+        this.commands = new Commands();
+        this.discord = new Discord();
+    }
+
+    public void reloadFiles() {
+        this.configFile.reload();
+        this.commandsFile.reload();
+        this.discordFile.reload();
+        this.localeFile.reload();
+        this.config.loadConfig();
+        this.commands.loadConfig();
+        this.discord.loadConfig();
         Color.log("&c==========================================");
-        Color.log("&eAll files have been loaded correctly!");
+        Color.log("&eAll files have been reloaded correctly!");
         Color.log("&c==========================================");
     }
 
     private void loadCommands() {
-        PluginManager pluginManager = getProxy().getPluginManager();
-        pluginManager.registerCommand(this, new StaffChatCommand(this));
-        pluginManager.registerCommand(this, new ToggleCommand());
-        pluginManager.registerCommand(this, new ReloadCommand(this));
-        pluginManager.registerCommand(this, new AdminChatCommand(this));
-        pluginManager.registerCommand(this, new AdminToggleCommand());
-        pluginManager.registerCommand(this, new DevChatCommand(this));
-        pluginManager.registerCommand(this, new DevToggleCommand());
-        Color.log("&eLoaded commands.");
+        this.commandManager = new CommandManager(this);
+        commandManager.registerAll();
+        Color.log("&aLoaded commands.");
     }
 
     private void loadListeners() {
-        getProxy().getPluginManager().registerListener(this, new JoinListener());
-        getProxy().getPluginManager().registerListener(this, new ChatListener());
-        Color.log("&eLoaded listeners.");
+        getProxy().getPluginManager().registerListener(this, new JoinListener(this));
+        getProxy().getPluginManager().registerListener(this, new ChatListener(this));
+        Color.log("&aLoaded listeners.");
     }
 
     public boolean getAntiPopupAddon() {
@@ -105,6 +119,7 @@ public class BungeeStaffChat extends Plugin {
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
+        Color.sendCustomMessage(sender, "&aChecking for updates!");
         try {
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);

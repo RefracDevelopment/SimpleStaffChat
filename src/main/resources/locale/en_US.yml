@@ -1,4 +1,7 @@
 # en_US translation by Refrac
+# This is used for automatic file updating purposes
+config-version: '3'
+
 # Plugin Message Prefix
 prefix: '<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
 
@@ -6,10 +9,18 @@ prefix: '<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
 no-permission: '&cYou don''t have permission for that!'
 no-console: '&cOnly players may execute this command.'
 reload: '&eConfig files reloaded. Changes should be live in-game.'
-usage: '&c/staffchat <message>'
-toggle-on: "&8[&c&lStaffChat&8] &eStaffChat toggled &aon&7."
-toggle-off: "%prefix% &eStaffChat toggled &coff&7."
-adminchat-toggle-on: "&8[&c&lAdminChat&8] &7AdminChat toggled &aon&7."
-adminchat-toggle-off: "&8[&4&lAdminChat&8] &7AdminChat toggled &coff&7."
-devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
-devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
+staffchat-toggle-on: '&eStaffChat toggled &aon&e.'
+staffchat-toggle-off: '&eStaffChat toggled &coff&e.'
+adminchat-toggle-on: '&eAdminChat toggled &aon&e.'
+adminchat-toggle-off: '&eAdminChat toggled &coff&e.'
+devchat-toggle-on: '&eDevChat toggled &aon&e.'
+devchat-toggle-off: '&eDevChat toggled &coff&e.'
+allchat-toggle-on: '&eAll chat toggled &aon&e.'
+staffchat-muted-on: '&eYour StaffChat has been muted.'
+staffchat-muted-off: '&eYour StaffChat has been un-muted.'
+adminchat-muted-on: '&eYour AdminChat has been muted.'
+adminchat-muted-off: '&eYour AdminChat has been un-muted.'
+devchat-muted-on: '&eYour DevChat has been muted.'
+devchat-muted-off: '&eYour DevChat has been un-muted.'
+allchat-muted-on: '&eAll channels have been muted.'
+allchat-muted-off: '&eAll channels have been un-muted.'

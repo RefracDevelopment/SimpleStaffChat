@@ -1,57 +1,61 @@
 package me.refracdevelopment.simplestaffchat.bungee.listeners;
 
-import me.refracdevelopment.simplestaffchat.bungee.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.commands.devchat.DevToggleCommand;
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 public class ChatListener implements Listener {
+    
+    private final BungeeStaffChat plugin;
+    
+    public ChatListener(BungeeStaffChat plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onStaffChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (ToggleCommand.insc.contains(player.getUniqueId()) && !event.isCommand()) {
-            if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                ToggleCommand.insc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF);
+        if (event.isCommand()) return;
+
+        if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+            if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "staffchat-toggle-off");
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL)) {
-            if (event.getMessage().equalsIgnoreCase(Config.STAFFCHAT_SYMBOL)) return;
+            Methods.sendStaffChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().STAFFCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            String message = event.getMessage();
-            String format = Config.STAFFCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.STAFFCHAT_SYMBOL, ""));
+            if (Methods.getAdminChatPlayers().contains(player.getUniqueId()) || Methods.getDevChatPlayers().contains(player.getUniqueId())) {
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
+            }
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().STAFFCHAT_SYMBOL, "");
+            String format = plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
+
+            Methods.sendStaffChat(player, format);
         }
     }
 
@@ -59,40 +63,41 @@ public class ChatListener implements Listener {
     public void onAdminChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (AdminToggleCommand.inac.contains(player.getUniqueId()) && !event.isCommand()) {
-            if (!player.hasPermission(Permissions.ADMINCHAT_TOGGLE)) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.ADMINCHAT_TOGGLE_OFF);
+        if (event.isCommand()) return;
+
+        if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
+            if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "adminchat-toggle-off");
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL)) {
-            if (event.getMessage().equalsIgnoreCase(Config.ADMINCHAT_SYMBOL)) return;
+            Methods.sendAdminChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            String message = event.getMessage();
-            String format = Config.ADMINCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.ADMINCHAT_SYMBOL, ""));
+            if (Methods.getDevChatPlayers().contains(player.getUniqueId()) || Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
+            }
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.ADMINCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().ADMINCHAT_SYMBOL, "");
+            String format = plugin.getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
+
+            Methods.sendAdminChat(player, format);
         }
     }
 
@@ -100,40 +105,41 @@ public class ChatListener implements Listener {
     public void onDevChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (DevToggleCommand.indc.contains(player.getUniqueId()) && !event.isCommand()) {
-            if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-                DevToggleCommand.indc.remove(player.getUniqueId());
-                Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF);
+        if (event.isCommand()) return;
+
+        if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
+            if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
+                Methods.getDevChatPlayers().remove(player.getUniqueId());
+                Color.sendMessage(player, "devchat-toggle-off");
                 return;
             }
 
             event.setCancelled(true);
 
             String message = event.getMessage();
-            String format = Config.DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
+            String format = plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
-        } else if (event.getMessage().startsWith(Config.DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL)) {
-            if (event.getMessage().equalsIgnoreCase(Config.DEVCHAT_SYMBOL)) return;
+            Methods.sendDevChat(player, format);
+        } else if (event.getMessage().startsWith(plugin.getConfig().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL)) return;
 
             event.setCancelled(true);
 
-            String message = event.getMessage();
-            String format = Config.DEVCHAT_FORMAT.replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%message%", message.replaceFirst(Config.DEVCHAT_SYMBOL, ""));
+            if (Methods.getAdminChatPlayers().contains(player.getUniqueId()) || Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+                Methods.getAdminChatPlayers().remove(player.getUniqueId());
+                Methods.getStaffChatPlayers().remove(player.getUniqueId());
+            }
 
-            ProxyServer.getInstance().getPlayers().forEach(p -> {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(player, format));
-                }
-            });
-            Color.log2(Color.translate(player, format));
+            String message = event.getMessage().replaceFirst(plugin.getConfig().DEVCHAT_SYMBOL, "");
+            String format = plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
+
+            Methods.sendDevChat(player, format);
         }
     }
 }

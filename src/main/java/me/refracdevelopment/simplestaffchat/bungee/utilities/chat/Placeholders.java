@@ -1,18 +1,19 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.bungee.utilities.LuckPermsUtil;
+import lombok.experimental.UtilityClass;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+@UtilityClass
 public class Placeholders {
 
-    public static String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", Config.PREFIX);
+    public String setPlaceholders(CommandSender sender, String placeholder) {
+        placeholder = placeholder.replace("%prefix%", BungeeStaffChat.getInstance().getLocaleFile().getString("prefix"));
         if (sender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
-            if (Config.LUCKPERMS || LuckPermsUtil.getLuckPerms() != null) {
+            if (LuckPermsUtil.getLuckPerms() != null) {
                 placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
                 placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
             } else {

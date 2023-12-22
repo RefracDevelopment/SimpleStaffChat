@@ -1,39 +1,50 @@
 package me.refracdevelopment.simplestaffchat.spigot.utilities.chat;
 
-import dev.rosewood.rosegarden.hook.PlaceholderAPIHook;
-import dev.rosewood.rosegarden.utils.HexUtils;
+import lombok.experimental.UtilityClass;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@UtilityClass
 public class Color {
 
-    public static String translate(CommandSender sender, String source) {
+    public String translate(CommandSender sender, String source) {
         source = Placeholders.setPlaceholders(sender, source);
 
-        if (sender instanceof Player && SimpleStaffChat.getInstance().getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            return PlaceholderAPIHook.applyPlaceholders((Player) sender, translate(source));
+        if (sender instanceof Player && Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            return PlaceholderAPI.setPlaceholders((Player) sender, translate(source));
         } else return translate(source);
     }
 
-    public static String translate(String source) {
-        return HexUtils.colorify(source);
+    public  String translate(String message) {
+        return HexUtils.colorify(message);
     }
 
-    public static void log(String message) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
+    public List<String> translate(List<String> source) {
+        return source.stream().map(Color::translate).collect(Collectors.toList());
+    }
 
-        String prefix = locale.getLocaleMessage("prefix");
+    public void sendMessage(CommandSender sender, String message) {
+        sendCustomMessage(sender, SimpleStaffChat.getInstance().getLocaleFile().getString(message));
+    }
 
-        locale.sendCustomMessage(Bukkit.getConsoleSender(), prefix + message);
+    public void sendCustomMessage(CommandSender sender, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%") || message.isEmpty()) return;
+
+        sender.sendMessage(translate(sender, message));
+    }
+
+    public void log(String message) {
+        sendCustomMessage(Bukkit.getConsoleSender(), SimpleStaffChat.getInstance().getLocaleFile().getString("prefix") + " " + message);
     }
 
     // Used for console StaffChat messages
-    public static void log2(String message) {
-        final LocaleManager locale = SimpleStaffChat.getInstance().getManager(LocaleManager.class);
-
-        locale.sendCustomMessage(Bukkit.getConsoleSender(), message);
+    public void log2(String message) {
+        sendCustomMessage(Bukkit.getConsoleSender(), message);
     }
 }

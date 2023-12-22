@@ -6,10 +6,8 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
-import net.kyori.adventure.text.Component;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public final class StaffChatCommand implements SimpleCommand {
 
@@ -21,71 +19,41 @@ public final class StaffChatCommand implements SimpleCommand {
     
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.STAFFCHAT_COMMAND_ENABLED.getBoolean()) return;
         CommandSource commandSource = invocation.source();
-        
+
+        String message = Joiner.on(" ").join(invocation.arguments());
+
+        if (!commandSource.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
+            Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+            return;
+        }
+
         if (invocation.arguments().length >= 1) {
-            String format;
-            String message = Joiner.on(" ").join(invocation.arguments());
+            String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", ((Player) commandSource).getUsername())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", "Console")
+                    .replace("%message%", message);
 
-            format = (commandSource instanceof Player) ? Config.STAFFCHAT_FORMAT.getString().replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_STAFFCHAT_FORMAT.getString().replace("%message%", message);
-            
-            if (!commandSource.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
-                commandSource.sendMessage(Component.text(Config.NO_PERMISSION.getString()));
-                return;
-            }
-
-            for (Player p : plugin.getServer().getAllPlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(commandSource, format));
-                }
-            }
-            Color.log2(Color.translate(commandSource, format));
+            Methods.sendStaffChat(commandSource, format, message);
         } else {
-            if (Config.STAFFCHAT_OUTPUT.getString().equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE.getStringList() != null) {
+            if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") && plugin.getConfig().STAFFCHAT_MESSAGE != null) {
                 if (!commandSource.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
+                    Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
                     return;
                 }
 
-                Config.STAFFCHAT_MESSAGE.getStringList().forEach(s -> {
+                plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
                     Color.sendMessage(commandSource, s);
                 });
-            } else if (Config.STAFFCHAT_OUTPUT.getString().equalsIgnoreCase("toggle")) {
+            } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSource instanceof Player) {
                     Player player = (Player) commandSource;
 
-                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION.getString());
-                        return;
-                    }
-
-                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
-                        ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF.getString());
-                    } else {
-                        ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON.getString());
-                    }
+                    Methods.toggleStaffChat(player);
                 }
-            } else {
-                if (!commandSource.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
-                    return;
-                }
-
-                Color.sendMessage(commandSource, "");
-                Color.sendMessage(commandSource, "&c&lSimpleStaffChat2 %arrow% Help");
-                Color.sendMessage(commandSource, "");
-                Color.sendMessage(commandSource, "&c/" + Commands.STAFFCHAT_ALIASES.getStringList().get(0) + " <message> - Send staffchat messages.");
-                Color.sendMessage(commandSource, "&c/" + Commands.TOGGLE_ALIASES.getStringList().get(0) + " - Send staffchat messages without needing to type a command.");
-                Color.sendMessage(commandSource, "&c/" + Commands.ADMINCHAT_ALIASES.getStringList().get(0) + " <message> - Send adminchat messages.");
-                Color.sendMessage(commandSource, "&c/" + Commands.ADMIN_TOGGLE_ALIASES.getStringList().get(0) + " - Send adminchat messages without needing to type a command.");
-                Color.sendMessage(commandSource, "&c/" + Commands.DEVCHAT_ALIASES.getStringList().get(0) + " <message> - Send devchat messages.");
-                Color.sendMessage(commandSource, "&c/" + Commands.DEV_TOGGLE_ALIASES.getStringList().get(0) + " - Send devchat messages without needing to type a command.");
-                Color.sendMessage(commandSource, "&c/" + Commands.RELOAD_ALIASES.getStringList().get(0) + " - Reload the config file.");
-                Color.sendMessage(commandSource, "");
             }
         }
     }

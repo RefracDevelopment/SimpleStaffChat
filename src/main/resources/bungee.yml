@@ -1,68 +1,9 @@
 name: SimpleStaffChat2
 version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
-author: RefracDevelopment
+author: Refrac
 softDepends:
   - LuckPerms
-description: A Simple StaffChat Plugin
-website: https://discord.refracdev.ml/
-
-permissions:
-  simplestaffchat.*:
-    default: op
-    description: Gives all permissions
-    children:
-      simplestaffchat.command.help: true
-      simplestaffchat.command.staffchat: true
-      simplestaffchat.command.adminchat: true
-      simplestaffchat.command.devchat: true
-      simplestaffchat.command.toggle: true
-      simplestaffchat.command.reload: true
-      simplestaffchat.see: true
-      simplestaffchat.symbol: true
-      simplestaffchat.adminchat.see: true
-      simplestaffchat.adminchat.symbol: true
-      simplestaffchat.devchat.see: true
-      simplestaffchat.devchat.symbol: true
-      simplestaffchat.join: true
-      simplestaffchat.switch: true
-      simplestaffchat.quit: true
-  simplestaffchat.command.help:
-    default: op
-    description: Allows you to see the help page
-  simplestaffchat.command.staffchat:
-    default: op
-    description: Allows you to use the staffchat command
-  simplestaffchat.command.toggle:
-    default: op
-    description: Allows you to toggle staffchat
-  simplestaffchat.command.reload:
-    default: op
-    description: Allows you to reload the config file
-  simplestaffchat.see:
-    default: op
-    description: Allows you to see the staffchat messages
-  simplestaffchat.symbol:
-    default: op
-    description: Allows you to use the staffchat symbol
-  simplestaffchat.adminchat.see:
-    default: op
-    description: Allows you to see the adminchat messages
-  simplestaffchat.adminchat.symbol:
-    default: op
-    description: Allows you to use the adminchat symbol
-  simplestaffchat.devchat.see:
-    default: op
-    description: Allows you to see the devchat messages
-  simplestaffchat.devchat.symbol:
-    default: op
-    description: Allows you to use the devchat symbol
-  simplestaffchat.join:
-    default: op
-    description: Sends a join message when a staff member joins.
-  simplestaffchat.switch:
-    default: op
-    description: Sends a server switch message when a staff member joins a new server.
-  simplestaffchat.quit:
-    default: op
-    description: Sends a join message when a staff member leaves the server.
+  - AntiPopup-Via
+description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
+website: https://discord.gg/EFeSKPg739

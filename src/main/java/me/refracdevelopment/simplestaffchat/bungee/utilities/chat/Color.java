@@ -1,34 +1,45 @@
 package me.refracdevelopment.simplestaffchat.bungee.utilities.chat;
 
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import lombok.experimental.UtilityClass;
+import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.TextComponent;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@UtilityClass
 public class Color {
 
-    public static String translate(CommandSender sender, String source) {
+    public String translate(CommandSender sender, String source) {
         source = Placeholders.setPlaceholders(sender, source);
 
         return translate(source);
     }
 
-    public static String translate(String source) {
+    public String translate(String source) {
         return HexUtils.colorify(source);
     }
 
-    public static void sendMessage(CommandSender sender, String source) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%")) return;
-
-        source = Placeholders.setPlaceholders(sender, source);
-
-        HexUtils.sendMessage(sender, source);
+    public List<String> translate(List<String> source) {
+        return source.stream().map(Color::translate).collect(Collectors.toList());
     }
 
-    public static void log(String message) {
-        sendMessage(ProxyServer.getInstance().getConsole(), Config.PREFIX + " " + message);
+    public void sendMessage(CommandSender sender, String message) {
+        sendCustomMessage(sender, BungeeStaffChat.getInstance().getLocaleFile().getString(message));
     }
 
-    public static void log2(String message) {
-        sendMessage(ProxyServer.getInstance().getConsole(), message);
+    public void sendCustomMessage(CommandSender sender, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%")) return;
+
+        sender.sendMessage(TextComponent.fromLegacyText(translate(sender, message)));
+    }
+
+    public void log(String message) {
+        sendCustomMessage(BungeeStaffChat.getInstance().getProxy().getConsole(), BungeeStaffChat.getInstance().getLocaleFile().getString("prefix") + " " + message);
+    }
+
+    public void log2(String message) {
+        sendCustomMessage(BungeeStaffChat.getInstance().getProxy().getConsole(), message);
     }
 }

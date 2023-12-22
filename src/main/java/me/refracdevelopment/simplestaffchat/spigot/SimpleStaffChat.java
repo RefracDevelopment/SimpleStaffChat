@@ -2,116 +2,151 @@ package me.refracdevelopment.simplestaffchat.spigot;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dev.rosewood.rosegarden.RosePlugin;
-import dev.rosewood.rosegarden.manager.Manager;
-import dev.rosewood.rosegarden.utils.NMSUtil;
+import com.tcoded.folialib.FoliaLib;
 import lombok.Getter;
-import me.refracdevelopment.simplestaffchat.spigot.config.Commands;
-import me.refracdevelopment.simplestaffchat.spigot.config.Config;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.spigot.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
-import me.refracdevelopment.simplestaffchat.spigot.manager.ConfigurationManager;
-import me.refracdevelopment.simplestaffchat.spigot.manager.LocaleManager;
-import me.refracdevelopment.simplestaffchat.spigot.utilities.FoliaUtil;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.VersionCheck;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import org.bukkit.Bukkit;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
 
 @Getter
-public final class SimpleStaffChat extends RosePlugin {
+public final class SimpleStaffChat extends JavaPlugin {
 
-    @Getter
-    private static SimpleStaffChat instance;
+    @Getter private static SimpleStaffChat instance;
 
+    // Managers
     private CommandManager commandManager;
-
     private PluginMessage pluginMessage;
-    private ConfigFile commandsFile;
 
-    public SimpleStaffChat() {
-        super(-1, 12095, ConfigurationManager.class, null, LocaleManager.class, null);
-        instance = this;
-    }
+    // Files
+    private ConfigFile configFile;
+    private ConfigFile commandsFile;
+    private ConfigFile discordFile;
+    private ConfigFile localeFile;
+
+    // Caches
+    private Config settings;
+    private Commands commands;
+    private Discord discord;
+
+    // Utilities
+    private FoliaLib foliaLib;
 
     @Override
-    protected void enable() {
+    public void onEnable() {
         // Plugin startup logic
+        instance = this;
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
+        this.foliaLib = new FoliaLib(this);
+
+        loadFiles();
+
+        new Metrics(this, 12095);
+
+        // Check if the server is on 1.7
+        if (VersionCheck.isOnePointSeven()) {
+            Color.log("&c" + getDescription().getName() + " 1.7 is in legacy mode, please update to 1.8+");
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Check if the server is on Folia
+        if (getFoliaLib().isFolia()) {
+            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
+        }
+
         // Make sure the server has PlaceholderAPI
-        if (!pluginManager.isPluginEnabled("PlaceholderAPI") && !FoliaUtil.isFolia()) {
+        if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        // Check if the server is on 1.7
-        if (NMSUtil.getVersionNumber() <= 7) {
-            Color.log("&cSimpleStaffChat2 1.7 is in legacy mode, please update to 1.8+");
-            this.getServer().getPluginManager().disablePlugin(this);
-            return;
+        if (!getAntiPopupAddon()) {
+            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+                    "consider downloading AntiPopup: https://www.spigotmc.org/resources/103782/");
         }
 
-        if (FoliaUtil.isFolia()) {
-            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
-        }
-
-        this.commandsFile = new ConfigFile(this, "commands.yml");
-        Config.loadConfig();
-        Commands.loadConfig();
-
-        if (Config.BUNGEECORD) {
+        if (getSettings().BUNGEECORD) {
             getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-            getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage(this));
-            pluginMessage = new PluginMessage(this);
+            getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this.pluginMessage = new PluginMessage(this));
         }
 
         loadCommands();
         loadListeners();
 
-        if (!getAntiPopupAddon()) {
-            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
-                    "consider downloading https://github.com/KaspianDev/AntiPopup/releases/latest");
-        }
-
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Color.log("&e" + getDescription().getName() + " has been enabled. (" + (System.currentTimeMillis() - startTiming) + "ms)");
+        Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
         Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
         Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
         Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
         Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
-        updateCheck(Bukkit.getConsoleSender(), true);
+        updateCheck(getServer().getConsoleSender(), true);
     }
 
     @Override
-    protected void disable() {
-        if (Config.BUNGEECORD) {
+    public void onDisable() {
+        if (getSettings().BUNGEECORD) {
             getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
-            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", pluginMessage);
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord", getPluginMessage());
         }
     }
 
-    @Override
-    protected List<Class<? extends Manager>> getManagerLoadPriority() {
-        return Collections.emptyList();
+    private void loadFiles() {
+        // Files
+        this.configFile = new ConfigFile("config.yml");
+        this.commandsFile = new ConfigFile("commands.yml");
+        this.discordFile = new ConfigFile("discord.yml");
+        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
+
+        // Caches
+        this.settings = new Config();
+        this.commands = new Commands();
+        this.discord = new Discord();
+
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been loaded correctly!");
+        Color.log("&c==========================================");
+    }
+
+    public void reloadFiles() {
+        // Files
+        getConfigFile().reload();
+        getCommandsFile().reload();
+        getDiscordFile().reload();
+        getLocaleFile().reload();
+
+        // Caches
+        getSettings().loadConfig();
+        getCommands().loadConfig();
+        getDiscord().loadConfig();
+
+        Color.log("&c==========================================");
+        Color.log("&aAll files have been reloaded correctly!");
+        Color.log("&c==========================================");
     }
 
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
-        commandManager.registerAll();
+        getCommandManager().registerAll();
         Color.log("&aLoaded commands.");
     }
 
@@ -127,7 +162,6 @@ public final class SimpleStaffChat extends RosePlugin {
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
-        Color.log("&aChecking for updates!");
         try {
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);

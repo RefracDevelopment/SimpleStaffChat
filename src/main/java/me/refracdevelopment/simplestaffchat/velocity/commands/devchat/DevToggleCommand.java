@@ -1,44 +1,33 @@
 package me.refracdevelopment.simplestaffchat.velocity.commands.devchat;
 
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
-import me.refracdevelopment.simplestaffchat.velocity.commands.ToggleCommand;
-import me.refracdevelopment.simplestaffchat.velocity.commands.adminchat.AdminToggleCommand;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class DevToggleCommand implements SimpleCommand {
 
-    public static List<UUID> indc = new ArrayList<>();
+    private final VelocityStaffChat plugin;
+
+    public DevToggleCommand(VelocityStaffChat plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.DEV_TOGGLE_COMMAND_ENABLED.getBoolean()) return;
-        if (!(invocation.source() instanceof Player)) return;
+        CommandSource commandSource = invocation.source();
+
+        if (!(commandSource instanceof Player)) return;
 
         Player player = (Player) invocation.source();
 
-        if (!player.hasPermission(Permissions.DEVCHAT_TOGGLE)) {
-            Color.sendMessage(player, Config.NO_PERMISSION.getString());
+        if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
+            Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);
             return;
         }
 
-        if (indc.contains(player.getUniqueId())) {
-            indc.remove(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_OFF.getString());
-        } else {
-            if (AdminToggleCommand.inac.contains(player.getUniqueId()) || ToggleCommand.insc.contains(player.getUniqueId())) {
-                AdminToggleCommand.inac.remove(player.getUniqueId());
-                ToggleCommand.insc.remove(player.getUniqueId());
-            }
-            indc.add(player.getUniqueId());
-            Color.sendMessage(player, Config.DEVCHAT_TOGGLE_ON.getString());
-        }
+        Methods.toggleDevChat(player);
     }
 }

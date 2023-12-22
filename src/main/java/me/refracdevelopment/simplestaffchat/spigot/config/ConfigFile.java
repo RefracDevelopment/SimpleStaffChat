@@ -1,104 +1,88 @@
 package me.refracdevelopment.simplestaffchat.spigot.config;
 
+import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
+import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
+import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
+import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
+import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/*
- * Taken from
- * https://github.com/BGHDDevelopment/PunishmentGUIRecode/blob/master/src/main/java/net/bghddevelopment/punishmentgui/utils/ConfigFile.java
- * Modified for my needs
- */
-public class ConfigFile extends YamlConfiguration {
+public class ConfigFile {
 
-    private File file;
-    private final JavaPlugin plugin;
-    private final String name;
+    private YamlDocument configFile;
 
-    public ConfigFile(JavaPlugin plugin, String name) {
-        this.file = new File(plugin.getDataFolder(), name);
-        this.plugin = plugin;
-        this.name = name;
-
-        if (!this.file.exists()) {
-            plugin.saveResource(name, false);
-        }
-
+    public ConfigFile(String name) {
         try {
-            this.load(this.file);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-    }
+            configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getDataFolder(), name),
+                    getClass().getResourceAsStream("/" + name),
+                    GeneralSettings.DEFAULT,
+                    LoaderSettings.builder().setAutoUpdate(true).build(),
+                    DumperSettings.DEFAULT,
+                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
+                            .setOptionSorting(UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS).build()
+            );
 
-    public void load() {
-        this.file = new File(plugin.getDataFolder(), name);
-
-        if (!this.file.exists()) {
-            plugin.saveResource(name, false);
-        }
-        try {
-            this.load(this.file);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
+            configFile.update();
+            configFile.save();
+        } catch (IOException e) {
+            Color.log("&cFailed to load config file! The plugin will now shutdown.");
+            Bukkit.getPluginManager().disablePlugin(SimpleStaffChat.getInstance());
         }
     }
 
     public void save() {
         try {
-            this.save(this.file);
+            configFile.save();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
+    public void reload() {
+        try {
+            configFile.reload();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getInt(String path) {
-        return super.getInt(path, 0);
+        return configFile.getInt(path, 0);
     }
 
-    @Override
     public double getDouble(String path) {
-        return super.getDouble(path, 0.0);
+        return configFile.getDouble(path, 0.0);
     }
 
-    @Override
     public boolean getBoolean(String path) {
-        return super.getBoolean(path, false);
+        return configFile.getBoolean(path, false);
     }
 
     public String getString(String path, boolean check) {
-        return super.getString(path, null);
+        return configFile.getString(path, null);
     }
 
-    @Override
     public String getString(String path) {
-        if (super.contains(path)) {
-            return ChatColor.translateAlternateColorCodes('&', super.getString(path, "String at path '" + path + "' not found.")).replace("|", "\u2503");
+        if (configFile.contains(path)) {
+            return configFile.getString(path, "String at path '" + path + "' not found.").replace("|", "\u2503");
         }
 
         return null;
     }
 
-    @Override
     public List<String> getStringList(String path) {
-        return super.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        return configFile.getStringList(path);
     }
 
     public List<String> getStringList(String path, boolean check) {
-        if (!super.contains(path)) return null;
-        return super.getStringList(path).stream().map(Color::translate).collect(Collectors.toList());
+        if (!configFile.contains(path)) return null;
+        return getStringList(path);
     }
-
-    public boolean getOption(String option) {
-        return this.getBoolean("options." + option);
-    }
-
 }

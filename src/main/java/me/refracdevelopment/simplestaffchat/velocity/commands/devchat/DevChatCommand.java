@@ -4,11 +4,9 @@ import com.google.common.base.Joiner;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
-import me.refracdevelopment.simplestaffchat.velocity.utilities.Color;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.Methods;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 
 public class DevChatCommand implements SimpleCommand {
 
@@ -20,28 +18,25 @@ public class DevChatCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if (!Commands.DEVCHAT_COMMAND_ENABLED.getBoolean()) return;
-
         CommandSource commandSource = invocation.source();
 
+        String message = Joiner.on(" ").join(invocation.arguments());
+
+        if (!commandSource.hasPermission(plugin.getCommands().DEVCHAT_COMMAND_PERMISSION)) {
+            Color.sendMessage(commandSource, plugin.getConfig().NO_PERMISSION);
+            return;
+        }
+
         if (invocation.arguments().length >= 1) {
-            String format;
-            String message = Joiner.on(" ").join(invocation.arguments());
+            String format = (commandSource instanceof Player) ? plugin.getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                    .replace("%player%", ((Player) commandSource).getUsername())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", "Console")
+                    .replace("%message%", message);
 
-            format = (commandSource instanceof Player) ? Config.DEVCHAT_FORMAT.getString().replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_DEVCHAT_FORMAT.getString().replace("%message%", message);
-
-            if (!commandSource.hasPermission(Permissions.DEVCHAT_COMMAND)) {
-                Color.sendMessage(commandSource, Config.NO_PERMISSION.getString());
-                return;
-            }
-
-            for (Player p : plugin.getServer().getAllPlayers()) {
-                if (p.hasPermission(Permissions.DEVCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(commandSource, format));
-                }
-            }
-            Color.log2(Color.translate(commandSource, format));
+            Methods.sendDevChat(commandSource, format, message);
         }
     }
 }

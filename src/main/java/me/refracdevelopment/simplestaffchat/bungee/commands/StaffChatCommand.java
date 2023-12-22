@@ -2,8 +2,7 @@ package me.refracdevelopment.simplestaffchat.bungee.commands;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.bungee.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
 import net.md_5.bungee.api.CommandSender;
@@ -13,78 +12,48 @@ import net.md_5.bungee.api.plugin.Command;
 public class StaffChatCommand extends Command {
 
     private final BungeeStaffChat plugin;
-
+    
     public StaffChatCommand(BungeeStaffChat plugin) {
-        super(Commands.STAFFCHAT_COMMAND, "", Commands.STAFFCHAT_ALIAS);
+        super(plugin.getCommands().STAFFCHAT_COMMAND_ALIASES.get(0), "", plugin.getCommands().STAFFCHAT_COMMAND_ALIASES.toArray(new String[0]));
         this.plugin = plugin;
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
-        if (!Commands.STAFFCHAT_COMMAND_ENABLED) return;
+    public void execute(CommandSender commandSender, String[] args) {
+        String message = Joiner.on(" ").join(args);
 
-        if (strings.length >= 1) {
-            String format;
-            String message = Joiner.on(" ").join(strings);
+        if (!commandSender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
+            Color.sendMessage(commandSender, "no-permission");
+            return;
+        }
 
-            format = (commandSender instanceof ProxiedPlayer) ? Config.STAFFCHAT_FORMAT.replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%message%", message) : Config.CONSOLE_STAFFCHAT_FORMAT.replace("%message%", message);
+        if (args.length >= 1) {
+            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                    .replace("%server%", "N/A")
+                    .replace("%player%", commandSender.getName())
+                    .replace("%message%", message);
 
-            if (!commandSender.hasPermission(Permissions.STAFFCHAT_COMMAND)) {
-                Color.sendMessage(commandSender, Config.NO_PERMISSION);
-                return;
-            }
-
-            for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-                if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                    Color.sendMessage(p, Color.translate(commandSender, format));
-                }
-            }
-            Color.log2(Color.translate(commandSender, format));
+            Methods.sendStaffChat(commandSender, format);
         } else {
-            if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("custom") && Config.STAFFCHAT_MESSAGE != null) {
+            if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
+                    plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!commandSender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSender, Config.NO_PERMISSION);
+                    Color.sendMessage(commandSender, "no-permission");
                     return;
                 }
 
-                Config.STAFFCHAT_MESSAGE.forEach(s -> {
-                    Color.sendMessage(commandSender, s);
+                plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
+                    Color.sendCustomMessage(commandSender, s);
                 });
-            } else if (Config.STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
+            } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) commandSender;
 
-                    if (!player.hasPermission(Permissions.STAFFCHAT_TOGGLE)) {
-                        Color.sendMessage(player, Config.NO_PERMISSION);
-                        return;
-                    }
-
-                    if (ToggleCommand.insc.contains(player.getUniqueId())) {
-                        ToggleCommand.insc.remove(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_OFF);
-                    } else {
-                        ToggleCommand.insc.add(player.getUniqueId());
-                        Color.sendMessage(player, Config.STAFFCHAT_TOGGLE_ON);
-                    }
+                    Methods.toggleStaffChat(player);
                 }
-            } else {
-                if (!commandSender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSender, Config.NO_PERMISSION);
-                    return;
-                }
-
-                Color.sendMessage(commandSender, "");
-                Color.sendMessage(commandSender, "&c&lSimpleStaffChat2 %arrow% Help");
-                Color.sendMessage(commandSender, "");
-                Color.sendMessage(commandSender, "&c/" + Commands.STAFFCHAT_COMMAND + " <message> - Send staffchat messages.");
-                Color.sendMessage(commandSender, "&c/" + Commands.TOGGLE_COMMAND + " - Send staffchat messages without needing to type a command.");
-                Color.sendMessage(commandSender, "&c/" + Commands.ADMINCHAT_COMMAND + " <message> - Send adminchat messages.");
-                Color.sendMessage(commandSender, "&c/" + Commands.ADMIN_TOGGLE_COMMAND + " - Send adminchat messages without needing to type a command.");
-                Color.sendMessage(commandSender, "&c/" + Commands.DEVCHAT_COMMAND + " <message> - Send devchat messages.");
-                Color.sendMessage(commandSender, "&c/" + Commands.DEV_TOGGLE_COMMAND + " - Send devchat messages without needing to type a command.");
-                Color.sendMessage(commandSender, "&c/" + Commands.RELOAD_COMMAND + " - Reload the config file.");
-                Color.sendMessage(commandSender, "");
             }
         }
     }

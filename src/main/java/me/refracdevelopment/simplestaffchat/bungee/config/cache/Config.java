@@ -7,42 +7,39 @@ import java.util.List;
 public class Config {
 
     // General
-    public static String STAFFCHAT_SYMBOL;
-    public static String ADMINCHAT_SYMBOL;
-    public static String DEVCHAT_SYMBOL;
-    public static boolean LUCKPERMS;
+    public boolean SYMBOLS;
+    public String STAFFCHAT_SYMBOL;
+    public String ADMINCHAT_SYMBOL;
+    public String DEVCHAT_SYMBOL;
+    public boolean LUCKPERMS;
 
     // Format
-    public static String STAFFCHAT_FORMAT;
-    public static String CONSOLE_STAFFCHAT_FORMAT;
-    public static String ADMINCHAT_FORMAT;
-    public static String CONSOLE_ADMINCHAT_FORMAT;
-    public static String DEVCHAT_FORMAT;
-    public static String CONSOLE_DEVCHAT_FORMAT;
+    public String STAFFCHAT_FORMAT;
+    public String CONSOLE_STAFFCHAT_FORMAT;
+    public String ADMINCHAT_FORMAT;
+    public String CONSOLE_ADMINCHAT_FORMAT;
+    public String DEVCHAT_FORMAT;
+    public String CONSOLE_DEVCHAT_FORMAT;
 
     // Join
-    public static boolean JOIN_ENABLED;
-    public static String JOIN_FORMAT;
-    public static String SWITCH_FORMAT;
-    public static String QUIT_FORMAT;
+    public boolean JOIN_ENABLED;
+    public String JOIN_FORMAT;
+    public String SWITCH_FORMAT;
+    public String QUIT_FORMAT;
 
     // Messages
-    public static String PREFIX;
-    public static String NO_PERMISSION;
-    public static String RELOAD;
-    public static String STAFFCHAT_TOGGLE_ON;
-    public static String STAFFCHAT_TOGGLE_OFF;
-    public static String ADMINCHAT_TOGGLE_ON;
-    public static String ADMINCHAT_TOGGLE_OFF;
-    public static String DEVCHAT_TOGGLE_ON;
-    public static String DEVCHAT_TOGGLE_OFF;
-    public static String STAFFCHAT_OUTPUT;
-    public static List<String> STAFFCHAT_MESSAGE;
+    public String STAFFCHAT_OUTPUT;
+    public List<String> STAFFCHAT_MESSAGE;
 
-    public static void loadConfig() {
-        STAFFCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("staffchat-symbol");
-        ADMINCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("adminchat-symbol");
-        DEVCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("devchat-symbol");
+    public Config() {
+        loadConfig();
+    }
+
+    public void loadConfig() {
+        SYMBOLS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("symbols.enabled");
+        STAFFCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("symbols.staffchat-symbol");
+        ADMINCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("symbols.adminchat-symbol");
+        DEVCHAT_SYMBOL = BungeeStaffChat.getInstance().getConfigFile().getString("symbols.devchat-symbol");
         LUCKPERMS = BungeeStaffChat.getInstance().getConfigFile().getBoolean("luckperms");
 
         STAFFCHAT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("format.minecraft-format");
@@ -57,16 +54,7 @@ public class Config {
         SWITCH_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("join.switch-format");
         QUIT_FORMAT = BungeeStaffChat.getInstance().getConfigFile().getString("join.quit-format");
 
-        PREFIX = BungeeStaffChat.getInstance().getConfigFile().getString("messages.prefix");
-        NO_PERMISSION = BungeeStaffChat.getInstance().getConfigFile().getString("messages.no-permission");
-        RELOAD = BungeeStaffChat.getInstance().getConfigFile().getString("messages.reload");
-        STAFFCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.toggle-on");
-        STAFFCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.toggle-off");
-        ADMINCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-on");
-        ADMINCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.adminchat-toggle-off");
-        DEVCHAT_TOGGLE_ON = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-on");
-        DEVCHAT_TOGGLE_OFF = BungeeStaffChat.getInstance().getConfigFile().getString("messages.devchat-toggle-off");
-        STAFFCHAT_OUTPUT = BungeeStaffChat.getInstance().getConfigFile().getString("messages.staffchat-output");
-        STAFFCHAT_MESSAGE = BungeeStaffChat.getInstance().getConfigFile().getStringList("messages.staffchat-message");
+        STAFFCHAT_OUTPUT = BungeeStaffChat.getInstance().getConfigFile().getString("staffchat-output");
+        STAFFCHAT_MESSAGE = BungeeStaffChat.getInstance().getConfigFile().getStringList("staffchat-message");
     }
 }

@@ -1,24 +1,25 @@
-# SimpleStaffChat2 by RefracDevelopment
-#--------------------------------------
-# Placeholders:
-# %player% - Get the player name
-# %displayname% - Get the player display name
-# %server% - Get the player server
-# %message% - Get the message
-# %arrow% - Get an arrow for a message
-# %arrow_2% - Get alt arrow for a message
-# %star% - Get a star for a message
-# %circle% - Get a circle for a message
-# %empty% - Disable any message with this placeholder
-#--------------------------------------
+#   ___________                __           _________ __           _____  ______________  /\             __
+#  /   _____/__| _____ ______ |  |   ____  /   _____//  |______  _/ ____\/ ____\_   ___ \|  |__ _____  _/  |_
+#  \_____  \|  |/     \\____ \|  | _/ __ \ \_____  \\   __\__  \ \   __\\   __\/    \  \/|  |  \\__  \ \   __\
+#  /        \  |  | |  \  |_\ \  |__  ___/_/        \|  |  / __ \_|  |   |  |  \     \____      \/ __ \_|  |
+# /_______  /__|__|_|  /   ___/____/\___  /_______  /|__| (____  /|_ |   |_ |   \______  /___|  /____  /|__|
+#         \/         \/|__|             \/        \/           \/   \/     \/          \/     \/     \/
+
+# This is used for automatic file updating purposes
+config-version: '2'
+
+# The locale to use in the /locale folder
+locale: en_US
+
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
 # this uses the same format as /staffchat <message>
-staffchat-symbol: "@"
-adminchat-symbol: "#"
-devchat-symbol: "%"
-# Change to true if you have LuckPerms installed
-luckperms: false
+symbols:
+  # Change to false if you want to disable all chat symbols
+  enabled: true
+  staffchat-symbol: "@"
+  adminchat-symbol: "#"
+  devchat-symbol: "%"
 
 format:
   # Minecraft format
@@ -42,29 +43,21 @@ join:
   switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."
   quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."
 
-messages:
-  prefix: "&8[&c&lStaffChat&8]"
-  no-permission: "&cYou don't have permission to execute this command."
-  reload: "&7Config files reloaded. Changes should be live in-game."
-  toggle-on: "%prefix% &7StaffChat toggled &aon&7."
-  toggle-off: "%prefix% &7StaffChat toggled &coff&7."
-  adminchat-toggle-on: "&8[&4&lAdminChat&8] &7AdminChat toggled &aon&7."
-  adminchat-toggle-off: "&8[&4&lAdminChat&8] &7AdminChat toggled &coff&7."
-  devchat-toggle-on: "&8[&d&lDevChat&8] &7DevChat toggled &aon&7."
-  devchat-toggle-off: "&8[&d&lDevChat&8] &7DevChat toggled &coff&7."
-  # If this is set to "custom" you can change the /sc output message to anything
-  # If this is set to "toggle" you can use /sc to toggle into staffchat easier
-  staffchat-output: "default"
-  # staffchat-output must be set to "custom" in order for this to work
-  staffchat-message:
-    - ""
-    - "&c&lSimpleStaffChat2 %arrow2% Help"
-    - ""
-    - "&c/staffchat <message> - Send staffchat messages."
-    - "&c/adminchat <message> - Send adminchat messages."
-    - "&c/devchat <message> - Send devchat messages."
-    - "&c/staffchattoggle - Send staffchat messages without needing to type a command."
-    - "&c/adminchattoggle - Send adminchat messages without needing to type a command."
-    - "&c/devchattoggle - Send devchat messages without needing to type a command."
-    - "&c/staffchatreload - Reload the config file."
-    - ""
+# If this is set to "toggle" you can use /sc to toggle into staffchat easier
+staffchat-output: "default"
+# staffchat-output must be set to "custom" in order for this to work
+staffchat-message:
+  - ""
+  - "&c&lSimpleStaffChat2 %arrow2% Help"
+  - ""
+  - "&d/staffchat <message> &7- Send staffchat messages."
+  - "&d/adminchat <message> &7- Send adminchat messages."
+  - "&d/devchat <message> &7- Send devchat messages."
+  - "&d/staffchattoggle &7- Send staffchat messages without needing to type a command."
+  - "&d/adminchattoggle &7- Send adminchat messages without needing to type a command."
+  - "&d/devchattoggle &7- Send devchat messages without needing to type a command."
+  - "&d/staffchathide &7- Allows you to hide staffchat messages."
+  - "&d/adminchathide &7- Allows you to hide adminchat messages."
+  - "&d/devchathide &7- Allows you to hide devchat messages."
+  - "&d/staffchatreload &7- Reload the config file."
+  - ""

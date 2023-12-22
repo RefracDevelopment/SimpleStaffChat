@@ -4,45 +4,75 @@ import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
 
 import java.util.List;
 
-public enum Commands {
+public class Commands {
 
-    STAFFCHAT_COMMAND_ENABLED("commands.staffchat.enabled"),
-    STAFFCHAT_ALIASES("commands.staffchat.aliases"),
+    public boolean STAFFCHAT_COMMAND_ENABLED;
+    public String STAFFCHAT_COMMAND_PERMISSION;
+    public List<String> STAFFCHAT_COMMAND_ALIASESES;
 
-    TOGGLE_COMMAND_ENABLED("commands.toggle.enabled"),
-    TOGGLE_ALIASES("commands.toggle.aliases"),
+    public boolean STAFF_TOGGLE_COMMAND_ENABLED;
+    public String STAFF_TOGGLE_COMMAND_PERMISSION;
+    public List<String> STAFF_TOGGLE_COMMAND_ALIASESES;
 
-    RELOAD_COMMAND_ENABLED("commands.reload.enabled"),
-    RELOAD_ALIASES("commands.reload.aliases"),
+    public boolean ADMINCHAT_COMMAND_ENABLED;
+    public String ADMINCHAT_COMMAND_PERMISSION;
+    public List<String> ADMINCHAT_COMMAND_ALIASESES;
 
-    ADMINCHAT_COMMAND_ENABLED("commands.adminchat.enabled"),
-    ADMINCHAT_ALIASES("commands.adminchat.aliases"),
+    public boolean ADMIN_TOGGLE_COMMAND_ENABLED;
+    public String ADMIN_TOGGLE_COMMAND_PERMISSION;
+    public List<String> ADMIN_TOGGLE_COMMAND_ALIASESES;
 
-    ADMIN_TOGGLE_COMMAND_ENABLED("commands.toggle.enabled"),
-    ADMIN_TOGGLE_ALIASES("commands.admin-toggle.aliases"),
+    public boolean DEVCHAT_COMMAND_ENABLED;
+    public String DEVCHAT_COMMAND_PERMISSION;
+    public List<String> DEVCHAT_COMMAND_ALIASESES;
 
-    DEVCHAT_COMMAND_ENABLED("commands.devchat.enabled"),
-    DEVCHAT_ALIASES("commands.devchat.aliases"),
+    public boolean DEV_TOGGLE_COMMAND_ENABLED;
+    public String DEV_TOGGLE_COMMAND_PERMISSION;
+    public List<String> DEV_TOGGLE_COMMAND_ALIASESES;
 
-    DEV_TOGGLE_COMMAND_ENABLED("commands.dev-toggle.enabled"),
-    DEV_TOGGLE_ALIASES("commands.dev-toggle.aliases");
+    public boolean CHAT_COMMAND_ENABLED;
+    public String CHAT_COMMAND_PERMISSION;
+    public List<String> CHAT_COMMAND_ALIASESES;
 
-    private final String path;
-    public static final VelocityStaffChat instance = VelocityStaffChat.getInstance();
+    public boolean HIDE_COMMAND_ENABLED;
+    public String HIDE_COMMAND_PERMISSION;
+    public List<String> HIDE_COMMAND_ALIASESES;
 
-    Commands(String path) {
-        this.path = path;
+    public Commands() {
+        loadConfig();
     }
+    
+    public void loadConfig() {
+        STAFFCHAT_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.staffchat.enabled");
+        STAFFCHAT_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.staffchat.permission");
+        STAFFCHAT_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.staffchat.aliases");
 
-    public String getString() {
-        return instance.getCommandsFile().getString(path);
-    }
+        STAFF_TOGGLE_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.toggle.enabled");
+        STAFF_TOGGLE_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.toggle.permission");
+        STAFF_TOGGLE_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.toggle.aliases");
 
-    public List<String> getStringList() {
-        return instance.getCommandsFile().getConfig().getStringList(path);
-    }
+        ADMINCHAT_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.adminchat.enabled");
+        ADMINCHAT_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.adminchat.permission");
+        ADMINCHAT_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.adminchat.aliases");
 
-    public Boolean getBoolean() {
-        return instance.getCommandsFile().getConfig().getBoolean(path);
+        ADMIN_TOGGLE_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.admin-toggle.enabled");
+        ADMIN_TOGGLE_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.admin-toggle.permission");
+        ADMIN_TOGGLE_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.admin-toggle.aliases");
+
+        DEVCHAT_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.devchat.enabled");
+        DEVCHAT_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.devchat.permission");
+        DEVCHAT_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.devchat.aliases");
+
+        DEV_TOGGLE_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.dev-toggle.enabled");
+        DEV_TOGGLE_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.dev-toggle.permission");
+        DEV_TOGGLE_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.dev-toggle.aliases");
+
+        CHAT_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.chat.enabled");
+        CHAT_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.chat.permission");
+        CHAT_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.chat.aliases");
+
+        HIDE_COMMAND_ENABLED = VelocityStaffChat.getInstance().getCommandsFile().getBoolean("commands.hide.enabled");
+        HIDE_COMMAND_PERMISSION = VelocityStaffChat.getInstance().getCommandsFile().getString("commands.hide.permission");
+        HIDE_COMMAND_ALIASESES = VelocityStaffChat.getInstance().getCommandsFile().getStringList("commands.hide.aliases");
     }
 }
