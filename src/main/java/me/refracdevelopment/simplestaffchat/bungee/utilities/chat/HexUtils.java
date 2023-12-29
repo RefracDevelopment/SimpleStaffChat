@@ -33,7 +33,7 @@ public final class HexUtils {
                     "\\{#([A-Fa-f0-9]){6}}|" +
                     "&#([A-Fa-f0-9]){6}|" +
                     "#([A-Fa-f0-9]){6}|" +
-                    org.bukkit.ChatColor.COLOR_CHAR
+                    ChatColor.COLOR_CHAR
     );
 
     private HexUtils() {
@@ -136,8 +136,8 @@ public final class HexUtils {
                 char c = chars[i];
                 if (c == '&' && i + 1 < chars.length) {
                     char next = chars[i + 1];
-                    org.bukkit.ChatColor color = org.bukkit.ChatColor.getByChar(next);
-                    if (color != null && color.isFormat()) {
+                    ChatColor color = ChatColor.getByChar(next);
+                    if (color != null) {
                         compoundedFormat += String.valueOf(ChatColor.COLOR_CHAR) + next;
                         i++; // Skip next character
                         continue;
@@ -198,8 +198,8 @@ public final class HexUtils {
                 char c = chars[i];
                 if (c == '&' && i + 1 < chars.length) {
                     char next = chars[i + 1];
-                    org.bukkit.ChatColor color = org.bukkit.ChatColor.getByChar(next);
-                    if (color != null && color.isFormat()) {
+                    ChatColor color = ChatColor.getByChar(next);
+                    if (color != null) {
                         compoundedFormat += String.valueOf(ChatColor.COLOR_CHAR) + next;
                         i++; // Skip next character
                         continue;

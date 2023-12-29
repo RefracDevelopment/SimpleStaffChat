@@ -26,7 +26,8 @@ import java.net.URL;
 public class BungeeStaffChat extends Plugin {
 
     @Getter private static BungeeStaffChat instance;
-    
+
+    // Managers
     private CommandManager commandManager;
 
     // Files
@@ -49,7 +50,7 @@ public class BungeeStaffChat extends Plugin {
 
         new Metrics(this, 12096);
 
-        if (this.config.LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
+        if (getConfig().LUCKPERMS || getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
             Color.log("&aHooked into LuckPerms.");
         }
@@ -86,13 +87,17 @@ public class BungeeStaffChat extends Plugin {
     }
 
     public void reloadFiles() {
-        this.configFile.reload();
-        this.commandsFile.reload();
-        this.discordFile.reload();
-        this.localeFile.reload();
-        this.config.loadConfig();
-        this.commands.loadConfig();
-        this.discord.loadConfig();
+        // Files
+        getConfigFile().reload();
+        getCommandsFile().reload();
+        getDiscordFile().reload();
+        getLocaleFile().reload();
+
+        // Caches
+        getConfig().loadConfig();
+        getCommands().loadConfig();
+        getDiscord().loadConfig();
+
         Color.log("&c==========================================");
         Color.log("&eAll files have been reloaded correctly!");
         Color.log("&c==========================================");
@@ -100,7 +105,7 @@ public class BungeeStaffChat extends Plugin {
 
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
-        commandManager.registerAll();
+        getCommandManager().registerAll();
         Color.log("&aLoaded commands.");
     }
 

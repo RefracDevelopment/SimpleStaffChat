@@ -5,6 +5,9 @@ import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @UtilityClass
 public class Placeholders {
 
@@ -14,11 +17,10 @@ public class Placeholders {
             ProxiedPlayer player = (ProxiedPlayer) sender;
 
             if (LuckPermsUtil.getLuckPerms() != null) {
+                // TODO: Add weighted prefixes support
+                // %luckperms_prefix_weight% - get the highest or lowest weight prefix or the weight of the specified weight number
                 placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
                 placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
-            } else {
-                placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
-                placeholder = placeholder.replace("%luckperms_suffix%", "N/A");
             }
 
             placeholder = placeholder.replace("%player%", player.getName());
