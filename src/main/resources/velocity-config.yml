@@ -64,7 +64,7 @@ messages:
   staffchat-output: "default"
   staffchat-message:
     - ""
-    - "<red><bold>SimpleStaffChat2 %arrow2% Help"
+    - "<red><bold>SimpleStaffChat %arrow2% Help"
     - ""
     - "<red>/staffchat <message> <gray>- Send staffchat messages."
     - "<red>/adminchat <message> <gray>- Send adminchat messages."

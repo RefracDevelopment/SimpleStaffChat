@@ -48,7 +48,7 @@ staffchat-output: "default"
 # staffchat-output must be set to "custom" in order for this to work
 staffchat-message:
   - ""
-  - "&c&lSimpleStaffChat2 %arrow2% Help"
+  - "&c&lSimpleStaffChat %arrow2% Help"
   - ""
   - "&d/staffchat <message> &7- Send staffchat messages."
   - "&d/adminchat <message> &7- Send adminchat messages."

@@ -95,7 +95,7 @@ public class JoinListener {
 
     private void sendDevMessage(Player player) {
         PluginManager pluginManager = VelocityStaffChat.getInstance().getServer().getPluginManager();
-        PluginContainer container = pluginManager.getPlugin("simplestaffchat2").get();
+        PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
 
         Color.sendMessage(player, " ");
         Color.sendMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");

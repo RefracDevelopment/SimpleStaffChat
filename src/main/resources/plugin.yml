@@ -1,4 +1,4 @@
-name: SimpleStaffChat2
+name: SimpleStaffChat
 version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat
 authors:

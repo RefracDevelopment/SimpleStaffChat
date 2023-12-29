@@ -4,14 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.metastacking.MetaStackElement;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.List;
 import java.util.SortedMap;
 
 @UtilityClass

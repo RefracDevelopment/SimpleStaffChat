@@ -35,7 +35,7 @@ public class ConfigFile {
             configFile.save();
         } catch (IOException exception) {
             VelocityStaffChat.getInstance().getLogger().error("Failed to load config file! This VelocityStaffChat.getInstance() will now shutdown.");
-            Optional<PluginContainer> container = VelocityStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat2");
+            Optional<PluginContainer> container = VelocityStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat");
             container.ifPresent(pluginContainer -> pluginContainer.getExecutorService().shutdown());
         }
     }

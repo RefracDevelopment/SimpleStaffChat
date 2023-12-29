@@ -5,9 +5,6 @@ import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @UtilityClass
 public class Placeholders {
 

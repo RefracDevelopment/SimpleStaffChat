@@ -37,9 +37,9 @@ import java.net.URL;
 import java.nio.file.Path;
 
 @Getter
-@Plugin(id = "simplestaffchat2",
-        name = "SimpleStaffChat2",
-        version = "3.2",
+@Plugin(id = "simplestaffchat",
+        name = "SimpleStaffChat",
+        version = "3.2.2",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
@@ -77,7 +77,7 @@ public class VelocityStaffChat {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
-        PluginContainer container = pluginManager.getPlugin("simplestaffchat2").get();
+        PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
 
         metricsFactory.make(this, 12096);
 
@@ -214,7 +214,7 @@ public class VelocityStaffChat {
 
     public void updateCheck(CommandSource sender, boolean console) {
         try {
-            PluginContainer container = getServer().getPluginManager().getPlugin("simplestaffchat2").get();
+            PluginContainer container = getServer().getPluginManager().getPlugin("simplestaffchat").get();
 
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
