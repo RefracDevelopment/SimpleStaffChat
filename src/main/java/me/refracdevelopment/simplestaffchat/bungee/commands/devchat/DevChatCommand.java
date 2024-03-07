@@ -26,16 +26,19 @@ public class DevChatCommand extends Command {
             return;
         }
 
-        if (args.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().DEVCHAT_FORMAT
-                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
-                    .replace("%server%", "N/A")
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message);
-
-            Methods.sendDevChat(commandSender, format);
+        if (!(args.length >= 1)) {
+            Color.sendMessage(commandSender, "usage", getName());
+            return;
         }
+
+        String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().DEVCHAT_FORMAT
+                .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
+                .replace("%server%", "N/A")
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message);
+
+        Methods.sendDevChat(commandSender, format);
     }
 }

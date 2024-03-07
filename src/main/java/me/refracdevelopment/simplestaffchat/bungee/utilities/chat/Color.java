@@ -5,6 +5,7 @@ import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,11 @@ public class Color {
         return source.stream().map(Color::translate).collect(Collectors.toList());
     }
 
-    public void sendMessage(CommandSender sender, String message) {
-        sendCustomMessage(sender, BungeeStaffChat.getInstance().getLocaleFile().getString(message));
+    public void sendMessage(CommandSender sender, String message, String... replacements) {
+        if (Arrays.stream(replacements).findAny().isPresent())
+            sendCustomMessage(sender, BungeeStaffChat.getInstance().getLocaleFile().getString(message).replace("%cmd%", Arrays.stream(replacements).findAny().get()));
+        else
+            sendCustomMessage(sender, BungeeStaffChat.getInstance().getLocaleFile().getString(message));
     }
 
     public void sendCustomMessage(CommandSender sender, String message) {

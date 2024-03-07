@@ -27,27 +27,15 @@ public class StaffChatCommand extends Command {
             return;
         }
 
-        if (args.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
-                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
-                    .replace("%server%", "N/A")
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message);
-
-            Methods.sendStaffChat(commandSender, format);
-        } else {
+        if (!(args.length >= 1)) {
             if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
                     plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom")) {
                 if (!commandSender.hasPermission(Permissions.STAFFCHAT_HELP)) {
-                    Color.sendMessage(commandSender, "no-permission");
+                    Color.sendMessage(commandSender, "usage", getName());
                     return;
                 }
 
-                plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> {
-                    Color.sendCustomMessage(commandSender, s);
-                });
+                plugin.getConfig().STAFFCHAT_MESSAGE.forEach(s -> Color.sendCustomMessage(commandSender, s));
             } else if (plugin.getConfig().STAFFCHAT_OUTPUT.equalsIgnoreCase("toggle")) {
                 if (commandSender instanceof ProxiedPlayer) {
                     ProxiedPlayer player = (ProxiedPlayer) commandSender;
@@ -56,5 +44,15 @@ public class StaffChatCommand extends Command {
                 }
             }
         }
+
+        String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
+                .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                .replace("%server%", "N/A")
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message);
+
+        Methods.sendStaffChat(commandSender, format);
     }
 }

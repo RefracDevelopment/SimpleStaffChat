@@ -1,6 +1,6 @@
 # en_US translation by Refrac
 # This is used for automatic file updating purposes
-config-version: '3'
+config-version: '4'
 
 # Plugin Message Prefix
 prefix: '<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
@@ -9,6 +9,7 @@ prefix: '<g:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
 no-permission: '&cYou don''t have permission for that!'
 no-console: '&cOnly players may execute this command.'
 reload: '&eConfig files reloaded. Changes should be live in-game.'
+usage: "&eUsage: /%cmd% <message>"
 staffchat-toggle-on: '&eStaffChat toggled &aon&e.'
 staffchat-toggle-off: '&eStaffChat toggled &coff&e.'
 adminchat-toggle-on: '&eAdminChat toggled &aon&e.'
