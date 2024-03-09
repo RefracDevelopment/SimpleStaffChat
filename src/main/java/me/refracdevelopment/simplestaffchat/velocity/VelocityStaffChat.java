@@ -114,18 +114,10 @@ public class VelocityStaffChat {
         config = new Config();
         commands = new Commands();
         discord = new Discord();
-    }
-    
-    public void reloadFiles() {
-        // Files
-        getConfigFile().reload();
-        getCommandsFile().reload();
-        getDiscordFile().reload();
 
-        // Cache
-        getConfig().loadConfig();
-        getCommands().loadConfig();
-        getDiscord().loadConfig();
+        Color.log("<red>==========================================");
+        Color.log("<green>All files have been loaded correctly!");
+        Color.log("<red>==========================================");
     }
 
     private void loadCommands() {

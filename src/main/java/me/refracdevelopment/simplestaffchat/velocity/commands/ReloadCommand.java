@@ -23,7 +23,23 @@ public class ReloadCommand implements SimpleCommand {
             return;
         }
 
-        plugin.reloadFiles();
+        reloadFiles();
         Color.sendMessage(commandSource, plugin.getConfig().RELOAD);
+    }
+
+    private void reloadFiles() {
+        // Files
+        plugin.getConfigFile().reload();
+        plugin.getCommandsFile().reload();
+        plugin.getDiscordFile().reload();
+
+        // Cache
+        plugin.getConfig().loadConfig();
+        plugin.getCommands().loadConfig();
+        plugin.getDiscord().loadConfig();
+
+        Color.log("<red>==========================================");
+        Color.log("<green>All files have been reloaded correctly!");
+        Color.log("<red>==========================================");
     }
 }

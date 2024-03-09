@@ -90,23 +90,6 @@ public class BungeeStaffChat extends Plugin {
         Color.log("&c==========================================");
     }
 
-    public void reloadFiles() {
-        // Files
-        getConfigFile().reload();
-        getCommandsFile().reload();
-        getDiscordFile().reload();
-        getLocaleFile().reload();
-
-        // Caches
-        getConfig().loadConfig();
-        getCommands().loadConfig();
-        getDiscord().loadConfig();
-
-        Color.log("&c==========================================");
-        Color.log("&eAll files have been reloaded correctly!");
-        Color.log("&c==========================================");
-    }
-
     private void loadCommands() {
         this.commandManager = new CommandManager(this);
         getCommandManager().registerAll();

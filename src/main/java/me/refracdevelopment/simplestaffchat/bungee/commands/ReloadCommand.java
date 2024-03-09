@@ -22,7 +22,24 @@ public class ReloadCommand extends Command {
             return;
         }
 
-        plugin.reloadFiles();
+        reloadFiles();
         Color.sendMessage(commandSender, "reload");
+    }
+
+    private void reloadFiles() {
+        // Files
+        plugin.getConfigFile().reload();
+        plugin.getCommandsFile().reload();
+        plugin.getDiscordFile().reload();
+        plugin.getLocaleFile().reload();
+
+        // Caches
+        plugin.getConfig().loadConfig();
+        plugin.getCommands().loadConfig();
+        plugin.getDiscord().loadConfig();
+
+        Color.log("&c==========================================");
+        Color.log("&eAll files have been reloaded correctly!");
+        Color.log("&c==========================================");
     }
 }
