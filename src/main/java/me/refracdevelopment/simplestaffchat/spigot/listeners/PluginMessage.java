@@ -45,33 +45,33 @@ public class PluginMessage implements PluginMessageListener {
         }
     }
 
-    public void sendStaffChat(Player player, String message) {
+    public void sendStaffChat(String message) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Forward");
         out.writeUTF("ALL");
         out.writeUTF("staffchat");
         out.writeUTF(message);
 
-        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+        Bukkit.getServer().sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 
-    public void sendAdminChat(Player player, String message) {
+    public void sendAdminChat(String message) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Forward");
         out.writeUTF("ALL");
         out.writeUTF("adminchat");
         out.writeUTF(message);
 
-        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+        Bukkit.getServer().sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 
-    public void sendDevChat(Player player, String message) {
+    public void sendDevChat(String message) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Forward");
         out.writeUTF("ALL");
         out.writeUTF("devchat");
         out.writeUTF(message);
 
-        player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+        Bukkit.getServer().sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
     }
 }

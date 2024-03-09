@@ -44,13 +44,10 @@ public class JoinListener implements Listener {
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
-            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, plugin.getSettings().JOIN_FORMAT));
+            plugin.getPluginMessage().sendStaffChat(Color.translate(player, plugin.getSettings().JOIN_FORMAT));
         }
         Color.log2(Color.translate(player, plugin.getSettings().JOIN_FORMAT));
-        DiscordImpl.sendJoin(player, JoinType.JOIN, plugin.getSettings().JOIN_FORMAT
-                .replace("%server%", plugin.getSettings().SERVER_NAME)
-                .replace("%player%", player.getName())
-        );
+        DiscordImpl.sendJoin(JoinType.JOIN, player);
     }
 
     @EventHandler
@@ -66,13 +63,10 @@ public class JoinListener implements Listener {
             }
         }
         if (plugin.getSettings().BUNGEECORD) {
-            plugin.getPluginMessage().sendStaffChat(player, Color.translate(player, plugin.getSettings().QUIT_FORMAT));
+            plugin.getPluginMessage().sendStaffChat(Color.translate(player, plugin.getSettings().QUIT_FORMAT));
         }
         Color.log2(Color.translate(player, plugin.getSettings().QUIT_FORMAT));
-        DiscordImpl.sendJoin(player, JoinType.LEAVE, plugin.getSettings().QUIT_FORMAT
-                .replace("%server%", plugin.getSettings().SERVER_NAME)
-                .replace("%player%", player.getName())
-        );
+        DiscordImpl.sendJoin(JoinType.LEAVE, player);
     }
 
     private void sendDevMessage(Player player) {

@@ -5,6 +5,7 @@ import me.refracdevelopment.simplestaffchat.shared.DiscordWebhook;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,42 +57,136 @@ public class DiscordImpl {
         }
     }
 
-    public void sendStaffChat(@Nullable Player player, String content) {
-        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(player, content, SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+    public void sendStaffChat(CommandSender commandSender, String content) {
+        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof com.velocitypowered.api.proxy.Player) {
+                Player player = (Player) commandSender;
+                sendMessage(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendDevChat(@Nullable Player player, String content) {
-        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(player, content, SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+    public void sendDevChat(CommandSender commandSender, String content) {
+        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                sendMessage(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendAdminChat(@Nullable Player player, String content) {
-        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(player, content, SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+    public void sendAdminChat(CommandSender commandSender, String content) {
+        if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                sendMessage(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        SimpleStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendJoin(Player player, JoinType type, String content) {
+    public void sendJoin(JoinType type, Player player) {
         if (SimpleStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             switch (type) {
                 case JOIN:
-                    sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.GREEN);
-                    break;
-                case SWITCH:
-                    sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.CYAN);
+                    sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
+                                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                    .replace("%player%", player.getName()),
+                            SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.GREEN);
                     break;
                 case LEAVE:
-                    sendEmbed(player, content, SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
+                    sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
+                                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                    .replace("%player%", player.getName()),
+                            SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
                     break;
             }
         } else {
-            sendMessage(player, content, SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+            switch (type) {
+                case JOIN:
+                    sendMessage(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
+                                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                    .replace("%player%", player.getName()),
+                            SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                    break;
+                case LEAVE:
+                    sendMessage(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
+                                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                                    .replace("%player%", player.getName()),
+                            SimpleStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                    break;
+            }
         }
     }
 }

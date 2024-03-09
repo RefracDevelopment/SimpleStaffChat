@@ -31,9 +31,8 @@ public class Methods {
             }
         }
 
-        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD && sender instanceof Player) {
-            Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendStaffChat(player, Color.translate(sender, format));
+        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
+            SimpleStaffChat.getInstance().getPluginMessage().sendStaffChat(Color.translate(sender, format));
         }
         Color.log2(Color.translate(sender, format));
         if (sender instanceof Player) {
@@ -42,13 +41,13 @@ public class Methods {
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         } else {
             DiscordImpl.sendStaffChat(null, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         }
     }
@@ -60,9 +59,8 @@ public class Methods {
             }
         }
 
-        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD && sender instanceof Player) {
-            Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(player, Color.translate(sender, format));
+        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
+            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(Color.translate(sender, format));
         }
         Color.log2(Color.translate(sender, format));
         if (sender instanceof Player) {
@@ -71,13 +69,13 @@ public class Methods {
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         } else {
             DiscordImpl.sendDevChat(null, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         }
     }
@@ -89,9 +87,8 @@ public class Methods {
             }
         }
 
-        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD && sender instanceof Player) {
-            Player player = (Player) sender;
-            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(player, Color.translate(sender, format));
+        if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
+            SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(Color.translate(sender, format));
         }
         Color.log2(Color.translate(sender, format));
         if (sender instanceof Player) {
@@ -100,13 +97,13 @@ public class Methods {
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         } else {
             DiscordImpl.sendAdminChat(null, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
-                    .replace("%arrow%", "\u00BB")
+                    .replace("%arrow%", "»")
             );
         }
     }

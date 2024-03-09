@@ -4,7 +4,9 @@ import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.shared.DiscordWebhook;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
+import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,42 +58,152 @@ public class DiscordImpl {
         }
     }
 
-    public void sendStaffChat(@Nullable ProxiedPlayer player, String content) {
-        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(null, content, BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+    public void sendStaffChat(CommandSender commandSender, String content) {
+        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().STAFFCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendDevChat(@Nullable ProxiedPlayer player, String content) {
-        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(null, content, BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+    public void sendDevChat(CommandSender commandSender, String content) {
+        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().DEVCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendAdminChat(@Nullable ProxiedPlayer player, String content) {
-        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED)
-            sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, Color.BLACK);
-        else
-            sendMessage(null, content, BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+    public void sendAdminChat(CommandSender commandSender, String content) {
+        if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content)
+                        ,
+                        BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+            } else {
+                sendEmbed(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK, java.awt.Color.BLACK);
+            }
+        } else {
+            if (commandSender instanceof ProxiedPlayer) {
+                ProxiedPlayer player = (ProxiedPlayer) commandSender;
+                sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%server%", player.getServer().getInfo().getName())
+                                .replace("%player%", player.getName())
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+            } else {
+                sendMessage(null, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                                .replace("%player%", "Console")
+                                .replace("%message%", content),
+                        BungeeStaffChat.getInstance().getDiscord().ADMINCHAT_WEBHOOK);
+            }
+        }
     }
 
-    public void sendJoin(ProxiedPlayer player, JoinType type, String content) {
+    public void sendJoin(JoinType type, ProxiedPlayer player, String currentServer, String previousServer) {
         if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             switch (type) {
                 case JOIN:
-                    sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.GREEN);
+                    sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName()),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.GREEN);
                     break;
                 case SWITCH:
-                    sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.CYAN);
+                    sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
+                                    .replace("%from%", previousServer)
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName())
+                                    .replace("%arrow%", "»"),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.CYAN);
                     break;
                 case LEAVE:
-                    sendEmbed(player, content, BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
+                    sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName()),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
                     break;
             }
         } else {
-            sendMessage(player, content, BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+            switch (type) {
+                case JOIN:
+                    sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName()),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                    break;
+                case SWITCH:
+                    sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
+                                    .replace("%from%", previousServer)
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName())
+                                    .replace("%arrow%", "\u00BB"),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                    break;
+                case LEAVE:
+                    sendMessage(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
+                                    .replace("%server%", currentServer)
+                                    .replace("%player%", player.getName()),
+                            BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                    break;
+            }
         }
     }
 }

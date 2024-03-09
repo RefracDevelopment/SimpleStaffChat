@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class JoinListener implements Listener {
 
-    private BungeeStaffChat plugin;
+    private final BungeeStaffChat plugin;
 
     protected final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
     protected final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
@@ -47,10 +47,7 @@ public class JoinListener implements Listener {
         });
         Color.log2(Color.translate(player, plugin.getConfig().JOIN_FORMAT
                 .replace("%server%", event.getTarget().getName())));
-        DiscordImpl.sendJoin(player, JoinType.JOIN, plugin.getConfig().JOIN_FORMAT
-                .replace("%server%", event.getTarget().getName())
-                .replace("%player%", player.getName())
-        );
+        DiscordImpl.sendJoin(JoinType.JOIN, player, player.getServer().getInfo().getName(), "");
     }
 
     @EventHandler
@@ -72,12 +69,7 @@ public class JoinListener implements Listener {
         Color.log2(Color.translate(player, plugin.getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName())));
-        DiscordImpl.sendJoin(player, JoinType.SWITCH, plugin.getConfig().SWITCH_FORMAT
-                .replace("%server%", player.getServer().getInfo().getName())
-                .replace("%from%", event.getFrom().getName())
-                .replace("%player%", player.getName())
-                .replace("%arrow%", "\u00BB")
-        );
+        DiscordImpl.sendJoin(JoinType.SWITCH, player, player.getServer().getInfo().getName(), event.getFrom().getName());
     }
 
     @EventHandler
@@ -97,10 +89,7 @@ public class JoinListener implements Listener {
         });
         Color.log2(Color.translate(player, plugin.getConfig().QUIT_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())));
-        DiscordImpl.sendJoin(player, JoinType.LEAVE, plugin.getConfig().QUIT_FORMAT
-                .replace("%server%", player.getServer().getInfo().getName())
-                .replace("%player%", player.getName())
-        );
+        DiscordImpl.sendJoin(JoinType.LEAVE, player, player.getServer().getInfo().getName(), "");
     }
 
     private void sendDevMessage(ProxiedPlayer player) {

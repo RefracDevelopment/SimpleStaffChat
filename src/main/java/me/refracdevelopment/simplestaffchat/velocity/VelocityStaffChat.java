@@ -39,7 +39,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat",
         name = "SimpleStaffChat",
-        version = "3.2.2",
+        version = "3.3",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
@@ -223,39 +223,37 @@ public class VelocityStaffChat {
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String input;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((input = reader.readLine()) != null) {
                 response.append(input);
             }
             reader.close();
-            JsonObject object = new JsonParser().parse(response.toString()).getAsJsonObject();
+            JsonObject object = JsonParser.parseString(response.toString()).getAsJsonObject();
 
             if (object.has("plugins")) {
                 JsonObject plugins = object.get("plugins").getAsJsonObject();
                 JsonObject info = plugins.get(container.getDescription().getName().get()).getAsJsonObject();
                 String version = info.get("version").getAsString();
-                if (version.equals(container.getDescription().getVersion().get())) {
+                boolean archived = info.get("archived").getAsBoolean();
+
+                if (archived) {
+                    sender.sendMessage(Color.translate("<red>This plugin has been marked as <yellow><bold>'Archived' &cby RefracDevelopment."));
+                    sender.sendMessage(Color.translate("<red>This version will continue to work but will not receive updates or support."));
+                } else if (version.equals(container.getDescription().getVersion().get())) {
                     if (console) {
-                        Color.sendMessage(sender, "<green>" + container.getDescription().getName().get() + " is on the latest version.");
+                        sender.sendMessage(Color.translate("<green>" + container.getDescription().getName().get() + " is on the latest version."));
                     }
                 } else {
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, "<red>Your " + container.getDescription().getName().get() + " version is out of date!");
-                    Color.sendMessage(sender, "<red>We recommend updating ASAP!");
-                    Color.sendMessage(sender, "");
-                    Color.sendMessage(sender, "<red>Your Version: <yellow>" + container.getDescription().getVersion().get());
-                    Color.sendMessage(sender, "<green>Newest Version: <yellow>" + version);
-                    Color.sendMessage(sender, " ");
-                    Color.sendMessage(sender, " ");
-                    return;
+                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Color.translate("<red>Your " + container.getDescription().getName().get() + " version <grey>(" + container.getDescription().getVersion().get() + ") <red>is out of date! Newest: <yellow><bold>v" + version));
+                    sender.sendMessage(Color.translate(""));
                 }
             } else {
-                Color.sendMessage(sender, "<red>Wrong response from update API, contact plugin developer!");
+                sender.sendMessage(Color.translate("<red>Wrong response from update API, contact plugin developer!"));
             }
         } catch (
                 Exception ex) {
-            Color.sendMessage(sender, "<red>Failed to get updater check. (" + ex.getMessage() + ")");
+            sender.sendMessage(Color.translate("<red>Failed to get updater check. (" + ex.getMessage() + ")"));
         }
     }
 }
