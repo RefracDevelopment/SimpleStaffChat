@@ -4,7 +4,6 @@ import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.shared.DiscordWebhook;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
-import me.refracdevelopment.simplestaffchat.spigot.SimpleStaffChat;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -62,7 +61,7 @@ public class DiscordImpl {
         if (BungeeStaffChat.getInstance().getDiscord().DISCORD_EMBED) {
             if (commandSender instanceof ProxiedPlayer) {
                 ProxiedPlayer player = (ProxiedPlayer) commandSender;
-                sendEmbed(player, SimpleStaffChat.getInstance().getDiscord().DISCORD_FORMAT
+                sendEmbed(player, BungeeStaffChat.getInstance().getDiscord().DISCORD_FORMAT
                                 .replace("%server%", player.getServer().getInfo().getName())
                                 .replace("%player%", player.getName())
                                 .replace("%message%", content)
@@ -194,7 +193,7 @@ public class DiscordImpl {
                                     .replace("%from%", previousServer)
                                     .replace("%server%", currentServer)
                                     .replace("%player%", player.getName())
-                                    .replace("%arrow%", "\u00BB"),
+                                    .replace("%arrow%", "»"),
                             BungeeStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
                     break;
                 case LEAVE:
