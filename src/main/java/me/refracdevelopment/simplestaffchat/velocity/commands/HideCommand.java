@@ -16,7 +16,10 @@ public class HideCommand implements SimpleCommand {
     
     @Override
     public void execute(Invocation invocation) {
-        if (!(invocation.source() instanceof Player)) return;
+        if (!(invocation.source() instanceof Player)) {
+            Color.sendMessage(invocation.source(), "no-console");
+            return;
+        }
         
         Player player = (Player) invocation.source();
 

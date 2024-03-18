@@ -1,6 +1,5 @@
 package me.refracdevelopment.simplestaffchat.velocity.commands;
 
-import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.velocity.VelocityStaffChat;
@@ -17,11 +16,12 @@ public class ToggleCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        CommandSource commandSource = invocation.source();
+        if (!(invocation.source() instanceof Player)) {
+            Color.sendMessage(invocation.source(), "no-console");
+            return;
+        }
 
-        if (!(commandSource instanceof Player)) return;
-
-        Player player = (Player) commandSource;
+        Player player = (Player) invocation.source();
 
         if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
             Color.sendMessage(player, plugin.getConfig().NO_PERMISSION);

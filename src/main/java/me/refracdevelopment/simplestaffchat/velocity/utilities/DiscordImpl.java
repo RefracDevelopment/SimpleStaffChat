@@ -174,29 +174,27 @@ public class DiscordImpl {
                             VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK, Color.RED);
                     break;
             }
-        } else {
-            switch (type) {
-                case JOIN:
-                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
-                                    .replace("%server%", currentServer)
-                                    .replace("%player%", player.getUsername()),
-                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
-                    break;
-                case SWITCH:
-                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
-                                    .replace("%from%", previousServer)
-                                    .replace("%server%", currentServer)
-                                    .replace("%player%", player.getUsername())
-                                    .replace("%arrow%", "\u00BB"),
-                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
-                    break;
-                case LEAVE:
-                    sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
-                                    .replace("%server%", currentServer)
-                                    .replace("%player%", player.getUsername()),
-                            VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
-                    break;
-            }
+        } else switch (type) {
+            case JOIN:
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_JOIN_FORMAT
+                                .replace("%server%", currentServer)
+                                .replace("%player%", player.getUsername()),
+                        VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                break;
+            case SWITCH:
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_SWITCH_FORMAT
+                                .replace("%from%", previousServer)
+                                .replace("%server%", currentServer)
+                                .replace("%player%", player.getUsername())
+                                .replace("%arrow%", "\u00BB"),
+                        VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                break;
+            case LEAVE:
+                sendMessage(player, VelocityStaffChat.getInstance().getDiscord().DISCORD_LEAVE_FORMAT
+                                .replace("%server%", currentServer)
+                                .replace("%player%", player.getUsername()),
+                        VelocityStaffChat.getInstance().getDiscord().JOIN_WEBHOOK);
+                break;
         }
     }
 }

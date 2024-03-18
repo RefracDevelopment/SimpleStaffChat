@@ -35,9 +35,12 @@ public class JoinListener implements Listener {
             sendDevMessage(player);
         }
 
-        if (!plugin.getConfig().JOIN_ENABLED) return;
-        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-        if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY) return;
+        if (!plugin.getConfig().JOIN_ENABLED)
+            return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
+            return;
+        if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY)
+            return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -45,6 +48,7 @@ public class JoinListener implements Listener {
                         .replace("%server%", event.getTarget().getName())));
             }
         });
+
         Color.log2(Color.translate(player, plugin.getConfig().JOIN_FORMAT
                 .replace("%server%", event.getTarget().getName())));
         DiscordImpl.sendJoin(JoinType.JOIN, player, player.getServer().getInfo().getName(), "");
@@ -52,12 +56,15 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onSwitch(ServerSwitchEvent event) {
-        if (event.getFrom() == null) return;
-        if (!plugin.getConfig().JOIN_ENABLED) return;
+        if (event.getFrom() == null)
+            return;
+        if (!plugin.getConfig().JOIN_ENABLED)
+            return;
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH))
+            return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -74,12 +81,15 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent event) {
-        if (!plugin.getConfig().JOIN_ENABLED) return;
+        if (!plugin.getConfig().JOIN_ENABLED)
+            return;
 
         ProxiedPlayer player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
-        if (player.getServer() == null) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT))
+            return;
+        if (player.getServer() == null)
+            return;
 
         plugin.getProxy().getPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -87,6 +97,7 @@ public class JoinListener implements Listener {
                         .replace("%server%", player.getServer().getInfo().getName())));
             }
         });
+
         Color.log2(Color.translate(player, plugin.getConfig().QUIT_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())));
         DiscordImpl.sendJoin(JoinType.LEAVE, player, player.getServer().getInfo().getName(), "");

@@ -10,6 +10,7 @@ public class Placeholders {
 
     public String setPlaceholders(CommandSource sender, String placeholder) {
         placeholder = placeholder.replace("%prefix%", VelocityStaffChat.getInstance().getConfig().PREFIX);
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
@@ -28,12 +29,13 @@ public class Placeholders {
             placeholder = placeholder.replace("%player%", player.getUsername());
             placeholder = placeholder.replace("%displayname%", player.getUsername());
         }
-        placeholder = placeholder.replace("%arrow%", "\u00BB");
-        placeholder = placeholder.replace("%arrow2%", "\u27A5");
-        placeholder = placeholder.replace("%arrow_2%", "\u27A5");
-        placeholder = placeholder.replace("%star%", "\u2726");
-        placeholder = placeholder.replace("%circle%", "\u2219");
-        placeholder = placeholder.replace("|", "\u239F");
+
+        placeholder = placeholder.replace("%arrow%", "»");
+        placeholder = placeholder.replace("%arrow2%", "➥");
+        placeholder = placeholder.replace("%arrow_2%", "➥");
+        placeholder = placeholder.replace("%star%", "✦");
+        placeholder = placeholder.replace("%circle%", "∙");
+        placeholder = placeholder.replace("|", "⎟");
 
         return placeholder;
     }

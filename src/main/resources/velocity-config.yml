@@ -44,6 +44,7 @@ messages:
   # Used for the %prefix% placeholder in messages
   prefix: "<dark_gray>[<red><bold>StaffChat<dark_gray>]"
   no-permission: "<red>You don't have permission to execute this command."
+  no-console: "<red>Only players may execute this command."
   reload: "<gray>Config files reloaded. Changes should be live in-game."
   staffchat-toggle-on: "%prefix% <yellow>StaffChat toggled <green>on<yellow>."
   staffchat-toggle-off: "%prefix% <yellow>StaffChat toggled <red>off<yellow>."

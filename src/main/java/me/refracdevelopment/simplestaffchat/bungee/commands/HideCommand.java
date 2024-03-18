@@ -18,7 +18,10 @@ public class HideCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        if (!(commandSender instanceof ProxiedPlayer)) return;
+        if (!(commandSender instanceof ProxiedPlayer)) {
+            Color.sendMessage(commandSender, "no-console");
+            return;
+        }
 
         ProxiedPlayer player = (ProxiedPlayer) commandSender;
 

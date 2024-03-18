@@ -15,7 +15,10 @@ public class ChatListener {
     public void onStaffChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (event.getMessage().startsWith("/")) return;
+        if (event.getMessage().startsWith("/"))
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             // requires SignedVelocity to be installed to work
@@ -36,7 +39,8 @@ public class ChatListener {
 
             Methods.sendStaffChat(player, format, message);
         } else if (event.getMessage().startsWith(VelocityStaffChat.getInstance().getConfig().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && VelocityStaffChat.getInstance().getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().STAFFCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().STAFFCHAT_SYMBOL))
+                return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());
 
@@ -59,7 +63,10 @@ public class ChatListener {
     public void onAdminChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (event.getMessage().startsWith("/")) return;
+        if (event.getMessage().startsWith("/"))
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
             event.setResult(PlayerChatEvent.ChatResult.denied());
@@ -76,7 +83,8 @@ public class ChatListener {
 
             Methods.sendAdminChat(player, format, message);
         } else if (event.getMessage().startsWith(VelocityStaffChat.getInstance().getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && VelocityStaffChat.getInstance().getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().ADMINCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().ADMINCHAT_SYMBOL))
+                return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());
 
@@ -98,7 +106,10 @@ public class ChatListener {
     public void onDevChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (event.getMessage().startsWith("/")) return;
+        if (event.getMessage().startsWith("/"))
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
             event.setResult(PlayerChatEvent.ChatResult.denied());
@@ -115,7 +126,8 @@ public class ChatListener {
 
             Methods.sendDevChat(player, format, message);
         } else if (event.getMessage().startsWith(VelocityStaffChat.getInstance().getConfig().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && VelocityStaffChat.getInstance().getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().DEVCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(VelocityStaffChat.getInstance().getConfig().DEVCHAT_SYMBOL))
+                return;
 
             event.setResult(PlayerChatEvent.ChatResult.denied());
 

@@ -18,7 +18,8 @@ public class Color {
 
         if (sender instanceof Player && Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             return PlaceholderAPI.setPlaceholders((Player) sender, translate(source));
-        } else return translate(source);
+        } else
+            return translate(source);
     }
 
     public  String translate(String message) {

@@ -28,9 +28,15 @@ public class Methods {
                 p.sendMessage(Color.translate(commandSource, format));
             }
         }
+
         Color.log2(format);
+
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
+
+            if (!player.getCurrentServer().isPresent())
+                return;
+
             DiscordImpl.sendStaffChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())
@@ -48,9 +54,15 @@ public class Methods {
                 p.sendMessage(Color.translate(commandSource, format));
             }
         }
+
         Color.log2(format);
+
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
+
+            if (!player.getCurrentServer().isPresent())
+                return;
+
             DiscordImpl.sendDevChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())
@@ -68,9 +80,15 @@ public class Methods {
                 p.sendMessage(Color.translate(commandSource, format));
             }
         }
+
         Color.log2(format);
+
         if (commandSource instanceof Player) {
             Player player = (Player) commandSource;
+
+            if (!player.getCurrentServer().isPresent())
+                return;
+
             DiscordImpl.sendAdminChat(player, message
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%player%", player.getUsername())

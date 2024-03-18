@@ -4,7 +4,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
 import com.velocitypowered.api.plugin.PluginContainer;
-import com.velocitypowered.api.plugin.PluginManager;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.shared.JoinType;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
@@ -29,32 +28,42 @@ public class JoinListener {
             sendDevMessage(player);
         }
 
-        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED) return;
-        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
-        if (event.getPreviousServer() != null) return;
-        if (!player.getCurrentServer().isPresent()) return;
+        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED)
+            return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
+            return;
+        if (event.getPreviousServer() != null)
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                p.sendMessage(Color.translate(player, VelocityStaffChat.getInstance().getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
+
         Color.log2(VelocityStaffChat.getInstance().getConfig().JOIN_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
+
         DiscordImpl.sendJoin(JoinType.JOIN, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
     @Subscribe
     public void onSwitch(ServerPostConnectEvent event) {
-        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED) return;
-        if (event.getPreviousServer() == null) return;
+        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED)
+            return;
+        if (event.getPreviousServer() == null)
+            return;
 
         Player player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH)) return;
-        if (!player.getCurrentServer().isPresent()) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH))
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
@@ -65,6 +74,7 @@ public class JoinListener {
                 ));
             }
         });
+
         Color.log2(VelocityStaffChat.getInstance().getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%from%", event.getPreviousServer().getServerInfo().getName())
@@ -75,17 +85,22 @@ public class JoinListener {
 
     @Subscribe
     public void onQuit(DisconnectEvent event) {
-        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED) return;
+        if (!VelocityStaffChat.getInstance().getConfig().JOIN_ENABLED)
+            return;
 
         Player player = event.getPlayer();
 
-        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT))
+            return;
+        if (!player.getCurrentServer().isPresent())
+            return;
 
         VelocityStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 p.sendMessage(Color.translate(player, VelocityStaffChat.getInstance().getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
             }
         });
+
         Color.log2(VelocityStaffChat.getInstance().getConfig().QUIT_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
@@ -94,8 +109,7 @@ public class JoinListener {
     }
 
     private void sendDevMessage(Player player) {
-        PluginManager pluginManager = VelocityStaffChat.getInstance().getServer().getPluginManager();
-        PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
+        PluginContainer container = VelocityStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat").get();
 
         Color.sendMessage(player, " ");
         Color.sendMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");

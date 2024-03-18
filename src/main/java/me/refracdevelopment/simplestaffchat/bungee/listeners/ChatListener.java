@@ -21,7 +21,8 @@ public class ChatListener implements Listener {
     public void onStaffChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (event.isCommand()) return;
+        if (event.isCommand())
+            return;
 
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
@@ -40,7 +41,8 @@ public class ChatListener implements Listener {
 
             Methods.sendStaffChat(player, format);
         } else if (event.getMessage().startsWith(plugin.getConfig().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().STAFFCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().STAFFCHAT_SYMBOL))
+                return;
 
             event.setCancelled(true);
 
@@ -63,7 +65,8 @@ public class ChatListener implements Listener {
     public void onAdminChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (event.isCommand()) return;
+        if (event.isCommand())
+            return;
 
         if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
@@ -82,7 +85,8 @@ public class ChatListener implements Listener {
 
             Methods.sendAdminChat(player, format);
         } else if (event.getMessage().startsWith(plugin.getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL))
+                return;
 
             event.setCancelled(true);
 
@@ -105,7 +109,8 @@ public class ChatListener implements Listener {
     public void onDevChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
-        if (event.isCommand()) return;
+        if (event.isCommand())
+            return;
 
         if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
@@ -124,7 +129,8 @@ public class ChatListener implements Listener {
 
             Methods.sendDevChat(player, format);
         } else if (event.getMessage().startsWith(plugin.getConfig().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && plugin.getConfig().SYMBOLS) {
-            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL))
+                return;
 
             event.setCancelled(true);
 

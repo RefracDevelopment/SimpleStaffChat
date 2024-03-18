@@ -22,7 +22,6 @@ public class ConfigFile {
     public ConfigFile(String name) {
         try {
             configFile = YamlDocument.create(new File(BungeeStaffChat.getInstance().getDataFolder(), name),
-                    getClass().getResourceAsStream("/" + name),
                     GeneralSettings.DEFAULT,
                     LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,

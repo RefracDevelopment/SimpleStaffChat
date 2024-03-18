@@ -35,17 +35,21 @@ public class JoinListener implements Listener {
             sendDevMessage(player);
         }
 
-        if (!plugin.getSettings().JOIN_ENABLED) return;
-        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN)) return;
+        if (!plugin.getSettings().JOIN_ENABLED)
+            return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
+            return;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 Color.sendCustomMessage(p, Color.translate(player, plugin.getSettings().JOIN_FORMAT));
             }
         }
+
         if (plugin.getSettings().BUNGEECORD) {
             plugin.getPluginMessage().sendStaffChat(Color.translate(player, plugin.getSettings().JOIN_FORMAT));
         }
+
         Color.log2(Color.translate(player, plugin.getSettings().JOIN_FORMAT));
         DiscordImpl.sendJoin(JoinType.JOIN, player);
     }
@@ -54,17 +58,21 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (!plugin.getSettings().JOIN_ENABLED) return;
-        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT)) return;
+        if (!plugin.getSettings().JOIN_ENABLED)
+            return;
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT))
+            return;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
                 Color.sendCustomMessage(p, Color.translate(player, plugin.getSettings().QUIT_FORMAT));
             }
         }
+
         if (plugin.getSettings().BUNGEECORD) {
             plugin.getPluginMessage().sendStaffChat(Color.translate(player, plugin.getSettings().QUIT_FORMAT));
         }
+
         Color.log2(Color.translate(player, plugin.getSettings().QUIT_FORMAT));
         DiscordImpl.sendJoin(JoinType.LEAVE, player);
     }

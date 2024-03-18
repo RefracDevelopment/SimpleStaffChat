@@ -28,7 +28,9 @@ public class Methods {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
+
         Color.log2(Color.translate(commandSender, format));
+
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             DiscordImpl.sendStaffChat(player, format
@@ -48,7 +50,9 @@ public class Methods {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
+
         Color.log2(Color.translate(commandSender, format));
+
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             DiscordImpl.sendDevChat(player, format
@@ -68,7 +72,9 @@ public class Methods {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
             }
         }
+
         Color.log2(Color.translate(commandSender, format));
+
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
             DiscordImpl.sendAdminChat(player, format
@@ -165,7 +171,7 @@ public class Methods {
     public void hideDevChat(ProxiedPlayer player) {
         if (devChatMuted.contains(player.getUniqueId())) {
             devChatMuted.remove(player.getUniqueId());
-            Color.sendMessage(player, "devchat-muted-of");
+            Color.sendMessage(player, "devchat-muted-off");
         } else {
             if (adminChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
                 adminChatMuted.remove(player.getUniqueId());

@@ -34,7 +34,9 @@ public class Methods {
         if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
             SimpleStaffChat.getInstance().getPluginMessage().sendStaffChat(Color.translate(sender, format));
         }
+
         Color.log2(Color.translate(sender, format));
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             DiscordImpl.sendStaffChat(player, format
@@ -62,7 +64,9 @@ public class Methods {
         if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
             SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(Color.translate(sender, format));
         }
+
         Color.log2(Color.translate(sender, format));
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             DiscordImpl.sendDevChat(player, format
@@ -90,7 +94,9 @@ public class Methods {
         if (SimpleStaffChat.getInstance().getSettings().BUNGEECORD) {
             SimpleStaffChat.getInstance().getPluginMessage().sendDevChat(Color.translate(sender, format));
         }
+
         Color.log2(Color.translate(sender, format));
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             DiscordImpl.sendAdminChat(player, format
@@ -151,8 +157,6 @@ public class Methods {
     }
 
     public void toggleAllChat(Player player) {
-        
-
         if (staffChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())
                 || adminChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
