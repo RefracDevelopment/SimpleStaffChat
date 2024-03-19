@@ -23,7 +23,8 @@ public class ConfigFile {
     public ConfigFile(String name) {
         try {
             configFile = YamlDocument.create(new File(VelocityStaffChat.getInstance().getPath().toFile(), name),
-                    GeneralSettings.DEFAULT,
+                    getClass().getResourceAsStream("/" + name),
+                    GeneralSettings.builder().setUseDefaults(false).build(),
                     LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,
                     UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
