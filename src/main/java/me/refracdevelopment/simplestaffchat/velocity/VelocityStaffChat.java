@@ -39,7 +39,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat",
         name = "SimpleStaffChat",
-        version = "3.3",
+        version = "3.3.1",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
