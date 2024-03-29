@@ -53,6 +53,6 @@ public class StaffChatCommand extends Command {
                 .replace("%player%", commandSender.getName())
                 .replace("%message%", message);
 
-        Methods.sendStaffChat(commandSender, format);
+        Methods.sendStaffChat(commandSender, format, message);
     }
 }

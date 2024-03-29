@@ -37,7 +37,7 @@ public class StaffChatCommand extends Command {
                             .replace("%player%", sender.getName())
                             .replace("%message%", message);
 
-            Methods.sendStaffChat(sender, format);
+            Methods.sendStaffChat(sender, format, message);
         } else {
             if (plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("default") ||
                     plugin.getSettings().STAFFCHAT_OUTPUT.equalsIgnoreCase("custom"))  {

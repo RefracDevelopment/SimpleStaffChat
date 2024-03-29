@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.shared.Permissions;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -22,7 +23,7 @@ public class Methods {
     @Getter private final List<UUID> adminChatPlayers = new ArrayList<>();
     @Getter private final List<UUID> devChatPlayers = new ArrayList<>();
 
-    public void sendStaffChat(CommandSender commandSender, String format) {
+    public void sendStaffChat(CommandSender commandSender, String format, String message) {
         for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
@@ -33,18 +34,18 @@ public class Methods {
 
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            DiscordImpl.sendStaffChat(player, format
+            DiscordImpl.sendStaffChat(player, ChatColor.stripColor(message)
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            DiscordImpl.sendStaffChat(null, format
+            DiscordImpl.sendStaffChat(null, ChatColor.stripColor(message)
                     .replace("%player%", "Console")
             );
         }
     }
 
-    public void sendDevChat(CommandSender commandSender, String format) {
+    public void sendDevChat(CommandSender commandSender, String format, String message) {
         for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
             if (p.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
@@ -55,18 +56,18 @@ public class Methods {
 
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            DiscordImpl.sendDevChat(player, format
+            DiscordImpl.sendDevChat(player, ChatColor.stripColor(message)
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            DiscordImpl.sendDevChat(null, format
+            DiscordImpl.sendDevChat(null, ChatColor.stripColor(message)
                     .replace("%player%", "Console")
             );
         }
     }
 
-    public void sendAdminChat(CommandSender commandSender, String format) {
+    public void sendAdminChat(CommandSender commandSender, String format, String message) {
         for (ProxiedPlayer p : BungeeStaffChat.getInstance().getProxy().getPlayers()) {
             if (p.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(commandSender, format));
@@ -77,12 +78,12 @@ public class Methods {
 
         if (commandSender instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) commandSender;
-            DiscordImpl.sendAdminChat(player, format
+            DiscordImpl.sendAdminChat(player, ChatColor.stripColor(message)
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            DiscordImpl.sendAdminChat(null, format
+            DiscordImpl.sendAdminChat(null, ChatColor.stripColor(message)
                     .replace("%player%", "Console")
             );
         }

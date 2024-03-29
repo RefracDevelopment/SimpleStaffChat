@@ -39,6 +39,6 @@ public class AdminChatCommand extends Command {
                 .replace("%player%", commandSender.getName())
                 .replace("%message%", message);
 
-        Methods.sendAdminChat(commandSender, format);
+        Methods.sendAdminChat(commandSender, format, message);
     }
 }

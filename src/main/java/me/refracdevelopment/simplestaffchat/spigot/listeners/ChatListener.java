@@ -38,7 +38,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendStaffChat(player, format);
+            Methods.sendStaffChat(player, format, message);
         } else if (event.getMessage().startsWith(plugin.getSettings().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getSettings().STAFFCHAT_SYMBOL))
                 return;
@@ -56,7 +56,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendStaffChat(player, format);
+            Methods.sendStaffChat(player, format, message);
         }
     }
 
@@ -82,7 +82,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendAdminChat(player, format);
+            Methods.sendAdminChat(player, format, message);
         } else if (event.getMessage().startsWith(plugin.getSettings().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getSettings().ADMINCHAT_SYMBOL))
                 return;
@@ -100,7 +100,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendAdminChat(player, format);
+            Methods.sendAdminChat(player, format, message);
         }
     }
 
@@ -126,7 +126,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendDevChat(player, format);
+            Methods.sendDevChat(player, format, message);
         } else if (event.getMessage().startsWith(plugin.getSettings().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && plugin.getSettings().SYMBOLS) {
             if (event.getMessage().equalsIgnoreCase(plugin.getSettings().DEVCHAT_SYMBOL))
                 return;
@@ -144,7 +144,7 @@ public class ChatListener implements Listener {
                     .replace("%player%", player.getName())
                     .replace("%message%", message);
 
-            Methods.sendDevChat(player, format);
+            Methods.sendDevChat(player, format, message);
         }
     }
 }

@@ -24,7 +24,7 @@ public class Methods {
     @Getter private final List<UUID> adminChatPlayers = new ArrayList<>();
     @Getter private final List<UUID> devChatPlayers = new ArrayList<>();
 
-    public void sendStaffChat(CommandSender sender, String format) {
+    public void sendStaffChat(CommandSender sender, String format, String message) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(sender, format));
@@ -39,14 +39,13 @@ public class Methods {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            DiscordImpl.sendStaffChat(player, format
+            DiscordImpl.sendStaffChat(player, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
-                    .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "»")
             );
         } else {
-            DiscordImpl.sendStaffChat(null, format
+            DiscordImpl.sendStaffChat(null, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "»")
@@ -54,7 +53,7 @@ public class Methods {
         }
     }
 
-    public void sendDevChat(CommandSender sender, String format) {
+    public void sendDevChat(CommandSender sender, String format, String message) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(sender, format));
@@ -69,14 +68,13 @@ public class Methods {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            DiscordImpl.sendDevChat(player, format
+            DiscordImpl.sendDevChat(player, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
-                    .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "»")
             );
         } else {
-            DiscordImpl.sendDevChat(null, format
+            DiscordImpl.sendDevChat(null, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "»")
@@ -84,7 +82,7 @@ public class Methods {
         }
     }
 
-    public void sendAdminChat(CommandSender sender, String format) {
+    public void sendAdminChat(CommandSender sender, String format, String message) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(p.getUniqueId())) {
                 Color.sendCustomMessage(p, Color.translate(sender, format));
@@ -99,14 +97,14 @@ public class Methods {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            DiscordImpl.sendAdminChat(player, format
+            DiscordImpl.sendAdminChat(player, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
                     .replace("%displayname%", ChatColor.stripColor(player.getDisplayName()))
                     .replace("%arrow%", "»")
             );
         } else {
-            DiscordImpl.sendAdminChat(null, format
+            DiscordImpl.sendAdminChat(null, ChatColor.stripColor(message)
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", sender.getName())
                     .replace("%arrow%", "»")

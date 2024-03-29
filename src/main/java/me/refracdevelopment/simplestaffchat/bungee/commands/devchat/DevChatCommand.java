@@ -39,6 +39,6 @@ public class DevChatCommand extends Command {
                 .replace("%player%", commandSender.getName())
                 .replace("%message%", message);
 
-        Methods.sendDevChat(commandSender, format);
+        Methods.sendDevChat(commandSender, format, message);
     }
 }
