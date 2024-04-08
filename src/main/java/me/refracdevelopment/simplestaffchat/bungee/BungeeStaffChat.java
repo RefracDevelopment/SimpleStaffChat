@@ -10,6 +10,7 @@ import me.refracdevelopment.simplestaffchat.bungee.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.bungee.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.bungee.manager.CommandManager;
+import me.refracdevelopment.simplestaffchat.bungee.utilities.DownloadUtil;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.bungee.utilities.chat.LuckPermsUtil;
 import net.luckperms.api.LuckPermsProvider;
@@ -45,6 +46,8 @@ public class BungeeStaffChat extends Plugin {
     public void onEnable() {
         instance = this;
         long startTiming = System.currentTimeMillis();
+
+        DownloadUtil.downloadAndEnable(this);
 
         loadFiles();
 

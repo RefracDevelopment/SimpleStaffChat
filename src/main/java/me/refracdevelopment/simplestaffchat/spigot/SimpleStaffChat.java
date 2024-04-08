@@ -2,7 +2,6 @@ package me.refracdevelopment.simplestaffchat.spigot;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tcoded.folialib.FoliaLib;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.spigot.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.spigot.config.cache.Commands;
@@ -12,6 +11,7 @@ import me.refracdevelopment.simplestaffchat.spigot.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.spigot.listeners.PluginMessage;
 import me.refracdevelopment.simplestaffchat.spigot.manager.CommandManager;
+import me.refracdevelopment.simplestaffchat.spigot.utilities.DownloadUtil;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.VersionCheck;
 import me.refracdevelopment.simplestaffchat.spigot.utilities.chat.Color;
 import org.bstats.bukkit.Metrics;
@@ -44,9 +44,6 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
-    // Utilities
-    private FoliaLib foliaLib;
-
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -54,7 +51,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
-        this.foliaLib = new FoliaLib(this);
+        DownloadUtil.downloadAndEnable(this);
 
         loadFiles();
 
@@ -65,11 +62,6 @@ public final class SimpleStaffChat extends JavaPlugin {
             Color.log("&c" + getDescription().getName() + " 1.7 is in legacy mode, please update to 1.8+");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
-        }
-
-        // Check if the server is on Folia
-        if (getFoliaLib().isFolia()) {
-            Color.log("&cSupport for Folia has not been tested and is only for experimental purposes.");
         }
 
         // Make sure the server has PlaceholderAPI

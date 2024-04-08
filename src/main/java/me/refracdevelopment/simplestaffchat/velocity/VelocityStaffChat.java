@@ -24,6 +24,7 @@ import me.refracdevelopment.simplestaffchat.velocity.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.velocity.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.velocity.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.velocity.listeners.JoinListener;
+import me.refracdevelopment.simplestaffchat.velocity.utilities.DownloadUtil;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.velocity.utilities.chat.LuckPermsUtil;
 import net.luckperms.api.LuckPermsProvider;
@@ -39,7 +40,7 @@ import java.nio.file.Path;
 @Getter
 @Plugin(id = "simplestaffchat",
         name = "SimpleStaffChat",
-        version = "3.3.1",
+        version = "3.4",
         dependencies = {@Dependency(id = "signedvelocity", optional = true), @Dependency(id = "luckperms", optional = true)},
         url = "https://discord.gg/EFeSKPg739",
         description = "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
@@ -69,8 +70,6 @@ public class VelocityStaffChat {
         this.logger = logger;
         this.path = path;
         this.metricsFactory = metricsFactory;
-
-        loadFiles();
     }
 
     @Subscribe
@@ -78,6 +77,10 @@ public class VelocityStaffChat {
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
         PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
+
+        DownloadUtil.downloadAndEnable();
+
+        loadFiles();
 
         metricsFactory.make(this, 12096);
 
