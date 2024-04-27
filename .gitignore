@@ -4,6 +4,7 @@
 *.iml
 *.ipr
 *.iws
+*.lock
 
 # IntelliJ
 out/
@@ -96,6 +97,7 @@ $RECYCLE.BIN/
 *.lnk
 
 target/
+build/
 
 pom.xml.tag
 pom.xml.releaseBackup

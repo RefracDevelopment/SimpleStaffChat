@@ -1,9 +1,0 @@
-name: SimpleStaffChat
-version: '${project.version}'
-main: me.refracdevelopment.simplestaffchat.bungee.BungeeStaffChat
-author: Refrac
-softDepends:
-  - LuckPerms
-  - AntiPopup-Via
-description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
-website: https://discord.gg/EFeSKPg739
