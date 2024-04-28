@@ -1,0 +1,53 @@
+# en_US translation by Refrac
+# This is used for automatic file updating purposes
+config-version: '5'
+
+# Plugin Message Prefix
+prefix: '<gradient:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
+
+# Generic Command Messages
+no-permission: '&cYou don''t have permission for that!'
+no-console: '&cOnly players may execute this command.'
+reload: '&eConfig files reloaded. Changes should be live in-game.'
+usage: "&eUsage: /%cmd% <message>"
+staffchat-toggle-on: '&eStaffChat toggled &aon&e.'
+staffchat-toggle-off: '&eStaffChat toggled &coff&e.'
+adminchat-toggle-on: '&eAdminChat toggled &aon&e.'
+adminchat-toggle-off: '&eAdminChat toggled &coff&e.'
+devchat-toggle-on: '&eDevChat toggled &aon&e.'
+devchat-toggle-off: '&eDevChat toggled &coff&e.'
+allchat-toggle-on: '&eAll chat toggled &aon&e.'
+staffchat-muted-on: '&eYour StaffChat has been muted.'
+staffchat-muted-off: '&eYour StaffChat has been un-muted.'
+adminchat-muted-on: '&eYour AdminChat has been muted.'
+adminchat-muted-off: '&eYour AdminChat has been un-muted.'
+devchat-muted-on: '&eYour DevChat has been muted.'
+devchat-muted-off: '&eYour DevChat has been un-muted.'
+allchat-muted-on: '&eAll channels have been muted.'
+allchat-muted-off: '&eAll channels have been un-muted.'
+
+# Used to send messages to staffchat without the
+# need to type in /staffchat <message> or /staffchattoggle
+# this uses the same format as /staffchat <message>
+staffchat-symbol: "@"
+adminchat-symbol: "#"
+devchat-symbol: "%"
+
+# StaffChat format
+staffchat-format: "%prefix% &e(%server%) &6&l%player%&7: &f%message%"
+# Format for messages sent by the console.
+console-staffchat-format: "%prefix% &6&lConsole&7: &f%message%"
+# AdminChat format
+adminchat-format: "&8[&4&lAdminChat&8] &e(%server%) &6&l%player%&7: &f%message%"
+# Format for messages sent by the console.
+console-adminchat-format: "&8[&4&lAdminChat&8] &6&lConsole&7: &f%message%"
+# DevChat format
+devchat-format: "&8[&b&lDevChat&8] &e(%server%) &6&l%player%&7: &f%message%"
+# Format for messages sent by the console.
+console-devchat-format: "&8[&b&lDevChat&8] &6&lConsole&7: &f%message%"
+
+# This is for staff joins only
+# permissions: simplestaffchat.join, simplestaffchat.quit
+join-format: "&8[&a+&8] &9%player% &fjoined &e%server%&f."
+switch-format: "&8[&b+&8] &9%player% &fswitched server &7(&e%from% &f%arrow% &e%server%&7)&f."
+quit-format: "&8[&c-&8] &9%player% &fleft &e%server%&f."

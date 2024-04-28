@@ -1,0 +1,11 @@
+name: SimpleStaffChat
+version: '${version}'
+main: me.refracdevelopment.simplestaffchat.SimpleStaffChat
+authors:
+  - Refrac
+softdepend:
+  - PlaceholderAPI
+  - SignedVelocity
+description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
+website: https://discord.gg/EFeSKPg739
+folia-supported: true
