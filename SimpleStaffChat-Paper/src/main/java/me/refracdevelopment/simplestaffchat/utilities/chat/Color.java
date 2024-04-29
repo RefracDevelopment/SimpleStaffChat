@@ -19,10 +19,7 @@ public class Color {
     public Component translate(CommandSender sender, String source) {
         source = Placeholders.setPlaceholders(sender, source);
 
-        if (sender instanceof Player && Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            return MiniMessage.miniMessage().deserialize(PlaceholderAPI.setPlaceholders((Player) sender, ((TextComponent) translate(source)).content()));
-        } else
-            return translate(source);
+        return translate(source);
     }
 
     public Component translate(String message) {

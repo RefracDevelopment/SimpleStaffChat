@@ -17,12 +17,10 @@ public class HideCommand extends Command {
     }
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String s, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Color.sendMessage(sender, "no-console");
             return true;
         }
-
-        Player player = (Player) sender;
 
         if (!player.hasPermission(this.plugin.getCommands().HIDE_COMMAND_PERMISSION)) {
             Color.sendMessage(player, "no-permission");

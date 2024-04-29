@@ -18,12 +18,10 @@ public class ChatCommand extends Command {
     }
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             Color.sendMessage(sender, "no-console");
             return true;
         }
-
-        Player player = (Player) sender;
 
         if (!player.hasPermission(this.plugin.getCommands().CHAT_COMMAND_PERMISSION)) {
             Color.sendMessage(player, "no-permission");
