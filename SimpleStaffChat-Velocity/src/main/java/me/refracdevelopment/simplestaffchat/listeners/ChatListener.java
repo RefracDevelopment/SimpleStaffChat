@@ -20,15 +20,21 @@ public class ChatListener {
             return;
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
-        
+
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             // requires SignedVelocity to be installed on the proxy/backend servers
             // for cancelling chat messages
             event.setResult(PlayerChatEvent.ChatResult.denied());
 
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
+                return;
+            }
+
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
-                Color.sendConfigMessage(player, "staffchat-toggle-off");
+                Color.sendMessage(player, "staffchat-toggle-off");
                 return;
             }
 
@@ -48,6 +54,12 @@ public class ChatListener {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
+            }
+
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
+                return;
             }
 
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getLocaleFile().getString("staffchat-symbol"), "");
@@ -74,7 +86,13 @@ public class ChatListener {
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
-                Color.sendConfigMessage(player, "adminchat-toggle-off");
+                Color.sendMessage(player, "adminchat-toggle-off");
+                return;
+            }
+
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
 
@@ -94,6 +112,12 @@ public class ChatListener {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
+            }
+
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
+                return;
             }
 
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getConfig().ADMINCHAT_SYMBOL, "");
@@ -120,7 +144,13 @@ public class ChatListener {
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
-                Color.sendConfigMessage(player, "devchat-toggle-off");
+                Color.sendMessage(player, "devchat-toggle-off");
+                return;
+            }
+
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
 
@@ -139,6 +169,12 @@ public class ChatListener {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
+            }
+
+            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+                Color.sendMessage(player, "blacklisted-server");
+                event.setResult(PlayerChatEvent.ChatResult.denied());
+                return;
             }
 
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getConfig().DEVCHAT_SYMBOL, "");

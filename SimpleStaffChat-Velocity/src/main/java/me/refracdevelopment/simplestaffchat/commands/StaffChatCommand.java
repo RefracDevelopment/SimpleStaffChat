@@ -23,7 +23,7 @@ public final class StaffChatCommand implements SimpleCommand {
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            Color.sendConfigMessage(commandSource, "no-permission");
+            Color.sendMessage(commandSource, "no-permission");
             return;
         }
 

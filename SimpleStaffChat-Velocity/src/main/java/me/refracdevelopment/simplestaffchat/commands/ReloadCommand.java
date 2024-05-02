@@ -19,12 +19,12 @@ public class ReloadCommand implements SimpleCommand {
         CommandSource commandSource = invocation.source();
 
         if (!commandSource.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            Color.sendConfigMessage(commandSource, "no-permission");
+            Color.sendMessage(commandSource, "no-permission");
             return;
         }
 
         reloadFiles();
-        Color.sendConfigMessage(commandSource, "reload");
+        Color.sendMessage(commandSource, "reload");
     }
 
     private void reloadFiles() {

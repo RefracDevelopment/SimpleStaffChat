@@ -23,7 +23,7 @@ public class DevChatCommand implements SimpleCommand {
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().DEVCHAT_COMMAND_PERMISSION)) {
-            Color.sendConfigMessage(commandSource, "no-permission");
+            Color.sendMessage(commandSource, "no-permission");
             return;
         }
 

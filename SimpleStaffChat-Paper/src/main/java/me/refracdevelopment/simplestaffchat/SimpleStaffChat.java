@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat;
 
+import com.cryptomorin.xseries.ReflectionUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
@@ -11,7 +12,6 @@ import me.refracdevelopment.simplestaffchat.manager.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.PaperConfig;
 import me.refracdevelopment.simplestaffchat.utilities.Metrics;
-import me.refracdevelopment.simplestaffchat.utilities.VersionCheck;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
@@ -42,28 +42,35 @@ public final class SimpleStaffChat extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        new Metrics(this, 12095);
+
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
 
-        Metrics metrics = new Metrics(this, 12095);
-
         loadFiles();
 
-        if (VersionCheck.isOnePointSeven()) {
-            Color.log("&c" + getDescription().getName() + " 1.7 is in legacy mode, please update to 1.8+");
-            getServer().getPluginManager().disablePlugin(this);
+        // Check if the server is on a legacy version
+        if (ReflectionUtils.MINOR_NUMBER < 18 && !ReflectionUtils.CRAFTBUKKIT_PACKAGE.isEmpty()) {
+            Color.log("&cThis version is unsupported, please update to 1.18.2+");
+            pluginManager.disablePlugin(this);
             return;
         }
 
-        if (!pluginManager.isPluginEnabled("PlaceholderAPI")) {
-            Color.log("&cPlease install PlaceholderAPI onto your server to use this plugin.");
-            getServer().getPluginManager().disablePlugin(this);
+        try {
+            Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
+        } catch (Exception exception) {
+            Color.log("&cSpigot is unsupported please use Paper.");
+            pluginManager.disablePlugin(this);
             return;
         }
 
         if (!getServer().getPluginManager().isPluginEnabled("SignedVelocity")) {
             Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Paper, " +
                     "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");
+        }
+
+        if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
+            Color.log("&aHooked into PlaceholderAPI for placeholders.");
         }
 
         loadModules();
@@ -79,10 +86,10 @@ public final class SimpleStaffChat extends JavaPlugin {
     }
 
     private void loadFiles() {
-        this.configFile = new ConfigFile("config.yml");
-        this.commandsFile = new ConfigFile("commands.yml");
-        this.discordFile = new ConfigFile("discord.yml");
-        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
+        this.configFile = new ConfigFile("config.yml", true);
+        this.commandsFile = new ConfigFile("commands.yml", true);
+        this.discordFile = new ConfigFile("discord.yml", true);
+        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml", true);
 
         this.settings = new PaperConfig();
         this.commands = new Commands();

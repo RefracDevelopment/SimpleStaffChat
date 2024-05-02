@@ -1,10 +1,10 @@
 package me.refracdevelopment.simplestaffchat.utilities;
 
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -12,98 +12,92 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
+@UtilityClass
 public final class Methods {
     @Getter
-    private static final List<UUID> staffChatMuted = new ArrayList<>();
+    private final List<UUID> staffChatMuted = new ArrayList<>();
     @Getter
-    private static final List<UUID> adminChatMuted = new ArrayList<>();
+    private final List<UUID> adminChatMuted = new ArrayList<>();
     @Getter
-    private static final List<UUID> devChatMuted = new ArrayList<>();
+    private final List<UUID> devChatMuted = new ArrayList<>();
     @Getter
-    private static final List<UUID> staffChatPlayers = new ArrayList<>();
+    private final List<UUID> staffChatPlayers = new ArrayList<>();
     @Getter
-    private static final List<UUID> adminChatPlayers = new ArrayList<>();
+    private final List<UUID> adminChatPlayers = new ArrayList<>();
     @Getter
-    private static final List<UUID> devChatPlayers = new ArrayList<>();
+    private final List<UUID> devChatPlayers = new ArrayList<>();
 
-    private Methods() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
 
-    public static void sendStaffChat(CommandSender sender, String format, String message) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("simplestaffchat.staffchat.see") && !staffChatMuted.contains(p.getUniqueId())) {
-                Color.sendCustomMessage(p, Color.translate(sender, format).toString());
-            }
-        }
+    public void sendStaffChat(CommandSender commandSender, String format, String message) {
+        if (commandSender instanceof Player player) {
 
-        Color.log2(Color.translate(sender, format).toString());
+            RyMessageUtils.broadcast(player, "simplestaffchat.staffchat.see", format);
 
-        if (sender instanceof Player) {
-            DiscordImpl.sendStaffChat(sender, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%arrow%", "»"));
+            Color.log(format);
+
+            DiscordImpl.sendStaffChat(player, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+            );
         } else {
-            DiscordImpl.sendStaffChat(null, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%arrow%", "»"));
-        }
+            RyMessageUtils.broadcast(null, "simplestaffchat.staffchat.see", format);
 
+            Color.log(format);
+
+            DiscordImpl.sendDevChat(commandSender, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
+        }
     }
 
-    public static void sendDevChat(CommandSender sender, String format, String message) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("simplestaffchat.devchat.see") && !devChatMuted.contains(p.getUniqueId())) {
-                Color.sendCustomMessage(p, Color.translate(sender, format).toString());
-            }
-        }
+    public void sendDevChat(CommandSender commandSender, String format, String message) {
+        if (commandSender instanceof Player player) {
 
-        Color.log2(Color.translate(sender, format).toString());
+            RyMessageUtils.broadcast(player, "simplestaffchat.devchat.see", format);
 
-        if (sender instanceof Player) {
-            DiscordImpl.sendDevChat(sender, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%arrow%", "»"));
+            Color.log(format);
+
+            DiscordImpl.sendDevChat(player, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+            );
         } else {
-            DiscordImpl.sendDevChat(null, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%arrow%", "»"));
-        }
+            RyMessageUtils.broadcast(null, "simplestaffchat.devchat.see", format);
 
+            Color.log(format);
+
+            DiscordImpl.sendDevChat(commandSender, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
+        }
     }
 
+    public void sendAdminChat(CommandSender commandSender, String format, String message) {
+        if (commandSender instanceof Player player) {
 
-    public static void sendAdminChat(CommandSender sender, String format, String message) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("simplestaffchat.adminchat.see") && !adminChatMuted.contains(p.getUniqueId())) {
-                Color.sendCustomMessage(p, Color.translate(sender, format).toString());
-            }
-        }
+            RyMessageUtils.broadcast((Player) commandSender, "simplestaffchat.adminchat.see", format);
 
-        Color.log2(Color.translate(sender, format).toString());
+            Color.log(format);
 
-        if (sender instanceof Player) {
-            DiscordImpl.sendAdminChat(sender, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%displayname%", ChatColor.stripColor(sender.getName()))
-                    .replace("%arrow%", "»"));
+            DiscordImpl.sendAdminChat(player, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+            );
         } else {
-            DiscordImpl.sendAdminChat(null, ChatColor.stripColor(message)
-                    .replace("%server%", (SimpleStaffChat.getInstance().getSettings()).SERVER_NAME)
-                    .replace("%player%", sender.getName())
-                    .replace("%arrow%", "»"));
-        }
+            RyMessageUtils.broadcast(null, "simplestaffchat.adminchat.see", format);
 
+            Color.log(format);
+
+            DiscordImpl.sendAdminChat(commandSender, message
+                    .replace("%player%", "Console")
+            );
+        }
     }
 
 
-    public static void toggleStaffChat(Player player) {
+    public void toggleStaffChat(Player player) {
         if (staffChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
             Color.sendMessage(player, "staffchat-toggle-off");
@@ -118,7 +112,7 @@ public final class Methods {
         }
     }
 
-    public static void toggleAdminChat(Player player) {
+    public void toggleAdminChat(Player player) {
         if (adminChatPlayers.contains(player.getUniqueId())) {
             adminChatPlayers.remove(player.getUniqueId());
             Color.sendMessage(player, "adminchat-toggle-off");
@@ -133,7 +127,7 @@ public final class Methods {
         }
     }
 
-    public static void toggleDevChat(Player player) {
+    public void toggleDevChat(Player player) {
         if (devChatPlayers.contains(player.getUniqueId())) {
             devChatPlayers.remove(player.getUniqueId());
             Color.sendMessage(player, "devchat-toggle-off");
@@ -148,7 +142,7 @@ public final class Methods {
         }
     }
 
-    public static void toggleAllChat(Player player) {
+    public void toggleAllChat(Player player) {
         if (staffChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId()) || adminChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
             devChatPlayers.remove(player.getUniqueId());
@@ -157,7 +151,7 @@ public final class Methods {
         }
     }
 
-    public static void hideStaffChat(Player player) {
+    public void hideStaffChat(Player player) {
         if (staffChatMuted.contains(player.getUniqueId())) {
             staffChatMuted.remove(player.getUniqueId());
             Color.sendMessage(player, "staffchat-muted-off");
@@ -172,7 +166,7 @@ public final class Methods {
         }
     }
 
-    public static void hideAdminChat(Player player) {
+    public void hideAdminChat(Player player) {
         if (adminChatMuted.contains(player.getUniqueId())) {
             adminChatMuted.remove(player.getUniqueId());
             Color.sendMessage(player, "adminchat-muted-off");
@@ -187,7 +181,7 @@ public final class Methods {
         }
     }
 
-    public static void hideDevChat(Player player) {
+    public void hideDevChat(Player player) {
         if (devChatMuted.contains(player.getUniqueId())) {
             devChatMuted.remove(player.getUniqueId());
             Color.sendMessage(player, "devchat-muted-off");
@@ -202,7 +196,7 @@ public final class Methods {
         }
     }
 
-    public static void hideAll(Player player) {
+    public void hideAll(Player player) {
         if ((staffChatMuted.contains(player.getUniqueId()) && adminChatMuted.contains(player.getUniqueId())) || devChatMuted.contains(player.getUniqueId())) {
             staffChatMuted.remove(player.getUniqueId());
             adminChatMuted.remove(player.getUniqueId());

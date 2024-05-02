@@ -3,7 +3,7 @@
 config-version: '5'
 
 # Plugin Message Prefix
-prefix: '<gradient:#8A2387:#E94057:#F27121>SimpleStaffChat &8| &f'
+prefix: '<gradient:#8A2387:#E94057:1>SimpleStaffChat</gradient> &8| &f'
 
 # Generic Command Messages
 no-permission: '&cYou don''t have permission for that!'

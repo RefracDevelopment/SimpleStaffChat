@@ -2,6 +2,7 @@ package me.refracdevelopment.simplestaffchat.config;
 
 import com.velocitypowered.api.plugin.PluginContainer;
 import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
 import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
@@ -19,16 +20,18 @@ public class ConfigFile {
 
     private YamlDocument configFile;
 
-    public ConfigFile(String name) {
+    public ConfigFile(String name, boolean autoUpdate) {
         try {
             configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getPath().toFile(), name),
                     getClass().getResourceAsStream("/" + name),
-                    GeneralSettings.builder().setUseDefaults(false).build(),
-                    LoaderSettings.builder().setAutoUpdate(false).build(),
-                    DumperSettings.DEFAULT, UpdaterSettings.DEFAULT
+                    GeneralSettings.builder().setUseDefaults(autoUpdate).build(),
+                    LoaderSettings.builder().setAutoUpdate(autoUpdate).build(),
+                    DumperSettings.DEFAULT,
+                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
+                            .setOptionSorting(autoUpdate ? UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS : UpdaterSettings.OptionSorting.NONE)
+                            .build()
             );
 
-            configFile.update();
             configFile.save();
         } catch (IOException exception) {
             SimpleStaffChat.getInstance().getLogger().error("Failed to load config file! This VelocityStaffChat.getInstance() will now shutdown.");

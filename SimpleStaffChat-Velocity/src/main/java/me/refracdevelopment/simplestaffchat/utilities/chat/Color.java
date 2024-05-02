@@ -1,43 +1,38 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 
 @UtilityClass
 public class Color {
 
-    public Component translate(CommandSource sender, String source) {
-        source = Placeholders.setPlaceholders(sender, source);
+    public Component translate(Player player, String message) {
+        message = Placeholders.setPlaceholders(player, message);
 
-        return translate(source);
+        return RyMessageUtils.translate(player, message);
     }
 
     public Component translate(String message) {
-        return MiniMessage.miniMessage().deserialize(message);
+        return RyMessageUtils.translate(message);
     }
 
-    public void sendConfigMessage(CommandSource sender, String source) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%") || source.isEmpty())
-            return;
-
-        sender.sendMessage(translate(sender, "%prefix%" + SimpleStaffChat.getInstance().getLocaleFile().getString(source)));
+    public void sendMessage(CommandSource sender, String message) {
+        sendCustomMessage(sender, SimpleStaffChat.getInstance().getLocaleFile().getString(message));
     }
 
-    public void sendMessage(CommandSource sender, String source) {
-        if (source.equalsIgnoreCase("%empty%") || source.contains("%empty%") || source.isEmpty())
+    public void sendCustomMessage(CommandSource sender, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
             return;
 
-        sender.sendMessage(translate(sender, "%prefix%" + source));
+        message = Placeholders.setPlaceholders(sender, message);
+
+        RyMessageUtils.sendSender(sender, "%prefix%" + message);
     }
 
     public void log(String message) {
-        sendMessage(SimpleStaffChat.getInstance().getServer().getConsoleCommandSource(), message);
-    }
-
-    public void log2(String message) {
-        sendMessage(SimpleStaffChat.getInstance().getServer().getConsoleCommandSource(), message);
+        sendCustomMessage(SimpleStaffChat.getInstance().getServer().getConsoleCommandSource(), message);
     }
 }

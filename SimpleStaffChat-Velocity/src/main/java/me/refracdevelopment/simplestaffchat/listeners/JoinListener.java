@@ -45,7 +45,7 @@ public class JoinListener {
             }
         });
 
-        Color.log2(SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
+        Color.log(SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
@@ -77,7 +77,7 @@ public class JoinListener {
             }
         });
 
-        Color.log2(SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
+        Color.log(SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%from%", event.getPreviousServer().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
@@ -103,7 +103,7 @@ public class JoinListener {
             }
         });
 
-        Color.log2(SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
+        Color.log(SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
@@ -114,12 +114,12 @@ public class JoinListener {
     private void sendDevMessage(Player player) {
         PluginContainer container = SimpleStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat").get();
 
-        Color.sendMessage(player, " ");
-        Color.sendMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");
-        Color.sendMessage(player, "<green>This server is currently running " + container.getDescription().getName().get() + " <aqua>v" + container.getDescription().getVersion().get() + "<green>.");
-        Color.sendMessage(player, "<green>Plugin name<gray>: <white>" + container.getDescription().getName().get());
-        Color.sendMessage(player, " ");
-        Color.sendMessage(player, "<green>Server version<gray>: <white>" + SimpleStaffChat.getInstance().getServer().getVersion());
-        Color.sendMessage(player, " ");
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");
+        Color.sendCustomMessage(player, "<green>This server is currently running " + container.getDescription().getName().get() + " <aqua>v" + container.getDescription().getVersion().get() + "<green>.");
+        Color.sendCustomMessage(player, "<green>Plugin name<gray>: <white>" + container.getDescription().getName().get());
+        Color.sendCustomMessage(player, " ");
+        Color.sendCustomMessage(player, "<green>Server version<gray>: <white>" + SimpleStaffChat.getInstance().getServer().getVersion());
+        Color.sendCustomMessage(player, " ");
     }
 }

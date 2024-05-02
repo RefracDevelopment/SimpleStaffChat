@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.refracdevelopment</groupId>
         <artifactId>SimpleStaffChat</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>4.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -22,7 +22,6 @@
     </properties>
 
     <build>
-        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

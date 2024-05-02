@@ -18,6 +18,7 @@ public class AdminToggleCommand extends Command {
     }
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        // Make sure the sender is a player.
         if (!(sender instanceof Player player)) {
             Color.sendMessage(sender, "no-console");
             return true;

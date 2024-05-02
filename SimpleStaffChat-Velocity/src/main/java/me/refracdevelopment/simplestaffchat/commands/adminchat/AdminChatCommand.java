@@ -23,7 +23,7 @@ public class AdminChatCommand implements SimpleCommand {
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().ADMINCHAT_COMMAND_PERMISSION)) {
-            Color.sendConfigMessage(commandSource, "no-permission");
+            Color.sendMessage(commandSource, "no-permission");
             return;
         }
 

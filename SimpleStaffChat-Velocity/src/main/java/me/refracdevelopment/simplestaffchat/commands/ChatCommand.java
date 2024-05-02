@@ -17,17 +17,22 @@ public class ChatCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         if (!(invocation.source() instanceof Player player)) {
-            Color.sendConfigMessage(invocation.source(), "no-console");
+            Color.sendMessage(invocation.source(), "no-console");
             return;
         }
 
         if (!player.hasPermission(plugin.getCommands().CHAT_COMMAND_PERMISSION)) {
-            Color.sendConfigMessage(player, "no-permission");
+            Color.sendMessage(player, "no-permission");
+            return;
+        }
+
+        if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+            Color.sendMessage(player, "blacklisted-server");
             return;
         }
 
         if (invocation.arguments().length == 0) {
-            Color.sendMessage(player, "&c/" + plugin.getCommands().CHAT_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
+            Color.sendCustomMessage(player, "&c/" + plugin.getCommands().CHAT_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
             return;
         }
 

@@ -18,12 +18,12 @@ public class ConfigFile {
 
     private YamlDocument configFile;
 
-    public ConfigFile(String name) {
+    public ConfigFile(String name, boolean autoUpdate) {
         try {
             configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getDataFolder(), name),
                     getClass().getResourceAsStream("/" + name),
-                    GeneralSettings.builder().setUseDefaults(false).build(),
-                    LoaderSettings.builder().setAutoUpdate(true).build(),
+                    GeneralSettings.builder().setUseDefaults(autoUpdate).build(),
+                    LoaderSettings.builder().setAutoUpdate(autoUpdate).build(),
                     DumperSettings.DEFAULT,
                     UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
                             .setOptionSorting(UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS).build()

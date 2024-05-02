@@ -70,11 +70,11 @@ public class SimpleStaffChat {
     public void onProxyInitialization(ProxyInitializeEvent event) {
         instance = this;
 
+        metricsFactory.make(this, 21704);
+
         long startTiming = System.currentTimeMillis();
         PluginManager pluginManager = getServer().getPluginManager();
         PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
-
-        metricsFactory.make(this, 21704);
 
         loadFiles();
 
@@ -95,11 +95,11 @@ public class SimpleStaffChat {
 
     private void loadFiles() {
         // Files
-        configFile = new ConfigFile("config.yml");
-        commandsFile = new ConfigFile("commands.yml");
-        discordFile = new ConfigFile("discord.yml");
-        localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
-        serversFile = new ConfigFile("servers.yml");
+        configFile = new ConfigFile("config.yml", true);
+        commandsFile = new ConfigFile("commands.yml", true);
+        discordFile = new ConfigFile("discord.yml", true);
+        localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml", true);
+        serversFile = new ConfigFile("servers.yml", true);
 
         // Caches
         config = new VelocityConfig();
