@@ -2,7 +2,7 @@ package me.refracdevelopment.simplestaffchat.utilities.chat;
 
 import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,14 +10,14 @@ import org.bukkit.entity.Player;
 @UtilityClass
 public class Color {
 
-    public Component translate(Player player, String message) {
+    public String translate(Player player, String message) {
         message = Placeholders.setPlaceholders(player, message);
 
-        return RyMessageUtils.translate(message);
+        return MiniMessage.miniMessage().serialize(RyMessageUtils.adventureTranslate(player, message));
     }
 
-    public Component translate(String message) {
-        return RyMessageUtils.translate(message);
+    public String translate(String message) {
+        return MiniMessage.miniMessage().serialize(RyMessageUtils.adventureTranslate(message));
     }
 
     public void sendMessage(CommandSender sender, String message) {

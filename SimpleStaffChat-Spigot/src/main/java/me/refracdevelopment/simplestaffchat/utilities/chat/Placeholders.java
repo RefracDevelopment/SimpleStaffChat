@@ -1,21 +1,17 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
+import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+@UtilityClass
 public class Placeholders {
 
-    private Placeholders() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
-
-    public static String setPlaceholders(CommandSender sender, String placeholder) {
-        placeholder = placeholder.replace("%prefix%", SimpleStaffChat.getInstance().getLocaleFile().getString("prefix"));
+    public String setPlaceholders(CommandSender sender, String placeholder) {
         placeholder = placeholder.replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME);
 
         if (sender instanceof Player player) {
-
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getName());
         }

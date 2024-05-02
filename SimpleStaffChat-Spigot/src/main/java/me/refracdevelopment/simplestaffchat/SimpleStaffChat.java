@@ -10,7 +10,7 @@ import me.refracdevelopment.simplestaffchat.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.manager.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
-import me.refracdevelopment.simplestaffchat.manager.config.cache.PaperConfig;
+import me.refracdevelopment.simplestaffchat.manager.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.utilities.Metrics;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
@@ -34,13 +34,24 @@ public final class SimpleStaffChat extends JavaPlugin {
 
     private ConfigFile discordFile;
     private ConfigFile localeFile;
-    private PaperConfig settings;
+    private Config settings;
     private Commands commands;
     private Discord discord;
+
+    private boolean usingPaper;
 
     @Override
     public void onEnable() {
         instance = this;
+
+        // This is only used to detect for things like MiniMessage
+        // So that it will work properly on Spigot and Paper
+        try {
+            Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
+            usingPaper = true;
+        } catch (Exception ignored) {
+            usingPaper = false;
+        }
 
         new Metrics(this, 12095);
 
@@ -52,14 +63,6 @@ public final class SimpleStaffChat extends JavaPlugin {
         // Check if the server is on a legacy version
         if (ReflectionUtils.MINOR_NUMBER < 18 && !ReflectionUtils.CRAFTBUKKIT_PACKAGE.isEmpty()) {
             Color.log("&cThis version is unsupported, please update to 1.18.2+");
-            pluginManager.disablePlugin(this);
-            return;
-        }
-
-        try {
-            Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
-        } catch (Exception exception) {
-            Color.log("&cSpigot is unsupported please use Paper.");
             pluginManager.disablePlugin(this);
             return;
         }
@@ -91,7 +94,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         this.discordFile = new ConfigFile("discord.yml", true);
         this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml", true);
 
-        this.settings = new PaperConfig();
+        this.settings = new Config();
         this.commands = new Commands();
         this.discord = new Discord();
 
@@ -138,22 +141,22 @@ public final class SimpleStaffChat extends JavaPlugin {
                 boolean archived = info.get("archived").getAsBoolean();
 
                 if (archived) {
-                    sender.sendMessage(Color.translate("&cThis plugin has been marked as &e&l'Archived' &cby RefracDevelopment."));
-                    sender.sendMessage(Color.translate("&cThis version will continue to work but will not receive updates or support."));
+                    Color.sendCustomMessage(sender, "&cThis plugin has been marked as &e&l'Archived' &cby RefracDevelopment.");
+                    Color.sendCustomMessage(sender, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        sender.sendMessage(Color.translate("&a" + getDescription().getName() + " is on the latest version."));
+                        Color.sendCustomMessage(sender, "&a" + getDescription().getName() + " is on the latest version.");
                     }
                 } else {
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version));
-                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage("");
+                    Color.sendCustomMessage(sender, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
+                    sender.sendMessage("");
                 }
             } else {
-                sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
+                Color.sendCustomMessage(sender, "&cWrong response from update API, contact plugin developer!");
             }
         } catch (Exception ex) {
-            sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
+            Color.sendCustomMessage(sender, "&cFailed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

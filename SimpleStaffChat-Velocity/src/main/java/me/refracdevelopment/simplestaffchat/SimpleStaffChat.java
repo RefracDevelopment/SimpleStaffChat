@@ -20,12 +20,13 @@ import me.refracdevelopment.simplestaffchat.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.config.cache.Servers;
-import me.refracdevelopment.simplestaffchat.config.cache.VelocityConfig;
+import me.refracdevelopment.simplestaffchat.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.utilities.Metrics;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.utilities.chat.LuckPermsUtil;
+import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import org.slf4j.Logger;
 
@@ -53,7 +54,7 @@ public class SimpleStaffChat {
     private ConfigFile serversFile;
 
     // Caches
-    private VelocityConfig config;
+    private Config config;
     private Commands commands;
     private Discord discord;
     private Servers servers;
@@ -102,7 +103,7 @@ public class SimpleStaffChat {
         serversFile = new ConfigFile("servers.yml", true);
 
         // Caches
-        config = new VelocityConfig();
+        config = new Config();
         commands = new Commands();
         discord = new Discord();
         servers = new Servers();
@@ -210,22 +211,22 @@ public class SimpleStaffChat {
                 boolean archived = info.get("archived").getAsBoolean();
 
                 if (archived) {
-                    sender.sendMessage(Color.translate("&cThis plugin has been marked as &e&b'Archived' &r&cby RefracDevelopment."));
-                    sender.sendMessage(Color.translate("&cThis version will continue to work but will not receive updates or support."));
+                    Color.sendCustomMessage(sender, "&cThis plugin has been marked as &e&b'Archived' &r&cby RefracDevelopment.");
+                    Color.sendCustomMessage(sender, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(container.getDescription().getVersion().get())) {
                     if (console) {
-                        sender.sendMessage(Color.translate("&a" + container.getDescription().getName().get() + " is on the latest version."));
+                        Color.sendCustomMessage(sender, "&a" + container.getDescription().getName().get() + " is on the latest version.");
                     }
                 } else {
-                    sender.sendMessage(Color.translate(""));
-                    sender.sendMessage(Color.translate("&cYour " + container.getDescription().getName().get() + " version &7(" + container.getDescription().getVersion().get() + ") &cis out of date! Newest: &e&bv" + version));
-                    sender.sendMessage(Color.translate(""));
+                    sender.sendMessage(Component.text(""));
+                    Color.sendCustomMessage(sender, "&cYour " + container.getDescription().getName().get() + " version &7(" + container.getDescription().getVersion().get() + ") &cis out of date! Newest: &e&bv" + version);
+                    sender.sendMessage(Component.text(""));
                 }
             } else {
-                sender.sendMessage(Color.translate("&cWrong response from update API, contact plugin developer!"));
+                Color.sendCustomMessage(sender, "&cWrong response from update API, contact plugin developer!");
             }
         } catch (Exception ex) {
-            sender.sendMessage(Color.translate("&cFailed to get updater check. (" + ex.getMessage() + ")"));
+            Color.sendCustomMessage(sender, "&cFailed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

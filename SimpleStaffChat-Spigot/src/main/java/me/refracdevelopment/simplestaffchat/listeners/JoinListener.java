@@ -4,7 +4,6 @@ import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.utilities.JoinType;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,11 +40,11 @@ public class JoinListener implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("simplestaffchat.staffchat.see")) {
-                Color.sendCustomMessage(p, ((TextComponent) Color.translate(player, this.plugin.getSettings().JOIN_FORMAT)).content());
+                Color.sendCustomMessage(p, Color.translate(player, this.plugin.getSettings().JOIN_FORMAT));
             }
         }
 
-        Color.log(((TextComponent) Color.translate(player, this.plugin.getSettings().JOIN_FORMAT)).content());
+        Color.log(Color.translate(player, this.plugin.getSettings().JOIN_FORMAT));
         DiscordImpl.sendJoin(JoinType.JOIN, player);
     }
 
@@ -58,11 +57,11 @@ public class JoinListener implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.hasPermission("simplestaffchat.staffchat.see")) {
-                Color.sendCustomMessage(p, ((TextComponent) Color.translate(player, this.plugin.getSettings().QUIT_FORMAT)).content());
+                Color.sendCustomMessage(p, Color.translate(player, this.plugin.getSettings().QUIT_FORMAT));
             }
         }
 
-        Color.log(((TextComponent) Color.translate(player, this.plugin.getSettings().QUIT_FORMAT)).content());
+        Color.log(Color.translate(player, this.plugin.getSettings().QUIT_FORMAT));
         DiscordImpl.sendJoin(JoinType.LEAVE, player);
     }
 

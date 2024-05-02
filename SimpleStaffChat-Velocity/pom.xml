@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.refracdevelopment</groupId>
         <artifactId>SimpleStaffChat</artifactId>
-        <version>4.0.0</version>
+        <version>4.1.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -37,14 +37,6 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.0</version>
                 <configuration>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.MF</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <relocations>
                         <relocation>

@@ -1,6 +1,6 @@
 # en_US translation by Refrac
 # This is used for automatic file updating purposes
-config-version: '5'
+config-version: '6'
 
 # Plugin Message Prefix
 prefix: '<gradient:#8A2387:#E94057:1>SimpleStaffChat</gradient> &8| &f'
@@ -16,7 +16,7 @@ adminchat-toggle-on: '&eAdminChat toggled &aon&e.'
 adminchat-toggle-off: '&eAdminChat toggled &coff&e.'
 devchat-toggle-on: '&eDevChat toggled &aon&e.'
 devchat-toggle-off: '&eDevChat toggled &coff&e.'
-allchat-toggle-on: '&eAll chat toggled &aon&e.'
+allchat-toggle-on: '&eAll staff chats toggled &coff&e.'
 staffchat-muted-on: '&eYour StaffChat has been muted.'
 staffchat-muted-off: '&eYour StaffChat has been un-muted.'
 adminchat-muted-on: '&eYour AdminChat has been muted.'

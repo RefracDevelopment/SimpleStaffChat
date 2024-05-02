@@ -3,7 +3,7 @@ package me.refracdevelopment.simplestaffchat.manager.config.cache;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 
 
-public class PaperConfig {
+public class Config {
     // General
     public String SERVER_NAME;
 
@@ -33,7 +33,7 @@ public class PaperConfig {
     public boolean CHAT_TOGGLE_ENABLED;
     public boolean SYMBOLS_ENABLED;
 
-    public PaperConfig() {
+    public Config() {
         loadConfig();
     }
 

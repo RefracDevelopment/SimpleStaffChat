@@ -2,7 +2,7 @@ package me.refracdevelopment.simplestaffchat.config.cache;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 
-public class VelocityConfig {
+public class Config {
 
     // General
     public String SERVER_NAME;
@@ -26,7 +26,7 @@ public class VelocityConfig {
     // Modules
     public boolean STAFFCHAT_ENABLED, ADMINCHAT_ENABLED, DEVCHAT_ENABLED, DISCORD_ENABLED, JOIN_ENABLED, CHAT_TOGGLE_ENABLED, SYMBOLS_ENABLED;
 
-    public VelocityConfig() {
+    public Config() {
         loadConfig();
     }
 
