@@ -29,7 +29,8 @@ public final class Methods {
 
 
     public void sendStaffChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player player) {
+        if (commandSender instanceof Player) {
+            Player player = (Player) commandSender;
 
             RyMessageUtils.broadcast(player, "simplestaffchat.staffchat.see", format);
 
@@ -52,7 +53,8 @@ public final class Methods {
     }
 
     public void sendDevChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player player) {
+        if (commandSender instanceof Player) {
+            Player player = (Player) commandSender;
 
             RyMessageUtils.broadcast(player, "simplestaffchat.devchat.see", format);
 
@@ -75,7 +77,8 @@ public final class Methods {
     }
 
     public void sendAdminChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player player) {
+        if (commandSender instanceof Player) {
+            Player player = (Player) commandSender;
 
             RyMessageUtils.broadcast((Player) commandSender, "simplestaffchat.adminchat.see", format);
 

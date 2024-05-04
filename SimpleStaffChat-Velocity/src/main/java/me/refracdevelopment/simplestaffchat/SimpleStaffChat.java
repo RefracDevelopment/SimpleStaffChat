@@ -79,8 +79,10 @@ public class SimpleStaffChat {
 
         loadFiles();
 
-        LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-        Color.log("&aHooked into LuckPerms.");
+        if (pluginManager.isLoaded("luckperms")) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            Color.log("&aHooked into LuckPerms.");
+        }
 
         loadModules();
 

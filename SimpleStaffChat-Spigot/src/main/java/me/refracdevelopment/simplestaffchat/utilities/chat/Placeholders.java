@@ -11,7 +11,9 @@ public class Placeholders {
     public String setPlaceholders(CommandSender sender, String placeholder) {
         placeholder = placeholder.replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME);
 
-        if (sender instanceof Player player) {
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getName());
         }

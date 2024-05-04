@@ -3,7 +3,6 @@ version: '${version}'
 main: me.refracdevelopment.simplestaffchat.SimpleStaffChat
 authors:
   - RefracDevelopment
-api-version: "1.18"
 softdepend:
   - PlaceholderAPI
   - SignedVelocity

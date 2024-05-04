@@ -19,10 +19,12 @@ public class AdminToggleCommand extends Command {
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         // Make sure the sender is a player.
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player)) {
             Color.sendMessage(sender, "no-console");
             return true;
         }
+
+        Player player = (Player) sender;
 
         if (!player.hasPermission(this.plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
             Color.sendMessage(player, "no-permission");

@@ -8,8 +8,8 @@ import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
 import me.refracdevelopment.simplestaffchat.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.manager.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Commands;
-import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Config;
+import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.utilities.Metrics;
 import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import org.bukkit.command.CommandSender;
@@ -37,19 +37,18 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
-    private boolean usingPaper;
+    private boolean usingPaper = false;
 
     @Override
     public void onEnable() {
         instance = this;
 
         // This is only used to detect for things like MiniMessage
-        // So that it will work properly on Spigot and Paper
+        // So that it will work properly on Spigot 1.8+ and Paper 1.8/1.18+
         try {
-            Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
+            Class.forName("io.papermc.paper.configuration.Configuration");
             usingPaper = true;
         } catch (Exception ignored) {
-            usingPaper = false;
         }
 
         new Metrics(this, 12095);
@@ -60,7 +59,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         loadFiles();
 
         if (!getServer().getPluginManager().isPluginEnabled("SignedVelocity")) {
-            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Paper, " +
+            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
                     "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");
         }
 

@@ -57,7 +57,7 @@ public class RyMessageUtils {
      *
      * @param player  The player that is being translated (%player% and PAPI)
      * @param message The message you wish to be translated.
-     * @return        a translated Component
+     * @return a translated Component
      */
     public static Component adventureTranslate(Player player, String message) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -102,7 +102,7 @@ public class RyMessageUtils {
      * Translates the message given for colours using AdventureAPI and %prefix%.
      *
      * @param message The message you wish to be translated.
-     * @return        a translated Component
+     * @return a translated Component
      */
     public static Component adventureTranslate(String message) {
         message = message
@@ -138,7 +138,7 @@ public class RyMessageUtils {
      * Translates the string list for colours using AdventureAPI and %prefix%.
      *
      * @param messages The string list you wish to be translated.
-     * @return         a component list of translated messages.
+     * @return a component list of translated messages.
      */
     public static List<Component> adventureTranslate(@NotNull List<String> messages) {
         return messages.stream().map(RyMessageUtils::adventureTranslate).collect(Collectors.toList());
