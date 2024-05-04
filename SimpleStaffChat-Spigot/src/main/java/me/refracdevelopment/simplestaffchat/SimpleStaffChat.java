@@ -60,13 +60,6 @@ public final class SimpleStaffChat extends JavaPlugin {
 
         loadFiles();
 
-        // Check if the server is on a legacy version
-        if (ReflectionUtils.MINOR_NUMBER < 18 && !ReflectionUtils.CRAFTBUKKIT_PACKAGE.isEmpty()) {
-            Color.log("&cThis version is unsupported, please update to 1.18.2+");
-            pluginManager.disablePlugin(this);
-            return;
-        }
-
         if (!getServer().getPluginManager().isPluginEnabled("SignedVelocity")) {
             Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Paper, " +
                     "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");

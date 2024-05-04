@@ -1,7 +1,7 @@
 {
   "id": "simplestaffchat",
   "name": "SimpleStaffChat",
-  "version": "${version}",
+  "version": "${project.version}",
   "description": "SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.",
   "url": "https://discord.gg/EFeSKPg739",
   "authors": [
@@ -14,7 +14,7 @@
     },
     {
       "id": "luckperms",
-      "optional": false
+      "optional": true
     }
   ],
   "main": "me.refracdevelopment.simplestaffchat.SimpleStaffChat"
