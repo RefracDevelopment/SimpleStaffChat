@@ -7,10 +7,7 @@ import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Command extends org.bukkit.command.Command implements Comparable<Command>, Executable {
 
@@ -25,7 +22,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
     }
 
     public Command(int argsLength, String usage, String name, String permission, String... aliases) {
-        super(name, "", usage, Arrays.asList(aliases));
+        super(name, "", usage, List.of(aliases));
 
         this.name = name;
         this.permission = permission;

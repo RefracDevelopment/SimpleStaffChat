@@ -8,10 +8,7 @@ import me.refracdevelopment.simplestaffchat.command.commands.adminchat.AdminTogg
 import me.refracdevelopment.simplestaffchat.command.commands.devchat.DevChatCommand;
 import me.refracdevelopment.simplestaffchat.command.commands.devchat.DevToggleCommand;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class CommandManager {
 
@@ -47,7 +44,7 @@ public class CommandManager {
     }
 
     public void register(Command... command) {
-        commands.addAll(Arrays.asList(command));
+        commands.addAll(List.of(command));
     }
 
     public Optional<Command> byCommand(String command) {
