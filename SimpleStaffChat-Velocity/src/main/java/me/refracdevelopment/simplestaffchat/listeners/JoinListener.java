@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat.listeners;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
@@ -18,7 +19,7 @@ public class JoinListener {
     private final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
     private final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onJoin(ServerPostConnectEvent event) {
         Player player = event.getPlayer();
 
@@ -50,7 +51,7 @@ public class JoinListener {
         DiscordImpl.sendJoin(JoinType.JOIN, player, player.getCurrentServer().get().getServerInfo().getName(), "");
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onSwitch(ServerPostConnectEvent event) {
         if (event.getPreviousServer() == null)
             return;
@@ -79,7 +80,7 @@ public class JoinListener {
         DiscordImpl.sendJoin(JoinType.SWITCH, player, player.getCurrentServer().get().getServerInfo().getName(), event.getPreviousServer().getServerInfo().getName());
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onQuit(DisconnectEvent event) {
         Player player = event.getPlayer();
 

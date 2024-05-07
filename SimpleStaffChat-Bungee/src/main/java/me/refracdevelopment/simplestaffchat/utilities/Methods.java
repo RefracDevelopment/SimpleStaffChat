@@ -37,18 +37,30 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format);
+            RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
             DiscordImpl.sendStaffChat(player, message
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format);
+            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
             DiscordImpl.sendStaffChat(commandSender, message
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -67,18 +79,30 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format);
+            RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
             DiscordImpl.sendDevChat(player, message
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.DEVCHAT_SEE, format);
+            RyMessageUtils.broadcast(null, Permissions.DEVCHAT_SEE, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
             DiscordImpl.sendDevChat(commandSender, message
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -97,18 +121,30 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.ADMINCHAT_SEE, format);
+            RyMessageUtils.broadcast(player, Permissions.ADMINCHAT_SEE, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", player.getServer().getInfo().getName())
+                    .replace("%player%", player.getName())
+            );
 
             DiscordImpl.sendAdminChat(player, message
                     .replace("%server%", player.getServer().getInfo().getName())
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format);
+            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
-            RyMessageUtils.sendConsole(true, format);
+            RyMessageUtils.sendConsole(true, format
+                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                    .replace("%player%", "Console")
+            );
 
             DiscordImpl.sendAdminChat(commandSender, message
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)

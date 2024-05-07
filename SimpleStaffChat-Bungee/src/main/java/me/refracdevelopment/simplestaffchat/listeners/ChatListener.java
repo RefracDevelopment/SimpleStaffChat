@@ -8,6 +8,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 public class ChatListener implements Listener {
 
@@ -17,7 +18,7 @@ public class ChatListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onStaffChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
@@ -25,13 +26,13 @@ public class ChatListener implements Listener {
             return;
 
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+
             if (!player.hasPermission(plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
                 RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-off");
                 return;
             }
-
-            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = plugin.getConfig().STAFFCHAT_FORMAT
@@ -60,7 +61,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAdminChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
@@ -68,13 +69,13 @@ public class ChatListener implements Listener {
             return;
 
         if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+
             if (!player.hasPermission(plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
                 RyMessageUtils.sendPluginMessage(player, "adminchat-toggle-off");
                 return;
             }
-
-            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = plugin.getConfig().ADMINCHAT_FORMAT
@@ -84,7 +85,8 @@ public class ChatListener implements Listener {
 
             Methods.sendAdminChat(player, format, message);
         } else if (event.getMessage().startsWith(plugin.getConfig().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && plugin.getConfig().SYMBOLS_ENABLED) {
-            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().ADMINCHAT_SYMBOL))
+                return;
 
             event.setCancelled(true);
 
@@ -103,7 +105,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDevChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
@@ -111,13 +113,13 @@ public class ChatListener implements Listener {
             return;
 
         if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
+            event.setCancelled(true);
+
             if (!player.hasPermission(plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
                 RyMessageUtils.sendPluginMessage(player, "devchat-toggle-off");
                 return;
             }
-
-            event.setCancelled(true);
 
             String message = event.getMessage();
             String format = plugin.getConfig().DEVCHAT_FORMAT
@@ -127,7 +129,8 @@ public class ChatListener implements Listener {
 
             Methods.sendDevChat(player, format, message);
         } else if (event.getMessage().startsWith(plugin.getConfig().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && plugin.getConfig().SYMBOLS_ENABLED) {
-            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL)) return;
+            if (event.getMessage().equalsIgnoreCase(plugin.getConfig().DEVCHAT_SYMBOL))
+                return;
 
             event.setCancelled(true);
 

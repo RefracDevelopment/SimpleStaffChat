@@ -6,6 +6,7 @@ import me.refracdevelopment.simplestaffchat.utilities.Permissions;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -18,7 +19,7 @@ public class ChatListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onStaffChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
@@ -59,7 +60,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onAdminChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
@@ -102,7 +103,7 @@ public class ChatListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onDevChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 

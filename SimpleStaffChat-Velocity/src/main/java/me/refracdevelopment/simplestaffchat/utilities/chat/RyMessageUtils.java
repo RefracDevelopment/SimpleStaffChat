@@ -275,8 +275,6 @@ public class RyMessageUtils {
      */
     public void broadcast(String message) {
         for (Player online : server.getAllPlayers()) {
-            message = Placeholders.setPlaceholders(online, message);
-
             online.sendMessage(translate(message));
         }
     }

@@ -90,9 +90,12 @@ public final class SimpleStaffChat extends JavaPlugin {
     private void loadHooks() {
         PluginManager pluginManager = getServer().getPluginManager();
 
-        if (!pluginManager.isPluginEnabled("SignedVelocity")) {
-            RyMessageUtils.sendConsole(true, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+        if (!pluginManager.isPluginEnabled("SignedVelocity") && isPaper()) {
+            RyMessageUtils.sendConsole(true, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Paper, " +
                     "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");
+        } else if (!isPaper()) {
+            RyMessageUtils.sendConsole(true, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+                    "consider downloading AntiPopup: https://www.spigotmc.org/resources/103782/");
         }
 
         if (pluginManager.isPluginEnabled("PlaceholderAPI")) {

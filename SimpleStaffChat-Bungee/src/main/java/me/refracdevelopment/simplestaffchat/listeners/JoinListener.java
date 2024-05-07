@@ -11,6 +11,7 @@ import net.md_5.bungee.api.event.ServerConnectEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import net.md_5.bungee.event.EventPriority;
 
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class JoinListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(ServerConnectEvent event) {
         if (event.getReason() != ServerConnectEvent.Reason.JOIN_PROXY)
             return;
@@ -49,7 +50,7 @@ public class JoinListener implements Listener {
         DiscordImpl.sendJoin(JoinType.JOIN, player, event.getTarget().getName(), "");
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onSwitch(ServerSwitchEvent event) {
         if (event.getFrom() == null)
             return;
@@ -70,7 +71,7 @@ public class JoinListener implements Listener {
         DiscordImpl.sendJoin(JoinType.SWITCH, player, player.getServer().getInfo().getName(), event.getFrom().getName());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onQuit(PlayerDisconnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
 

@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat.listeners;
 
+import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
@@ -10,7 +11,7 @@ import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 public class ChatListener {
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onStaffChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
@@ -18,19 +19,11 @@ public class ChatListener {
             return;
         if (!player.getCurrentServer().isPresent())
             return;
-        if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
-            return;
 
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             // requires SignedVelocity to be installed on the proxy/backend servers
             // for cancelling chat messages
             event.setResult(PlayerChatEvent.ChatResult.denied());
-
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
@@ -39,7 +32,8 @@ public class ChatListener {
             }
 
             String message = event.getMessage();
-            String format = SimpleStaffChat.getInstance().getConfig().STAFFCHAT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+            String format = SimpleStaffChat.getInstance().getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
             Methods.sendStaffChat(player, format, message);
@@ -56,29 +50,22 @@ public class ChatListener {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
             }
 
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
-
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getLocaleFile().getString("staffchat-symbol"), "");
-            String format = SimpleStaffChat.getInstance().getConfig().STAFFCHAT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+            String format = SimpleStaffChat.getInstance().getConfig().STAFFCHAT_FORMAT
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
             Methods.sendStaffChat(player, format, message);
         }
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onAdminChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (event.getMessage().startsWith("/"))
             return;
         if (!player.getCurrentServer().isPresent())
-            return;
-        if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
         if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
@@ -90,14 +77,8 @@ public class ChatListener {
                 return;
             }
 
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
-
             String message = event.getMessage();
-            String format = SimpleStaffChat.getInstance().getLocaleFile().getString("adminchat-format")
+            String format = SimpleStaffChat.getInstance().getConfig().ADMINCHAT_FORMAT
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
@@ -114,29 +95,22 @@ public class ChatListener {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
             }
 
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
-
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getConfig().ADMINCHAT_SYMBOL, "");
-            String format = SimpleStaffChat.getInstance().getConfig().ADMINCHAT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+            String format = SimpleStaffChat.getInstance().getConfig().ADMINCHAT_FORMAT
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
             Methods.sendAdminChat(player, format, message);
         }
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.FIRST)
     public void onDevChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (event.getMessage().startsWith("/"))
             return;
         if (!player.getCurrentServer().isPresent())
-            return;
-        if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
         if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
@@ -148,14 +122,9 @@ public class ChatListener {
                 return;
             }
 
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
-
             String message = event.getMessage();
-            String format = SimpleStaffChat.getInstance().getConfig().DEVCHAT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+            String format = SimpleStaffChat.getInstance().getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
             Methods.sendDevChat(player, format, message);
@@ -171,14 +140,9 @@ public class ChatListener {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
             }
 
-            if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
-                event.setResult(PlayerChatEvent.ChatResult.denied());
-                return;
-            }
-
             String message = event.getMessage().replaceFirst(SimpleStaffChat.getInstance().getConfig().DEVCHAT_SYMBOL, "");
-            String format = SimpleStaffChat.getInstance().getConfig().DEVCHAT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+            String format = SimpleStaffChat.getInstance().getConfig().DEVCHAT_FORMAT
+                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                     .replace("%message%", message);
 
             Methods.sendDevChat(player, format, message);
