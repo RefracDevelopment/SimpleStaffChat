@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.utilities;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,6 +13,7 @@ import java.util.UUID;
 
 @UtilityClass
 public final class Methods {
+
     @Getter
     private final List<UUID> staffChatMuted = new ArrayList<>();
     @Getter
@@ -29,21 +29,20 @@ public final class Methods {
 
 
     public void sendStaffChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player) {
-            Player player = (Player) commandSender;
+        if (commandSender instanceof Player player) {
 
-            RyMessageUtils.broadcast(player, "simplestaffchat.staffchat.see", format);
+            RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendStaffChat(player, message
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, "simplestaffchat.staffchat.see", format);
+            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendDevChat(commandSender, message
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
@@ -53,21 +52,20 @@ public final class Methods {
     }
 
     public void sendDevChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player) {
-            Player player = (Player) commandSender;
+        if (commandSender instanceof Player player) {
 
-            RyMessageUtils.broadcast(player, "simplestaffchat.devchat.see", format);
+            RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendDevChat(player, message
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, "simplestaffchat.devchat.see", format);
+            RyMessageUtils.broadcast(null, Permissions.DEVCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendDevChat(commandSender, message
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
@@ -77,23 +75,23 @@ public final class Methods {
     }
 
     public void sendAdminChat(CommandSender commandSender, String format, String message) {
-        if (commandSender instanceof Player) {
-            Player player = (Player) commandSender;
+        if (commandSender instanceof Player player) {
 
-            RyMessageUtils.broadcast((Player) commandSender, "simplestaffchat.adminchat.see", format);
+            RyMessageUtils.broadcast((Player) commandSender, Permissions.ADMINCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendAdminChat(player, message
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, "simplestaffchat.adminchat.see", format);
+            RyMessageUtils.broadcast(null, Permissions.ADMINCHAT_SEE, format);
 
-            Color.log(format);
+            RyMessageUtils.sendConsole(true, format);
 
             DiscordImpl.sendAdminChat(commandSender, message
+                    .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", "Console")
             );
         }
@@ -103,7 +101,8 @@ public final class Methods {
     public void toggleStaffChat(Player player) {
         if (staffChatPlayers.contains(player.getUniqueId())) {
             staffChatPlayers.remove(player.getUniqueId());
-            Color.sendMessage(player, "staffchat-toggle-off");
+
+            RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-off");
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || devChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
@@ -111,14 +110,16 @@ public final class Methods {
             }
 
             staffChatPlayers.add(player.getUniqueId());
-            Color.sendMessage(player, "staffchat-toggle-on");
+
+            RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-on");
         }
     }
 
     public void toggleAdminChat(Player player) {
         if (adminChatPlayers.contains(player.getUniqueId())) {
             adminChatPlayers.remove(player.getUniqueId());
-            Color.sendMessage(player, "adminchat-toggle-off");
+
+            RyMessageUtils.sendPluginMessage(player, "adminchat-toggle-off");
         } else {
             if (devChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 devChatPlayers.remove(player.getUniqueId());
@@ -126,14 +127,16 @@ public final class Methods {
             }
 
             adminChatPlayers.add(player.getUniqueId());
-            Color.sendMessage(player, "adminchat-toggle-on");
+
+            RyMessageUtils.sendPluginMessage(player, "adminchat-toggle-on");
         }
     }
 
     public void toggleDevChat(Player player) {
         if (devChatPlayers.contains(player.getUniqueId())) {
             devChatPlayers.remove(player.getUniqueId());
-            Color.sendMessage(player, "devchat-toggle-off");
+
+            RyMessageUtils.sendPluginMessage(player, "devchat-toggle-off");
         } else {
             if (adminChatPlayers.contains(player.getUniqueId()) || staffChatPlayers.contains(player.getUniqueId())) {
                 adminChatPlayers.remove(player.getUniqueId());
@@ -141,7 +144,8 @@ public final class Methods {
             }
 
             devChatPlayers.add(player.getUniqueId());
-            Color.sendMessage(player, "devchat-toggle-on");
+
+            RyMessageUtils.sendPluginMessage(player, "devchat-toggle-on");
         }
     }
 
@@ -150,14 +154,15 @@ public final class Methods {
             staffChatPlayers.remove(player.getUniqueId());
             devChatPlayers.remove(player.getUniqueId());
             adminChatPlayers.remove(player.getUniqueId());
-            Color.sendMessage(player, "allchat-toggle-on");
+
+            RyMessageUtils.sendPluginMessage(player, "allchat-toggle-on");
         }
     }
 
     public void hideStaffChat(Player player) {
         if (staffChatMuted.contains(player.getUniqueId())) {
             staffChatMuted.remove(player.getUniqueId());
-            Color.sendMessage(player, "staffchat-muted-off");
+            RyMessageUtils.sendPluginMessage(player, "staffchat-muted-off");
         } else {
             if (adminChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
                 adminChatMuted.remove(player.getUniqueId());
@@ -165,14 +170,15 @@ public final class Methods {
             }
 
             staffChatMuted.add(player.getUniqueId());
-            Color.sendMessage(player, "staffchat-muted-on");
+
+            RyMessageUtils.sendPluginMessage(player, "staffchat-muted-on");
         }
     }
 
     public void hideAdminChat(Player player) {
         if (adminChatMuted.contains(player.getUniqueId())) {
             adminChatMuted.remove(player.getUniqueId());
-            Color.sendMessage(player, "adminchat-muted-off");
+            RyMessageUtils.sendPluginMessage(player, "adminchat-muted-off");
         } else {
             if (staffChatMuted.contains(player.getUniqueId()) || devChatMuted.contains(player.getUniqueId())) {
                 staffChatMuted.remove(player.getUniqueId());
@@ -180,14 +186,15 @@ public final class Methods {
             }
 
             adminChatMuted.add(player.getUniqueId());
-            Color.sendMessage(player, "adminchat-muted-on");
+
+            RyMessageUtils.sendPluginMessage(player, "adminchat-muted-on");
         }
     }
 
     public void hideDevChat(Player player) {
         if (devChatMuted.contains(player.getUniqueId())) {
             devChatMuted.remove(player.getUniqueId());
-            Color.sendMessage(player, "devchat-muted-off");
+            RyMessageUtils.sendPluginMessage(player, "devchat-muted-off");
         } else {
             if (adminChatMuted.contains(player.getUniqueId()) || staffChatMuted.contains(player.getUniqueId())) {
                 adminChatMuted.remove(player.getUniqueId());
@@ -195,7 +202,8 @@ public final class Methods {
             }
 
             devChatMuted.add(player.getUniqueId());
-            Color.sendMessage(player, "devchat-muted-on");
+
+            RyMessageUtils.sendPluginMessage(player, "devchat-muted-on");
         }
     }
 
@@ -204,12 +212,14 @@ public final class Methods {
             staffChatMuted.remove(player.getUniqueId());
             adminChatMuted.remove(player.getUniqueId());
             devChatMuted.remove(player.getUniqueId());
-            Color.sendMessage(player, "allchat-muted-off");
+
+            RyMessageUtils.sendPluginMessage(player, "allchat-muted-off");
         } else {
             staffChatMuted.add(player.getUniqueId());
             adminChatMuted.add(player.getUniqueId());
             devChatMuted.add(player.getUniqueId());
-            Color.sendMessage(player, "allchat-muted-on");
+
+            RyMessageUtils.sendPluginMessage(player, "allchat-muted-on");
         }
     }
 }

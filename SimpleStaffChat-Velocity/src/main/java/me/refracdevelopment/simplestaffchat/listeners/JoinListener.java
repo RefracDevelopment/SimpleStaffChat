@@ -9,7 +9,7 @@ import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.utilities.JoinType;
 import me.refracdevelopment.simplestaffchat.utilities.Permissions;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 import java.util.UUID;
 
@@ -36,16 +36,13 @@ public class JoinListener {
             return;
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
-        if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
-            return;
 
-        SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
-            }
-        });
+        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                .replace("%player%", player.getUsername())
+        );
 
-        Color.log(SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
+        RyMessageUtils.sendConsole(true, SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
@@ -67,17 +64,13 @@ public class JoinListener {
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
-        SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
-                        .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                        .replace("%from%", event.getPreviousServer().getServerInfo().getName())
-                        .replace("%player%", player.getUsername())
-                ));
-            }
-        });
+        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                .replace("%from%", event.getPreviousServer().getServerInfo().getName())
+                .replace("%player%", player.getUsername())
+        );
 
-        Color.log(SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
+        RyMessageUtils.sendConsole(true, SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%from%", event.getPreviousServer().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
@@ -97,13 +90,11 @@ public class JoinListener {
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
-        SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(p -> {
-            if (p.hasPermission(Permissions.STAFFCHAT_SEE)) {
-                p.sendMessage(Color.translate(player, SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT.replace("%server%", player.getCurrentServer().get().getServerInfo().getName())));
-            }
-        });
+        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
+                .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+        );
 
-        Color.log(SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
+        RyMessageUtils.sendConsole(true, SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
@@ -114,12 +105,12 @@ public class JoinListener {
     private void sendDevMessage(Player player) {
         PluginContainer container = SimpleStaffChat.getInstance().getServer().getPluginManager().getPlugin("simplestaffchat").get();
 
-        Color.sendCustomMessage(player, " ");
-        Color.sendCustomMessage(player, "<green>Welcome " + container.getDescription().getName().get() + " Developer!");
-        Color.sendCustomMessage(player, "<green>This server is currently running " + container.getDescription().getName().get() + " <aqua>v" + container.getDescription().getVersion().get() + "<green>.");
-        Color.sendCustomMessage(player, "<green>Plugin name<gray>: <white>" + container.getDescription().getName().get());
-        Color.sendCustomMessage(player, " ");
-        Color.sendCustomMessage(player, "<green>Server version<gray>: <white>" + SimpleStaffChat.getInstance().getServer().getVersion());
-        Color.sendCustomMessage(player, " ");
+        RyMessageUtils.sendPlayer(player, " ");
+        RyMessageUtils.sendPlayer(player, "&aWelcome " + container.getDescription().getName().get() + " Developer!");
+        RyMessageUtils.sendPlayer(player, "&aThis server is currently running " + container.getDescription().getName().get() + " &bv" + container.getDescription().getVersion().get() + "&a.");
+        RyMessageUtils.sendPlayer(player, "&aPlugin name&7: &f" + container.getDescription().getName().get());
+        RyMessageUtils.sendPlayer(player, " ");
+        RyMessageUtils.sendPlayer(player, "&aServer version&7: &f" + SimpleStaffChat.getInstance().getServer().getVersion());
+        RyMessageUtils.sendPlayer(player, " ");
     }
 }

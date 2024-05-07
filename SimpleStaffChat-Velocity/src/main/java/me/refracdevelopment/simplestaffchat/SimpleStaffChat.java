@@ -18,16 +18,16 @@ import me.refracdevelopment.simplestaffchat.commands.devchat.DevChatCommand;
 import me.refracdevelopment.simplestaffchat.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.config.cache.Commands;
+import me.refracdevelopment.simplestaffchat.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.config.cache.Servers;
-import me.refracdevelopment.simplestaffchat.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.utilities.Metrics;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
 import me.refracdevelopment.simplestaffchat.utilities.chat.LuckPermsUtil;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
+import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -81,17 +81,17 @@ public class SimpleStaffChat {
 
         if (pluginManager.isLoaded("luckperms")) {
             LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            Color.log("&aHooked into LuckPerms.");
+            RyMessageUtils.sendConsole(true, "&aHooked into LuckPerms.");
         }
 
         loadModules();
 
-        Color.log("&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
-        Color.log("&e" + container.getDescription().getName().get() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(" &f[*] <gold>Version<white>: &b" + container.getDescription().getVersion().get());
-        Color.log(" &f[*] <gold>Name<white>: &b" + container.getDescription().getName().get());
-        Color.log(" &f[*] <gold>Author<white>: &b" + container.getDescription().getAuthors().get(0));
-        Color.log("&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
+        RyMessageUtils.sendConsole(true, "&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
+        RyMessageUtils.sendConsole(true, "&e" + container.getDescription().getName().get() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
+        RyMessageUtils.sendConsole(true, " &f[*] &6Version&f: &b" + container.getDescription().getVersion().get());
+        RyMessageUtils.sendConsole(true, " &f[*] &6Name&f: &b" + container.getDescription().getName().get());
+        RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + container.getDescription().getAuthors().get(0));
+        RyMessageUtils.sendConsole(true, "&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
 
         updateCheck(server.getConsoleCommandSource(), true);
     }
@@ -110,9 +110,9 @@ public class SimpleStaffChat {
         discord = new Discord();
         servers = new Servers();
 
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aAll files have been loaded correctly!");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
     }
 
     private void loadModules() {
@@ -165,24 +165,24 @@ public class SimpleStaffChat {
                     .aliases(aliases_chat)
                     .build(), new ChatCommand(this));
 
+            final String[] aliases_hide = getCommands().HIDE_COMMAND_ALIASESES.toArray(new String[0]);
+            getServer().getCommandManager().register(getServer().getCommandManager()
+                    .metaBuilder(getCommands().HIDE_COMMAND_ALIASESES.get(0))
+                    .aliases(aliases_hide)
+                    .build(), new HideCommand(this));
+
             server.getEventManager().register(this, new ChatListener());
         }
 
         if (getConfig().JOIN_ENABLED)
             server.getEventManager().register(this, new JoinListener());
 
-        final String[] aliases_hide = getCommands().HIDE_COMMAND_ALIASESES.toArray(new String[0]);
-        getServer().getCommandManager().register(getServer().getCommandManager()
-                .metaBuilder(getCommands().HIDE_COMMAND_ALIASESES.get(0))
-                .aliases(aliases_hide)
-                .build(), new HideCommand(this));
-
         getServer().getCommandManager().register(getServer().getCommandManager()
                 .metaBuilder("staffchatreload")
                 .aliases("screload")
                 .build(), new ReloadCommand(this));
 
-        Color.log("&aLoaded modules.");
+        RyMessageUtils.sendConsole(true, "&aLoaded modules.");
     }
 
     public void updateCheck(CommandSource sender, boolean console) {
@@ -213,22 +213,22 @@ public class SimpleStaffChat {
                 boolean archived = info.get("archived").getAsBoolean();
 
                 if (archived) {
-                    Color.sendCustomMessage(sender, "&cThis plugin has been marked as &e&b'Archived' &r&cby RefracDevelopment.");
-                    Color.sendCustomMessage(sender, "&cThis version will continue to work but will not receive updates or support.");
+                    RyMessageUtils.sendConsole(true, "&cThis plugin has been marked as &e&b'Archived' &r&cby RefracDevelopment.");
+                    RyMessageUtils.sendConsole(true, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(container.getDescription().getVersion().get())) {
                     if (console) {
-                        Color.sendCustomMessage(sender, "&a" + container.getDescription().getName().get() + " is on the latest version.");
+                        RyMessageUtils.sendConsole(true, "&a" + container.getDescription().getName().get() + " is on the latest version.");
                     }
                 } else {
                     sender.sendMessage(Component.text(""));
-                    Color.sendCustomMessage(sender, "&cYour " + container.getDescription().getName().get() + " version &7(" + container.getDescription().getVersion().get() + ") &cis out of date! Newest: &e&bv" + version);
+                    RyMessageUtils.sendConsole(true, "&cYour " + container.getDescription().getName().get() + " version &7(" + container.getDescription().getVersion().get() + ") &cis out of date! Newest: &e&bv" + version);
                     sender.sendMessage(Component.text(""));
                 }
             } else {
-                Color.sendCustomMessage(sender, "&cWrong response from update API, contact plugin developer!");
+                RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");
             }
         } catch (Exception ex) {
-            Color.sendCustomMessage(sender, "&cFailed to get updater check. (" + ex.getMessage() + ")");
+            RyMessageUtils.sendConsole(true, "&cFailed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

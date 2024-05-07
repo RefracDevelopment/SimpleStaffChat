@@ -6,7 +6,7 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat</artifactId>
-    <version>4.1.1</version>
+    <version>4.2.0</version>
     <packaging>pom</packaging>
 
     <name>SimpleStaffChat</name>
@@ -14,5 +14,6 @@
     <modules>
         <module>SimpleStaffChat-Velocity</module>
         <module>SimpleStaffChat-Spigot</module>
+        <module>SimpleStaffChat-Bungee</module>
     </modules>
 </project>

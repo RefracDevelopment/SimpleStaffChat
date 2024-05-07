@@ -1,7 +1,7 @@
 package me.refracdevelopment.simplestaffchat.command;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
         this.name = name;
         this.permission = permission;
         this.argsLength = argsLength;
-        this.usage = String.valueOf(Color.translate(usage));
+        this.usage = usage;
 
         this.aliases = new HashSet<>();
         this.aliases.add(name);
@@ -49,7 +49,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
                 commandMap.register(alias, "simplestaffchat", this);
             }
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
-            Color.log("&cCould not register a command properly (name: " + this.name + "), stacktrace: ");
+            RyMessageUtils.sendPluginError("&cCould not register a command properly (name: " + this.name + "), stacktrace: " + exception.getMessage(), exception, false);
         }
     }
 
@@ -65,7 +65,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     @Override
     public String getPermissionMessage() {
-        return String.valueOf(Color.translate(SimpleStaffChat.getInstance().getLocaleFile().getString("no-permission")));
+        return SimpleStaffChat.getInstance().getLocaleFile().getString("no-permission");
     }
 
     @Override
@@ -75,7 +75,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
 
     @Override
     public Command setUsage(String usage) {
-        this.usage = String.valueOf(Color.translate(usage));
+        this.usage = usage;
         return this;
     }
 

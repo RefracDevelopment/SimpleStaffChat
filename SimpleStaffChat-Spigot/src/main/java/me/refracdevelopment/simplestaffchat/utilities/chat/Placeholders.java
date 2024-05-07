@@ -9,11 +9,10 @@ import org.bukkit.entity.Player;
 public class Placeholders {
 
     public String setPlaceholders(CommandSender sender, String placeholder) {
+        placeholder = placeholder.replace("%prefix%", SimpleStaffChat.getInstance().getLocaleFile().getString("prefix"));
         placeholder = placeholder.replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME);
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
+        if (sender instanceof Player player) {
             placeholder = placeholder.replace("%player%", player.getName());
             placeholder = placeholder.replace("%displayname%", player.getName());
         }
@@ -27,4 +26,5 @@ public class Placeholders {
 
         return placeholder;
     }
+
 }

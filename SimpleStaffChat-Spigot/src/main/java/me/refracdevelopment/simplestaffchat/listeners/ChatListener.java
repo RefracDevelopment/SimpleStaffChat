@@ -2,7 +2,8 @@ package me.refracdevelopment.simplestaffchat.listeners;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.Permissions;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class ChatListener implements Listener {
         if (Methods.getStaffChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission((this.plugin.getCommands()).STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "staffchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-off");
                 return;
             }
 
@@ -37,7 +38,7 @@ public class ChatListener implements Listener {
             String format = this.plugin.getSettings().STAFFCHAT_FORMAT.replace("%server%", this.plugin.getSettings().SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
 
             Methods.sendStaffChat(player, format, message);
-        } else if (event.getMessage().startsWith(this.plugin.getSettings().STAFFCHAT_SYMBOL) && player.hasPermission("simplestaffchat.staffchat.symbol") && (this.plugin.getSettings()).SYMBOLS_ENABLED) {
+        } else if (event.getMessage().startsWith(this.plugin.getSettings().STAFFCHAT_SYMBOL) && player.hasPermission(Permissions.STAFFCHAT_SYMBOL) && this.plugin.getSettings().SYMBOLS_ENABLED) {
             if (event.getMessage().equalsIgnoreCase(this.plugin.getSettings().STAFFCHAT_SYMBOL))
                 return;
 
@@ -49,7 +50,10 @@ public class ChatListener implements Listener {
             }
 
             String message = event.getMessage().replaceFirst(this.plugin.getSettings().STAFFCHAT_SYMBOL, "");
-            String format = this.plugin.getSettings().STAFFCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
+            String format = this.plugin.getSettings().STAFFCHAT_FORMAT
+                    .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             Methods.sendStaffChat(player, format, message);
         }
@@ -65,7 +69,7 @@ public class ChatListener implements Listener {
         if (Methods.getAdminChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(this.plugin.getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "adminchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "adminchat-toggle-off");
                 return;
             }
 
@@ -76,7 +80,7 @@ public class ChatListener implements Listener {
             String format = this.plugin.getSettings().ADMINCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
 
             Methods.sendAdminChat(player, format, message);
-        } else if (event.getMessage().startsWith(this.plugin.getSettings().ADMINCHAT_SYMBOL) && player.hasPermission("simplestaffchat.adminchat.symbol") && (this.plugin.getSettings()).SYMBOLS_ENABLED) {
+        } else if (event.getMessage().startsWith(this.plugin.getSettings().ADMINCHAT_SYMBOL) && player.hasPermission(Permissions.ADMINCHAT_SYMBOL) && this.plugin.getSettings().SYMBOLS_ENABLED) {
             if (event.getMessage().equalsIgnoreCase(this.plugin.getSettings().ADMINCHAT_SYMBOL)) {
                 return;
             }
@@ -89,7 +93,10 @@ public class ChatListener implements Listener {
             }
 
             String message = event.getMessage().replaceFirst(this.plugin.getSettings().ADMINCHAT_SYMBOL, "");
-            String format = this.plugin.getSettings().ADMINCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
+            String format = this.plugin.getSettings().ADMINCHAT_FORMAT
+                    .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             Methods.sendAdminChat(player, format, message);
         }
@@ -105,7 +112,7 @@ public class ChatListener implements Listener {
         if (Methods.getDevChatPlayers().contains(player.getUniqueId())) {
             if (!player.hasPermission(this.plugin.getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "devchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "devchat-toggle-off");
                 return;
             }
 
@@ -115,7 +122,7 @@ public class ChatListener implements Listener {
             String format = this.plugin.getSettings().DEVCHAT_FORMAT.replace("%server%", this.plugin.getSettings().SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
 
             Methods.sendDevChat(player, format, message);
-        } else if (event.getMessage().startsWith(this.plugin.getSettings().DEVCHAT_SYMBOL) && player.hasPermission("simplestaffchat.devchat.symbol") && this.plugin.getSettings().SYMBOLS_ENABLED) {
+        } else if (event.getMessage().startsWith(this.plugin.getSettings().DEVCHAT_SYMBOL) && player.hasPermission(Permissions.DEVCHAT_SYMBOL) && this.plugin.getSettings().SYMBOLS_ENABLED) {
             if (event.getMessage().equalsIgnoreCase(this.plugin.getSettings().DEVCHAT_SYMBOL))
                 return;
 
@@ -127,7 +134,10 @@ public class ChatListener implements Listener {
             }
 
             String message = event.getMessage().replaceFirst(this.plugin.getSettings().DEVCHAT_SYMBOL, "");
-            String format = this.plugin.getSettings().DEVCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", player.getName()).replace("%message%", message);
+            String format = this.plugin.getSettings().DEVCHAT_FORMAT
+                    .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                    .replace("%player%", player.getName())
+                    .replace("%message%", message);
 
             Methods.sendDevChat(player, format, message);
         }

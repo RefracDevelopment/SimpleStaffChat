@@ -2,7 +2,8 @@ package me.refracdevelopment.simplestaffchat.command.commands;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.command.Command;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.Permissions;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,13 +17,13 @@ public class ReloadCommand extends Command {
     }
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if (!sender.hasPermission("simplestaffchat.command.reload")) {
-            Color.sendMessage(sender, "no-permission");
+        if (!sender.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
+            RyMessageUtils.sendPluginMessage(sender, "no-permission");
             return true;
         }
 
         reloadFiles();
-        Color.sendMessage(sender, "reload");
+        RyMessageUtils.sendPluginMessage(sender, "reload");
         return true;
     }
 
@@ -37,8 +38,8 @@ public class ReloadCommand extends Command {
         this.plugin.getCommands().loadConfig();
         this.plugin.getDiscord().loadConfig();
 
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been reloaded correctly!");
-        Color.log("&c==========================================");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aAll files have been reloaded correctly!");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
     }
 }

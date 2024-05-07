@@ -10,8 +10,8 @@ import me.refracdevelopment.simplestaffchat.manager.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
-import me.refracdevelopment.simplestaffchat.utilities.Metrics;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,44 +37,25 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
-    private boolean usingPaper = false;
-
     @Override
     public void onEnable() {
+        long startTiming = System.currentTimeMillis();
         instance = this;
-
-        // This is only used to detect for things like MiniMessage
-        // So that it will work properly on Spigot 1.8+ and Paper 1.8/1.18+
-        try {
-            Class.forName("io.papermc.paper.configuration.Configuration");
-            usingPaper = true;
-        } catch (Exception ignored) {
-        }
 
         new Metrics(this, 12095);
 
-        long startTiming = System.currentTimeMillis();
-        PluginManager pluginManager = getServer().getPluginManager();
-
         loadFiles();
-
-        if (!getServer().getPluginManager().isPluginEnabled("SignedVelocity")) {
-            Color.log("&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
-                    "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");
-        }
-
-        if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
-            Color.log("&aHooked into PlaceholderAPI for placeholders.");
-        }
 
         loadModules();
 
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        Color.log("&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
-        Color.log(" &f[*] &6Version&f: &b" + getDescription().getVersion());
-        Color.log(" &f[*] &6Name&f: &b" + getDescription().getName());
-        Color.log(" &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
-        Color.log("&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        loadHooks();
+
+        RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
+        RyMessageUtils.sendConsole(true, "&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
+        RyMessageUtils.sendConsole(true, " &f[*] &6Version&f: &b" + getDescription().getVersion());
+        RyMessageUtils.sendConsole(true, " &f[*] &6Name&f: &b" + getDescription().getName());
+        RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
+        RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck(getServer().getConsoleSender(), true);
     }
@@ -89,9 +70,9 @@ public final class SimpleStaffChat extends JavaPlugin {
         this.commands = new Commands();
         this.discord = new Discord();
 
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been loaded correctly!");
-        Color.log("&c==========================================");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aAll files have been loaded correctly!");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
     }
 
     private void loadModules() {
@@ -103,7 +84,32 @@ public final class SimpleStaffChat extends JavaPlugin {
         if (getSettings().CHAT_TOGGLE_ENABLED)
             getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 
-        Color.log("&aLoaded modules.");
+        RyMessageUtils.sendConsole(true, "&aLoaded modules.");
+    }
+
+    private void loadHooks() {
+        PluginManager pluginManager = getServer().getPluginManager();
+
+        if (!pluginManager.isPluginEnabled("SignedVelocity")) {
+            RyMessageUtils.sendConsole(true, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot, " +
+                    "consider downloading SignedVelocity: https://modrinth.com/plugin/signedvelocity");
+        }
+
+        if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
+            RyMessageUtils.sendConsole(true, "&aHooked into PlaceholderAPI for placeholders.");
+        }
+    }
+
+    /**
+     * @return true if the server is running Paper or a fork of Paper, false otherwise
+     */
+    public boolean isPaper() {
+        try {
+            Class.forName("com.destroystokyo.paper.PaperConfig");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
     public void updateCheck(CommandSender sender, boolean console) {
@@ -132,22 +138,22 @@ public final class SimpleStaffChat extends JavaPlugin {
                 boolean archived = info.get("archived").getAsBoolean();
 
                 if (archived) {
-                    Color.sendCustomMessage(sender, "&cThis plugin has been marked as &e&l'Archived' &cby RefracDevelopment.");
-                    Color.sendCustomMessage(sender, "&cThis version will continue to work but will not receive updates or support.");
+                    RyMessageUtils.sendConsole(true, "&cThis plugin has been marked as &e&l'Archived' &cby RefracDevelopment.");
+                    RyMessageUtils.sendConsole(true, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(getDescription().getVersion())) {
                     if (console) {
-                        Color.sendCustomMessage(sender, "&a" + getDescription().getName() + " is on the latest version.");
+                        RyMessageUtils.sendConsole(true, "&a" + getDescription().getName() + " is on the latest version.");
                     }
                 } else {
                     sender.sendMessage("");
-                    Color.sendCustomMessage(sender, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
+                    RyMessageUtils.sendConsole(true, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
                     sender.sendMessage("");
                 }
             } else {
-                Color.sendCustomMessage(sender, "&cWrong response from update API, contact plugin developer!");
+                RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");
             }
         } catch (Exception ex) {
-            Color.sendCustomMessage(sender, "&cFailed to get updater check. (" + ex.getMessage() + ")");
+            RyMessageUtils.sendConsole(true, "&cFailed to get updater check. (" + ex.getMessage() + ")");
         }
     }
 }

@@ -6,7 +6,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 public class AdminChatCommand implements SimpleCommand {
 
@@ -23,7 +23,7 @@ public class AdminChatCommand implements SimpleCommand {
         String message = Joiner.on(" ").join(invocation.arguments());
 
         if (!commandSource.hasPermission(plugin.getCommands().ADMINCHAT_COMMAND_PERMISSION)) {
-            Color.sendMessage(commandSource, "no-permission");
+            RyMessageUtils.sendPluginMessage(commandSource, "no-permission");
             return;
         }
 

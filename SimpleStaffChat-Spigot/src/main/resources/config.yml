@@ -25,7 +25,7 @@ modules:
   discord: false
   # This is for staff join messages
   join: false
-  # This is for toggle commands like /sctoggle and /chat etc
+  # This is for toggle commands like /sctoggle, /schide and /chat
   chat-toggle: true
   # This is for the symbol chats
   symbols: true

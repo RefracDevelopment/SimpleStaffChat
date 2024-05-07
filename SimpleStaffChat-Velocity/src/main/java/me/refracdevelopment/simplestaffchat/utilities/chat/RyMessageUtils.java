@@ -1,5 +1,6 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
+import com.google.common.collect.ImmutableMap;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -12,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -21,18 +24,51 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class RyMessageUtils {
 
-    private final Object instance = SimpleStaffChat.getInstance();
-    private final ProxyServer server = SimpleStaffChat.getInstance().getServer();
+    private final SimpleStaffChat instance;
+    private final ProxyServer server;
     private final String pluginId = "simplestaffchat";
 
     @Getter
-    private final String prefix = SimpleStaffChat.getInstance().getLocaleFile().getString("prefix");
+    private final String prefix;
     @Getter
     private final String errorPrefix = "&cError &7» &c";
     @Getter
     private final String breaker = "&7&m------------------------------------";
     @Getter
     private final String supportMessage = "Please contact the plugin author for support.";
+
+    private static final Pattern HEX_PATTERN = Pattern.compile("(?i)&#([0-9A-F]{6})");
+    private static final Pattern AMPERSAND_PATTERN = Pattern.compile("(?i)&([0-9A-FK-ORX#])");
+    private static final Map<String, String> codeTranslations = new ImmutableMap.Builder<String, String>()
+            .put("0", "<black>")
+            .put("1", "<dark_blue>")
+            .put("2", "<dark_green>")
+            .put("3", "<dark_aqua>")
+            .put("4", "<dark_red>")
+            .put("5", "<dark_purple>")
+            .put("6", "<gold>")
+            .put("7", "<gray>")
+            .put("8", "<dark_gray>")
+            .put("9", "<blue>")
+            .put("a", "<green>")
+            .put("b", "<aqua>")
+            .put("c", "<red>")
+            .put("d", "<light_purple>")
+            .put("e", "<yellow>")
+            .put("f", "<white>")
+            .put("k", "<obfuscated>")
+            .put("l", "<bold>")
+            .put("m", "<strikethrough>")
+            .put("n", "<underlined>")
+            .put("o", "<italic>")
+            .put("r", "<reset>")
+            .build();
+
+    static {
+        instance = SimpleStaffChat.getInstance();
+        server = instance.getServer();
+        prefix = instance.getLocaleFile().getString("prefix");
+    }
 
     /**
      * Translates the message given and for colours, %prefix% and %player%.
@@ -42,46 +78,43 @@ public class RyMessageUtils {
      * @return a translated String
      */
     public Component translate(Player player, String message) {
-        message = message.replace("%player%", player.getUsername())
-                .replace("%prefix%", getPrefix());
+        message = Placeholders.setPlaceholders(player, message);
 
         return translate(message);
     }
 
     /**
-     * Translates the message given for colours and %prefix%.
+     * Translates the message given for colours using AdventureAPI and %prefix%.
      *
      * @param message The message you wish to be translated.
-     * @return a translated String
+     * @return a translated Component
      */
-    public Component translate(String message) {
-        message = message
-                .replace("%prefix%", getPrefix())
-                .replaceAll("&1", "<dark_blue>")
-                .replaceAll("&2", "<dark_green>")
-                .replaceAll("&3", "<dark_aqua>")
-                .replaceAll("&4", "<dark_red>")
-                .replaceAll("&5", "<dark_purple>")
-                .replaceAll("&6", "<gold>")
-                .replaceAll("&7", "<gray>")
-                .replaceAll("&8", "<dark_gray>")
-                .replaceAll("&9", "<blue>")
-                .replaceAll("&a", "<green>")
-                .replaceAll("&b", "<aqua>")
-                .replaceAll("&c", "<red>")
-                .replaceAll("&d", "<light_purple>")
-                .replaceAll("&e", "<yellow>")
-                .replaceAll("&f", "<white>")
-                .replaceAll("&l", "<bold>")
-                .replaceAll("&k", "<obfuscated>")
-                .replaceAll("&m", "<strikethrough>")
-                .replaceAll("&n", "<underlined>")
-                .replaceAll("&o", "<italic>")
-                .replaceAll("&r", "<reset>");
+    public static Component translate(String message) {
+        message = legacyToAdventure(message);
 
         Component component = MiniMessage.miniMessage().deserialize(message);
 
         return component;
+    }
+
+    private static String legacyToAdventure(String input) {
+        String result = HEX_PATTERN.matcher(input).replaceAll(matchResult -> {
+            String hex = matchResult.group(1);
+            return "<#" + hex + ">";
+        });
+
+        result = AMPERSAND_PATTERN.matcher(result).replaceAll(matchResult -> {
+            String color = matchResult.group(1);
+            String adventure = codeTranslations.get(color.toLowerCase());
+
+            if (adventure == null) {
+                return matchResult.group();
+            }
+
+            return adventure;
+        });
+
+        return result;
     }
 
     /**
@@ -135,6 +168,8 @@ public class RyMessageUtils {
      * @param message The message you wish to send to the sender.
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull String message) {
+        message = Placeholders.setPlaceholders(sender, message);
+
         sender.sendMessage(translate(message));
     }
 
@@ -146,6 +181,8 @@ public class RyMessageUtils {
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull String... messages) {
         for (String message : messages) {
+            message = Placeholders.setPlaceholders(sender, message);
+
             sender.sendMessage(translate(message));
         }
     }
@@ -158,6 +195,8 @@ public class RyMessageUtils {
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull List<String> messages) {
         for (String message : messages) {
+            message = Placeholders.setPlaceholders(sender, message);
+
             sender.sendMessage(translate(message));
         }
     }
@@ -220,6 +259,8 @@ public class RyMessageUtils {
      * @param message    The message you wish to be broadcast.
      */
     public void broadcast(@Nullable Player player, String permission, String message) {
+        message = Placeholders.setPlaceholders(player, message);
+
         for (Player online : server.getAllPlayers()) {
             if (online.hasPermission(permission)) {
                 online.sendMessage(translate(message));
@@ -234,6 +275,8 @@ public class RyMessageUtils {
      */
     public void broadcast(String message) {
         for (Player online : server.getAllPlayers()) {
+            message = Placeholders.setPlaceholders(online, message);
+
             online.sendMessage(translate(message));
         }
     }
@@ -245,6 +288,8 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to players.
      */
     public void broadcast(Player player, String message) {
+        message = Placeholders.setPlaceholders(player, message);
+
         for (Player online : server.getAllPlayers()) {
             online.sendMessage(translate(player, message));
         }
@@ -359,6 +404,26 @@ public class RyMessageUtils {
         if (disablePlugin && instance != null && server != null) {
             server.getPluginManager().getPlugin(pluginId).get().getExecutorService().shutdown();
         }
+    }
+
+    /**
+     * Send a player a message from the locale/messages file.
+     *
+     * @param player  The sender who you wish to receive the messages.
+     * @param message The message you wish to send to the sender.
+     */
+    public static void sendPluginMessage(Player player, String message) {
+        sendPlayer(player, instance.getLocaleFile().getString(message));
+    }
+
+    /**
+     * Send a sender a message from the locale/messages file.
+     *
+     * @param sender  The sender who you wish to receive the messages.
+     * @param message The message you wish to send to the sender.
+     */
+    public static void sendPluginMessage(CommandSource sender, String message) {
+        sendSender(sender, instance.getLocaleFile().getString(message));
     }
 
 }

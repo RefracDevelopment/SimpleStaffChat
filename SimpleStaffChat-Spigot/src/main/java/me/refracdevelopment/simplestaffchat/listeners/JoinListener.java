@@ -3,7 +3,8 @@ package me.refracdevelopment.simplestaffchat.listeners;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.DiscordImpl;
 import me.refracdevelopment.simplestaffchat.utilities.JoinType;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.Permissions;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,17 +35,12 @@ public class JoinListener implements Listener {
             sendDevMessage(player);
         }
 
-        if (!player.hasPermission("simplestaffchat.join"))
+        if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
             return;
 
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().JOIN_FORMAT);
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("simplestaffchat.staffchat.see")) {
-                Color.sendCustomMessage(p, Color.translate(player, this.plugin.getSettings().JOIN_FORMAT));
-            }
-        }
-
-        Color.log(Color.translate(player, this.plugin.getSettings().JOIN_FORMAT));
+        RyMessageUtils.sendConsole(true, this.plugin.getSettings().JOIN_FORMAT);
         DiscordImpl.sendJoin(JoinType.JOIN, player);
     }
 
@@ -52,26 +48,22 @@ public class JoinListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (!player.hasPermission("simplestaffchat.quit"))
+        if (!player.hasPermission(Permissions.STAFFCHAT_QUIT))
             return;
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission("simplestaffchat.staffchat.see")) {
-                Color.sendCustomMessage(p, Color.translate(player, this.plugin.getSettings().QUIT_FORMAT));
-            }
-        }
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().QUIT_FORMAT);
 
-        Color.log(Color.translate(player, this.plugin.getSettings().QUIT_FORMAT));
+        RyMessageUtils.sendConsole(true, this.plugin.getSettings().QUIT_FORMAT);
         DiscordImpl.sendJoin(JoinType.LEAVE, player);
     }
 
     private void sendDevMessage(Player player) {
-        Color.sendCustomMessage(player, " ");
-        Color.sendCustomMessage(player, "&aWelcome " + this.plugin.getDescription().getName() + " Developer!");
-        Color.sendCustomMessage(player, "&aThis server is currently running " + this.plugin.getDescription().getName() + " &bv" + this.plugin.getDescription().getVersion() + "&a.");
-        Color.sendCustomMessage(player, "&aPlugin name&7: &f" + this.plugin.getDescription().getName());
-        Color.sendCustomMessage(player, " ");
-        Color.sendCustomMessage(player, "&aServer version&7: &f" + Bukkit.getVersion());
-        Color.sendCustomMessage(player, " ");
+        RyMessageUtils.sendPlayer(player, " ");
+        RyMessageUtils.sendPlayer(player, "&aWelcome " + this.plugin.getDescription().getName() + " Developer!");
+        RyMessageUtils.sendPlayer(player, "&aThis server is currently running " + this.plugin.getDescription().getName() + " &bv" + this.plugin.getDescription().getVersion() + "&a.");
+        RyMessageUtils.sendPlayer(player, "&aPlugin name&7: &f" + this.plugin.getDescription().getName());
+        RyMessageUtils.sendPlayer(player, " ");
+        RyMessageUtils.sendPlayer(player, "&aServer version&7: &f" + Bukkit.getVersion());
+        RyMessageUtils.sendPlayer(player, " ");
     }
 }

@@ -4,7 +4,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Permissions;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 public class ReloadCommand implements SimpleCommand {
 
@@ -19,12 +19,12 @@ public class ReloadCommand implements SimpleCommand {
         CommandSource commandSource = invocation.source();
 
         if (!commandSource.hasPermission(Permissions.STAFFCHAT_RELOAD)) {
-            Color.sendMessage(commandSource, "no-permission");
+            RyMessageUtils.sendPluginMessage(commandSource, "no-permission");
             return;
         }
 
         reloadFiles();
-        Color.sendMessage(commandSource, "reload");
+        RyMessageUtils.sendPluginMessage(commandSource, "reload");
     }
 
     private void reloadFiles() {
@@ -39,8 +39,8 @@ public class ReloadCommand implements SimpleCommand {
         plugin.getCommands().loadConfig();
         plugin.getDiscord().loadConfig();
 
-        Color.log("&c==========================================");
-        Color.log("&aAll files have been reloaded correctly!");
-        Color.log("&c==========================================");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aAll files have been reloaded correctly!");
+        RyMessageUtils.sendConsole(true, "&c==========================================");
     }
 }

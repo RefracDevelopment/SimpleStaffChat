@@ -3,7 +3,7 @@ package me.refracdevelopment.simplestaffchat.command.commands;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.command.Command;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -19,15 +19,13 @@ public class ToggleCommand extends Command {
 
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         // Make sure the sender is a player.
-        if (!(sender instanceof Player)) {
-            Color.sendMessage(sender, "no-console");
+        if (!(sender instanceof Player player)) {
+            RyMessageUtils.sendPluginMessage(sender, "no-console");
             return true;
         }
 
-        Player player = (Player) sender;
-
         if (!player.hasPermission(this.plugin.getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
-            Color.sendMessage(player, "no-permission");
+            RyMessageUtils.sendPluginMessage(player, "no-permission");
             return true;
         }
 

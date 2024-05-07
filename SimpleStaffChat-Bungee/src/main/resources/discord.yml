@@ -1,0 +1,29 @@
+# This is used for automatic file updating purposes
+config-version: '3'
+
+webhook:
+  # StaffChat messages webhook
+  staffchat: "WEBHOOK-URL-HERE"
+  # DevChat messages webhook
+  devchat: "WEBHOOK-URL-HERE"
+  # AdminChat messages webhook
+  adminchat: "WEBHOOK-URL-HERE"
+  # Join messages webhook
+  join: "WEBHOOK-URL-HERE"
+
+discord:
+  # Do you want an embed or a normal message?
+  embed-message: true
+  # This will either be the username or the embed title
+  title: "StaffChat Logs"
+  footer: "Created by RefracDevelopment"
+  # These settings are here so no color codes appear in discord.
+  format:
+    # The chat format
+    format: "%server% %player% %message%"
+    # The join format
+    join-format: "%player% joined %server%"
+    # The switch format (This is only available for BungeeCord/Velocity)
+    switch-format: "%player% switched %from% to %server%"
+    # The leave format
+    leave-format: "%player% left %server%"

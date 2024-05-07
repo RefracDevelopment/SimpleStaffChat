@@ -7,7 +7,7 @@ import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -29,10 +29,9 @@ public class ConfigFile {
                             .setOptionSorting(UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS).build()
             );
 
-            configFile.update();
             configFile.save();
         } catch (IOException e) {
-            Color.log("&cFailed to load config file! The plugin will now shutdown.");
+            RyMessageUtils.sendConsole(true, "&cFailed to load " + name + " file! The plugin will now shutdown.");
             Bukkit.getPluginManager().disablePlugin(SimpleStaffChat.getInstance());
         }
     }

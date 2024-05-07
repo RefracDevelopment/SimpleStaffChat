@@ -4,7 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 public class ChatCommand implements SimpleCommand {
 
@@ -17,22 +17,22 @@ public class ChatCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         if (!(invocation.source() instanceof Player player)) {
-            Color.sendMessage(invocation.source(), "no-console");
+            RyMessageUtils.sendPluginMessage(invocation.source(), "no-console");
             return;
         }
 
         if (!player.hasPermission(plugin.getCommands().CHAT_COMMAND_PERMISSION)) {
-            Color.sendMessage(player, "no-permission");
+            RyMessageUtils.sendPluginMessage(player, "no-permission");
             return;
         }
 
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-            Color.sendMessage(player, "blacklisted-server");
+            RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
             return;
         }
 
         if (invocation.arguments().length == 0) {
-            Color.sendCustomMessage(player, "&c/" + plugin.getCommands().CHAT_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
+            RyMessageUtils.sendPlayer(player, "&c/" + plugin.getCommands().CHAT_COMMAND_ALIASESES.get(0) + " <staff|admin|dev|all>");
             return;
         }
 

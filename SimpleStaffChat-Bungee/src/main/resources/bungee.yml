@@ -1,0 +1,6 @@
+name: SimpleStaffChat
+version: '${project.version}'
+main: me.refracdevelopment.simplestaffchat.SimpleStaffChat
+author: "RefracDevelopment"
+description: SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
+website: https://discord.gg/EFeSKPg739

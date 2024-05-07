@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.command.Command;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class StaffChatCommand extends Command {
         String message = Joiner.on(" ").join(args);
 
         if (!sender.hasPermission(this.plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            Color.sendMessage(sender, "no-permission");
+            RyMessageUtils.sendPluginMessage(sender, "no-permission");
             return true;
         }
 

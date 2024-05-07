@@ -6,7 +6,7 @@ import com.velocitypowered.api.proxy.Player;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.utilities.Permissions;
-import me.refracdevelopment.simplestaffchat.utilities.chat.Color;
+import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 
 public class ChatListener {
 
@@ -27,14 +27,14 @@ public class ChatListener {
             event.setResult(PlayerChatEvent.ChatResult.denied());
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().STAFF_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getStaffChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "staffchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-off");
                 return;
             }
 
@@ -57,7 +57,7 @@ public class ChatListener {
             }
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
@@ -86,12 +86,12 @@ public class ChatListener {
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().ADMIN_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getAdminChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "adminchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "adminchat-toggle-off");
                 return;
             }
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
@@ -115,7 +115,7 @@ public class ChatListener {
             }
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
@@ -144,12 +144,12 @@ public class ChatListener {
 
             if (!player.hasPermission(SimpleStaffChat.getInstance().getCommands().DEV_TOGGLE_COMMAND_PERMISSION)) {
                 Methods.getDevChatPlayers().remove(player.getUniqueId());
-                Color.sendMessage(player, "devchat-toggle-off");
+                RyMessageUtils.sendPluginMessage(player, "devchat-toggle-off");
                 return;
             }
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
@@ -172,7 +172,7 @@ public class ChatListener {
             }
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName())) {
-                Color.sendMessage(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
                 event.setResult(PlayerChatEvent.ChatResult.denied());
                 return;
             }
