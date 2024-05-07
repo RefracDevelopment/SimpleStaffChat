@@ -118,6 +118,7 @@ public class RyMessageUtils {
         return component;
     }
 
+    // Taken from https://github.com/EternalCodeTeam/ChatFormatter/
     private static String legacyToAdventure(String input) {
         String result = HEX_PATTERN.matcher(input).replaceAll(matchResult -> {
             String hex = matchResult.group(1);
