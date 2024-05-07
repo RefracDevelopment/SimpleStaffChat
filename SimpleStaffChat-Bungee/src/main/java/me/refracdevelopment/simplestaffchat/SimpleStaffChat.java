@@ -3,6 +3,11 @@ package me.refracdevelopment.simplestaffchat;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
+import me.refracdevelopment.simplestaffchat.commands.*;
+import me.refracdevelopment.simplestaffchat.commands.adminchat.AdminChatCommand;
+import me.refracdevelopment.simplestaffchat.commands.adminchat.AdminToggleCommand;
+import me.refracdevelopment.simplestaffchat.commands.devchat.DevChatCommand;
+import me.refracdevelopment.simplestaffchat.commands.devchat.DevToggleCommand;
 import me.refracdevelopment.simplestaffchat.config.ConfigFile;
 import me.refracdevelopment.simplestaffchat.config.cache.Commands;
 import me.refracdevelopment.simplestaffchat.config.cache.Config;
@@ -76,12 +81,28 @@ public final class SimpleStaffChat extends Plugin {
     }
 
     private void loadModules() {
+        if (getConfig().STAFFCHAT_ENABLED)
+            getProxy().getPluginManager().registerCommand(this, new StaffChatCommand(this));
 
+        if (getConfig().ADMINCHAT_ENABLED)
+            getProxy().getPluginManager().registerCommand(this, new AdminChatCommand(this));
+
+        if (getConfig().DEVCHAT_ENABLED)
+            getProxy().getPluginManager().registerCommand(this, new DevChatCommand(this));
 
         if (getConfig().JOIN_ENABLED)
             getProxy().getPluginManager().registerListener(this, new JoinListener(this));
-        if (getConfig().CHAT_TOGGLE_ENABLED)
+
+        if (getConfig().CHAT_TOGGLE_ENABLED) {
             getProxy().getPluginManager().registerListener(this, new ChatListener(this));
+            getProxy().getPluginManager().registerCommand(this, new ToggleCommand(this));
+            getProxy().getPluginManager().registerCommand(this, new AdminToggleCommand(this));
+            getProxy().getPluginManager().registerCommand(this, new DevToggleCommand(this));
+            getProxy().getPluginManager().registerCommand(this, new HideCommand(this));
+            getProxy().getPluginManager().registerCommand(this, new ChatCommand(this));
+        }
+
+        getProxy().getPluginManager().registerCommand(this, new ReloadCommand(this));
 
         RyMessageUtils.sendConsole(true, "&aLoaded modules.");
     }
