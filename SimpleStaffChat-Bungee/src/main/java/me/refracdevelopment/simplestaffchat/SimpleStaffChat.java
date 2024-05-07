@@ -10,7 +10,6 @@ import me.refracdevelopment.simplestaffchat.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.config.cache.Servers;
 import me.refracdevelopment.simplestaffchat.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
-import me.refracdevelopment.simplestaffchat.manager.CommandManager;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
@@ -36,8 +35,6 @@ public final class SimpleStaffChat extends Plugin {
     private Commands commands;
     private Discord discord;
     private Servers servers;
-
-    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
@@ -79,8 +76,7 @@ public final class SimpleStaffChat extends Plugin {
     }
 
     private void loadModules() {
-        this.commandManager = new CommandManager(this);
-        getCommandManager().registerAll();
+
 
         if (getConfig().JOIN_ENABLED)
             getProxy().getPluginManager().registerListener(this, new JoinListener(this));

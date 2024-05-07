@@ -1,12 +1,12 @@
-package me.refracdevelopment.simplestaffchat.command.commands.devchat;
+package me.refracdevelopment.simplestaffchat.commands.devchat;
 
 import com.google.common.base.Joiner;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.command.Command;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.plugin.Command;
 
 public class DevChatCommand extends Command {
 

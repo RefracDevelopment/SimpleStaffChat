@@ -1,10 +1,10 @@
-package me.refracdevelopment.simplestaffchat.command.commands;
+package me.refracdevelopment.simplestaffchat.commands;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.command.Command;
 import me.refracdevelopment.simplestaffchat.utilities.Permissions;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.plugin.Command;
 
 public class ReloadCommand extends Command {
 
