@@ -334,7 +334,7 @@ public class RyMessageUtils {
         for (ProxiedPlayer online : ProxyServer.getInstance().getPlayers()) {
             if (online.hasPermission(permission)) {
                 if (getAudiences() != null) {
-                    getAudiences().player(player).sendMessage(adventureTranslate(player, message));
+                    getAudiences().player(online).sendMessage(adventureTranslate(player, message));
                 } else {
                     BaseComponent[] text = TextComponent.fromLegacyText(translate(player, message));
                     online.sendMessage(text);

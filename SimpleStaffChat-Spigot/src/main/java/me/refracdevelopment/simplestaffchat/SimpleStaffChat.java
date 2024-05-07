@@ -57,7 +57,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + getDescription().getAuthors().get(0));
         RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
-        updateCheck(getServer().getConsoleSender(), true);
+        updateCheck();
     }
 
     private void loadFiles() {
@@ -112,7 +112,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         }
     }
 
-    public void updateCheck(CommandSender sender, boolean console) {
+    public void updateCheck() {
         try {
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
@@ -141,13 +141,11 @@ public final class SimpleStaffChat extends JavaPlugin {
                     RyMessageUtils.sendConsole(true, "&cThis plugin has been marked as &e&l'Archived' &cby RefracDevelopment.");
                     RyMessageUtils.sendConsole(true, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(getDescription().getVersion())) {
-                    if (console) {
-                        RyMessageUtils.sendConsole(true, "&a" + getDescription().getName() + " is on the latest version.");
-                    }
+                    RyMessageUtils.sendConsole(true, "&a" + getDescription().getName() + " is on the latest version.");
                 } else {
-                    sender.sendMessage("");
+                    RyMessageUtils.sendConsole(true, " ");
                     RyMessageUtils.sendConsole(true, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
-                    sender.sendMessage("");
+                    RyMessageUtils.sendConsole(true, " ");
                 }
             } else {
                 RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");

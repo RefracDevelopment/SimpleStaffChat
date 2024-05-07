@@ -93,7 +93,7 @@ public class SimpleStaffChat {
         RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + container.getDescription().getAuthors().get(0));
         RyMessageUtils.sendConsole(true, "&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
 
-        updateCheck(server.getConsoleCommandSource(), true);
+        updateCheck();
     }
 
     private void loadFiles() {
@@ -185,7 +185,7 @@ public class SimpleStaffChat {
         RyMessageUtils.sendConsole(true, "&aLoaded modules.");
     }
 
-    public void updateCheck(CommandSource sender, boolean console) {
+    public void updateCheck() {
         try {
             PluginContainer container = getServer().getPluginManager().getPlugin("simplestaffchat").get();
 
@@ -216,13 +216,11 @@ public class SimpleStaffChat {
                     RyMessageUtils.sendConsole(true, "&cThis plugin has been marked as &e&b'Archived' &r&cby RefracDevelopment.");
                     RyMessageUtils.sendConsole(true, "&cThis version will continue to work but will not receive updates or support.");
                 } else if (version.equals(container.getDescription().getVersion().get())) {
-                    if (console) {
-                        RyMessageUtils.sendConsole(true, "&a" + container.getDescription().getName().get() + " is on the latest version.");
-                    }
+                    RyMessageUtils.sendConsole(true, "&a" + container.getDescription().getName().get() + " is on the latest version.");
                 } else {
-                    sender.sendMessage(Component.text(""));
+                    RyMessageUtils.sendConsole(true, " ");
                     RyMessageUtils.sendConsole(true, "&cYour " + container.getDescription().getName().get() + " version &7(" + container.getDescription().getVersion().get() + ") &cis out of date! Newest: &e&bv" + version);
-                    sender.sendMessage(Component.text(""));
+                    RyMessageUtils.sendConsole(true, " ");
                 }
             } else {
                 RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");
