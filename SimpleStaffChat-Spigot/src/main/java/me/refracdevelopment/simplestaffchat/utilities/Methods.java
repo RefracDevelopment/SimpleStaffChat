@@ -30,7 +30,6 @@ public final class Methods {
 
     public void sendStaffChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
-
             RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
@@ -64,7 +63,6 @@ public final class Methods {
 
     public void sendDevChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
-
             RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())
@@ -99,7 +97,6 @@ public final class Methods {
 
     public void sendAdminChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
-
             RyMessageUtils.broadcast((Player) commandSender, Permissions.ADMINCHAT_SEE, format
                     .replace("%server%", SimpleStaffChat.getInstance().getSettings().SERVER_NAME)
                     .replace("%player%", player.getName())

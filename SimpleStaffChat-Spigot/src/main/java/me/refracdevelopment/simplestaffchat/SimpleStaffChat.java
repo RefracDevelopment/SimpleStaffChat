@@ -108,7 +108,7 @@ public final class SimpleStaffChat extends JavaPlugin {
      */
     public boolean isPaper() {
         try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
+            Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
             return true;
         } catch (ClassNotFoundException e) {
             return false;

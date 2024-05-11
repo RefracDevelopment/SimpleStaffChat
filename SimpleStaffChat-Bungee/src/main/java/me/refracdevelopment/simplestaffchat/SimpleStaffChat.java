@@ -15,7 +15,9 @@ import me.refracdevelopment.simplestaffchat.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.config.cache.Servers;
 import me.refracdevelopment.simplestaffchat.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
+import me.refracdevelopment.simplestaffchat.utilities.chat.LuckPermsUtil;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
+import net.luckperms.api.LuckPermsProvider;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
 
@@ -52,6 +54,8 @@ public final class SimpleStaffChat extends Plugin {
         loadFiles();
 
         loadModules();
+
+        loadHooks();
 
         RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
         RyMessageUtils.sendConsole(true, "&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
@@ -105,6 +109,13 @@ public final class SimpleStaffChat extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new ReloadCommand(this));
 
         RyMessageUtils.sendConsole(true, "&aLoaded modules.");
+    }
+
+    private void loadHooks() {
+        if (getProxy().getPluginManager().getPlugin("LuckPerms") != null) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            RyMessageUtils.sendConsole(true, "&aHooked into LuckPerms.");
+        }
     }
 
     public void updateCheck() {
