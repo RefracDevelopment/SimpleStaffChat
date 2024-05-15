@@ -37,9 +37,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%player%", player.getUsername()));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                            .replace("%player%", player.getUsername())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
@@ -50,9 +55,14 @@ public class Methods {
                     .replace("%player%", player.getUsername())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console"));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -74,9 +84,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format
-                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%player%", player.getUsername()));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                            .replace("%player%", player.getUsername())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
@@ -87,9 +102,14 @@ public class Methods {
                     .replace("%player%", player.getUsername())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.DEVCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console"));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.DEVCHAT_SEE) && !devChatPlayers.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -112,9 +132,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.ADMINCHAT_SEE, format
-                    .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
-                    .replace("%player%", player.getUsername()));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
+                            .replace("%player%", player.getUsername())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
@@ -125,9 +150,14 @@ public class Methods {
                     .replace("%player%", player.getUsername())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console"));
+            SimpleStaffChat.getInstance().getServer().getAllPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)

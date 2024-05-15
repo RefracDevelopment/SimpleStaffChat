@@ -37,10 +37,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%player%", player.getName())
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getServer().getInfo().getName())
+                            .replace("%player%", player.getName())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getServer().getInfo().getName())
@@ -52,10 +56,14 @@ public class Methods {
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console")
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -79,10 +87,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.DEVCHAT_SEE, format
-                    .replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%player%", player.getName())
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getServer().getInfo().getName())
+                            .replace("%player%", player.getName())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getServer().getInfo().getName())
@@ -94,10 +106,14 @@ public class Methods {
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.DEVCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console")
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -121,10 +137,14 @@ public class Methods {
                 return;
             }
 
-            RyMessageUtils.broadcast(player, Permissions.ADMINCHAT_SEE, format
-                    .replace("%server%", player.getServer().getInfo().getName())
-                    .replace("%player%", player.getName())
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", player.getServer().getInfo().getName())
+                            .replace("%player%", player.getName())
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", player.getServer().getInfo().getName())
@@ -136,10 +156,14 @@ public class Methods {
                     .replace("%player%", player.getName())
             );
         } else {
-            RyMessageUtils.broadcast(null, Permissions.STAFFCHAT_SEE, format
-                    .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
-                    .replace("%player%", "Console")
-            );
+            SimpleStaffChat.getInstance().getProxy().getPlayers().forEach(onlinePlayer -> {
+                if (onlinePlayer.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(onlinePlayer.getUniqueId())) {
+                    RyMessageUtils.sendPlayer(onlinePlayer, format
+                            .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
+                            .replace("%player%", "Console")
+                    );
+                }
+            });
 
             RyMessageUtils.sendConsole(true, format
                     .replace("%server%", SimpleStaffChat.getInstance().getConfig().SERVER_NAME)
@@ -162,6 +186,7 @@ public class Methods {
                 adminChatPlayers.remove(player.getUniqueId());
                 devChatPlayers.remove(player.getUniqueId());
             }
+
             staffChatPlayers.add(player.getUniqueId());
             RyMessageUtils.sendPluginMessage(player, "staffchat-toggle-on");
         }
@@ -203,6 +228,7 @@ public class Methods {
             staffChatPlayers.remove(player.getUniqueId());
             staffChatPlayers.remove(player.getUniqueId());
             staffChatPlayers.remove(player.getUniqueId());
+
             RyMessageUtils.sendPluginMessage(player, "allchat-toggle-on");
         }
     }
@@ -231,6 +257,7 @@ public class Methods {
                 devChatMuted.remove(player.getUniqueId());
                 staffChatMuted.remove(player.getUniqueId());
             }
+
             adminChatMuted.add(player.getUniqueId());
             RyMessageUtils.sendPluginMessage(player, "adminchat-muted-on");
         }
@@ -256,11 +283,13 @@ public class Methods {
             staffChatMuted.remove(player.getUniqueId());
             adminChatMuted.remove(player.getUniqueId());
             devChatMuted.remove(player.getUniqueId());
+
             RyMessageUtils.sendPluginMessage(player, "allchat-muted-off");
         } else {
             staffChatMuted.add(player.getUniqueId());
             adminChatMuted.add(player.getUniqueId());
             devChatMuted.add(player.getUniqueId());
+
             RyMessageUtils.sendPluginMessage(player, "allchat-muted-on");
         }
     }

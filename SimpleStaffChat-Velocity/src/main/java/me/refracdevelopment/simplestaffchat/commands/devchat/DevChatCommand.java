@@ -27,16 +27,19 @@ public class DevChatCommand implements SimpleCommand {
             return;
         }
 
-        if (invocation.arguments().length >= 1) {
-            String format = (commandSource instanceof Player) ? plugin.getConfig().DEVCHAT_FORMAT
-                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%player%", ((Player) commandSource).getUsername())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
-                    .replace("%server%", "N/A")
-                    .replace("%player%", "Console")
-                    .replace("%message%", message);
-
-            Methods.sendDevChat(commandSource, format, message);
+        if (!(invocation.arguments().length >= 1)) {
+            RyMessageUtils.sendSender(commandSource, "&cUsage: /devchat <message>");
+            return;
         }
+
+        String format = (commandSource instanceof Player) ? plugin.getConfig().DEVCHAT_FORMAT
+                .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                .replace("%player%", ((Player) commandSource).getUsername())
+                .replace("%message%", message) : plugin.getConfig().CONSOLE_DEVCHAT_FORMAT
+                .replace("%server%", "N/A")
+                .replace("%player%", "Console")
+                .replace("%message%", message);
+
+        Methods.sendDevChat(commandSource, format, message);
     }
 }

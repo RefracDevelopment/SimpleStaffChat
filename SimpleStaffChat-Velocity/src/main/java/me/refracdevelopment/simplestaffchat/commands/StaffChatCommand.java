@@ -27,16 +27,19 @@ public final class StaffChatCommand implements SimpleCommand {
             return;
         }
 
-        if (invocation.arguments().length >= 1) {
-            String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT
-                    .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
-                    .replace("%player%", ((Player) commandSource).getUsername())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
-                    .replace("%server%", plugin.getConfig().SERVER_NAME)
-                    .replace("%player%", "Console")
-                    .replace("%message%", message);
-
-            Methods.sendStaffChat(commandSource, format, message);
+        if (!(invocation.arguments().length >= 1)) {
+            RyMessageUtils.sendSender(commandSource, "&cUsage: /staffchat <message>");
+            return;
         }
+
+        String format = (commandSource instanceof Player) ? plugin.getConfig().STAFFCHAT_FORMAT
+                .replace("%server%", ((Player) commandSource).getCurrentServer().get().getServerInfo().getName())
+                .replace("%player%", ((Player) commandSource).getUsername())
+                .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                .replace("%server%", plugin.getConfig().SERVER_NAME)
+                .replace("%player%", "Console")
+                .replace("%message%", message);
+
+        Methods.sendStaffChat(commandSource, format, message);
     }
 }

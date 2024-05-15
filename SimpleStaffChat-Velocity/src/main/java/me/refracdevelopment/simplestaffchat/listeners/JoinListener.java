@@ -38,7 +38,7 @@ public class JoinListener {
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
-        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, SimpleStaffChat.getInstance().getConfig().JOIN_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
         );
@@ -65,7 +65,7 @@ public class JoinListener {
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
-        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, SimpleStaffChat.getInstance().getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
                 .replace("%from%", event.getPreviousServer().getServerInfo().getName())
                 .replace("%player%", player.getUsername())
@@ -91,7 +91,7 @@ public class JoinListener {
         if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getCurrentServer().get().getServerInfo().getName()))
             return;
 
-        RyMessageUtils.broadcast(player, SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, SimpleStaffChat.getInstance().getConfig().QUIT_FORMAT
                 .replace("%server%", player.getCurrentServer().get().getServerInfo().getName())
         );
 

@@ -22,20 +22,23 @@ public class StaffChatCommand extends Command {
         String message = Joiner.on(" ").join(args);
 
         if (!commandSender.hasPermission(plugin.getCommands().STAFFCHAT_COMMAND_PERMISSION)) {
-            RyMessageUtils.sendSender(commandSender, "no-permission");
+            RyMessageUtils.sendPluginMessage(commandSender, "no-permission");
             return;
         }
 
-        if (args.length >= 1) {
-            String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
-                    .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
-                    .replace("%server%", "N/A")
-                    .replace("%player%", commandSender.getName())
-                    .replace("%message%", message);
-
-            Methods.sendStaffChat(commandSender, format, message);
+        if (!(args.length >= 1)) {
+            RyMessageUtils.sendSender(commandSender, "&cUsage: /" + this.getName() + " <message>");
+            return;
         }
+
+        String format = (commandSender instanceof ProxiedPlayer) ? plugin.getConfig().STAFFCHAT_FORMAT
+                .replace("%server%", ((ProxiedPlayer) commandSender).getServer().getInfo().getName())
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message) : plugin.getConfig().CONSOLE_STAFFCHAT_FORMAT
+                .replace("%server%", "N/A")
+                .replace("%player%", commandSender.getName())
+                .replace("%message%", message);
+
+        Methods.sendStaffChat(commandSender, format, message);
     }
 }

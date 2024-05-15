@@ -25,11 +25,20 @@ public class StaffChatCommand extends Command {
             return true;
         }
 
-        if (args.length >= 1) {
-            String format = (sender instanceof org.bukkit.entity.Player) ? (this.plugin.getSettings()).STAFFCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", sender.getName()).replace("%message%", message) : (this.plugin.getSettings()).CONSOLE_STAFFCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", sender.getName()).replace("%message%", message);
-
-            Methods.sendStaffChat(sender, format, message);
+        if (!(args.length >= 1)) {
+            RyMessageUtils.sendSender(sender, "&cUsage: /" + this.getName() + " <message>");
+            return true;
         }
+
+        String format = (sender instanceof org.bukkit.entity.Player) ? this.plugin.getSettings().STAFFCHAT_FORMAT
+                .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                .replace("%player%", sender.getName())
+                .replace("%message%", message) : this.plugin.getSettings().CONSOLE_STAFFCHAT_FORMAT
+                .replace("%server%", (this.plugin.getSettings()).SERVER_NAME)
+                .replace("%player%", sender.getName())
+                .replace("%message%", message);
+
+        Methods.sendStaffChat(sender, format, message);
 
         return true;
     }

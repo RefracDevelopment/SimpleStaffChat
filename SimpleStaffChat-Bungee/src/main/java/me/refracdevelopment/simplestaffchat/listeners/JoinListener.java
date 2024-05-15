@@ -60,7 +60,7 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_SWITCH))
             return;
 
-        RyMessageUtils.broadcast(player, plugin.getConfig().SWITCH_FORMAT
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, plugin.getConfig().SWITCH_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName()));
 
@@ -80,7 +80,7 @@ public class JoinListener implements Listener {
         if (player.getServer() == null)
             return;
 
-        RyMessageUtils.broadcast(player, plugin.getConfig().QUIT_FORMAT
+        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, plugin.getConfig().QUIT_FORMAT
                 .replace("%server%", player.getServer().getInfo().getName()));
 
         RyMessageUtils.sendConsole(true, plugin.getConfig().QUIT_FORMAT

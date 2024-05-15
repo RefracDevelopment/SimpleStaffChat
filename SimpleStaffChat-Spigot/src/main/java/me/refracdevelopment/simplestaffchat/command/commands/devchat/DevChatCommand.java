@@ -26,11 +26,20 @@ public class DevChatCommand extends Command {
             return true;
         }
 
-        if (args.length >= 1) {
-            String format = (sender instanceof Player) ? (this.plugin.getSettings()).DEVCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", sender.getName()).replace("%message%", message) : (this.plugin.getSettings()).CONSOLE_DEVCHAT_FORMAT.replace("%server%", (this.plugin.getSettings()).SERVER_NAME).replace("%player%", sender.getName()).replace("%message%", message);
-
-            Methods.sendDevChat(sender, format, message);
+        if (!(args.length >= 1)) {
+            RyMessageUtils.sendSender(sender, "&cUsage: /" + this.getName() + " <message>");
+            return true;
         }
+
+        String format = (sender instanceof Player) ? this.plugin.getSettings().DEVCHAT_FORMAT
+                .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                .replace("%player%", sender.getName())
+                .replace("%message%", message) : this.plugin.getSettings().CONSOLE_DEVCHAT_FORMAT
+                .replace("%server%", this.plugin.getSettings().SERVER_NAME)
+                .replace("%player%", sender.getName())
+                .replace("%message%", message);
+
+        Methods.sendDevChat(sender, format, message);
 
         return true;
     }
