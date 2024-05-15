@@ -8,7 +8,10 @@ import me.refracdevelopment.simplestaffchat.command.commands.adminchat.AdminTogg
 import me.refracdevelopment.simplestaffchat.command.commands.devchat.DevChatCommand;
 import me.refracdevelopment.simplestaffchat.command.commands.devchat.DevToggleCommand;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public class CommandManager {
     private final Set<Command> commands = new HashSet<>();
@@ -36,9 +39,9 @@ public class CommandManager {
             this.commands.add(new AdminToggleCommand(this.plugin));
             this.commands.add(new DevToggleCommand(this.plugin));
             this.commands.add(new ChatCommand(this.plugin));
+            this.commands.add(new HideCommand(this.plugin));
         }
 
-        this.commands.add(new HideCommand(this.plugin));
         this.commands.add(new ReloadCommand(this.plugin));
     }
 

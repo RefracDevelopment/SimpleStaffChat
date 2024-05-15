@@ -67,7 +67,7 @@ public class RyMessageUtils {
     static {
         instance = SimpleStaffChat.getInstance();
         server = instance.getServer();
-        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
+        prefix = instance.getLocaleFile().getString("prefix");
     }
 
     /**
@@ -209,7 +209,7 @@ public class RyMessageUtils {
      */
     public void sendConsole(boolean prefix, String message) {
         if (prefix) {
-            server.getConsoleCommandSource().sendMessage(translate(getPrefix() + " " + message));
+            server.getConsoleCommandSource().sendMessage(translate("<#7D0DC3>[SimpleStaffChat] &f" + message));
         } else {
             server.getConsoleCommandSource().sendMessage(translate(message));
         }
@@ -224,7 +224,7 @@ public class RyMessageUtils {
     public void sendConsole(boolean prefix, String... messages) {
         if (prefix) {
             for (String message : messages) {
-                server.getConsoleCommandSource().sendMessage(translate(getPrefix() + message));
+                server.getConsoleCommandSource().sendMessage(translate("<#7D0DC3>[SimpleStaffChat] &f" + message));
             }
         } else {
             for (String message : messages) {
@@ -242,7 +242,7 @@ public class RyMessageUtils {
     public void sendConsole(boolean prefix, List<String> messages) {
         if (prefix) {
             for (String message : messages) {
-                server.getConsoleCommandSource().sendMessage(translate(getPrefix() + message));
+                server.getConsoleCommandSource().sendMessage(translate("<#7D0DC3>[SimpleStaffChat] &f" + message));
             }
         } else {
             for (String message : messages) {

@@ -50,17 +50,18 @@ public final class SimpleStaffChat extends Plugin {
 
         new Metrics(this, 12096);
 
+        loadFiles();
+
         RyMessageUtils.sendConsole(false,
                 "<#A020F0> _____ _           _     _____ _       ___ ___ _____ _       _     " + "Running <#7D0DC3>v" + getDescription().getVersion(),
-                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>BungeeCord <#A020F0>v" + getProxy().getVersion(),
+                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>" + getProxy().getName() + " <#A020F0>v" + getProxy().getVersion(),
                 "<#A020F0>|__   | |     | . | | -_|__   |  _||. |  _|  _|   --|   ||. |  _|  " + "Discord support: <#7D0DC3>https://discord.gg/EFeSKPg739",
                 "<#7D0DC3>|_____|_|_|_|_|  _|_|___|_____| | |___|_| |_| |_____|_|_|___| |    " + "Thanks for using my plugin ❤ !",
                 "<#7D0DC3>              |_|             |__|                          |__|",
-                "     <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
+                "        <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
                 ""
         );
 
-        loadFiles();
         loadModules();
         loadHooks();
 
@@ -147,9 +148,7 @@ public final class SimpleStaffChat extends Plugin {
                 } else if (version.equals(getDescription().getVersion())) {
                     RyMessageUtils.sendConsole(true, "&a" + getDescription().getName() + " is on the latest version.");
                 } else {
-                    RyMessageUtils.sendConsole(true, "");
                     RyMessageUtils.sendConsole(true, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
-                    RyMessageUtils.sendConsole(true, "");
                 }
             } else {
                 RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");

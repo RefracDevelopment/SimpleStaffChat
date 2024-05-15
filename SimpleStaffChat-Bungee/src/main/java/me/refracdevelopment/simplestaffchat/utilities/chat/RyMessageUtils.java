@@ -71,7 +71,7 @@ public class RyMessageUtils {
     static {
         instance = SimpleStaffChat.getInstance();
         audiences = BungeeAudiences.create(instance);
-        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
+        prefix = instance.getLocaleFile().getString("prefix");
     }
 
     /**
@@ -275,7 +275,7 @@ public class RyMessageUtils {
      * @param message The message you wish for console to receive.
      */
     public static void sendConsole(boolean prefix, String message) {
-        if (prefix) message = getPrefix() + message;
+        if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
         if (getAudiences() != null) {
             getAudiences().console().sendMessage(adventureTranslate(message));
@@ -293,7 +293,7 @@ public class RyMessageUtils {
      */
     public static void sendConsole(boolean prefix, String... messages) {
         for (String message : messages) {
-            if (prefix) message = getPrefix() + message;
+            if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
             if (getAudiences() != null) {
                 getAudiences().console().sendMessage(adventureTranslate(message));
@@ -312,7 +312,7 @@ public class RyMessageUtils {
      */
     public static void sendConsole(boolean prefix, List<String> messages) {
         for (String message : messages) {
-            if (prefix) message = getPrefix() + message;
+            if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
             if (getAudiences() != null) {
                 getAudiences().console().sendMessage(adventureTranslate(message));

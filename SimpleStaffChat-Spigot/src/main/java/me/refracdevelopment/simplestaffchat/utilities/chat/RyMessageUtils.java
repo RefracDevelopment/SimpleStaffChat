@@ -79,7 +79,7 @@ public class RyMessageUtils {
         else
             audiences = null;
 
-        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
+        prefix = instance.getLocaleFile().getString("prefix");
     }
 
     /**
@@ -89,20 +89,16 @@ public class RyMessageUtils {
      * @param message The message you wish to be translated.
      * @return a translated Component
      */
-    public static Component adventureTranslate(Player player, String message) {
+    public static Component translate(Player player, String message) {
         message = Placeholders.setPlaceholders(player, message);
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            message = PlaceholderAPI.setPlaceholders(player, message)
-                    .replace("%prefix%", getPrefix())
-                    .replace("%player%", player.getName());
-        } else {
-            message = message
-                    .replace("%prefix%", getPrefix())
-                    .replace("%player%", player.getName());
+            String PAPI = PlaceholderAPI.setPlaceholders(player, message);
+
+            return translate(PAPI);
         }
 
-        return adventureTranslate(message);
+        return translate(message);
     }
 
     /**
@@ -111,7 +107,7 @@ public class RyMessageUtils {
      * @param message The message you wish to be translated.
      * @return a translated Component
      */
-    public static Component adventureTranslate(String message) {
+    public static Component translate(String message) {
         message = legacyToAdventure(message);
 
         Component component = MiniMessage.miniMessage().deserialize(message);
@@ -146,8 +142,8 @@ public class RyMessageUtils {
      * @param messages The string list you wish to be translated.
      * @return a component list of translated messages.
      */
-    public static List<Component> adventureTranslate(@NotNull List<String> messages) {
-        return messages.stream().map(RyMessageUtils::adventureTranslate).collect(Collectors.toList());
+    public static List<Component> translate(@NotNull List<String> messages) {
+        return messages.stream().map(RyMessageUtils::translate).collect(Collectors.toList());
     }
 
     /**
@@ -158,9 +154,9 @@ public class RyMessageUtils {
      */
     public static void sendPlayer(@NotNull Player player, @NotNull String message) {
         if (getAudiences() != null) {
-            getAudiences().player(player).sendMessage(adventureTranslate(player, message));
+            getAudiences().player(player).sendMessage(translate(player, message));
         } else {
-            player.sendMessage(adventureTranslate(player, message));
+            player.sendMessage(translate(player, message));
         }
     }
 
@@ -173,9 +169,9 @@ public class RyMessageUtils {
     public static void sendPlayer(@NotNull Player player, @NotNull String... messages) {
         for (String message : messages) {
             if (getAudiences() != null) {
-                getAudiences().player(player).sendMessage(adventureTranslate(player, message));
+                getAudiences().player(player).sendMessage(translate(player, message));
             } else {
-                player.sendMessage(adventureTranslate(player, message));
+                player.sendMessage(translate(player, message));
             }
         }
     }
@@ -189,9 +185,9 @@ public class RyMessageUtils {
     public static void sendPlayer(Player player, @NotNull List<String> messages) {
         for (String message : messages) {
             if (getAudiences() != null) {
-                getAudiences().player(player).sendMessage(adventureTranslate(player, message));
+                getAudiences().player(player).sendMessage(translate(player, message));
             } else {
-                player.sendMessage(adventureTranslate(player, message));
+                player.sendMessage(translate(player, message));
             }
         }
     }
@@ -206,9 +202,9 @@ public class RyMessageUtils {
         message = Placeholders.setPlaceholders(sender, message);
 
         if (getAudiences() != null) {
-            getAudiences().sender(sender).sendMessage(adventureTranslate(message));
+            getAudiences().sender(sender).sendMessage(translate(message));
         } else {
-            sender.sendMessage(adventureTranslate(message));
+            sender.sendMessage(translate(message));
         }
     }
 
@@ -223,9 +219,9 @@ public class RyMessageUtils {
             message = Placeholders.setPlaceholders(sender, message);
 
             if (getAudiences() != null) {
-                getAudiences().sender(sender).sendMessage(adventureTranslate(message));
+                getAudiences().sender(sender).sendMessage(translate(message));
             } else {
-                sender.sendMessage(adventureTranslate(message));
+                sender.sendMessage(translate(message));
             }
         }
     }
@@ -241,9 +237,9 @@ public class RyMessageUtils {
             message = Placeholders.setPlaceholders(sender, message);
 
             if (getAudiences() != null) {
-                getAudiences().sender(sender).sendMessage(adventureTranslate(message));
+                getAudiences().sender(sender).sendMessage(translate(message));
             } else {
-                sender.sendMessage(adventureTranslate(message));
+                sender.sendMessage(translate(message));
             }
         }
     }
@@ -255,12 +251,12 @@ public class RyMessageUtils {
      * @param message The message you wish for console to receive.
      */
     public static void sendConsole(boolean prefix, String message) {
-        if (prefix) message = getPrefix() + message;
+        if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
         if (getAudiences() != null) {
-            getAudiences().console().sendMessage(adventureTranslate(message));
+            getAudiences().console().sendMessage(translate(message));
         } else {
-            Bukkit.getConsoleSender().sendMessage(adventureTranslate(message));
+            Bukkit.getConsoleSender().sendMessage(translate(message));
         }
     }
 
@@ -272,12 +268,12 @@ public class RyMessageUtils {
      */
     public static void sendConsole(boolean prefix, String... messages) {
         for (String message : messages) {
-            if (prefix) message = getPrefix() + message;
+            if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
             if (getAudiences() != null) {
-                getAudiences().console().sendMessage(adventureTranslate(message));
+                getAudiences().console().sendMessage(translate(message));
             } else {
-                Bukkit.getConsoleSender().sendMessage(adventureTranslate(message));
+                Bukkit.getConsoleSender().sendMessage(translate(message));
             }
         }
     }
@@ -290,12 +286,12 @@ public class RyMessageUtils {
      */
     public static void sendConsole(boolean prefix, List<String> messages) {
         for (String message : messages) {
-            if (prefix) message = getPrefix() + message;
+            if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
             if (getAudiences() != null) {
-                getAudiences().console().sendMessage(adventureTranslate(message));
+                getAudiences().console().sendMessage(translate(message));
             } else {
-                Bukkit.getConsoleSender().sendMessage(adventureTranslate(message));
+                Bukkit.getConsoleSender().sendMessage(translate(message));
             }
         }
     }
@@ -311,9 +307,9 @@ public class RyMessageUtils {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission)) {
                 if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(adventureTranslate(player, message));
+                    getAudiences().player(online).sendMessage(translate(player, message));
                 } else {
-                    online.sendMessage(adventureTranslate(player, message));
+                    online.sendMessage(translate(player, message));
                 }
             }
         }
@@ -330,9 +326,9 @@ public class RyMessageUtils {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission)) {
                 if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(adventureTranslate(player, message));
+                    getAudiences().player(online).sendMessage(translate(player, message));
                 } else {
-                    online.sendMessage(adventureTranslate(player, message));
+                    online.sendMessage(translate(player, message));
                 }
             }
         }
@@ -345,9 +341,9 @@ public class RyMessageUtils {
      */
     public static void broadcast(String message) {
         if (getAudiences() != null) {
-            getAudiences().players().sendMessage(adventureTranslate(message));
+            getAudiences().players().sendMessage(translate(message));
         } else {
-            Bukkit.getConsoleSender().sendMessage(adventureTranslate(message));
+            Bukkit.getConsoleSender().sendMessage(translate(message));
         }
     }
 
@@ -359,9 +355,9 @@ public class RyMessageUtils {
      */
     public static void broadcast(Player player, String message) {
         if (getAudiences() != null) {
-            getAudiences().players().sendMessage(adventureTranslate(player, message));
+            getAudiences().players().sendMessage(translate(player, message));
         } else {
-            Bukkit.getConsoleSender().sendMessage(adventureTranslate(player, message));
+            Bukkit.getConsoleSender().sendMessage(translate(player, message));
         }
     }
 

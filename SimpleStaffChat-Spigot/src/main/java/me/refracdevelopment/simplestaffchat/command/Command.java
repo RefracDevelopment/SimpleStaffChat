@@ -1,14 +1,13 @@
 package me.refracdevelopment.simplestaffchat.command;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
-import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
-import space.arim.morepaperlib.MorePaperLib;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class Command extends org.bukkit.command.Command implements Comparable<Command>, Executable {
 
@@ -38,7 +37,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
     }
 
     private void registerBukkitCommand(String[] aliases) {
-        CommandMap commandMap = SimpleStaffChat.getInstance().getMorePaperLib().commandRegistration().getServerCommandMap();
+        CommandMap commandMap = SimpleStaffChat.getInstance().getPaperLib().commandRegistration().getServerCommandMap();
 
         commandMap.register("simplestaffchat", this);
         for (String alias : aliases) {

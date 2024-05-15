@@ -1,7 +1,6 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
 
 import java.awt.*;
 import java.util.ArrayList;

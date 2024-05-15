@@ -13,7 +13,6 @@ import me.refracdevelopment.simplestaffchat.manager.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import space.arim.morepaperlib.MorePaperLib;
@@ -39,7 +38,7 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
-    private MorePaperLib morePaperLib;
+    private MorePaperLib paperLib;
 
     @Override
     public void onEnable() {
@@ -47,27 +46,27 @@ public final class SimpleStaffChat extends JavaPlugin {
 
         new Metrics(this, 12095);
 
-        morePaperLib = new MorePaperLib(SimpleStaffChat.getInstance());
+        paperLib = new MorePaperLib(SimpleStaffChat.getInstance());
+
+        loadFiles();
 
         RyMessageUtils.sendConsole(false,
                 "<#A020F0> _____ _           _     _____ _       ___ ___ _____ _       _     " + "Running <#7D0DC3>v" + getDescription().getVersion(),
-                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>" + (PaperLib.isPaper() ? "Paper" : "Spigot") + " <#A020F0>v" + getServer().getVersion(),
+                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>" + getServer().getName() + " <#A020F0>v" + getServer().getVersion(),
                 "<#A020F0>|__   | |     | . | | -_|__   |  _||. |  _|  _|   --|   ||. |  _|  " + "Discord support: <#7D0DC3>" + getDescription().getWebsite(),
                 "<#7D0DC3>|_____|_|_|_|_|  _|_|___|_____| | |___|_| |_| |_____|_|_|___| |    " + "Thanks for using my plugin ❤ !",
                 "<#7D0DC3>              |_|             |__|                          |__|",
-                "     <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
+                "        <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
                 ""
         );
 
-
-        loadFiles();
         loadModules();
         loadHooks();
 
-        updateCheck();
-
         // Paper is recommended but not required
         PaperLib.suggestPaper(this);
+
+        paperLib.scheduling().asyncScheduler().run(this::updateCheck);
     }
 
     private void loadFiles() {
@@ -139,9 +138,7 @@ public final class SimpleStaffChat extends JavaPlugin {
                 } else if (version.equals(getDescription().getVersion())) {
                     RyMessageUtils.sendConsole(true, "&a" + getDescription().getName() + " is on the latest version.");
                 } else {
-                    RyMessageUtils.sendConsole(true, " ");
                     RyMessageUtils.sendConsole(true, "&cYour " + getDescription().getName() + " version &7(" + getDescription().getVersion() + ") &cis out of date! Newest: &e&lv" + version);
-                    RyMessageUtils.sendConsole(true, " ");
                 }
             } else {
                 RyMessageUtils.sendConsole(true, "&cWrong response from update API, contact plugin developer!");
