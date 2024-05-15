@@ -67,7 +67,7 @@ public class RyMessageUtils {
     static {
         instance = SimpleStaffChat.getInstance();
         server = instance.getServer();
-        prefix = instance.getLocaleFile().getString("prefix");
+        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
     }
 
     /**

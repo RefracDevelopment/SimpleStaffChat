@@ -5,6 +5,7 @@ import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
+import space.arim.morepaperlib.MorePaperLib;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -37,16 +38,11 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
     }
 
     private void registerBukkitCommand(String[] aliases) {
-        try {
-            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            bukkitCommandMap.setAccessible(true);
-            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-            commandMap.register("simplestaffchat", this);
-            for (String alias : aliases) {
-                commandMap.register(alias, "simplestaffchat", this);
-            }
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
-            RyMessageUtils.sendPluginError("&cCould not register a command properly (name: " + this.name + "), stacktrace: " + exception.getMessage(), exception, false);
+        CommandMap commandMap = SimpleStaffChat.getInstance().getMorePaperLib().commandRegistration().getServerCommandMap();
+
+        commandMap.register("simplestaffchat", this);
+        for (String alias : aliases) {
+            commandMap.register(alias, "simplestaffchat", this);
         }
     }
 

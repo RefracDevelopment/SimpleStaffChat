@@ -38,8 +38,6 @@ public class ReloadCommand extends Command {
         this.plugin.getCommands().loadConfig();
         this.plugin.getDiscord().loadConfig();
 
-        RyMessageUtils.sendConsole(true, "&c==========================================");
-        RyMessageUtils.sendConsole(true, "&aAll files have been reloaded correctly!");
-        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aReloaded all files.");
     }
 }

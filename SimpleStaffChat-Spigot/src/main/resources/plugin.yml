@@ -1,5 +1,5 @@
 name: SimpleStaffChat
-version: '${version}'
+version: '${project.version}'
 main: me.refracdevelopment.simplestaffchat.SimpleStaffChat
 authors:
   - RefracDevelopment

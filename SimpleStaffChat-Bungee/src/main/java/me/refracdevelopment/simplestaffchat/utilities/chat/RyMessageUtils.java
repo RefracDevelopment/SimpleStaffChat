@@ -71,7 +71,7 @@ public class RyMessageUtils {
     static {
         instance = SimpleStaffChat.getInstance();
         audiences = BungeeAudiences.create(instance);
-        prefix = instance.getLocaleFile().getString("prefix");
+        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
     }
 
     /**

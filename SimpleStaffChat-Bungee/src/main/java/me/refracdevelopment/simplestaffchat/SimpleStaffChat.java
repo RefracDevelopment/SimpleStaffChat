@@ -46,42 +46,40 @@ public final class SimpleStaffChat extends Plugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        long startTiming = System.currentTimeMillis();
         instance = this;
 
         new Metrics(this, 12096);
 
+        RyMessageUtils.sendConsole(false,
+                "<#A020F0> _____ _           _     _____ _       ___ ___ _____ _       _     " + "Running <#7D0DC3>v" + getDescription().getVersion(),
+                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>BungeeCord <#A020F0>v" + getProxy().getVersion(),
+                "<#A020F0>|__   | |     | . | | -_|__   |  _||. |  _|  _|   --|   ||. |  _|  " + "Discord support: <#7D0DC3>https://discord.gg/EFeSKPg739",
+                "<#7D0DC3>|_____|_|_|_|_|  _|_|___|_____| | |___|_| |_| |_____|_|_|___| |    " + "Thanks for using my plugin ❤ !",
+                "<#7D0DC3>              |_|             |__|                          |__|",
+                "     <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
+                ""
+        );
+
         loadFiles();
-
         loadModules();
-
         loadHooks();
-
-        RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
-        RyMessageUtils.sendConsole(true, "&e" + getDescription().getName() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
-        RyMessageUtils.sendConsole(true, " &f[*] &6Version&f: &b" + getDescription().getVersion());
-        RyMessageUtils.sendConsole(true, " &f[*] &6Name&f: &b" + getDescription().getName());
-        RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + getDescription().getAuthor());
-        RyMessageUtils.sendConsole(true, "&8&m==&c&m=====&f&m======================&c&m=====&8&m==");
 
         updateCheck();
     }
 
     private void loadFiles() {
-        this.configFile = new ConfigFile("config.yml", true);
-        this.commandsFile = new ConfigFile("commands.yml", true);
-        this.discordFile = new ConfigFile("discord.yml", true);
-        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml", true);
-        this.serversFile = new ConfigFile("servers.yml", true);
+        this.configFile = new ConfigFile("config.yml");
+        this.commandsFile = new ConfigFile("commands.yml");
+        this.discordFile = new ConfigFile("discord.yml");
+        this.localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
+        this.serversFile = new ConfigFile("servers.yml");
 
         this.config = new Config();
         this.commands = new Commands();
         this.discord = new Discord();
         this.servers = new Servers();
 
-        RyMessageUtils.sendConsole(true, "&c==========================================");
-        RyMessageUtils.sendConsole(true, "&aAll files have been loaded correctly!");
-        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aLoaded all files.");
     }
 
     private void loadModules() {

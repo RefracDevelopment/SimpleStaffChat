@@ -20,18 +20,18 @@ public class ConfigFile {
 
     private YamlDocument configFile;
 
-    public ConfigFile(String name, boolean autoUpdate) {
+    public ConfigFile(String name) {
         try {
             configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getPath().toFile(), name),
                     getClass().getResourceAsStream("/" + name),
-                    GeneralSettings.builder().setUseDefaults(autoUpdate).build(),
-                    LoaderSettings.builder().setAutoUpdate(autoUpdate).build(),
+                    GeneralSettings.DEFAULT,
+                    LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,
                     UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
-                            .setOptionSorting(autoUpdate ? UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS : UpdaterSettings.OptionSorting.NONE)
                             .build()
             );
 
+            configFile.update();
             configFile.save();
         } catch (IOException exception) {
             SimpleStaffChat.getInstance().getLogger().error("Failed to load config file! This VelocityStaffChat.getInstance() will now shutdown.");

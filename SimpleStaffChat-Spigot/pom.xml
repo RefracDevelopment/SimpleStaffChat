@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.refracdevelopment</groupId>
         <artifactId>SimpleStaffChat</artifactId>
-        <version>4.2.2</version>
+        <version>4.3.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -101,8 +101,8 @@
             <url>https://repo.alessiodp.com/releases/</url>
         </repository>
         <repository>
-            <id>sonatype-oss-snapshots1</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>arim-mvn-lgpl3</id>
+            <url>https://mvn-repo.arim.space/lesser-gpl3/</url>
         </repository>
     </repositories>
 
@@ -152,13 +152,25 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.3.3-SNAPSHOT</version>
+            <version>4.3.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
             <version>4.17.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>space.arim.morepaperlib</groupId>
+            <artifactId>morepaperlib</artifactId>
+            <version>0.4.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

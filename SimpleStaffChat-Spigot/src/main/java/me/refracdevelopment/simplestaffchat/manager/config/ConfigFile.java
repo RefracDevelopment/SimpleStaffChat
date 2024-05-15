@@ -18,20 +18,21 @@ public class ConfigFile {
 
     private YamlDocument configFile;
 
-    public ConfigFile(String name, boolean autoUpdate) {
+    public ConfigFile(String name) {
         try {
             configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getDataFolder(), name),
                     getClass().getResourceAsStream("/" + name),
-                    GeneralSettings.builder().setUseDefaults(autoUpdate).build(),
-                    LoaderSettings.builder().setAutoUpdate(autoUpdate).build(),
+                    GeneralSettings.DEFAULT,
+                    LoaderSettings.builder().setAutoUpdate(true).build(),
                     DumperSettings.DEFAULT,
                     UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
-                            .setOptionSorting(UpdaterSettings.OptionSorting.SORT_BY_DEFAULTS).build()
+                            .build()
             );
 
+            configFile.update();
             configFile.save();
         } catch (IOException e) {
-            RyMessageUtils.sendConsole(true, "&cFailed to load " + name + " file! The plugin will now shutdown.");
+            RyMessageUtils.sendConsole(true, "&cFailed to load " + name + " file! The plugin will now shutdown...");
             Bukkit.getPluginManager().disablePlugin(SimpleStaffChat.getInstance());
         }
     }

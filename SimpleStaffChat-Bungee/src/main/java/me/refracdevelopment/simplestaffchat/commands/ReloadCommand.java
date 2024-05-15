@@ -39,8 +39,6 @@ public class ReloadCommand extends Command {
         plugin.getDiscord().loadConfig();
         plugin.getServers().loadConfig();
 
-        RyMessageUtils.sendConsole(true, "&c==========================================");
-        RyMessageUtils.sendConsole(true, "&eAll files have been reloaded correctly!");
-        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aReloaded all files.");
     }
 }

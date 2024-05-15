@@ -45,6 +45,7 @@ public class SimpleStaffChat {
     private final ProxyServer server;
     private final Logger logger;
     private final Path path;
+    private final PluginContainer container;
 
     // Files
     private ConfigFile configFile;
@@ -65,6 +66,7 @@ public class SimpleStaffChat {
         this.logger = logger;
         this.path = path;
         this.metricsFactory = metricsFactory;
+        this.container = server.getPluginManager().getPlugin("simplestaffchat").get();
     }
 
     @Subscribe
@@ -73,36 +75,30 @@ public class SimpleStaffChat {
 
         metricsFactory.make(this, 21704);
 
-        long startTiming = System.currentTimeMillis();
-        PluginManager pluginManager = getServer().getPluginManager();
-        PluginContainer container = pluginManager.getPlugin("simplestaffchat").get();
+        RyMessageUtils.sendConsole(false,
+                "<#A020F0> _____ _           _     _____ _       ___ ___ _____ _       _     " + "Running <#7D0DC3>v" + container.getDescription().getVersion(),
+                "<#A020F0>|   __|_|_____ ___| |___|   __| |_  __|  _|  _|     | |_  __| |_   " + "Server <#7D0DC3>Velocity <#A020F0>v" + getServer().getVersion(),
+                "<#A020F0>|__   | |     | . | | -_|__   |  _||. |  _|  _|   --|   ||. |  _|  " + "Discord support: <#7D0DC3>https://discord.gg/EFeSKPg739",
+                "<#7D0DC3>|_____|_|_|_|_|  _|_|___|_____| | |___|_| |_| |_____|_|_|___| |    " + "Thanks for using my plugin ❤ !",
+                "<#7D0DC3>              |_|             |__|                          |__|",
+                "     <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
+                ""
+        );
 
         loadFiles();
-
-        if (pluginManager.isLoaded("luckperms")) {
-            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
-            RyMessageUtils.sendConsole(true, "&aHooked into LuckPerms.");
-        }
-
         loadModules();
-
-        RyMessageUtils.sendConsole(true, "&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
-        RyMessageUtils.sendConsole(true, "&e" + container.getDescription().getName().get() + " has been enabled. (took " + (System.currentTimeMillis() - startTiming) + "ms)");
-        RyMessageUtils.sendConsole(true, " &f[*] &6Version&f: &b" + container.getDescription().getVersion().get());
-        RyMessageUtils.sendConsole(true, " &f[*] &6Name&f: &b" + container.getDescription().getName().get());
-        RyMessageUtils.sendConsole(true, " &f[*] &6Author&f: &b" + container.getDescription().getAuthors().get(0));
-        RyMessageUtils.sendConsole(true, "&7&m==&r&c&m=====&r&f&m======================&r&c&m=====&r&7&m==");
+        loadHooks();
 
         updateCheck();
     }
 
     private void loadFiles() {
         // Files
-        configFile = new ConfigFile("config.yml", true);
-        commandsFile = new ConfigFile("commands.yml", true);
-        discordFile = new ConfigFile("discord.yml", true);
-        localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml", true);
-        serversFile = new ConfigFile("servers.yml", true);
+        configFile = new ConfigFile("config.yml");
+        commandsFile = new ConfigFile("commands.yml");
+        discordFile = new ConfigFile("discord.yml");
+        localeFile = new ConfigFile("locale/" + getConfigFile().getString("locale") + ".yml");
+        serversFile = new ConfigFile("servers.yml");
 
         // Caches
         config = new Config();
@@ -110,9 +106,7 @@ public class SimpleStaffChat {
         discord = new Discord();
         servers = new Servers();
 
-        RyMessageUtils.sendConsole(true, "&c==========================================");
-        RyMessageUtils.sendConsole(true, "&aAll files have been loaded correctly!");
-        RyMessageUtils.sendConsole(true, "&c==========================================");
+        RyMessageUtils.sendConsole(true, "&aLoaded all files.");
     }
 
     private void loadModules() {
@@ -185,10 +179,15 @@ public class SimpleStaffChat {
         RyMessageUtils.sendConsole(true, "&aLoaded modules.");
     }
 
+    private void loadHooks() {
+        if (getServer().getPluginManager().isLoaded("luckperms")) {
+            LuckPermsUtil.setLuckPerms(LuckPermsProvider.get());
+            RyMessageUtils.sendConsole(true, "&aHooked into LuckPerms.");
+        }
+    }
+
     public void updateCheck() {
         try {
-            PluginContainer container = getServer().getPluginManager().getPlugin("simplestaffchat").get();
-
             String urlString = "https://refracdev-updatecheck.refracdev.workers.dev/";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

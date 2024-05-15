@@ -1,6 +1,7 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
 import com.google.common.collect.ImmutableMap;
+import io.papermc.lib.PaperLib;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -73,12 +74,12 @@ public class RyMessageUtils {
         instance = SimpleStaffChat.getInstance();
 
         // If this check is not present it will throw an error when trying to use MiniMessage
-        if (!instance.isPaper())
+        if (PaperLib.isSpigot())
             audiences = BukkitAudiences.create(instance);
         else
             audiences = null;
 
-        prefix = instance.getLocaleFile().getString("prefix");
+        prefix = "<#7D0DC3>[SimpleStaffChat] &f";
     }
 
     /**
