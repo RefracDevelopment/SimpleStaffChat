@@ -81,7 +81,7 @@ public class SimpleStaffChat {
                 "<#A020F0>|__   | |     | . | | -_|__   |  _||. |  _|  _|   --|   ||. |  _|  " + "Discord support: <#7D0DC3>" + container.getDescription().getUrl().get(),
                 "<#7D0DC3>|_____|_|_|_|_|  _|_|___|_____| | |___|_| |_| |_____|_|_|___| |    " + "Thanks for using my plugin ❤ !",
                 "<#7D0DC3>              |_|             |__|                          |__|",
-                "       <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
+                "        <#A020F0>Developed by <#7D0DC3>RefracDevelopment",
                 ""
         );
 
