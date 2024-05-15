@@ -9,7 +9,7 @@
 config-version: '7'
 
 # Plugin Message Prefix
-prefix: '<#7D0DC3>[SimpleStaffChat] &f'
+prefix: '<gradient:#8A2387:#E94057:#F27121:0>SimpleStaffChat &8| &f'
 
 # Generic Command Messages
 no-permission: '%prefix%&cYou don''t have permission for that!'
