@@ -6,7 +6,7 @@
 
 # en_US translation by Refrac
 # This is used for automatic file updating purposes
-config-version: '7'
+config-version: '8'
 
 # Plugin Message Prefix
 prefix: '<gradient:#8A2387:#E94057:#F27121:0>SimpleStaffChat &8| &f'
