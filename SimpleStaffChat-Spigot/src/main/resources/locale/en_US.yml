@@ -33,6 +33,8 @@ allchat-muted-on: '%prefix%&eAll channels have been muted.'
 allchat-muted-off: '%prefix%&eAll channels have been un-muted.'
 blacklisted-server: '%prefix%&cThis server is blacklisted from using staff chats.'
 staffchat-muted: '%prefix%&eYour staffchat is muted.'
+devchat-muted: '%prefix%&eYour devchat is muted.'
+adminchat-muted: '%prefix%&eYour adminchat is muted.'
 
 # Used to send messages to staffchat without the
 # need to type in /staffchat <message> or /staffchattoggle
