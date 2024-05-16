@@ -29,6 +29,11 @@ public final class Methods {
 
     public void sendStaffChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
+            if (staffChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "staffchat-muted");
+                return;
+            }
+
             SimpleStaffChat.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
                 if (onlinePlayer.hasPermission(Permissions.STAFFCHAT_SEE) && !staffChatMuted.contains(onlinePlayer.getUniqueId())) {
                     RyMessageUtils.sendPlayer(onlinePlayer, format
@@ -70,6 +75,11 @@ public final class Methods {
 
     public void sendDevChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
+            if (devChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "devchat-muted");
+                return;
+            }
+
             SimpleStaffChat.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
                 if (onlinePlayer.hasPermission(Permissions.DEVCHAT_SEE) && !devChatMuted.contains(onlinePlayer.getUniqueId())) {
                     RyMessageUtils.sendPlayer(onlinePlayer, format
@@ -112,6 +122,11 @@ public final class Methods {
 
     public void sendAdminChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {
+            if (adminChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "adminchat-muted");
+                return;
+            }
+
             SimpleStaffChat.getInstance().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
                 if (onlinePlayer.hasPermission(Permissions.ADMINCHAT_SEE) && !adminChatMuted.contains(onlinePlayer.getUniqueId())) {
                     RyMessageUtils.sendPlayer(onlinePlayer, format

@@ -33,7 +33,12 @@ public class Methods {
                 return;
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getServer().getInfo().getName())) {
-                RyMessageUtils.sendPlayer(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
+                return;
+            }
+
+            if (staffChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "staffchat-muted");
                 return;
             }
 
@@ -83,7 +88,12 @@ public class Methods {
                 return;
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getServer().getInfo().getName())) {
-                RyMessageUtils.sendPlayer(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
+                return;
+            }
+
+            if (devChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "devchat-muted");
                 return;
             }
 
@@ -133,7 +143,12 @@ public class Methods {
                 return;
 
             if (SimpleStaffChat.getInstance().getServers().BLACKLIST_SERVERS.contains(player.getServer().getInfo().getName())) {
-                RyMessageUtils.sendPlayer(player, "blacklisted-server");
+                RyMessageUtils.sendPluginMessage(player, "blacklisted-server");
+                return;
+            }
+
+            if (adminChatMuted.contains(player.getUniqueId())) {
+                RyMessageUtils.sendPluginMessage(player, "adminchat-muted");
                 return;
             }
 
