@@ -14,7 +14,7 @@ import java.io.IOException;
 public class DiscordImpl {
 
     private void sendMessage(@Nullable Player player, String content, String url) {
-        if (!SimpleStaffChat.getInstance().getDiscord().DISCORD_ENABLED)
+        if (!SimpleStaffChat.getInstance().getSettings().DISCORD_ENABLED)
             return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);
@@ -32,7 +32,7 @@ public class DiscordImpl {
     }
 
     private void sendEmbed(@Nullable Player player, String content, String url, Color color) {
-        if (!SimpleStaffChat.getInstance().getDiscord().DISCORD_ENABLED)
+        if (!SimpleStaffChat.getInstance().getSettings().DISCORD_ENABLED)
             return;
 
         DiscordWebhook webhook = new DiscordWebhook(url);

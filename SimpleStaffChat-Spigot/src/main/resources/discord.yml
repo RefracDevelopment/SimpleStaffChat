@@ -29,7 +29,5 @@ discord:
     format: "%server% %player% %message%"
     # The join format
     join-format: "%player% joined %server%"
-    # The switch format (This is only available for Velocity)
-    switch-format: "%player% switched %from% to %server%"
     # The leave format
     leave-format: "%player% left %server%"
