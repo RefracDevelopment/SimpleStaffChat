@@ -19,14 +19,12 @@ public class Placeholders {
                 placeholder = placeholder.replace("%luckperms_prefix%", "N/A");
                 placeholder = placeholder.replace("%luckperms_suffix%", "N/A");
             }
+
             if (player.getServer() != null) {
                 placeholder = placeholder.replace("%server%", player.getServer().getInfo().getName());
             } else {
                 placeholder = placeholder.replace("%server%", "");
             }
-
-            placeholder = placeholder.replace("%player%", player.getName());
-            placeholder = placeholder.replace("%displayname%", player.getDisplayName());
         }
 
         placeholder = placeholder.replace("%arrow%", "»");
