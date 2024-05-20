@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '${{ env.PROJECT_VERSION }}'
+          tag_name: 'Spigot-${{ env.PROJECT_VERSION }}'
           release_name: SimpleStaffChat
           draft: false
           prerelease: true
