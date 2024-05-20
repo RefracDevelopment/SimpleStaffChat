@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './SimpleStaffChat-Bunge/target/SimpleStaffChat-Bungee-${{ env.PROJECT_VERSION }}.jar'
+          asset_path: './SimpleStaffChat-Bungee/target/SimpleStaffChat-Bungee-${{ env.PROJECT_VERSION }}.jar'
           asset_name: 'SimpleStaffChat-Bungee-${{ env.PROJECT_VERSION }}.jar'
           asset_content_type: 'application/java-archive'
