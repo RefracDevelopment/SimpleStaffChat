@@ -24,7 +24,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn -B install --file pom.xml
+          mvn -B install --file ./SimpleStaffChat-Bungee/pom.xml
           echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Create Release
@@ -33,8 +33,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: '${{ env.PROJECT_VERSION }}-SNAPSHOT'
-          release_name: SimpleTags
+          tag_name: 'Bungee-${{ env.PROJECT_VERSION }}'
+          release_name: SimpleStaffChat-Bungee ${{ env.PROJECT_VERSION }}
           draft: false
           prerelease: true
 
@@ -45,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './target/SimpleStaffChat-${{ env.PROJECT_VERSION }}.jar'
-          asset_name: 'SimpleStaffChat-${{ env.PROJECT_VERSION }}.jar'
+          asset_path: './SimpleStaffChat-Bungee/target/SimpleStaffChat-Bungee-${{ env.PROJECT_VERSION }}.jar'
+          asset_name: 'SimpleStaffChat-Bungee-${{ env.PROJECT_VERSION }}.jar'
           asset_content_type: 'application/java-archive'
