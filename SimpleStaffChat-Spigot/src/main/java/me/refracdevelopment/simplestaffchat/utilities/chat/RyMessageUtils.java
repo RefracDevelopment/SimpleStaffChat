@@ -93,9 +93,9 @@ public class RyMessageUtils {
         message = Placeholders.setPlaceholders(player, message);
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            String PAPI = PlaceholderAPI.setPlaceholders(player, message);
+             message = PlaceholderAPI.setPlaceholders(player, message);
 
-            return translate(PAPI);
+            return translate(message);
         }
 
         return translate(message);
@@ -115,7 +115,14 @@ public class RyMessageUtils {
         return component;
     }
 
-    // Taken from https://github.com/EternalCodeTeam/ChatFormatter/
+    /**
+     * Translate a string from legacy to Adventure API.
+     *
+     * @param input The string that needs translating.
+     * @return      String which is in an adventure format.
+     *
+     * @Author: EternalCodeTeam (https://github.com/EternalCodeTeam/ChatFormatter/)
+     */
     private static String legacyToAdventure(String input) {
         String result = HEX_PATTERN.matcher(input).replaceAll(matchResult -> {
             String hex = matchResult.group(1);
@@ -199,8 +206,6 @@ public class RyMessageUtils {
      * @param message The message you wish to send to the sender.
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull String message) {
-        message = Placeholders.setPlaceholders(sender, message);
-
         if (getAudiences() != null) {
             getAudiences().sender(sender).sendMessage(translate(message));
         } else {
@@ -216,8 +221,6 @@ public class RyMessageUtils {
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull String... messages) {
         for (String message : messages) {
-            message = Placeholders.setPlaceholders(sender, message);
-
             if (getAudiences() != null) {
                 getAudiences().sender(sender).sendMessage(translate(message));
             } else {
@@ -234,8 +237,6 @@ public class RyMessageUtils {
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull List<String> messages) {
         for (String message : messages) {
-            message = Placeholders.setPlaceholders(sender, message);
-
             if (getAudiences() != null) {
                 getAudiences().sender(sender).sendMessage(translate(message));
             } else {
