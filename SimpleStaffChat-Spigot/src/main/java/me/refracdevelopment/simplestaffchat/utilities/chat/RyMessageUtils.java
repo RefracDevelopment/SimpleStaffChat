@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
+import me.refracdevelopment.simplestaffchat.utilities.Methods;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -206,6 +207,8 @@ public class RyMessageUtils {
      * @param message The message you wish to send to the sender.
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull String message) {
+        message = Placeholders.setPlaceholders(sender, message);
+
         if (getAudiences() != null) {
             getAudiences().sender(sender).sendMessage(translate(message));
         } else {
@@ -221,6 +224,8 @@ public class RyMessageUtils {
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull String... messages) {
         for (String message : messages) {
+            message = Placeholders.setPlaceholders(sender, message);
+
             if (getAudiences() != null) {
                 getAudiences().sender(sender).sendMessage(translate(message));
             } else {
@@ -237,6 +242,8 @@ public class RyMessageUtils {
      */
     public static void sendSender(@NotNull CommandSender sender, @NotNull List<String> messages) {
         for (String message : messages) {
+            message = Placeholders.setPlaceholders(sender, message);
+
             if (getAudiences() != null) {
                 getAudiences().sender(sender).sendMessage(translate(message));
             } else {
@@ -304,9 +311,47 @@ public class RyMessageUtils {
      * @param permission The permission the players require to see the broadcast.
      * @param message    The message you wish to be broadcast.
      */
-    public static void broadcast(Player player, String permission, String message) {
+    public static void sendStaffChat(Player player, String permission, String message) {
         for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission(permission)) {
+            if (online.hasPermission(permission) && !Methods.getStaffChatMuted().contains(online.getUniqueId())) {
+                if (getAudiences() != null) {
+                    getAudiences().player(online).sendMessage(translate(player, message));
+                } else {
+                    online.sendMessage(translate(player, message));
+                }
+            }
+        }
+    }
+
+    /**
+     * Send a permission based broadcast to all online players.
+     *
+     * @param player     The player who is making the broadcast.
+     * @param permission The permission the players require to see the broadcast.
+     * @param message    The message you wish to be broadcast.
+     */
+    public static void sendDevChat(Player player, String permission, String message) {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.hasPermission(permission) && !Methods.getDevChatMuted().contains(online.getUniqueId())) {
+                if (getAudiences() != null) {
+                    getAudiences().player(online).sendMessage(translate(player, message));
+                } else {
+                    online.sendMessage(translate(player, message));
+                }
+            }
+        }
+    }
+
+    /**
+     * Send a permission based broadcast to all online players.
+     *
+     * @param player     The player who is making the broadcast.
+     * @param permission The permission the players require to see the broadcast.
+     * @param message    The message you wish to be broadcast.
+     */
+    public static void sendAdminChat(Player player, String permission, String message) {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.hasPermission(permission) && !Methods.getAdminChatMuted().contains(online.getUniqueId())) {
                 if (getAudiences() != null) {
                     getAudiences().player(online).sendMessage(translate(player, message));
                 } else {

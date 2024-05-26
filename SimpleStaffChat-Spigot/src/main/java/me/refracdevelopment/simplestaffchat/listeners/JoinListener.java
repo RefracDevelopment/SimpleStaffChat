@@ -39,7 +39,7 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
             return;
 
-        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().JOIN_FORMAT);
+        RyMessageUtils.sendStaffChat(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().JOIN_FORMAT);
 
         RyMessageUtils.sendConsole(true, this.plugin.getSettings().JOIN_FORMAT);
         DiscordImpl.sendJoin(JoinType.JOIN, player);
@@ -52,7 +52,7 @@ public class JoinListener implements Listener {
         if (!player.hasPermission(Permissions.STAFFCHAT_QUIT))
             return;
 
-        RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().QUIT_FORMAT);
+        RyMessageUtils.sendStaffChat(player, Permissions.STAFFCHAT_SEE, this.plugin.getSettings().QUIT_FORMAT);
 
         RyMessageUtils.sendConsole(true, this.plugin.getSettings().QUIT_FORMAT);
         DiscordImpl.sendJoin(JoinType.LEAVE, player);
