@@ -12,6 +12,9 @@ public class Placeholders {
         placeholder = placeholder.replace("%prefix%", SimpleStaffChat.getInstance().getLocaleFile().getString("prefix"));
 
         if (sender instanceof ProxiedPlayer player) {
+            placeholder = placeholder.replace("%player%", player.getName());
+            placeholder = placeholder.replace("%displayname%", player.getDisplayName());
+
             if (LuckPermsUtil.getLuckPerms() != null) {
                 placeholder = placeholder.replace("%luckperms_prefix%", LuckPermsUtil.getPrefix(player));
                 placeholder = placeholder.replace("%luckperms_suffix%", LuckPermsUtil.getSuffix(player));
