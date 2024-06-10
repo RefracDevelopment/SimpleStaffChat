@@ -42,9 +42,11 @@ public class JoinListener implements Listener {
             return;
 
         RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, plugin.getConfig().JOIN_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", event.getTarget().getName()));
 
         RyMessageUtils.sendConsole(true, plugin.getConfig().JOIN_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", event.getTarget().getName()));
 
         DiscordImpl.sendJoin(JoinType.JOIN, player, event.getTarget().getName(), "");
@@ -61,10 +63,12 @@ public class JoinListener implements Listener {
             return;
 
         RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, plugin.getConfig().SWITCH_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName()));
 
         RyMessageUtils.sendConsole(true, plugin.getConfig().SWITCH_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", player.getServer().getInfo().getName())
                 .replace("%from%", event.getFrom().getName()));
 
@@ -81,10 +85,13 @@ public class JoinListener implements Listener {
             return;
 
         RyMessageUtils.broadcast(player, Permissions.STAFFCHAT_SEE, plugin.getConfig().QUIT_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", player.getServer().getInfo().getName()));
 
         RyMessageUtils.sendConsole(true, plugin.getConfig().QUIT_FORMAT
+                .replace("%player%", player.getName())
                 .replace("%server%", player.getServer().getInfo().getName()));
+
         DiscordImpl.sendJoin(JoinType.LEAVE, player, player.getServer().getInfo().getName(), "");
     }
 
