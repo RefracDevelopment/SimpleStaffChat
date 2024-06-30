@@ -7,25 +7,23 @@ import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @UtilityClass
 public final class Methods {
 
     @Getter
-    private final List<UUID> staffChatMuted = new ArrayList<>();
+    private final Set<UUID> staffChatMuted = new HashSet<>();
     @Getter
-    private final List<UUID> adminChatMuted = new ArrayList<>();
+    private final Set<UUID> adminChatMuted = new HashSet<>();
     @Getter
-    private final List<UUID> devChatMuted = new ArrayList<>();
+    private final Set<UUID> devChatMuted = new HashSet<>();
     @Getter
-    private final List<UUID> staffChatPlayers = new ArrayList<>();
+    private final Set<UUID> staffChatPlayers = new HashSet<>();
     @Getter
-    private final List<UUID> adminChatPlayers = new ArrayList<>();
+    private final Set<UUID> adminChatPlayers = new HashSet<>();
     @Getter
-    private final List<UUID> devChatPlayers = new ArrayList<>();
+    private final Set<UUID> devChatPlayers = new HashSet<>();
 
     public void sendStaffChat(CommandSender commandSender, String format, String message) {
         if (commandSender instanceof Player player) {

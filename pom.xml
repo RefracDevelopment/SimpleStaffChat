@@ -6,7 +6,7 @@
 
     <groupId>me.refracdevelopment</groupId>
     <artifactId>SimpleStaffChat</artifactId>
-    <version>4.3.3</version>
+    <version>4.3.4</version>
     <packaging>pom</packaging>
 
     <name>SimpleStaffChat</name>

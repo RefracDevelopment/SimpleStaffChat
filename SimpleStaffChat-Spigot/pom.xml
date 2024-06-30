@@ -6,7 +6,7 @@
     <parent>
         <groupId>me.refracdevelopment</groupId>
         <artifactId>SimpleStaffChat</artifactId>
-        <version>4.3.3</version>
+        <version>4.3.4</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -62,6 +62,14 @@
                         <relocation>
                             <pattern>net.kyori.adventure.text.minimessage</pattern>
                             <shadedPattern>me.refracdevelopment.libs.minimessage</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>space.arim.morepaperlib</pattern>
+                            <shadedPattern>me.refracdevelopment.libs.morepaperlib</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>io.papermc.lib</pattern>
+                            <shadedPattern>me.refracdevelopment.libs.paperlib</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
