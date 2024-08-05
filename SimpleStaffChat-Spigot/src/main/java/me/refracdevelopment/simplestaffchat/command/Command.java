@@ -1,6 +1,7 @@
 package me.refracdevelopment.simplestaffchat.command;
 
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +38,7 @@ public abstract class Command extends org.bukkit.command.Command implements Comp
     }
 
     private void registerBukkitCommand(String[] aliases) {
-        CommandMap commandMap = SimpleStaffChat.getInstance().getPaperLib().commandRegistration().getServerCommandMap();
+        CommandMap commandMap = Bukkit.getCommandMap();
 
         commandMap.register("simplestaffchat", this);
         for (String alias : aliases) {

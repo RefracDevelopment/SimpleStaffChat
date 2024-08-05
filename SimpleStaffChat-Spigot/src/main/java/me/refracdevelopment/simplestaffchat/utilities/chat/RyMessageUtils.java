@@ -1,13 +1,11 @@
 package me.refracdevelopment.simplestaffchat.utilities.chat;
 
 import com.google.common.collect.ImmutableMap;
-import io.papermc.lib.PaperLib;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -55,9 +53,6 @@ public class RyMessageUtils {
             .build();
     @Setter
     private static SimpleStaffChat instance;
-    @Setter
-    @Getter
-    private static BukkitAudiences audiences;
     @Getter
     @Setter
     private static String prefix;
@@ -73,13 +68,6 @@ public class RyMessageUtils {
 
     static {
         instance = SimpleStaffChat.getInstance();
-
-        // If this check is not present it will throw an error when trying to use MiniMessage
-        if (PaperLib.isSpigot())
-            audiences = BukkitAudiences.create(instance);
-        else
-            audiences = null;
-
         prefix = instance.getLocaleFile().getString("prefix");
     }
 
@@ -161,11 +149,7 @@ public class RyMessageUtils {
      * @param message The message you wish to send the player.
      */
     public static void sendPlayer(@NotNull Player player, @NotNull String message) {
-        if (getAudiences() != null) {
-            getAudiences().player(player).sendMessage(translate(player, message));
-        } else {
-            player.sendMessage(translate(player, message));
-        }
+        player.sendMessage(translate(player, message));
     }
 
     /**
@@ -176,11 +160,7 @@ public class RyMessageUtils {
      */
     public static void sendPlayer(@NotNull Player player, @NotNull String... messages) {
         for (String message : messages) {
-            if (getAudiences() != null) {
-                getAudiences().player(player).sendMessage(translate(player, message));
-            } else {
-                player.sendMessage(translate(player, message));
-            }
+            player.sendMessage(translate(player, message));
         }
     }
 
@@ -192,11 +172,7 @@ public class RyMessageUtils {
      */
     public static void sendPlayer(Player player, @NotNull List<String> messages) {
         for (String message : messages) {
-            if (getAudiences() != null) {
-                getAudiences().player(player).sendMessage(translate(player, message));
-            } else {
-                player.sendMessage(translate(player, message));
-            }
+            player.sendMessage(translate(player, message));
         }
     }
 
@@ -209,11 +185,7 @@ public class RyMessageUtils {
     public static void sendSender(@NotNull CommandSender sender, @NotNull String message) {
         message = Placeholders.setPlaceholders(sender, message);
 
-        if (getAudiences() != null) {
-            getAudiences().sender(sender).sendMessage(translate(message));
-        } else {
-            sender.sendMessage(translate(message));
-        }
+        sender.sendMessage(translate(message));
     }
 
     /**
@@ -226,11 +198,7 @@ public class RyMessageUtils {
         for (String message : messages) {
             message = Placeholders.setPlaceholders(sender, message);
 
-            if (getAudiences() != null) {
-                getAudiences().sender(sender).sendMessage(translate(message));
-            } else {
-                sender.sendMessage(translate(message));
-            }
+            sender.sendMessage(translate(message));
         }
     }
 
@@ -244,11 +212,7 @@ public class RyMessageUtils {
         for (String message : messages) {
             message = Placeholders.setPlaceholders(sender, message);
 
-            if (getAudiences() != null) {
-                getAudiences().sender(sender).sendMessage(translate(message));
-            } else {
-                sender.sendMessage(translate(message));
-            }
+            sender.sendMessage(translate(message));
         }
     }
 
@@ -261,11 +225,7 @@ public class RyMessageUtils {
     public static void sendConsole(boolean prefix, String message) {
         if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
-        if (getAudiences() != null) {
-            getAudiences().console().sendMessage(translate(message));
-        } else {
-            Bukkit.getConsoleSender().sendMessage(translate(message));
-        }
+        Bukkit.getConsoleSender().sendMessage(translate(message));
     }
 
     /**
@@ -278,11 +238,7 @@ public class RyMessageUtils {
         for (String message : messages) {
             if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
-            if (getAudiences() != null) {
-                getAudiences().console().sendMessage(translate(message));
-            } else {
-                Bukkit.getConsoleSender().sendMessage(translate(message));
-            }
+            Bukkit.getConsoleSender().sendMessage(translate(message));
         }
     }
 
@@ -296,11 +252,7 @@ public class RyMessageUtils {
         for (String message : messages) {
             if (prefix) message = "<#7D0DC3>[SimpleStaffChat] &f" + message;
 
-            if (getAudiences() != null) {
-                getAudiences().console().sendMessage(translate(message));
-            } else {
-                Bukkit.getConsoleSender().sendMessage(translate(message));
-            }
+            Bukkit.getConsoleSender().sendMessage(translate(message));
         }
     }
 
@@ -314,11 +266,7 @@ public class RyMessageUtils {
     public static void sendStaffChat(Player player, String permission, String message) {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission) && !Methods.getStaffChatMuted().contains(online.getUniqueId())) {
-                if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(translate(player, message));
-                } else {
-                    online.sendMessage(translate(player, message));
-                }
+                online.sendMessage(translate(player, message));
             }
         }
     }
@@ -333,11 +281,7 @@ public class RyMessageUtils {
     public static void sendDevChat(Player player, String permission, String message) {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission) && !Methods.getDevChatMuted().contains(online.getUniqueId())) {
-                if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(translate(player, message));
-                } else {
-                    online.sendMessage(translate(player, message));
-                }
+                online.sendMessage(translate(player, message));
             }
         }
     }
@@ -352,11 +296,7 @@ public class RyMessageUtils {
     public static void sendAdminChat(Player player, String permission, String message) {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission) && !Methods.getAdminChatMuted().contains(online.getUniqueId())) {
-                if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(translate(player, message));
-                } else {
-                    online.sendMessage(translate(player, message));
-                }
+                online.sendMessage(translate(player, message));
             }
         }
     }
@@ -371,11 +311,7 @@ public class RyMessageUtils {
     public static void broadcast(Player player, Permission permission, String message) {
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.hasPermission(permission)) {
-                if (getAudiences() != null) {
-                    getAudiences().player(online).sendMessage(translate(player, message));
-                } else {
-                    online.sendMessage(translate(player, message));
-                }
+                online.sendMessage(translate(player, message));
             }
         }
     }
@@ -386,11 +322,7 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to the players.
      */
     public static void broadcast(String message) {
-        if (getAudiences() != null) {
-            getAudiences().players().sendMessage(translate(message));
-        } else {
-            Bukkit.getConsoleSender().sendMessage(translate(message));
-        }
+        Bukkit.getConsoleSender().sendMessage(translate(message));
     }
 
     /**
@@ -400,11 +332,7 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to players.
      */
     public static void broadcast(Player player, String message) {
-        if (getAudiences() != null) {
-            getAudiences().players().sendMessage(translate(player, message));
-        } else {
-            Bukkit.getConsoleSender().sendMessage(translate(player, message));
-        }
+        Bukkit.getConsoleSender().sendMessage(translate(player, message));
     }
 
     /**

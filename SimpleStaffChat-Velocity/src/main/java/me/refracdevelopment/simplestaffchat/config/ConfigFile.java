@@ -24,11 +24,8 @@ public class ConfigFile {
         try {
             configFile = YamlDocument.create(new File(SimpleStaffChat.getInstance().getPath().toFile(), name),
                     getClass().getResourceAsStream("/" + name),
-                    GeneralSettings.DEFAULT,
-                    LoaderSettings.builder().setAutoUpdate(true).build(),
-                    DumperSettings.DEFAULT,
-                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version"))
-                            .build()
+                    GeneralSettings.builder().setUseDefaults(false).build(),
+                    LoaderSettings.builder().setAutoUpdate(false).build()
             );
 
             configFile.update();

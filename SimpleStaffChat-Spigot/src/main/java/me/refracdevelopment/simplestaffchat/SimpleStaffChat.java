@@ -1,8 +1,9 @@
 package me.refracdevelopment.simplestaffchat;
 
+import com.cryptomorin.xseries.reflection.XReflection;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.papermc.lib.PaperLib;
+import com.tcoded.folialib.FoliaLib;
 import lombok.Getter;
 import me.refracdevelopment.simplestaffchat.listeners.ChatListener;
 import me.refracdevelopment.simplestaffchat.listeners.JoinListener;
@@ -15,7 +16,6 @@ import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import space.arim.morepaperlib.MorePaperLib;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -38,15 +38,20 @@ public final class SimpleStaffChat extends JavaPlugin {
     private Commands commands;
     private Discord discord;
 
-    private MorePaperLib paperLib;
+    private FoliaLib foliaLib;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        new Metrics(this, 12095);
+        foliaLib = new FoliaLib(this);
 
-        paperLib = new MorePaperLib(SimpleStaffChat.getInstance());
+        if (!XReflection.supports(18) || getFoliaLib().isSpigot()) {
+            getLogger().info("This version and or software (Spigot) is no longer supported.");
+            getLogger().info("Please update to at least Paper 1.18.x or above.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         loadFiles();
 
@@ -63,10 +68,9 @@ public final class SimpleStaffChat extends JavaPlugin {
         loadModules();
         loadHooks();
 
-        // Paper is recommended but not required
-        PaperLib.suggestPaper(this);
+        updateCheck();
 
-        paperLib.scheduling().asyncScheduler().run(this::updateCheck);
+        new Metrics(this, 12095);
     }
 
     private void loadFiles() {
