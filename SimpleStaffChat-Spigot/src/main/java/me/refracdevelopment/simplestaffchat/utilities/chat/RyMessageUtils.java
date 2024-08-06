@@ -7,6 +7,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import me.refracdevelopment.simplestaffchat.utilities.Methods;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -99,7 +100,10 @@ public class RyMessageUtils {
     public static Component translate(String message) {
         message = legacyToAdventure(message);
 
-        Component component = MiniMessage.miniMessage().deserialize(message);
+        Component component = MiniMessage.miniMessage().deserialize(message)
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.BOLD, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE);
 
         return component;
     }

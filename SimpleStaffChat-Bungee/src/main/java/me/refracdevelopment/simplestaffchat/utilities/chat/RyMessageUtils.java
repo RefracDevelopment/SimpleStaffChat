@@ -6,6 +6,7 @@ import lombok.Setter;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -129,7 +130,10 @@ public class RyMessageUtils {
     public static Component adventureTranslate(String message) {
         message = legacyToAdventure(message);
 
-        Component component = MiniMessage.miniMessage().deserialize(message);
+        Component component = MiniMessage.miniMessage().deserialize(message)
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.BOLD, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE);
 
         return component;
     }

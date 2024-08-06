@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -92,7 +93,10 @@ public class RyMessageUtils {
     public static Component translate(String message) {
         message = legacyToAdventure(message);
 
-        Component component = MiniMessage.miniMessage().deserialize(message);
+        Component component = MiniMessage.miniMessage().deserialize(message)
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.BOLD, TextDecoration.State.FALSE)
+                .decorationIfAbsent(TextDecoration.OBFUSCATED, TextDecoration.State.FALSE);
 
         return component;
     }
