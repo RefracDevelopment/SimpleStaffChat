@@ -221,7 +221,7 @@ public class RyMessageUtils {
      */
     public void sendConsole(boolean prefix, String message) {
         if (prefix) {
-            server.getConsoleCommandSource().sendMessage(translate("<#7D0DC3>[SimpleStaffChat] &f" + message));
+            server.getConsoleCommandSource().sendMessage(translate("<#7D0DC3>[" + instance.getContainer().getDescription().getName() + "] &f" + message));
         } else {
             server.getConsoleCommandSource().sendMessage(translate(message));
         }
