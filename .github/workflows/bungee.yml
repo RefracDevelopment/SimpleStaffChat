@@ -18,7 +18,7 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Rename JAR with Build Number
       run: |
-        original_jar=$(find SimpleStaffChat-Bungee/target/ -type f -name "SimpleGems-*.jar")
+        original_jar=$(find SimpleStaffChat-Bungee/target/ -type f -name "SimpleStaffChat-Bungee-*.jar")
         new_name=$(echo "$original_jar" | sed "s/SimpleStaffChat-Bungee-\(.*\)\.jar/SimpleStaffChat-Bungee-\1+${{ github.run_number }}.jar/")
         mv "$original_jar" "$new_name"
     - name: Upload a Build Artifact
