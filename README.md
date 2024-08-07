@@ -1,3 +1,5 @@
+[![Bungee](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/bungee.yml/badge.svg)](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/bungee.yml) [![Paper](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/paper.yml/badge.svg)](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/paper.yml) [![Velocity](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/velocity.yml/badge.svg)](https://github.com/RefracDevelopment/SimpleStaffChat/actions/workflows/velocity.yml)
+
 ![](https://i.imgur.com/9n13hxp.png)
 
 SimpleStaffChat is a plugin that allows you to send messages to your staff members privately.
