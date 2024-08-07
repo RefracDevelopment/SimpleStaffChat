@@ -1,4 +1,4 @@
-name: Build
+name: Velocity
 on:
   push:
     branches: [ "main" ]
