@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v4.3.3 # https://github.com/actions/upload-artifact/releases
       with:
         name: Click here to download
-        path: target/SimpleStaffChat-Spigot-*+${{ github.run_number }}.jar
+        path: SimpleStaffChat-Spigot/target/SimpleStaffChat-Spigot-*+${{ github.run_number }}.jar
