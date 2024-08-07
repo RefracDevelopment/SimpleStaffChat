@@ -1,4 +1,4 @@
-name: Build
+name: Paper
 on:
   push:
     branches: [ "main" ]
