@@ -1,50 +1,28 @@
 name: Build
-
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare Project
-        uses: actions/checkout@v3
-        with:
-          ref: 'main'
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Build with Maven
-        run: |
-          mvn -B install --file ./SimpleStaffChat-Velocity/pom.xml
-          echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: 'Velocity-${{ env.PROJECT_VERSION }}'
-          release_name: SimpleStaffChat-Velocity ${{ env.PROJECT_VERSION }}
-          draft: false
-          prerelease: true
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './SimpleStaffChat-Velocity/target/SimpleStaffChat-Velocity-${{ env.PROJECT_VERSION }}.jar'
-          asset_name: 'SimpleStaffChat-Velocity-${{ env.PROJECT_VERSION }}.jar'
-          asset_content_type: 'application/java-archive'
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Rename JAR with Build Number
+      run: |
+        original_jar=$(find SimpleStaffChat-Velocity/target/ -type f -name "SimpleStaffChat-Velocity-*.jar")
+        new_name=$(echo "$original_jar" | sed "s/SimpleStaffChat-Velocity-\(.*\)\.jar/SimpleStaffChat-Velocity-\1+${{ github.run_number }}.jar/")
+        mv "$original_jar" "$new_name"
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.3 # https://github.com/actions/upload-artifact/releases
+      with:
+        name: Click here to download
+        path: target/SimpleStaffChat-Velocity-*+${{ github.run_number }}.jar
