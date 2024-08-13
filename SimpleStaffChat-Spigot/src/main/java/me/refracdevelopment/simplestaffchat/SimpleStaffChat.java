@@ -14,6 +14,7 @@ import me.refracdevelopment.simplestaffchat.manager.config.cache.Config;
 import me.refracdevelopment.simplestaffchat.manager.config.cache.Discord;
 import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -47,7 +48,7 @@ public final class SimpleStaffChat extends JavaPlugin {
         foliaLib = new FoliaLib(this);
 
         if (!XReflection.supports(18) || getFoliaLib().isSpigot()) {
-            getLogger().info("This version and or software (Spigot) is no longer supported.");
+            getLogger().info("This version and or software (" + Bukkit.getName() + ") is not supported.");
             getLogger().info("Please update to at least Paper 1.18.x or above.");
             getServer().getPluginManager().disablePlugin(this);
             return;
@@ -101,9 +102,9 @@ public final class SimpleStaffChat extends JavaPlugin {
     private void loadHooks() {
         PluginManager pluginManager = getServer().getPluginManager();
 
-        if (!pluginManager.isPluginEnabled("AntiPopup")) {
+        if (!pluginManager.isPluginEnabled("NoChatReports")) {
             RyMessageUtils.sendConsole(true, "&cIf you get kicked out in 1.19+ while typing in a staffchat on Spigot",
-                    "&cconsider downloading AntiPopup: https://www.spigotmc.org/resources/103782/");
+                    "&cconsider downloading NoChatReports: https://www.spigotmc.org/resources/102931/");
         }
 
         if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
