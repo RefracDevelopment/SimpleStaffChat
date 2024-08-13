@@ -105,8 +105,7 @@ public class RyMessageUtils {
      * Translate a string from legacy to Adventure API.
      *
      * @param input The string that needs translating.
-     * @return      String which is in an adventure format.
-     *
+     * @return String which is in an adventure format.
      * @Author: EternalCodeTeam (https://github.com/EternalCodeTeam/ChatFormatter/)
      */
     private static String legacyToAdventure(String input) {
@@ -146,6 +145,9 @@ public class RyMessageUtils {
      * @param message The message you wish to send the player.
      */
     public void sendPlayer(@NotNull Player player, @NotNull String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         player.sendMessage(translate(player, message));
     }
 
@@ -157,6 +159,9 @@ public class RyMessageUtils {
      */
     public void sendPlayer(@NotNull Player player, @NotNull String... messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
             player.sendMessage(translate(player, message));
         }
     }
@@ -169,7 +174,10 @@ public class RyMessageUtils {
      */
     public void sendPlayer(@NotNull Player player, @NotNull List<String> messages) {
         for (String message : messages) {
-            player.sendMessage(translate(message));
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
+            player.sendMessage(translate(player, message));
         }
     }
 
@@ -180,6 +188,9 @@ public class RyMessageUtils {
      * @param message The message you wish to send to the sender.
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         message = Placeholders.setPlaceholders(sender, message);
 
         sender.sendMessage(translate(message));
@@ -193,6 +204,8 @@ public class RyMessageUtils {
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull String... messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
             message = Placeholders.setPlaceholders(sender, message);
 
             sender.sendMessage(translate(message));
@@ -207,6 +220,8 @@ public class RyMessageUtils {
      */
     public void sendSender(@NotNull CommandSource sender, @NotNull List<String> messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
             message = Placeholders.setPlaceholders(sender, message);
 
             sender.sendMessage(translate(message));
@@ -271,11 +286,12 @@ public class RyMessageUtils {
      * @param message    The message you wish to be broadcast.
      */
     public void broadcast(@Nullable Player player, String permission, String message) {
-        message = Placeholders.setPlaceholders(player, message);
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
 
         for (Player online : server.getAllPlayers()) {
             if (online.hasPermission(permission)) {
-                online.sendMessage(translate(message));
+                online.sendMessage(translate(player, message));
             }
         }
     }
@@ -286,6 +302,9 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to the players.
      */
     public void broadcast(String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         for (Player online : server.getAllPlayers()) {
             online.sendMessage(translate(message));
         }
@@ -298,7 +317,8 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to players.
      */
     public void broadcast(Player player, String message) {
-        message = Placeholders.setPlaceholders(player, message);
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
 
         for (Player online : server.getAllPlayers()) {
             online.sendMessage(translate(player, message));

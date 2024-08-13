@@ -142,8 +142,7 @@ public class RyMessageUtils {
      * Translate a string from legacy to Adventure API.
      *
      * @param input The string that needs translating.
-     * @return      String which is in an adventure format.
-     *
+     * @return String which is in an adventure format.
      * @Author: EternalCodeTeam (https://github.com/EternalCodeTeam/ChatFormatter/)
      */
     private static String legacyToAdventure(String input) {
@@ -183,6 +182,9 @@ public class RyMessageUtils {
      * @param message The message you wish to send the player.
      */
     public static void sendPlayer(ProxiedPlayer player, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         if (getAudiences() != null) {
             getAudiences().player(player).sendMessage(adventureTranslate(player, message));
         } else {
@@ -199,6 +201,9 @@ public class RyMessageUtils {
      */
     public static void sendPlayer(ProxiedPlayer player, String... messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
             if (getAudiences() != null) {
                 getAudiences().player(player).sendMessage(adventureTranslate(player, message));
             } else {
@@ -216,6 +221,9 @@ public class RyMessageUtils {
      */
     public static void sendPlayer(ProxiedPlayer player, List<String> messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
             if (getAudiences() != null) {
                 getAudiences().player(player).sendMessage(adventureTranslate(player, message));
             } else {
@@ -232,6 +240,9 @@ public class RyMessageUtils {
      * @param message The message you wish to send to the sender.
      */
     public static void sendSender(CommandSender sender, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         message = Placeholders.setPlaceholders(sender, message);
 
         if (getAudiences() != null) {
@@ -250,6 +261,9 @@ public class RyMessageUtils {
      */
     public static void sendSender(CommandSender sender, String... messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
             message = Placeholders.setPlaceholders(sender, message);
 
             if (getAudiences() != null) {
@@ -269,6 +283,9 @@ public class RyMessageUtils {
      */
     public static void sendSender(CommandSender sender, List<String> messages) {
         for (String message : messages) {
+            if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+                return;
+
             message = Placeholders.setPlaceholders(sender, message);
 
             if (getAudiences() != null) {
@@ -343,6 +360,9 @@ public class RyMessageUtils {
      * @param message    The message you wish to be broadcast.
      */
     public static void broadcast(ProxiedPlayer player, String permission, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         for (ProxiedPlayer online : ProxyServer.getInstance().getPlayers()) {
             if (online.hasPermission(permission)) {
                 if (getAudiences() != null) {
@@ -362,6 +382,9 @@ public class RyMessageUtils {
      * @param message The message you wish to be broadcast.
      */
     public static void broadcast(ProxiedPlayer player, String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         if (getAudiences() != null) {
             getAudiences().players().sendMessage(adventureTranslate(player, message));
         } else {
@@ -376,6 +399,9 @@ public class RyMessageUtils {
      * @param message The message you wish to be sent to the players.
      */
     public static void broadcast(String message) {
+        if (message.equalsIgnoreCase("%empty%") || message.contains("%empty%"))
+            return;
+
         if (getAudiences() != null) {
             getAudiences().players().sendMessage(adventureTranslate(message));
         } else {

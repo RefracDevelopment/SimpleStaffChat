@@ -3,7 +3,6 @@ package me.refracdevelopment.simplestaffchat.utilities.chat;
 import lombok.experimental.UtilityClass;
 import me.refracdevelopment.simplestaffchat.SimpleStaffChat;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 @UtilityClass
 public class Placeholders {

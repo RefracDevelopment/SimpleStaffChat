@@ -7,7 +7,9 @@ import me.refracdevelopment.simplestaffchat.utilities.chat.RyMessageUtils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @UtilityClass
 public class Methods {
