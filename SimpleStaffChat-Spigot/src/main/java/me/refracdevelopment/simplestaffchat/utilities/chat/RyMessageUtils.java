@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 
 /**
  * Modified version of <a href="https://github.com/RyanMoodGAMING/RyUtils">RyMessageUtils</a>
+ *
+ * @Author: RyanMoodGAMING (https://github.com/RyanMoodGAMING/RyUtils)
  */
 @SuppressWarnings("unused")
 public class RyMessageUtils {
