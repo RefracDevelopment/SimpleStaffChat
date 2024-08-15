@@ -19,8 +19,6 @@ import java.util.UUID;
 public class JoinListener implements Listener {
 
     private final SimpleStaffChat plugin;
-    private final UUID getDevUUID = UUID.fromString("d9c670ed-d7d5-45fb-a144-8b8be86c4a2d");
-    private final UUID getDevUUID2 = UUID.fromString("ab898e40-9088-45eb-9d69-e0b78e872627");
 
     public JoinListener(SimpleStaffChat plugin) {
         this.plugin = plugin;
@@ -29,12 +27,6 @@ public class JoinListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
-        if (player.getUniqueId().equals(this.getDevUUID)) {
-            sendDevMessage(player);
-        } else if (player.getUniqueId().equals(this.getDevUUID2)) {
-            sendDevMessage(player);
-        }
 
         if (!player.hasPermission(Permissions.STAFFCHAT_JOIN))
             return;
@@ -66,15 +58,5 @@ public class JoinListener implements Listener {
         );
 
         DiscordImpl.sendJoin(JoinType.LEAVE, player);
-    }
-
-    private void sendDevMessage(Player player) {
-        RyMessageUtils.sendPlayer(player, " ");
-        RyMessageUtils.sendPlayer(player, "&aWelcome " + this.plugin.getDescription().getName() + " Developer!");
-        RyMessageUtils.sendPlayer(player, "&aThis server is currently running " + this.plugin.getDescription().getName() + " &bv" + this.plugin.getDescription().getVersion() + "&a.");
-        RyMessageUtils.sendPlayer(player, "&aPlugin name&7: &f" + this.plugin.getDescription().getName());
-        RyMessageUtils.sendPlayer(player, " ");
-        RyMessageUtils.sendPlayer(player, "&aServer version&7: &f" + Bukkit.getVersion());
-        RyMessageUtils.sendPlayer(player, " ");
     }
 }
