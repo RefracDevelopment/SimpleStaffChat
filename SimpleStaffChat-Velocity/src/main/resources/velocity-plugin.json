@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "id": "signedvelocity",
-      "optional": false
+      "optional": true
     },
     {
       "id": "luckperms",
