@@ -48,8 +48,6 @@ public final class SimpleStaffChat extends Plugin {
         // Plugin startup logic
         instance = this;
 
-        new Metrics(this, 12096);
-
         loadFiles();
 
         RyMessageUtils.sendConsole(false,
@@ -66,6 +64,8 @@ public final class SimpleStaffChat extends Plugin {
         loadHooks();
 
         updateCheck();
+
+        new Metrics(this, 12096);
     }
 
     private void loadFiles() {

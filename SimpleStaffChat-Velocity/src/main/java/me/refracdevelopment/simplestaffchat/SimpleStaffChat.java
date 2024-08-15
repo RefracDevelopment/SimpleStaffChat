@@ -71,8 +71,6 @@ public class SimpleStaffChat {
 
         container = server.getPluginManager().getPlugin("simplestaffchat").get();
 
-        metricsFactory.make(this, 21704);
-
         loadFiles();
 
         RyMessageUtils.sendConsole(false,
@@ -89,6 +87,8 @@ public class SimpleStaffChat {
         loadHooks();
 
         updateCheck();
+
+        metricsFactory.make(this, 21704);
     }
 
     private void loadFiles() {
